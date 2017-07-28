@@ -7,7 +7,6 @@ using System.IO;
 public class Autorun {
 	static Autorun () {
 		EditorApplication.update += InitProject;
-
 	}
 
 	static void InitProject () {

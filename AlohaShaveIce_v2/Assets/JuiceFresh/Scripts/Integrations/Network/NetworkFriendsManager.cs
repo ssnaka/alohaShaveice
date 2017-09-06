@@ -17,6 +17,7 @@ public class NetworkFriendsManager {
 #elif GAMESPARKS
 		friendsManager = new GameSparksFriendsManager ();
 
+
 #endif
 		NetworkManager.OnLoginEvent += GetFriends;
 		LevelManager.OnMapState += PlaceFriendsPositionsOnMap;
@@ -103,30 +104,39 @@ public class NetworkFriendsManager {
 			int LevelNumber = PlayerPrefs.GetInt ("OpenLevel");
 			NetworkManager.leadboardList.Clear ();
 			friendsManager.GetLeadboardOnLevel (LevelNumber, (list) => {
-				foreach (var pl in list) {
-					FriendData friend = FacebookManager.Friends.Find (delegate (FriendData bk) {
-						return bk.userID == pl.userID;
-					}
-					                    );
-					if (friend != null) {
-						pl.friendData = friend;
-						pl.picture = friend.picture;
-					}
+				Debug.LogError("----" + list.Count);
+				if (list.Count == 0)
+				{
+					Debug.LogError("no frined");
 
-					LeadboardPlayerData leadboardPlayerData = NetworkManager.leadboardList.Find (delegate (LeadboardPlayerData bk) {
-						return bk.userID == pl.userID;
-					}
-					                                          );
-					if (leadboardPlayerData != null)
-						leadboardPlayerData = pl;
-					else
-						NetworkManager.leadboardList.Add (pl);
-
-					Debug.Log (pl.Name + " " + pl.userID + " " + pl.position + " " + pl.score);
 				}
+				else
+				{
+					foreach (var pl in list) {
+						FriendData friend = FacebookManager.Friends.Find (delegate (FriendData bk) {
+							return bk.userID == pl.userID;
+						}
+						                    );
+						if (friend != null) {
+							pl.friendData = friend;
+							pl.picture = friend.picture;
+						}
 
-				if (NetworkManager.leadboardList.Count > 0) {
-					NetworkManager.LevelLeadboardLoaded ();
+						LeadboardPlayerData leadboardPlayerData = NetworkManager.leadboardList.Find (delegate (LeadboardPlayerData bk) {
+							return bk.userID == pl.userID;
+						}
+						                                          );
+						if (leadboardPlayerData != null)
+							leadboardPlayerData = pl;
+						else
+							NetworkManager.leadboardList.Add (pl);
+
+						Debug.Log (pl.Name + " " + pl.userID + " " + pl.position + " " + pl.score);
+					}
+
+					if (NetworkManager.leadboardList.Count > 0) {
+						NetworkManager.LevelLeadboardLoaded ();
+					}
 				}
 
 			});

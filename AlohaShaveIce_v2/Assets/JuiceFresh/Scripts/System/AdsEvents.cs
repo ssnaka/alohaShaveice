@@ -4,7 +4,8 @@ using System.Collections;
 public enum AdType {
     AdmobInterstitial,
     ChartboostInterstitial,
-    UnityAdsVideo
+    UnityAdsVideo,
+	Appodeal
 }
 
 [System.Serializable]

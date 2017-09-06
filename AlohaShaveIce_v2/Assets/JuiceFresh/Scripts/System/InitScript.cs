@@ -14,6 +14,11 @@ using ChartboostSDK;
 #if  GOOGLE_MOBILE_ADS
 using GoogleMobileAds.Api;
 #endif
+#if APPODEAL_ADS
+using AppodealAds.Unity.Api;
+using AppodealAds.Unity.Common;
+#endif
+
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -60,10 +65,11 @@ public enum CollectStars {
 public enum RewardedAdsType {
 	GetLifes,
 	GetGems,
-	GetGoOn
+	GetGoOn,
+	Counter
 }
 
-public class InitScript : MonoBehaviour {
+public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener {
 	public static InitScript Instance;
 	public static int openLevel;
 
@@ -203,6 +209,20 @@ public class InitScript : MonoBehaviour {
 		#else
 		enableGoogleMobileAds = false; //1.3
 #endif
+
+#if APPODEAL_ADS
+		String appKey = "00b427e95e6a2a660b700aa7aa36a02f96738fd9deecc690";
+		Appodeal.disableLocationPermissionCheck();
+		Appodeal.setTesting(true);
+
+		Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.SKIPPABLE_VIDEO | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
+		Appodeal.setNonSkippableVideoCallbacks(this);
+		Appodeal.setBannerCallbacks(this);
+
+		Appodeal.setBannerBackground(true);
+		Debug.LogError("AppODeal Setting Done");
+#endif
+
 		Transform canvas = GameObject.Find ("CanvasGlobal").transform;
 		foreach (Transform item in canvas) {
 			item.gameObject.SetActive (false);
@@ -273,6 +293,12 @@ public class InitScript : MonoBehaviour {
 			});
 		}
 #endif
+		#if APPODEAL_ADS
+		if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
+		{
+			Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
+		}
+		#endif
 	}
 
 	public void CheckAdsEvents (GameState state) {
@@ -346,6 +372,44 @@ public class InitScript : MonoBehaviour {
 		}
 	}
 
+#if APPODEAL_ADS
+	#region Rewarded Video callback handlers
+	public void onNonSkippableVideoLoaded() { Debug.LogError("Video Loaded"); }
+	public void onNonSkippableVideoFailedToLoad() { Debug.LogError("Video failed"); }
+	public void onNonSkippableVideoShown() { Debug.LogError("Video shown"); }
+	public void onNonSkippableVideoClosed() { Debug.LogError("Video closed"); }
+	public void onNonSkippableVideoFinished()
+	{
+		Debug.LogError("Video Finished");
+		CheckRewardedAds();
+	}
+	#endregion
+
+	#region Banner callback handlers
+	public void onBannerLoaded() { Debug.LogError("banner loaded"); }
+	public void onBannerFailedToLoad() { Debug.LogError("banner failed"); }
+	public void onBannerShown() { Debug.LogError("banner opened"); }
+	public void onBannerClicked() { Debug.LogError("banner clicked"); }
+	#endregion
+
+	public void EnableBannerAds (bool _enabled)
+	{
+		if (_enabled)
+		{
+//			Debug.LogError(Appodeal.isLoaded(Appodeal.BANNER));
+			if (Appodeal.isLoaded(Appodeal.BANNER))
+			{
+				Appodeal.show(Appodeal.BANNER_BOTTOM);
+			}
+		}
+		else
+		{
+			Appodeal.hide(Appodeal.BANNER);
+		}
+	}
+
+#endif
+
 	public void ShowRate () {
 		rate.SetActive (true);
 	}
@@ -368,6 +432,10 @@ public class InitScript : MonoBehaviour {
 			GameObject.Find ("CanvasGlobal").transform.Find ("MenuFailed").GetComponent<AnimationManager> ().GoOnFailed ();
 		}
 
+		else if (currentReward == RewardedAdsType.Counter)
+		{
+				
+		}
 	}
 
 	public void SetGems (int count) {//1.3.3

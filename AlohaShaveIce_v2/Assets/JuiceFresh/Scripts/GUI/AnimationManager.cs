@@ -76,7 +76,6 @@ public class AnimationManager : MonoBehaviour
 				transform.Find("Image/Music/MusicOff").gameObject.SetActive(true);
 			else
 				transform.Find("Image/Music/MusicOff").gameObject.SetActive(false);
-
 		}
 
 		if (name == "GemsShop") {
@@ -89,7 +88,6 @@ public class AnimationManager : MonoBehaviour
 			for (int i = 1; i <= 3; i++) {
 				transform.Find("Image/Star" + i + "/Star").gameObject.SetActive(false);
 			}
-
 		}
 		if (transform.Find("Image/Video") != null) {
 
@@ -99,8 +97,15 @@ public class AnimationManager : MonoBehaviour
 			if (!InitScript.Instance.enableUnityAds || !InitScript.Instance.GetRewardedUnityAdsReady ())
 				transform.Find ("Image/Video").gameObject.SetActive (false);
 #else
+#if !APPODEAL_ADS
 			transform.Find("Image/Video").gameObject.SetActive(false);
 #endif
+#endif
+		}
+
+		if (name != "Lifes" && name != "Gems" && name != "Settings")
+		{
+			InitScript.Instance.EnableBannerAds(true);
 		}
 	}
 

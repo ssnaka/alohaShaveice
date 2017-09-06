@@ -9,6 +9,8 @@ public class BoostIcon : MonoBehaviour
     bool check;
     public Text price;
 
+	public bool canUseBoost = true;
+
     void OnEnable()
     {
         if (name != "Main Camera")
@@ -20,38 +22,50 @@ public class BoostIcon : MonoBehaviour
                 if (!LevelManager.THIS.enableInApps)
                     gameObject.SetActive(false);
             }
+
+			if (!canUseBoost)
+			{
+				transform.Find("Indicator/Count/Check").gameObject.SetActive(false);
+			}
         }
     }
 
     public void ActivateBoost()
     {
-        if (LevelManager.THIS.ActivatedBoost == this)
-        {
-            UnCheckBoost();
-            return;
-        }
-        if (IsLocked() || check || (LevelManager.THIS.gameStatus != GameState.Playing && LevelManager.THIS.gameStatus != GameState.Map))
-            return;
-        if (BoostCount() > 0)
-        {
-            if (type != BoostType.Colorful_bomb && type != BoostType.Stripes && !LevelManager.THIS.DragBlocked)
-                LevelManager.THIS.ActivatedBoost = this;
-            if (type == BoostType.Colorful_bomb)
-            {
-                LevelManager.THIS.BoostColorfullBomb = 1;
-                Check();
-            }
-            if (type == BoostType.Stripes)
-            {
-                LevelManager.THIS.BoostStriped = 2;
-                Check();
-            }
+		if (canUseBoost)
+		{
+	        if (LevelManager.THIS.ActivatedBoost == this)
+	        {
+	            UnCheckBoost();
+	            return;
+	        }
+	        if (IsLocked() || check || (LevelManager.THIS.gameStatus != GameState.Playing && LevelManager.THIS.gameStatus != GameState.Map))
+	            return;
+	        if (BoostCount() > 0)
+	        {
+	            if (type != BoostType.Colorful_bomb && type != BoostType.Stripes && !LevelManager.THIS.DragBlocked)
+	                LevelManager.THIS.ActivatedBoost = this;
+	            if (type == BoostType.Colorful_bomb)
+	            {
+	                LevelManager.THIS.BoostColorfullBomb = 1;
+	                Check();
+	            }
+	            if (type == BoostType.Stripes)
+	            {
+	                LevelManager.THIS.BoostStriped = 2;
+	                Check();
+	            }
 
-        }
-        else
-        {
-            OpenBoostShop(type);
-        }
+	        }
+	        else
+	        {
+	            OpenBoostShop(type);
+	        }
+		}
+		else
+		{
+			OpenBoostShop(type);
+		}
     }
 
 

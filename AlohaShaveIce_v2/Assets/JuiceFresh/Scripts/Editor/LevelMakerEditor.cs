@@ -561,7 +561,6 @@ public class LevelMakerEditor : EditorWindow {
 			}, new GUILayoutOption[] { GUILayout.Width (100) });
 
 			EditorGUILayout.EndHorizontal ();
-
 		}
 		EditorGUILayout.Space ();
 
@@ -577,11 +576,71 @@ public class LevelMakerEditor : EditorWindow {
 				initscript.adsEvents.Remove (initscript.adsEvents [initscript.adsEvents.Count - 1]);
 
 		}
+		EditorGUILayout.EndHorizontal ();
 
-
+		EditorGUILayout.BeginHorizontal ();
+		GUILayout.Label ("Boost Ads controller:", EditorStyles.boldLabel, new GUILayoutOption[] { GUILayout.Width (150) });
+		EditorGUILayout.EndHorizontal ();
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.Space ();
+		GUILayout.Label ("Event:               Status:                            n call to reward:", new GUILayoutOption[] { GUILayout.Width (350) });
 		GUILayout.Space (10);
+		EditorGUILayout.EndHorizontal ();
+		foreach (BoostAdEvents item in initscript.boostAdsEvents) {
+			EditorGUILayout.BeginHorizontal ();
+			item.boostType = (BoostType)EditorGUILayout.EnumPopup (item.boostType, new GUILayoutOption[] { GUILayout.Width (100) });
+			item.adType = (AdType)EditorGUILayout.EnumPopup (item.adType, new GUILayoutOption[] { GUILayout.Width (150) });
+			item.countToReward = EditorGUILayout.IntPopup (item.countToReward, new string[] {
+				"1",
+				"2",
+				"3",
+				"4",
+				"5",
+				"6",
+				"7",
+				"8",
+				"9",
+				"10"
+			}, new int[] {
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			}, new GUILayoutOption[] { GUILayout.Width (100) });
 
+			EditorGUILayout.EndHorizontal ();
+		}
+		EditorGUILayout.Space ();
 
+		EditorGUILayout.BeginHorizontal ();
+		if (GUILayout.Button ("Add_")) {
+			BoostAdEvents adevent = new BoostAdEvents ();
+			adevent.countToReward = 1;
+			initscript.boostAdsEvents.Add (adevent);
+
+		}
+		if (GUILayout.Button ("Delete_")) {
+			if (initscript.boostAdsEvents.Count > 0)
+				initscript.boostAdsEvents.Remove (initscript.boostAdsEvents [initscript.boostAdsEvents.Count - 1]);
+
+		}
+		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.Space ();
+		EditorGUILayout.Space ();
+		EditorGUILayout.BeginHorizontal ();
+
+		initscript.maxVideoPerDay = EditorGUILayout.IntField ("Max Video Per Day", initscript.maxVideoPerDay, new GUILayoutOption[] {
+			GUILayout.Width (200),
+			GUILayout.MaxWidth (200)
+		});
+		EditorGUILayout.EndHorizontal();
 
 	}
 

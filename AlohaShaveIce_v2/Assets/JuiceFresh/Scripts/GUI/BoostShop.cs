@@ -23,9 +23,14 @@ public class BoostShop : MonoBehaviour
     public Image icon;
     public Text description;
 
-    BoostType boostType;
+	public BoostType boostType { get; private set; }
 
     public List<BoostProduct> boostProducts = new List<BoostProduct>();
+
+	[SerializeField]
+	GameObject videoButtonObject;
+	[SerializeField]
+	Text videoCounter;
 
     // Use this for initialization
     void Start()
@@ -49,6 +54,17 @@ public class BoostShop : MonoBehaviour
             transform.Find("Image/BuyBoost" + (i + 1) + "/Count").GetComponent<Text>().text = "x" + boostProducts[(int)_boostType].count[i];
             transform.Find("Image/BuyBoost" + (i + 1) + "/Price").GetComponent<Text>().text = "" + boostProducts[(int)_boostType].GemPrices[i];
         }
+
+		BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(_boostType);
+		if (boostAdEvent != null)
+		{
+			int playedCount = PlayerPrefs.GetInt(_boostType.ToString() + "_watch", 0);
+			videoCounter.text = (boostAdEvent.countToReward - playedCount).ToString();
+			if (playedCount >= boostAdEvent.countToReward)
+			{
+				videoButtonObject.SetActive(false);
+			}
+		}
     }
 
     public void BuyBoost(GameObject button)

@@ -30,7 +30,8 @@ public enum GameState
 	WaitForPotion,
 	PreFailed,
 	PreFailedBomb,
-	RegenLevel
+	RegenLevel,
+	BoostShop
 }
 
 

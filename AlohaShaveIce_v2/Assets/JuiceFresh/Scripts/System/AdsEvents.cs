@@ -5,7 +5,7 @@ public enum AdType {
     AdmobInterstitial,
     ChartboostInterstitial,
     UnityAdsVideo,
-	Appodeal
+	AppODeal
 }
 
 [System.Serializable]
@@ -15,4 +15,12 @@ public class AdEvents {
     public int everyLevel;
     public int calls;
 
+}
+
+[System.Serializable]
+public class BoostAdEvents {
+	public BoostType boostType;
+	public AdType adType;
+	public int countToReward;
+	public int calls;
 }

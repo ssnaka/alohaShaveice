@@ -20,6 +20,7 @@ public class AnimationManager : MonoBehaviour
 	bool WaitForAksFriends;
 	System.Collections.Generic.Dictionary<string, string> parameters;
 
+	Button videoButton;
 	void OnEnable()
 	{
 		if (PlayOnEnable) {
@@ -106,6 +107,30 @@ public class AnimationManager : MonoBehaviour
 		if (name != "Lifes" && name != "Gems" && name != "Settings")
 		{
 			InitScript.Instance.EnableBannerAds(true);
+
+			Button[] allButtonsArray = transform.GetComponentsInChildren<Button>();
+			if (videoButton == null)
+			{
+				if (allButtonsArray != null && allButtonsArray.Length > 0)
+				{
+					List<Button> allButtons = new List<Button>(allButtonsArray);
+					videoButton = allButtons.Find(item => item.name.Equals("Video"));
+				}
+			}
+
+			if (videoButton != null)
+			{
+				if (!InitScript.Instance.CanVideoBePlayed())
+				{
+					videoButton.gameObject.SetActive(false);
+				}
+				else
+				{
+					videoButton.gameObject.SetActive(true);
+				}
+
+			}
+
 		}
 	}
 
@@ -126,6 +151,34 @@ public class AnimationManager : MonoBehaviour
 			InitScript.Instance.currentReward = RewardedAdsType.GetLifes;
 		else if (name == "MenuFailed")
 			InitScript.Instance.currentReward = RewardedAdsType.GetGoOn;
+		else if (name == "BoostShop")
+		{	
+			BoostShop shop = GetComponent<BoostShop>();
+			switch(shop.boostType)
+			{
+			case BoostType.Stripes:
+				InitScript.Instance.currentReward = RewardedAdsType.Stripes;
+				break;
+			case BoostType.Colorful_bomb:
+				InitScript.Instance.currentReward = RewardedAdsType.Colorful_bomb;
+				break;
+			case BoostType.ExtraMoves:
+				InitScript.Instance.currentReward = RewardedAdsType.ExtraMoves;
+				break;
+			case BoostType.ExtraTime:
+				InitScript.Instance.currentReward = RewardedAdsType.ExtraTime;
+				break;
+			case BoostType.Bomb:
+				InitScript.Instance.currentReward = RewardedAdsType.Bomb;
+				break;
+			case BoostType.Energy:
+				InitScript.Instance.currentReward = RewardedAdsType.Energy;
+				break;
+			case BoostType.Shovel:
+				InitScript.Instance.currentReward = RewardedAdsType.Shovel;
+				break;
+			}
+		}
 		InitScript.Instance.ShowRewardedAds();
 		if (name != "MenuFailed")
 			CloseMenu();

@@ -582,7 +582,7 @@ public class LevelMakerEditor : EditorWindow {
 		GUILayout.Label ("Boost Ads controller:", EditorStyles.boldLabel, new GUILayoutOption[] { GUILayout.Width (150) });
 		EditorGUILayout.EndHorizontal ();
 		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.Space ();
+//		EditorGUILayout.Space ();
 		GUILayout.Label ("Event:               Status:                            n call to reward:", new GUILayoutOption[] { GUILayout.Width (350) });
 		GUILayout.Space (10);
 		EditorGUILayout.EndHorizontal ();

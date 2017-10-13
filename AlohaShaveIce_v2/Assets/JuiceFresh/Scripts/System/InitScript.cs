@@ -495,11 +495,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.Stripes.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.Stripes.ToString() + "_watch", ++count);
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.Stripes, 0, 1);
 				}
+
+				PlayerPrefs.SetInt(RewardedAdsType.Stripes.ToString() + "_watch", ++count);
 			}
 		}
 		else if (currentReward == RewardedAdsType.Colorful_bomb)
@@ -508,11 +510,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.Colorful_bomb.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.Colorful_bomb.ToString() + "_watch", ++count);
+
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.Colorful_bomb, 0, 1);
 				}
+
+				PlayerPrefs.SetInt(RewardedAdsType.Colorful_bomb.ToString() + "_watch", ++count);
 			}
 		}
 		else if (currentReward == RewardedAdsType.ExtraMoves)
@@ -521,11 +526,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.ExtraMoves.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_watch", ++count);
+
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.ExtraMoves, 0, 1);
 				}
+
+				PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_watch", ++count);
 			}
 		}
 		else if (currentReward == RewardedAdsType.ExtraTime)
@@ -534,11 +542,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.ExtraTime.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_watch", ++count);
+
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.ExtraTime, 0, 1);
 				}
+				count = -1;
+				PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_watch", ++count);
 			}
 		}
 		else if (currentReward == RewardedAdsType.Bomb)
@@ -547,11 +558,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.Bomb.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.Bomb.ToString() + "_watch", ++count);
+
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.Bomb, 0, 1);
 				}
+
+				PlayerPrefs.SetInt(RewardedAdsType.Bomb.ToString() + "_watch", ++count);
 			}
 		}
 		else if (currentReward == RewardedAdsType.Energy)
@@ -560,11 +574,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.Energy.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.Energy.ToString() + "_watch", ++count);
+
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.Energy, 0, 1);
 				}
+
+				PlayerPrefs.SetInt(RewardedAdsType.Energy.ToString() + "_watch", ++count);
 			}
 		}
 		else if (currentReward == RewardedAdsType.Shovel)
@@ -573,11 +590,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (boostAdEvent != null)
 			{
 				int count = PlayerPrefs.GetInt (RewardedAdsType.Shovel.ToString() + "_watch", 0);
-				PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_watch", ++count);
+
 				if (count >= boostAdEvent.countToReward)
 				{
+					count = -1;
 					BuyBoost(BoostType.Shovel, 0, 1);
 				}
+
+				PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_watch", ++count);
 			}
 		}
 

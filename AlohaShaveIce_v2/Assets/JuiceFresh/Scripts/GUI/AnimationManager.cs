@@ -207,6 +207,7 @@ public class AnimationManager : MonoBehaviour
 		//    if( !GetComponent<SequencePlayer>().sequenceArray[0].isPlaying )
 		//        GetComponent<SequencePlayer>().sequenceArray[0].Play
 		//}
+		InitScript.Instance.EnableBannerAds(false);
 	}
 
 	public void OnFinished()

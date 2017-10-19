@@ -5,56 +5,46 @@ using AppodealAds.Unity.Common;
 using AOT;
 
 #if UNITY_IPHONE
-namespace AppodealAds.Unity.iOS
-{
+namespace AppodealAds.Unity.iOS {
+	
 	public class AppodealAdsClient : IAppodealAdsClient {
 		
 		private const int AppodealAdTypeInterstitial 	  = 1 << 0;
-		private const int AppodealAdTypeSkippableVideo 	  = 1 << 1;
 		private const int AppodealAdTypeBanner       	  = 1 << 2;
 		private const int AppodealAdTypeRewardedVideo	  = 1 << 4;
 		private const int AppodealAdTypeNonSkippableVideo = 1 << 6;
-		private const int AppodealAdTypeAll           = AppodealAdTypeInterstitial | AppodealAdTypeSkippableVideo | AppodealAdTypeBanner | AppodealAdTypeNonSkippableVideo | AppodealAdTypeRewardedVideo;
-		
+
 		private const int AppodealShowStyleInterstitial        = 1;
-		private const int AppodealShowStyleVideo               = 2;
-		private const int AppodealShowStyleVideoOrInterstitial = 3;
 		private const int AppodealShowStyleBannerTop           = 4;
-		private const int AppodealShowStyleBannerBottom        = 5;
-		private const int AppodealShowStyleRewardedVideo       = 6;
-		private const int AppodealShowStyleNonSkippableVideo   = 7;
+		private const int AppodealShowStyleBannerBottom        = 8;
+		private const int AppodealShowStyleRewardedVideo       = 16;
+		private const int AppodealShowStyleNonSkippableVideo   = 32;
 		
 		
-		#region Singleton
-		
-		private AppodealAdsClient(){}
-		
+	#region Singleton
+		private AppodealAdsClient() { }
 		private static readonly AppodealAdsClient instance = new AppodealAdsClient();
-		
 		public static AppodealAdsClient Instance {
 			get {
 				return instance; 
 			}
 		}
-		
-		#endregion
+	#endregion
 
 		public void requestAndroidMPermissions(IPermissionGrantedListener listener) {
 			// not supported on ios
 		}
 		
 		private static IInterstitialAdListener interstitialListener;
-		private static ISkippableVideoAdListener skippableVideoListener;
 		private static INonSkippableVideoAdListener nonSkippableVideoListener;
 		private static IRewardedVideoAdListener rewardedVideoListener;
 		private static IBannerAdListener bannerListener;
 		
-		#region Interstitial Delegate
-		
-		[MonoPInvokeCallback (typeof (AppodealInterstitialCallbacks))]
-		private static void interstitialDidLoad () {
+	#region Interstitial Delegate
+		[MonoPInvokeCallback (typeof (AppodealInterstitialDidLoadCallback))]
+		private static void interstitialDidLoad (bool isPrecache) {
 			if (AppodealAdsClient.interstitialListener != null) {
-				AppodealAdsClient.interstitialListener.onInterstitialLoaded();
+				AppodealAdsClient.interstitialListener.onInterstitialLoaded(isPrecache);
 			}
 		}
 		
@@ -97,62 +87,9 @@ namespace AppodealAds.Unity.iOS
 				AppodealAdsClient.interstitialWillPresent
 			);
 		}
+	#endregion
 		
-		#endregion
-		
-		#region Skippable Video Delegate
-		
-		[MonoPInvokeCallback (typeof (AppodealSkippableVideoCallbacks))]
-		private static void skippableVideoDidLoadAd() {
-			if (AppodealAdsClient.skippableVideoListener != null) {
-				AppodealAdsClient.skippableVideoListener.onSkippableVideoLoaded();
-			}
-		}
-		
-		[MonoPInvokeCallback (typeof (AppodealSkippableVideoCallbacks))]
-		private static void skippableVideoDidFailToLoadAd() {
-			if (AppodealAdsClient.skippableVideoListener != null) {
-				AppodealAdsClient.skippableVideoListener.onSkippableVideoFailedToLoad();
-			}
-		}
-
-		[MonoPInvokeCallback (typeof (AppodealSkippableVideoCallbacks))]
-		private static void skippableVideoWillDismiss() {
-			if (AppodealAdsClient.skippableVideoListener != null) {
-				AppodealAdsClient.skippableVideoListener.onSkippableVideoClosed();
-			}
-		}
-		
-		[MonoPInvokeCallback (typeof (AppodealSkippableVideoCallbacks))]
-		private static void skippableVideoDidFinish() {
-			if (AppodealAdsClient.skippableVideoListener != null) {
-				AppodealAdsClient.skippableVideoListener.onSkippableVideoFinished();
-			}
-		}
-		
-		[MonoPInvokeCallback (typeof (AppodealSkippableVideoCallbacks))]
-		private static void skippableVideoDidPresent() {
-			if (AppodealAdsClient.skippableVideoListener != null) {
-				AppodealAdsClient.skippableVideoListener.onSkippableVideoShown();
-			}
-		}
-		
-		public void setSkippableVideoCallbacks(ISkippableVideoAdListener listener) {
-			AppodealAdsClient.skippableVideoListener = listener;
-			
-			AppodealObjCBridge.AppodealSetSkippableVideoDelegate(
-				AppodealAdsClient.skippableVideoDidLoadAd,
-				AppodealAdsClient.skippableVideoDidFailToLoadAd,
-				AppodealAdsClient.skippableVideoWillDismiss,
-				AppodealAdsClient.skippableVideoDidFinish,
-				AppodealAdsClient.skippableVideoDidPresent
-			);
-		}
-		
-		#endregion
-
-		#region Non Skippable Video Delegate
-
+	#region Non Skippable Video Delegate
 		[MonoPInvokeCallback (typeof (AppodealNonSkippableVideoCallbacks))]
 		private static void nonSkippableVideoDidLoadAd() {
 			if (AppodealAdsClient.nonSkippableVideoListener != null) {
@@ -167,10 +104,10 @@ namespace AppodealAds.Unity.iOS
 			}
 		}
 
-		[MonoPInvokeCallback (typeof (AppodealNonSkippableVideoCallbacks))]
-		private static void nonSkippableVideoWillDismiss() {
+		[MonoPInvokeCallback (typeof (AppodealNonSkippableVideoDidDismissCallback))]
+		private static void nonSkippableVideoWillDismiss(bool isFinished) {
 			if (AppodealAdsClient.nonSkippableVideoListener != null) {
-				AppodealAdsClient.nonSkippableVideoListener.onNonSkippableVideoClosed();
+				AppodealAdsClient.nonSkippableVideoListener.onNonSkippableVideoClosed(isFinished);
 			}
 		}
 
@@ -199,12 +136,9 @@ namespace AppodealAds.Unity.iOS
 				AppodealAdsClient.nonSkippableVideoDidPresent
 			);
 		}
-
-		#endregion
+	#endregion
 		
-		#region Rewarded Video Delegate
-		
-		
+	#region Rewarded Video Delegate
 		[MonoPInvokeCallback (typeof (AppodealRewardedVideoCallbacks))]
 		private static void rewardedVideoDidLoadAd() {
 			if (AppodealAdsClient.rewardedVideoListener != null) {
@@ -219,10 +153,10 @@ namespace AppodealAds.Unity.iOS
 			}
 		}
 
-		[MonoPInvokeCallback (typeof (AppodealRewardedVideoCallbacks))]
-		private static void rewardedVideoWillDismiss() {
+		[MonoPInvokeCallback (typeof (AppodealRewardedVideoDidDismissCallback))]
+		private static void rewardedVideoWillDismiss(bool isFinished) {
 			if (AppodealAdsClient.rewardedVideoListener != null) {
-				AppodealAdsClient.rewardedVideoListener.onRewardedVideoClosed();
+				AppodealAdsClient.rewardedVideoListener.onRewardedVideoClosed(isFinished);
 			}
 		}
 		
@@ -252,14 +186,14 @@ namespace AppodealAds.Unity.iOS
 			);
 		}
 		
-		#endregion
+	#endregion
 
-		#region Banner Delegate
+	#region Banner Delegate
 		
-		[MonoPInvokeCallback (typeof (AppodealBannerCallbacks))]
-		private static void bannerDidLoadAd() {
+		[MonoPInvokeCallback (typeof (AppodealBannerDidLoadCallback))]
+		private static void bannerDidLoadAd(bool isPrecache) {
 			if (AppodealAdsClient.bannerListener != null) {
-				AppodealAdsClient.bannerListener.onBannerLoaded();
+				AppodealAdsClient.bannerListener.onBannerLoaded(isPrecache);
 			}
 		}
 		
@@ -283,7 +217,28 @@ namespace AppodealAds.Unity.iOS
 				AppodealAdsClient.bannerListener.onBannerShown();
 			}
 		}
-		
+
+		[MonoPInvokeCallback (typeof (AppodealBannerViewDidLoadCallback))]
+		private static void bannerViewDidLoadAd(bool isPrecache) {
+			if (AppodealAdsClient.bannerListener != null) {
+				AppodealAdsClient.bannerListener.onBannerLoaded(isPrecache);
+			}
+		}
+
+		[MonoPInvokeCallback (typeof (AppodealBannerViewCallbacks))]
+		private static void bannerViewDidFailToLoadAd() {
+			if (AppodealAdsClient.bannerListener != null) {
+				AppodealAdsClient.bannerListener.onBannerFailedToLoad();
+			}
+		}
+
+		[MonoPInvokeCallback (typeof (AppodealBannerViewCallbacks))]
+		private static void bannerViewDidClick () {
+			if (AppodealAdsClient.bannerListener != null) {
+				AppodealAdsClient.bannerListener.onBannerClicked();
+			}
+		}
+
 		public void setBannerCallbacks(IBannerAdListener listener) {
 			AppodealAdsClient.bannerListener = listener;
 			
@@ -292,9 +247,14 @@ namespace AppodealAds.Unity.iOS
 				AppodealAdsClient.bannerDidFailToLoadAd,
 				AppodealAdsClient.bannerDidClick,
 				AppodealAdsClient.bannerDidShow);
+
+			AppodealObjCBridge.AppodealSetBannerViewDelegate(
+				AppodealAdsClient.bannerViewDidLoadAd,
+				AppodealAdsClient.bannerViewDidFailToLoadAd,
+				AppodealAdsClient.bannerViewDidClick);
 		}
 		
-		#endregion
+	#endregion
 		
 		private int nativeAdTypesForType(int adTypes) {
 			int nativeAdTypes = 0;
@@ -303,11 +263,8 @@ namespace AppodealAds.Unity.iOS
 				nativeAdTypes |= AppodealAdTypeInterstitial;
 			}
 			
-			if ((adTypes & Appodeal.SKIPPABLE_VIDEO) > 0) {
-				nativeAdTypes |= AppodealAdTypeSkippableVideo;
-			}
-			
 			if ((adTypes & Appodeal.BANNER) > 0 || 
+				(adTypes & Appodeal.BANNER_VIEW) > 0 || 
 			    (adTypes & Appodeal.BANNER_TOP) > 0 || 
 			    (adTypes & Appodeal.BANNER_BOTTOM) > 0) {
 				
@@ -326,14 +283,7 @@ namespace AppodealAds.Unity.iOS
 		}
 		
 		private int nativeShowStyleForType(int adTypes) {
-			bool isInterstitial = (adTypes & Appodeal.INTERSTITIAL) > 0;
-			bool isVideo = (adTypes & Appodeal.SKIPPABLE_VIDEO) > 0;
-			
-			if (isInterstitial && isVideo) {
-				return AppodealShowStyleVideoOrInterstitial;
-			} else if (isVideo) {
-				return AppodealShowStyleVideo;
-			} else if (isInterstitial) {
+			if ((adTypes & Appodeal.INTERSTITIAL) > 0) {
 				return AppodealShowStyleInterstitial;
 			}
 			
@@ -357,169 +307,50 @@ namespace AppodealAds.Unity.iOS
 		}
 		
 		public void initialize(string appKey, int adTypes) {
-			AppodealObjCBridge.AppodealInitializeWithTypes(appKey, nativeAdTypesForType(adTypes));
+			AppodealObjCBridge.AppodealInitializeWithTypes(appKey, nativeAdTypesForType(adTypes), Appodeal.getPluginVersion());
+		}
+
+		public bool show(int adTypes) {
+			return AppodealObjCBridge.AppodealShowAd(nativeShowStyleForType(adTypes));
+		}
+
+		public bool show(int adTypes, string placement) {
+			return AppodealObjCBridge.AppodealShowAdforPlacement(nativeShowStyleForType(adTypes), placement);
+		}
+
+		public bool showBannerView(int YAxis, int XGravity, string Placement) {
+			return AppodealObjCBridge.AppodealShowBannerAdViewforPlacement(YAxis, XGravity, Placement);
+		}
+
+		public bool isLoaded(int adTypes) {
+			return AppodealObjCBridge.AppodealIsReadyWithStyle(nativeShowStyleForType(adTypes));
 		}
 		
 		public void cache(int adTypes) {
 			AppodealObjCBridge.AppodealCacheAd(nativeAdTypesForType(adTypes));
 		}
-
-		public void cache(int adTypes, string placement) {
-			AppodealObjCBridge.AppodealCacheAdWithPlacement(nativeAdTypesForType(adTypes), placement);
-		}
 		
-		public Boolean isLoaded(int adTypes) {
-			int style = nativeShowStyleForType(adTypes);
-			bool isBanner = style == AppodealShowStyleBannerTop || style == AppodealShowStyleBannerBottom;
-			
-			return isBanner ? true : AppodealObjCBridge.AppodealIsReadyWithStyle(style);
+		public void setAutoCache(int adTypes, bool autoCache) {
+			AppodealObjCBridge.AppodealSetAutocache(autoCache, nativeAdTypesForType(adTypes));
 		}
 
-		public Boolean isPrecache(int adTypes) {
-			return false;
-		}
-		
-		public Boolean show(int adTypes) {
-			return AppodealObjCBridge.AppodealShowAd(nativeShowStyleForType(adTypes));
-		}
-
-		public Boolean show(int adTypes, string placement) {
-			return AppodealObjCBridge.AppodealShowAdforPlacement(nativeShowStyleForType(adTypes), placement);
-		}
-		
 		public void hide(int adTypes) {
 			if ((nativeAdTypesForType(adTypes) & AppodealAdTypeBanner) > 0) {
 				AppodealObjCBridge.AppodealHideBanner();
 			}
 		}
-		
-		public void setAutoCache(int adTypes, Boolean autoCache) {
-			AppodealObjCBridge.AppodealSetAutocache(autoCache, nativeAdTypesForType(adTypes));
-		}
-		
-		public void setTesting(Boolean test) {
-			AppodealObjCBridge.AppodealSetTestingEnabled(test);
-		}
-		
-		public void setLogging(Boolean logging) {
-			AppodealObjCBridge.AppodealSetDebugEnabled(logging);
-		}
-		
-		public void setOnLoadedTriggerBoth(int adTypes, Boolean onLoadedTriggerBoth) {
-			// Not supported for iOS SDK
+
+		public void hideBannerView() {
+			AppodealObjCBridge.AppodealHideBannerView();
 		}
 
-		public void confirm(int adTypes) {
-			AppodealObjCBridge.AppodealConfirmUsage(adTypes);
+		public bool isPrecache(int adTypes) {
+			return false;
 		}
 
-		public void disableWriteExternalStoragePermissionCheck() 
-		{
-			// Not supported for iOS SDK
-		}
+		public void onResume() { } // handled by SDK
 		
-		public void disableNetwork(String network) {
-			AppodealObjCBridge.AppodealDisableNetwork(network);
-		}
-		
-		public void disableNetwork(String network, int adTypes) {
-			AppodealObjCBridge.AppodealDisableNetworkForAdTypes(network, adTypes);
-		}
-		
-		public void disableLocationPermissionCheck() 
-		{
-			AppodealObjCBridge.AppodealDisableLocationPermissionCheck();
-		}
-		
-		public void orientationChange() { } // handled by SDK
-		
-		
-		public string getVersion() {
-			return AppodealObjCBridge.AppodealGetVersion();
-		}
-		
-		//User Settings
-		
-		public void getUserSettings() {
-			// No additional state change required on iOS
-		}
-
-		public void setUserId(string id) {
-			AppodealObjCBridge.AppodealSetUserId(id);
-		}
-
-		public void setAge(int age) 
-		{
-			AppodealObjCBridge.AppodealSetUserAge(age);
-		}
-		
-		public void setBirthday(string bDay)
-		{
-			AppodealObjCBridge.AppodealSetUserBirthday(bDay);
-		}
-		
-		public void setEmail(String email)
-		{
-			AppodealObjCBridge.AppodealSetUserEmail(email);
-		}
-		
-		public void setGender(int gender)
-		{
-			AppodealObjCBridge.AppodealSetUserGender(gender - 1); // iOS Enum starts from 0
-		}
-		
-		public void setInterests(String interests)
-		{
-			AppodealObjCBridge.AppodealSetUserInterests(interests);
-		}
-		
-		public void setOccupation(int occupation)
-		{
-			AppodealObjCBridge.AppodealSetUserOccupation(occupation - 1);
-		}
-		
-		public void setRelation(int relation)
-		{
-			AppodealObjCBridge.AppodealSetUserRelationship(relation - 1);
-		}
-		
-		public void setAlcohol(int alcohol)
-		{
-			AppodealObjCBridge.AppodealSetUserAlcoholAttitude(alcohol);
-		}
-		
-		public void setSmoking(int smoking)
-		{
-			AppodealObjCBridge.AppodealSetUserSmokingAttitude(smoking);
-		}
-
-		public void trackInAppPurchase(double amount, string currency)
-		{
-			//TODO;
-		}
-
-		public void setCustomRule(string name, bool value) 
-		{
-			AppodealObjCBridge.setCustomSegmentBool(name, value);
-		}
-		
-		public void setCustomRule(string name, int value) 
-		{
-			AppodealObjCBridge.setCustomSegmentInt(name, value);
-		}
-		
-		public void setCustomRule(string name, double value) 
-		{
-			AppodealObjCBridge.setCustomSegmentDouble(name, value);
-		}
-		
-		public void setCustomRule(string name, string value)
-		{
-			AppodealObjCBridge.setCustomSegmentString(name, value);
-		}
-
-		public void setSmartBanners(Boolean value)
-		{
+		public void setSmartBanners(bool value) {
 			AppodealObjCBridge.setSmartBanners(value);
 		}
 
@@ -529,6 +360,142 @@ namespace AppodealAds.Unity.iOS
 
 		public void setBannerBackground(bool value) {
 			AppodealObjCBridge.setBannerBackground(value);
+		}
+
+		public void setTabletBanners(bool value) {
+			// Handled by os
+		}
+
+		public void setTesting(bool test) {
+			AppodealObjCBridge.AppodealSetTestingEnabled(test);
+		}
+
+		public void setLogLevel(Appodeal.LogLevel level) {
+			switch(level) {
+				case Appodeal.LogLevel.None: {
+					AppodealObjCBridge.AppodealSetLogLevel(1);
+					break;
+				}
+				case Appodeal.LogLevel.Debug: {
+					AppodealObjCBridge.AppodealSetLogLevel(2);
+					break;
+				}
+				case Appodeal.LogLevel.Verbose: {
+					AppodealObjCBridge.AppodealSetLogLevel(3);
+					break;
+				}
+			}
+		}
+
+		public void setChildDirectedTreatment(bool value) {
+			AppodealObjCBridge.AppodealSetChildDirectedTreatment(value);
+		}
+
+		public void disableNetwork(String network) {
+			AppodealObjCBridge.AppodealDisableNetwork(network);
+		}
+
+		public void disableNetwork(String network, int adTypes) {
+			AppodealObjCBridge.AppodealDisableNetworkForAdTypes(network, adTypes);
+		}
+
+		public void disableLocationPermissionCheck() {
+			AppodealObjCBridge.AppodealDisableLocationPermissionCheck();
+		}
+
+		public void disableWriteExternalStoragePermissionCheck() {
+			// Not supported for iOS SDK
+		}
+
+		public void muteVideosIfCallsMuted(bool value) {
+			// Not supported for iOS SDK
+		}
+
+		public void showTestScreen() {
+			// Not supported for iOS SDK
+		}
+
+		public string getVersion() {
+			return AppodealObjCBridge.AppodealGetVersion();
+		}
+
+		public bool canShow(int adTypes, string placement) {
+			return AppodealObjCBridge.AppodealCanShowWithPlacement(nativeShowStyleForType(adTypes), placement);
+		}
+
+		public bool canShow(int adTypes) {
+			return AppodealObjCBridge.AppodealCanShow(nativeShowStyleForType(adTypes));
+		}
+
+		public string getRewardCurrency(string placement) {
+			return AppodealObjCBridge.AppodealGetRewardCurrency(placement);
+		}
+
+		public int getRewardAmount(string placement) {
+			return AppodealObjCBridge.AppodealGetRewardAmount(placement);
+		}
+
+		public string getRewardCurrency() {
+			return AppodealObjCBridge.AppodealGetRewardCurrency("");
+		}
+
+		public int getRewardAmount() {
+			return AppodealObjCBridge.AppodealGetRewardAmount("");
+		}
+
+		public void setCustomRule(string name, bool value) {
+			AppodealObjCBridge.setCustomSegmentBool(name, value);
+		}
+
+		public void setCustomRule(string name, int value)  {
+			AppodealObjCBridge.setCustomSegmentInt(name, value);
+		}
+
+		public void setCustomRule(string name, double value)  {
+			AppodealObjCBridge.setCustomSegmentDouble(name, value);
+		}
+
+		public void setCustomRule(string name, string value) {
+			AppodealObjCBridge.setCustomSegmentString(name, value);
+		}
+
+		public void setTriggerOnLoadedOnPrecache(int adTypes, Boolean onLoadedTriggerBoth) {
+			// Not supported for iOS SDK
+		}
+		
+		//User Settings
+
+		public void getUserSettings() {
+			// No additional state change required on iOS
+		}
+
+		public void setUserId(string id) {
+			AppodealObjCBridge.AppodealSetUserId(id);
+		}
+
+		public void setAge(int age)  {
+			AppodealObjCBridge.AppodealSetUserAge(age);
+		}
+
+		public void setGender(UserSettings.Gender gender) {
+			switch(gender) {
+			case UserSettings.Gender.OTHER: {
+					AppodealObjCBridge.AppodealSetUserGender(0);
+					break;
+				}
+			case UserSettings.Gender.MALE: {
+					AppodealObjCBridge.AppodealSetUserGender(1);
+					break;
+				}
+			case UserSettings.Gender.FEMALE: {
+					AppodealObjCBridge.AppodealSetUserGender(2);
+					break;
+				}
+			}
+		}
+
+		public void trackInAppPurchase(double amount, string currency) {
+			AppodealObjCBridge.trackInAppPurchase(amount, currency);
 		}
 				
 	}

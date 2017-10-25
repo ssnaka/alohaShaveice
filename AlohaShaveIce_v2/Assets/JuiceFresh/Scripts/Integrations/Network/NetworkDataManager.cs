@@ -9,16 +9,18 @@ using PlayFab;
 using System.Collections.Generic;
 
 
-public class NetworkDataManager {
+public class NetworkDataManager
+{
 	IDataManager dataManager;
 	public	static int LatestReachedLevel = 0;
 	public static int LevelScoreCurrentRecord = 0;
 
-	public NetworkDataManager () {
+	public NetworkDataManager ()
+	{
 #if PLAYFAB
 		dataManager = new PlayFabDataManager ();
 #elif GAMESPARKS
-		dataManager = new GamesparksDataManager ();
+		dataManager = new GamesparksDataManager();
 #endif
 		NetworkManager.OnLoginEvent += GetPlayerLevel;
 		LevelManager.OnEnterGame += GetPlayerScore;
@@ -26,8 +28,9 @@ public class NetworkDataManager {
 		NetworkManager.OnLoginEvent += GetBoosterData;	
 	}
 
-	public void Logout () {
-		dataManager.Logout ();
+	public void Logout ()
+	{
+		dataManager.Logout();
 		NetworkManager.OnLoginEvent -= GetPlayerLevel;
 		LevelManager.OnEnterGame -= GetPlayerScore;
 		NetworkManager.OnLoginEvent -= GetBoosterData;
@@ -44,24 +47,27 @@ public class NetworkDataManager {
 	//		}
 	//	}
 
-	public  void SetPlayerScore (int level, int score) {
+	public  void SetPlayerScore (int level, int score)
+	{
 		if (!NetworkManager.THIS.IsLoggedIn)
 			return;
 
 		if (score <= LevelScoreCurrentRecord)
 			return;
 		
-		dataManager.SetPlayerScore (level, score);
+		dataManager.SetPlayerScore(level, score);
 	}
 
-	public void GetPlayerScore () {
+	public void GetPlayerScore ()
+	{
 		if (!NetworkManager.THIS.IsLoggedIn)
 			return;
 		
-		dataManager.GetPlayerScore ((value) => {
+		dataManager.GetPlayerScore((value) =>
+		{
 			NetworkDataManager.LevelScoreCurrentRecord = value;
-			PlayerPrefs.SetInt ("Score" + LevelManager.THIS.currentLevel, NetworkDataManager.LevelScoreCurrentRecord);
-			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt("Score" + LevelManager.THIS.currentLevel, NetworkDataManager.LevelScoreCurrentRecord);
+			PlayerPrefs.Save();
 		});
 	}
 
@@ -70,55 +76,63 @@ public class NetworkDataManager {
 
 	#region LEVEL
 
-	public  void SetPlayerLevel (int level) {
+	public  void SetPlayerLevel (int level)
+	{
 		if (!NetworkManager.THIS.IsLoggedIn)
 			return;
 
 		if (level <= LatestReachedLevel)
 			return;
 		
-		dataManager.SetPlayerLevel (level);
+		dataManager.SetPlayerLevel(level);
 	}
 
-	public void GetPlayerLevel () {
+	public void GetPlayerLevel ()
+	{
 		if (!NetworkManager.THIS.IsLoggedIn)
 			return;
 
-		dataManager.GetPlayerLevel ((value) => {
+		dataManager.GetPlayerLevel((value) =>
+		{
 			NetworkDataManager.LatestReachedLevel = value;
-			GetStars ();
+			GetStars();
 		});
 		if (NetworkDataManager.LatestReachedLevel <= 0)
-			NetworkManager.dataManager.SetPlayerLevel (1);
+			NetworkManager.dataManager.SetPlayerLevel(1);
 	}
 
 	#endregion
 
 	#region STARS
 
-	public  void SetStars () {
+	public  void SetStars ()
+	{
 		int level = LevelManager.THIS.currentLevel;
-		int stars = PlayerPrefs.GetInt (string.Format ("Level.{0:000}.StarsCount", level));
-		dataManager.SetStars (stars, level);
+		int stars = PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", level));
+		dataManager.SetStars(stars, level);
 	}
 
-	public void GetStars () {
+	public void GetStars ()
+	{
 		if (!NetworkManager.THIS.IsLoggedIn)
 			return;
 
 
-		if (LevelsMap._instance.GetLastestReachedLevel () > LatestReachedLevel) {
-			Debug.Log ("reached higher level than synced");
-			SyncAllData ();
+		if (LevelsMap._instance.GetLastestReachedLevel() > LatestReachedLevel)
+		{
+			Debug.Log("reached higher level than synced");
+			SyncAllData();
 			return;
 		}
 
-		dataManager.GetStars ((dic) => {
-			foreach (var item in dic) {
-				PlayerPrefs.SetInt (string.Format ("Level.{0:000}.StarsCount", int.Parse (item.Key.Replace ("StarsLevel_", ""))), item.Value);
+		dataManager.GetStars((dic) =>
+		{
+			foreach (var item in dic)
+			{
+				PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", int.Parse(item.Key.Replace("StarsLevel_", ""))), item.Value);
 			}
-			PlayerPrefs.Save ();
-			LevelsMap._instance.Reset ();
+			PlayerPrefs.Save();
+			LevelsMap._instance.Reset();
 
 		});
 	}
@@ -127,42 +141,48 @@ public class NetworkDataManager {
 
 	#region BOOSTS
 
-	public  void SetBoosterData () {
-		Dictionary<string, string> dic = new Dictionary<string, string> () {
-			{ "Boost_" + (int)BoostType.Bomb,"" + PlayerPrefs.GetInt ("" + BoostType.Bomb) },
-			{ "Boost_" + (int)BoostType.Colorful_bomb,"" + PlayerPrefs.GetInt ("" + BoostType.Colorful_bomb) },
-			{ "Boost_" + (int)BoostType.Energy,"" + PlayerPrefs.GetInt ("" + BoostType.Energy) },
-			{ "Boost_" + (int)BoostType.ExtraMoves,"" + PlayerPrefs.GetInt ("" + BoostType.ExtraMoves) },
-			{ "Boost_" + (int)BoostType.ExtraTime,"" + PlayerPrefs.GetInt ("" + BoostType.ExtraTime) },
-			{ "Boost_" + (int)BoostType.Shovel,"" + PlayerPrefs.GetInt ("" + BoostType.Shovel) },
-			{ "Boost_" + (int)BoostType.Stripes,"" + PlayerPrefs.GetInt ("" + BoostType.Stripes) } 
+	public void SetBoosterData ()
+	{
+		Dictionary<string, string> dic = new Dictionary<string, string>() {
+			{ "Boost_" + (int)BoostType.ExtraMoves, "" + PlayerPrefs.GetInt("" + BoostType.ExtraMoves) },
+			{ "Boost_" + (int)BoostType.Stripes, "" + PlayerPrefs.GetInt("" + BoostType.Stripes) },
+			{ "Boost_" + (int)BoostType.ExtraTime, "" + PlayerPrefs.GetInt("" + BoostType.ExtraTime) },
+			{ "Boost_" + (int)BoostType.Bomb, "" + PlayerPrefs.GetInt("" + BoostType.Bomb) },
+			{ "Boost_" + (int)BoostType.Colorful_bomb, "" + PlayerPrefs.GetInt("" + BoostType.Colorful_bomb) },
+			{ "Boost_" + (int)BoostType.Shovel, "" + PlayerPrefs.GetInt("" + BoostType.Shovel) },
+			{ "Boost_" + (int)BoostType.Energy, "" + PlayerPrefs.GetInt("" + BoostType.Energy) }
 		};
 
-		dataManager.SetBoosterData (dic);
+		dataManager.SetBoosterData(dic);
 	}
 
-	public  void GetBoosterData () {
+	public  void GetBoosterData ()
+	{
 		if (!NetworkManager.THIS.IsLoggedIn)
 			return;
 
-		dataManager.GetBoosterData ((dic) => {
-			foreach (var item in dic) {
-				PlayerPrefs.SetInt ("" + (BoostType)int.Parse (item.Key.Replace ("Boost_", "")), item.Value);
+		dataManager.GetBoosterData((dic) =>
+		{
+			foreach (var item in dic)
+			{
+				PlayerPrefs.SetInt("" + (BoostType)int.Parse(item.Key.Replace("Boost_", "")), item.Value);
 			}
-			PlayerPrefs.Save ();
+			PlayerPrefs.Save();
 		});
 	}
 
 
 	#endregion
 
-	public	void SetTotalStars () {
-		dataManager.SetTotalStars ();
+	public	void SetTotalStars ()
+	{
+		dataManager.SetTotalStars();
 	}
 
-	public void SyncAllData () {
-		SetTotalStars ();
-		SetPlayerLevel (LevelsMap._instance.GetLastestReachedLevel ());
+	public void SyncAllData ()
+	{
+		SetTotalStars();
+		SetPlayerLevel(LevelsMap._instance.GetLastestReachedLevel());
 		//		SetPlayerScoreTotal ();
 
 	}

@@ -6,39 +6,51 @@ using System.Collections.Generic;
 using GameSparks.Api.Requests;
 using GameSparks.Core;
 
-public class GameSparksFriendsManager : IFriendsManager {
+public class GameSparksFriendsManager : IFriendsManager
+{
 
-#region IFriendsManager implementation
+	#region IFriendsManager implementation
 
-	public void GetFriends (System.Action<System.Collections.Generic.Dictionary<string, string>> Callback) {
-		new GameSparks.Api.Requests.SocialLeaderboardDataRequest ().SetLeaderboardShortCode ("Level").SetDontErrorOnNotSocial (true).SetEntryCount (100).Send ((response) => {
-			if (!response.HasErrors) {
+	public void GetFriends (System.Action<System.Collections.Generic.Dictionary<string, string>> Callback)
+	{
+		new GameSparks.Api.Requests.SocialLeaderboardDataRequest ().SetLeaderboardShortCode ("Level").SetDontErrorOnNotSocial (true).SetEntryCount (100).Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
 				Debug.Log ("Found friends Data...");
 				Dictionary<string,string> dic = new Dictionary<string, string> ();
-				foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData entry in response.Data) {
+				foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData entry in response.Data)
+				{
 					int rank = (int)entry.Rank;
 					string playerName = entry.UserName;
 					var FBidArray = entry.ExternalIds.BaseData;
-					foreach (var item2 in FBidArray) {
+					foreach (var item2 in FBidArray)
+					{
 //						Debug.Log (item2);
 						dic.Add (item2.Value.ToString (), entry.UserId);
 					}
 
 				}
 				Callback (dic);
-			} else {
+			}
+			else
+			{
 				Debug.Log ("Error Retrieving friends Data...");
 			}
 		});
 
 	}
 
-	public void PlaceFriendsPositionsOnMap (System.Action<System.Collections.Generic.Dictionary<string, int>> Callback) {
+	public void PlaceFriendsPositionsOnMap (System.Action<System.Collections.Generic.Dictionary<string, int>> Callback)
+	{
 		Debug.Log ("place friends");
-		new GameSparks.Api.Requests.SocialLeaderboardDataRequest ().SetLeaderboardShortCode ("Level").SetDontErrorOnNotSocial (true).SetEntryCount (100).Send ((response) => {
-			if (!response.HasErrors) {
+		new GameSparks.Api.Requests.SocialLeaderboardDataRequest ().SetLeaderboardShortCode ("Level").SetDontErrorOnNotSocial (true).SetEntryCount (100).Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
 				Dictionary<string,int> dic = new Dictionary<string, int> ();
-				foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData entry in response.Data) {
+				foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData entry in response.Data)
+				{
 					int rank = (int)entry.Rank;
 					string playerName = entry.UserName;
 //					Debug.Log (entry.UserId + " " + entry.JSONData ["Level"]);
@@ -47,18 +59,24 @@ public class GameSparksFriendsManager : IFriendsManager {
 				}
 				Callback (dic);
 
-			} else {
+			}
+			else
+			{
 				Debug.Log ("Error Retrieving friends Data...");
 			}
 		});
 
 	}
 
-	public void GetLeadboardOnLevel (int LevelNumber, System.Action<System.Collections.Generic.List<LeadboardPlayerData>> Callback) {
-		new GameSparks.Api.Requests.SocialLeaderboardDataRequest ().SetDontErrorOnNotSocial (true).SetLeaderboardShortCode ("LB.Level." + LevelManager.THIS.currentLevel).SetEntryCount (6).Send ((response) => {
-			if (!response.HasErrors) {
+	public void GetLeadboardOnLevel (int LevelNumber, System.Action<System.Collections.Generic.List<LeadboardPlayerData>> Callback)
+	{
+		new GameSparks.Api.Requests.SocialLeaderboardDataRequest ().SetDontErrorOnNotSocial (true).SetLeaderboardShortCode ("LB.Level." + LevelManager.THIS.currentLevel).SetEntryCount (6).Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
 				List<LeadboardPlayerData> list = new List<LeadboardPlayerData> ();
-				foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData item in response.Data) {
+				foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData item in response.Data)
+				{
 					LeadboardPlayerData pl = new LeadboardPlayerData ();
 					pl.Name = item.UserName;
 					pl.userID = item.UserId;
@@ -71,19 +89,22 @@ public class GameSparksFriendsManager : IFriendsManager {
 				}
 				Callback (list);
 
-			} else {
+			}
+			else
+			{
 				Debug.Log ("Error Retrieving leadboard Data...");
 			}
 		});
 
 	}
 
-	public void Logout () {
+	public void Logout ()
+	{
 
 	}
 
 
-#endregion
+	#endregion
 
 
 

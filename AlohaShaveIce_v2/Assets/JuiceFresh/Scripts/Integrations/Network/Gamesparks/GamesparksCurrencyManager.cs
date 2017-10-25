@@ -4,58 +4,82 @@ using System.Collections;
 #if GAMESPARKS
 using GameSparks.Core;
 
-public class GamesparksCurrencyManager : ICurrencyManager {
+public class GamesparksCurrencyManager : ICurrencyManager
+{
 
 
 
-#region ICurrencyManager implementation
+	#region ICurrencyManager implementation
 
-	public void IncBalance (int amount) {
+	public void IncBalance (int amount)
+	{
 		new GameSparks.Api.Requests.LogEventRequest ().SetEventKey ("AddCurrency")
-			.SetEventAttribute ("Value", amount).Send ((response) => {
-			if (!response.HasErrors) {
+			.SetEventAttribute ("Value", amount).Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
 				Debug.Log ("Currency Saved To GameSparks...");
-			} else {
+			}
+			else
+			{
 				SetBalance (InitScript.Gems);//1.4.2
 			}
 		});
 		
 	}
 
-	public void DecBalance (int amount) {
+	public void DecBalance (int amount)
+	{
 		new GameSparks.Api.Requests.LogEventRequest ().SetEventKey ("SpendCurrency")
-			.SetEventAttribute ("Value", amount).Send ((response) => {
-			if (!response.HasErrors) {
+			.SetEventAttribute ("Value", amount).Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
 				Debug.Log ("Currency Saved To GameSparks...");
-			} else {
+			}
+			else
+			{
 				Debug.Log ("Error Saving Currency Data...");
 			}
 		});
 		
 	}
 
-	public void SetBalance (int newbalance) {
+	public void SetBalance (int newbalance)
+	{
 		new GameSparks.Api.Requests.LogEventRequest ().SetEventKey ("SetCurrency")
-			.SetEventAttribute ("Value", newbalance).Send ((response) => {
-			if (!response.HasErrors) {
+			.SetEventAttribute ("Value", newbalance).Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
 				Debug.Log ("Currency Saved To GameSparks...");
-			} else {
+			}
+			else
+			{
 				Debug.Log ("Error Saving Currency Data...");
 			}
 		});
 		
 	}
 
-	public void GetBalance (System.Action<int> Callback) {
+	public void GetBalance (System.Action<int> Callback)
+	{
 		new GameSparks.Api.Requests.LogEventRequest ().SetEventKey ("GetCurrency")
-			.Send ((response) => {
-			if (!response.HasErrors) {
+			.Send ((response) =>
+		{
+			if (!response.HasErrors)
+			{
+				Debug.LogError(response.JSONString);
+				Debug.LogError(response.ScriptData);
 				GSData data = response.ScriptData.GetGSData ("currency_Data");
-				if (data != null) {
+				if (data != null)
+				{
 					Callback (int.Parse (data.GetInt ("Value").ToString ()));
 					Debug.Log ("Currency Received From GameSparks...");
 				}
-			} else {
+			}
+			else
+			{
 				Debug.Log ("Error Saving Currency Data...");
 			}
 		});
@@ -65,7 +89,7 @@ public class GamesparksCurrencyManager : ICurrencyManager {
 
 
 
-#endregion
+	#endregion
 
 
 

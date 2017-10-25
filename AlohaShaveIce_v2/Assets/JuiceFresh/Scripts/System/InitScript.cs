@@ -28,7 +28,7 @@ public enum Target {
 	ITEMS,
 	BLOCKS,
 	CAGES,
-	BOMBS,
+	BOMBS
 }
 
 public enum LIMIT {

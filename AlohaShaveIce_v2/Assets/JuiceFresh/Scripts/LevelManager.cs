@@ -145,18 +145,24 @@ public class LevelManager : MonoBehaviour
 
 
 	// field of getting and setting currently activated boost
-	public BoostIcon ActivatedBoost {
-		get {
-			if (activatedBoost == null) {
+	public BoostIcon ActivatedBoost
+	{
+		get
+		{
+			if (activatedBoost == null)
+			{
 				//BoostIcon bi = new BoostIcon();
 				//bi.type = BoostType.None;
 				return emptyBoostIcon;
-			} else
+			}
+			else
 				return activatedBoost;
 		}
-		set {
+		set
+		{
 
-			if (value == null) {
+			if (value == null)
+			{
 				if (activatedBoost != null && gameStatus == GameState.Playing)
 					InitScript.Instance.SpendBoost(activatedBoost.type);
 				UnLockBoosts();
@@ -164,12 +170,15 @@ public class LevelManager : MonoBehaviour
 			//        if (activatedBoost != null) return;
 			activatedBoost = value;
 
-			if (value != null) {
+			if (value != null)
+			{
 				LockBoosts();
 			}
 
-			if (activatedBoost != null) {
-				if (activatedBoost.type == BoostType.ExtraMoves || activatedBoost.type == BoostType.ExtraTime) {
+			if (activatedBoost != null)
+			{
+				if (activatedBoost.type == BoostType.ExtraMoves || activatedBoost.type == BoostType.ExtraTime)
+				{
 					if (LevelManager.Instance.limitType == LIMIT.MOVES)
 						LevelManager.THIS.Limit += 5;
 					else
@@ -262,11 +271,14 @@ public class LevelManager : MonoBehaviour
 
 	public Target target;
 
-	public int TargetBlocks {
-		get {
+	public int TargetBlocks
+	{
+		get
+		{
 			return targetBlocks;
 		}
-		set {
+		set
+		{
 			if (targetBlocks < 0)
 				targetBlocks = 0;
 			targetBlocks = value;
@@ -276,18 +288,25 @@ public class LevelManager : MonoBehaviour
 	public int TargetCages;
 	public int TargetBombs;
 
-	public bool DragBlocked {
-		get {
+	public bool DragBlocked
+	{
+		get
+		{
 			return dragBlocked;
 		}
-		set {
-			if (value) {
+		set
+		{
+			if (value)
+			{
 				List<Item> items = GetItems();
-				foreach (Item item in items) {
+				foreach (Item item in items)
+				{
 					//if (item != null)
 					//    item.anim.SetBool("stop", true);
 				}
-			} else {
+			}
+			else
+			{
 				//  StartCoroutine( StartIdleCor());
 			}
 			dragBlocked = value;
@@ -312,13 +331,14 @@ public class LevelManager : MonoBehaviour
 	private float offset;
 	public GameObject flower;
 	float extraItemEvery = 6;
-	public int bombsCollect; //1.4.5
+	public int bombsCollect;
+	//1.4.5
 	public int bombTimer;
 	public int NumIngredients = 4;
 
 	#region EVENTS
 
-	public delegate void GameStateEvents();
+	public delegate void GameStateEvents ();
 
 	public static event GameStateEvents OnMapState;
 	public static event GameStateEvents OnEnterGame;
@@ -330,69 +350,97 @@ public class LevelManager : MonoBehaviour
 	public static event GameStateEvents OnLose;
 
 
-	public GameState gameStatus {
-		get {
+	public GameState gameStatus
+	{
+		get
+		{
 			return GameStatus;
 		}
-		set {
+		set
+		{
 			GameStatus = value;
 
-			if (value == GameState.PrepareGame) {
+			if (value == GameState.PrepareGame)
+			{
 				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				MusicBase.Instance.GetComponent<AudioSource>().loop = true;
 				MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
 				MusicBase.Instance.GetComponent<AudioSource>().Play();
 				PrepareGame();
-			} else if (value == GameState.WaitForPopup) {
+			}
+			else if (value == GameState.WaitForPopup)
+			{
 
 				InitLevel();
 				OnLevelLoaded();
 
-			} else if (value == GameState.PreFailedBomb) {
+			}
+			else if (value == GameState.PreFailedBomb)
+			{
 
-			} else if (value == GameState.PreFailed) {
+			}
+			else if (value == GameState.PreFailed)
+			{
 				GameObject.Find("CanvasGlobal").transform.Find("PreFailed").gameObject.SetActive(true);
 
-			} else if (value == GameState.Map) {
-				if (PlayerPrefs.GetInt("OpenLevelTest") <= 0) {
+			}
+			else if (value == GameState.Map)
+			{
+				if (PlayerPrefs.GetInt("OpenLevelTest") <= 0)
+				{
 					MusicBase.Instance.GetComponent<AudioSource>().Stop();
 					MusicBase.Instance.GetComponent<AudioSource>().loop = true;
 					MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[0];
 					MusicBase.Instance.GetComponent<AudioSource>().Play();
 					EnableMap(true);
 					OnMapState();
-				} else {
+				}
+				else
+				{
 					LevelManager.THIS.gameStatus = GameState.PrepareGame;
 					PlayerPrefs.SetInt("OpenLevelTest", 0);
 					PlayerPrefs.Save();
 				}
 #if UNITY_ANDROID || UNITY_IOS || UNITY_WINRT
-				if (passLevelCounter > 0 && InitScript.Instance.ShowRateEvery > 0) {
+				if (passLevelCounter > 0 && InitScript.Instance.ShowRateEvery > 0)
+				{
 					if (passLevelCounter % InitScript.Instance.ShowRateEvery == 0 && InitScript.Instance.ShowRateEvery > 0 && PlayerPrefs.GetInt("Rated", 0) == 0)
 						InitScript.Instance.ShowRate();
 				}
 #endif
 
-			} else if (value == GameState.Pause) {
+			}
+			else if (value == GameState.Pause)
+			{
 				Time.timeScale = 0;
 
-			} else if (value == GameState.PrepareBoosts) {
+			}
+			else if (value == GameState.PrepareBoosts)
+			{
 				SetPreBoosts();
 
-			} else if (value == GameState.Playing) {
+			}
+			else if (value == GameState.Playing)
+			{
 				Time.timeScale = 1;
 
 
 				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
-			} else if (value == GameState.GameOver) {
+			}
+			else if (value == GameState.GameOver)
+			{
 				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				SoundBase.Instance.PlaySound(SoundBase.Instance.gameOver[0]);
 				GameObject.Find("CanvasGlobal").transform.Find("MenuFailed").gameObject.SetActive(true);
 				OnLose();
-			} else if (value == GameState.PreWinAnimations) {
+			}
+			else if (value == GameState.PreWinAnimations)
+			{
 				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				StartCoroutine(PreWinAnimationsCor());
-			} else if (value == GameState.Win) {
+			}
+			else if (value == GameState.Win)
+			{
 				passLevelCounter++;
 				OnMenuComplete();
 				GameObject.Find("CanvasGlobal").transform.Find("MenuComplete").gameObject.SetActive(true);
@@ -404,7 +452,7 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	public void MenuPlayEvent()
+	public void MenuPlayEvent ()
 	{
 		OnMenuPlay();
 	}
@@ -412,23 +460,25 @@ public class LevelManager : MonoBehaviour
 	#endregion
 
 
-	void LockBoosts()
+	void LockBoosts ()
 	{
-		foreach (BoostIcon item in InGameBoosts) {
+		foreach (BoostIcon item in InGameBoosts)
+		{
 			if (item != ActivatedBoost)
 				item.LockBoost();
 		}
 	}
 
-	public void UnLockBoosts()
+	public void UnLockBoosts ()
 	{
-		foreach (BoostIcon item in InGameBoosts) {
+		foreach (BoostIcon item in InGameBoosts)
+		{
 			item.UnLockBoost();
 		}
 	}
 
 
-	public void LoadLevel()
+	public void LoadLevel ()
 	{
 		currentLevel = PlayerPrefs.GetInt("OpenLevel");// TargetHolder.level;
 		if (currentLevel == 0)
@@ -438,7 +488,7 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	void SetupGameCamera()
+	void SetupGameCamera ()
 	{
 
 		float aspect = (float)Screen.height / (float)Screen.width;
@@ -460,9 +510,11 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	public void EnableMap(bool enable)
+	public void EnableMap (bool enable)
 	{
-		if (enable) {
+		if (enable)
+		{
+			LevelsMap.SetActive(true);
 			float aspect = (float)Screen.height / (float)Screen.width;
 			GetComponent<Camera>().orthographicSize = 10.25f;
 			aspect = (float)Math.Round(aspect, 2);
@@ -476,10 +528,12 @@ public class LevelManager : MonoBehaviour
 				GetComponent<Camera>().orthographicSize = 10.25f;                  //4:3
 			else if (aspect == 1.67f)
 				GetComponent<Camera>().orthographicSize = 12.5f;                  //5:3
-																				  //else if (aspect == 1.25f)
-																				  //    GetComponent<Camera>().orthographicSize = 4.9f;                  //5:4
+			//else if (aspect == 1.25f)
+			//    GetComponent<Camera>().orthographicSize = 4.9f;                  //5:4
 			GetComponent<Camera>().GetComponent<MapCamera>().SetPosition(new Vector2(0, GetComponent<Camera>().transform.position.y));
-		} else {
+		}
+		else
+		{
 			InitScript.DateOfExit = DateTime.Now.ToString();
 			SetupGameCamera();
 			GameObject.Find("CanvasGlobal").GetComponent<GraphicRaycaster>().enabled = false;
@@ -494,10 +548,12 @@ public class LevelManager : MonoBehaviour
 			//		LevelsMap.SetActive (!enable);
 			//		LevelsMap.SetActive (enable);
 			LevelsMap.GetComponent<LevelsMap>().Reset();
-			foreach (Transform tr in LevelsMap.transform) {
+			foreach (Transform tr in LevelsMap.transform)
+			{
 				if (tr.name != "AvatarManager" && tr.name != "Character")
 					tr.gameObject.SetActive(enable);
-				if (tr.name == "Character") {
+				if (tr.name == "Character")
+				{
 					tr.GetComponent<SpriteRenderer>().enabled = enable;
 					tr.transform.GetChild(0).gameObject.SetActive(enable);
 				}
@@ -510,24 +566,25 @@ public class LevelManager : MonoBehaviour
 
 		if (!enable)
 			Camera.main.transform.position = new Vector3(0, 0, -10);
-		foreach (Transform item in GameField.transform) {
+		foreach (Transform item in GameField.transform)
+		{
 			Destroy(item.gameObject);
 		}
 	}
 
 	// Use this for initialization
-	void Start()
+	void Start ()
 	{
 		ingrCountTarget = new int[NumIngredients]; //necessary amount of collectable items
-												   //ingrTarget = InitScript.Instance.collectedIngredients.ToArray();  //necessary collectable items
-												   //collectItems = new CollectItems[NumIngredients];   //necessary collectable items
+		//ingrTarget = InitScript.Instance.collectedIngredients.ToArray();  //necessary collectable items
+		//collectItems = new CollectItems[NumIngredients];   //necessary collectable items
 
 		if (Level.gameObject.activeSelf)
 			Level.gameObject.SetActive(false);
 #if FACEBOOK
 		FacebookEnable = true;//1.3.2
 		if (FacebookEnable)
-			FacebookManager.THIS.CallFBInit ();
+			FacebookManager.THIS.CallFBInit();
 
 #else
 		FacebookEnable = false;
@@ -535,7 +592,7 @@ public class LevelManager : MonoBehaviour
 #endif
 #if UNITY_INAPPS
 
-		gameObject.AddComponent<UnityInAppsIntegration> ();
+		gameObject.AddComponent<UnityInAppsIntegration>();
 		enableInApps = true;//1.3
 #else
 		enableInApps = false;
@@ -547,27 +604,29 @@ public class LevelManager : MonoBehaviour
 			GameObject.Find("Gems").gameObject.SetActive(false);
 
 		gameStatus = GameState.Map;
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 20; i++)
+		{
 			itemExplPool[i] = Instantiate(Resources.Load("Prefabs/Effects/ItemExpl"), transform.position, Quaternion.identity) as GameObject;
 			itemExplPool[i].GetComponent<SpriteRenderer>().enabled = false;
 
 			// itemExplPool[i].SetActive(false);
 		}
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 20; i++)
+		{
 			flowersPool[i] = Instantiate(flower, transform.position, Quaternion.identity) as GameObject;
 			flowersPool[i].GetComponent<SpriteRenderer>().enabled = false;
 		}
 		passLevelCounter = 0;
 
 #if UNITY_INAPPS
-		if (GetComponent<UnityInAppsIntegration> () == null)
-			gameObject.AddComponent<UnityInAppsIntegration> ();
+		if (GetComponent<UnityInAppsIntegration>() == null)
+			gameObject.AddComponent<UnityInAppsIntegration>();
 		
 #endif
 
 	}
 
-	void InitLevel()
+	void InitLevel ()
 	{
 		//        itemPrefab = Resources.Load("Prefabs/Item " + currentLevel)as GameObject;
 		GenerateLevel();
@@ -575,16 +634,17 @@ public class LevelManager : MonoBehaviour
 		GenerateNewItems(false);
 		nextExtraItems = 0;
 		bombTimers.Clear();//1.3
-						   //        ReGenLevel();
+		//        ReGenLevel();
 		RestartTimer();
 		InitTargets();
 		GameField.gameObject.SetActive(true);
 
 	}
 
-	public void RestartTimer()
+	public void RestartTimer ()
 	{
-		if (limitType == LIMIT.TIME) {
+		if (limitType == LIMIT.TIME)
+		{
 			StopCoroutine(TimeTick());
 			StartCoroutine(TimeTick());
 		}
@@ -592,7 +652,7 @@ public class LevelManager : MonoBehaviour
 
 	List<GameObject> listIngredientsGUIObjects = new List<GameObject>();
 
-	void InitTargets()
+	void InitTargets ()
 	{
 		blocksObject.SetActive(false);
 		ingrObject.SetActive(false);
@@ -600,7 +660,8 @@ public class LevelManager : MonoBehaviour
 		cageTargetObject.SetActive(false);
 		bombTargetObject.SetActive(false);
 		GameObject ingrPrefab = Resources.Load("Prefabs/CollectGUIObj") as GameObject;
-		foreach (GameObject item in listIngredientsGUIObjects) {
+		foreach (GameObject item in listIngredientsGUIObjects)
+		{
 			Destroy(item);
 		}
 		listIngredientsGUIObjects.Clear();
@@ -608,28 +669,38 @@ public class LevelManager : MonoBehaviour
 
 		if (target != Target.COLLECT && target != Target.ITEMS)
 			ingrObject.SetActive(false);
-		else if (target == Target.COLLECT) {
-			blocksObject.SetActive(false);
-			CreateCollectableTarget(ingrObject, target, false);
-		} else if (target == Target.ITEMS) {
+		else if (target == Target.COLLECT)
+		{
 			blocksObject.SetActive(false);
 			CreateCollectableTarget(ingrObject, target, false);
 		}
-		if (targetBlocks > 0 && target == Target.BLOCKS) {
+		else if (target == Target.ITEMS)
+		{
+			blocksObject.SetActive(false);
+			CreateCollectableTarget(ingrObject, target, false);
+		}
+		if (targetBlocks > 0 && target == Target.BLOCKS)
+		{
 			blocksObject.SetActive(true);
 
 			blocksObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().totalCount = targetBlocks;
 			//CreateCollectableTarget(ingrObject, target, false);
-		} else if (LevelManager.THIS.target == Target.CAGES) {
+		}
+		else if (LevelManager.THIS.target == Target.CAGES)
+		{
 			cageTargetObject.SetActive(true);
 			cageTargetObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().totalCount = TargetCages;
 			//CreateCollectableTarget(ingrObject, target, false);
-		} else if (LevelManager.THIS.target == Target.BOMBS) {
+		}
+		else if (LevelManager.THIS.target == Target.BOMBS)
+		{
 			StartCoroutine(InitBombs());
 			bombTargetObject.SetActive(true);
 			bombTargetObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().totalCount = bombsCollect;
 			//CreateCollectableTarget(ingrObject, target, false);
-		} else if (target == Target.SCORE) {
+		}
+		else if (target == Target.SCORE)
+		{
 			ingrObject.SetActive(false);
 			blocksObject.SetActive(false);
 			scoreTargetObject.SetActive(true);
@@ -639,7 +710,7 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public void CreateCollectableTarget(GameObject parentTransform, Target tar, bool ForDialog = true)
+	public void CreateCollectableTarget (GameObject parentTransform, Target tar, bool ForDialog = true)
 	{
 		tar = target;
 		// if (tar != Target.COLLECT && tar != Target.ITEMS && tar != Target.BOMBS && tar != Target.CAGES ) return;
@@ -649,28 +720,37 @@ public class LevelManager : MonoBehaviour
 		RectTransform containerRect = parentTransform.GetComponent<RectTransform>();
 		int Sprites_Length = (Resources.Load("Prefabs/Item") as GameObject).GetComponent<Item>().items.Length;
 		Sprite[] spr = new Sprite[Sprites_Length];
-		for (int i = 0; i < Sprites_Length; i++) {
+		for (int i = 0; i < Sprites_Length; i++)
+		{
 			spr[i] = (Resources.Load("Prefabs/Item") as GameObject).GetComponent<Item>().items[i];
 		}
 		int num = NumIngredients;
 		List<object> collectionItems = new List<object>();
-		if (tar == Target.ITEMS) {
-			for (int i = 0; i < num; i++) {
+		if (tar == Target.ITEMS)
+		{
+			for (int i = 0; i < num; i++)
+			{
 				collectionItems.Add(collectItems[i]);
 			}
 			Sprite[] sprOld = spr;
 			int ii = 0;
-			for (int i = 0; i < collectItems.Length; i++) {
-				if (collectItems[i] != CollectItems.None) {
+			for (int i = 0; i < collectItems.Length; i++)
+			{
+				if (collectItems[i] != CollectItems.None)
+				{
 					spr[ii] = sprOld[(int)collectItems[i] - 1];
 					ii++;
 				}
 			}
-		} else if (tar == Target.COLLECT) {
+		}
+		else if (tar == Target.COLLECT)
+		{
 			spr = ingrediendSprites;
 			for (int i = 0; i < num; i++)
 				collectionItems.Add(ingrTarget[i]);
-		} else if (tar == Target.BLOCKS) {
+		}
+		else if (tar == Target.BLOCKS)
+		{
 			num = 1;
 			spr = new Sprite[] { blockPrefab.GetComponent<SpriteRenderer>().sprite };
 			for (int i = 0; i < num; i++)
@@ -678,7 +758,9 @@ public class LevelManager : MonoBehaviour
 			ingrTarget.Add(new CollectedIngredients());
 
 			ingrTarget[0].count = TargetBlocks;
-		} else if (tar == Target.CAGES) {
+		}
+		else if (tar == Target.CAGES)
+		{
 			num = 1;
 			spr = new Sprite[] { wireBlockPrefab.GetComponent<SpriteRenderer>().sprite };
 			for (int i = 0; i < num; i++)
@@ -686,14 +768,18 @@ public class LevelManager : MonoBehaviour
 			ingrTarget.Add(new CollectedIngredients());
 
 			ingrTarget[0].count = TargetCages;
-		} else if (tar == Target.BOMBS) {
+		}
+		else if (tar == Target.BOMBS)
+		{
 			num = 1;
 			spr = new Sprite[] { ingrPrefab.GetComponent<TargetGUI>().bomb };
 			for (int i = 0; i < num; i++)
 				collectionItems.Add(Ingredients.Ingredient1);
 			ingrTarget.Add(new CollectedIngredients());
 			ingrTarget[0].count = 1;
-		} else if (tar == Target.SCORE) {
+		}
+		else if (tar == Target.SCORE)
+		{
 			num = 1;
 			spr = new Sprite[] { ingrPrefab.GetComponent<TargetGUI>().star };
 			for (int i = 0; i < num; i++)
@@ -703,8 +789,10 @@ public class LevelManager : MonoBehaviour
 			ingrTarget[0].count = 1;
 		}
 		int f = 0;
-		for (int i = 0; i < num; i++) {
-			if (collectionItems[i] != (object)0 && ingrTarget[i].count > 0) {
+		for (int i = 0; i < num; i++)
+		{
+			if (collectionItems[i] != (object)0 && ingrTarget[i].count > 0)
+			{
 				f++;
 			}
 		}
@@ -716,8 +804,10 @@ public class LevelManager : MonoBehaviour
 
 		int j = 0;
 		//print(ingrCountTarget[0]);
-		for (int i = 0; i < num; i++) {
-			if (collectionItems[i] != (object)0 && ingrTarget[i].count > 0) {
+		for (int i = 0; i < num; i++)
+		{
+			if (collectionItems[i] != (object)0 && ingrTarget[i].count > 0)
+			{
 				GameObject ingr = Instantiate(ingrPrefab) as GameObject;
 				ingr.name = "Ingr" + i;
 				ingr.GetComponent<TargetGUI>().SetBack(ForDialog);
@@ -735,7 +825,8 @@ public class LevelManager : MonoBehaviour
 					ingr.transform.Find("CountIngr").name = "TargetCages";
 				else if (tar == Target.BOMBS)
 					ingr.transform.Find("CountIngr").name = "TargetBombs";
-				if (tar == Target.COLLECT) {
+				if (tar == Target.COLLECT)
+				{
 					ingr.GetComponent<TargetGUI>().SetSprite(ingrTarget[i].sprite);
 				}
 				ingr.transform.SetParent(parentTransform.transform);
@@ -753,14 +844,15 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	IEnumerator InitBombs()
+	IEnumerator InitBombs ()
 	{
 
 		yield return new WaitUntil(() => !TipsManager.THIS.gotTip); //1.3
 		yield return new WaitForSeconds(1);
 		int bombsOnField = 0;
 		List<Item> items = GetItems();
-		foreach (Item item in items) {
+		foreach (Item item in items)
+		{
 			if (item.currentType == ItemsTypes.BOMB)
 				bombsOnField++;
 		}
@@ -768,7 +860,8 @@ public class LevelManager : MonoBehaviour
 		List<Item> itemsRand = GetRandomItems(bombsCollect - bombsOnField - LevelManager.THIS.TargetBombs);//1.3
 		int i = 0;
 
-		foreach (Item item in itemsRand) {
+		foreach (Item item in itemsRand)
+		{
 
 			item.nextType = ItemsTypes.BOMB;
 
@@ -780,12 +873,12 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public void RechargeBombs()
+	public void RechargeBombs ()
 	{//1.3
 		StartCoroutine(InitBombs());
 	}
 
-	void PrepareGame()
+	void PrepareGame ()
 	{
 		InitScript.Instance.SpendLife(1);
 
@@ -814,7 +907,8 @@ public class LevelManager : MonoBehaviour
 
 		//ingrTarget = InitScript.Instance.collectedIngredients.ToArray();  //necessary collectable items
 
-		for (int i = 0; i < collectItems.Length; i++) {
+		for (int i = 0; i < collectItems.Length; i++)
+		{
 			collectItems[i] = CollectItems.None;
 			//ingrTarget[i] = Ingredients.None;
 			//ingrCountTarget[i] = 0;
@@ -839,10 +933,13 @@ public class LevelManager : MonoBehaviour
 		//if (getSize > 0)
 		//    camera.orthographicSize = 6.5f + getSize * 0.5f;
 		Level.transform.Find("Canvas/PrePlay").gameObject.SetActive(true);//1.3.3
-		if (limitType == LIMIT.MOVES) {
+		if (limitType == LIMIT.MOVES)
+		{
 			InGameBoosts[0].gameObject.SetActive(true);
 			InGameBoosts[1].gameObject.SetActive(false);
-		} else {
+		}
+		else
+		{
 			InGameBoosts[0].gameObject.SetActive(false);
 			InGameBoosts[1].gameObject.SetActive(true);
 
@@ -851,13 +948,18 @@ public class LevelManager : MonoBehaviour
 		OnEnterGame();
 	}
 
-	public void CheckCollectedTarget(GameObject _item)
+	public void CheckCollectedTarget (GameObject _item)
 	{
-		for (int i = 0; i < NumIngredients; i++) {
-			if (ingrTarget[i].count > 0) {
-				if (_item.GetComponent<Item>() != null) {
-					if (_item.GetComponent<Item>().currentType == ItemsTypes.NONE) {
-						if (_item.GetComponent<Item>().color == (int)collectItems[i] - 1) {
+		for (int i = 0; i < NumIngredients; i++)
+		{
+			if (ingrTarget[i].count > 0)
+			{
+				if (_item.GetComponent<Item>() != null)
+				{
+					if (_item.GetComponent<Item>().currentType == ItemsTypes.NONE)
+					{
+						if (_item.GetComponent<Item>().color == (int)collectItems[i] - 1)
+						{
 							GameObject item = new GameObject();
 							item.transform.position = _item.transform.position;
 							item.transform.localScale = Vector3.one / 2f;
@@ -868,10 +970,14 @@ public class LevelManager : MonoBehaviour
 
 							StartCoroutine(StartAnimateIngredient(item, i));
 						}
-					} else if (_item.GetComponent<Item>().currentType == ItemsTypes.INGREDIENT) {
-						if (ingrTarget[i].count > 0) {
+					}
+					else if (_item.GetComponent<Item>().currentType == ItemsTypes.INGREDIENT)
+					{
+						if (ingrTarget[i].count > 0)
+						{
 
-							if (_item.GetComponent<Item>().color == i + 1000) {
+							if (_item.GetComponent<Item>().color == i + 1000)
+							{
 								GameObject item = new GameObject();
 								item.transform.position = _item.transform.position;
 								item.transform.localScale = Vector3.one / 2f;
@@ -888,8 +994,10 @@ public class LevelManager : MonoBehaviour
 				}
 			}
 		}
-		if (targetBlocks > 0) {
-			if (_item.GetComponent<Square>() != null) {
+		if (targetBlocks > 0)
+		{
+			if (_item.GetComponent<Square>() != null)
+			{
 				GameObject item = new GameObject();
 				item.transform.position = _item.transform.position;
 				item.transform.localScale = Vector3.one / 2f;
@@ -902,8 +1010,10 @@ public class LevelManager : MonoBehaviour
 
 			}
 		}
-		if (target == Target.BOMBS) {
-			if (_item.GetComponent<Item>().currentType == ItemsTypes.BOMB) {
+		if (target == Target.BOMBS)
+		{
+			if (_item.GetComponent<Item>().currentType == ItemsTypes.BOMB)
+			{
 
 				GameObject item = new GameObject();
 				item.transform.position = _item.transform.position;
@@ -922,10 +1032,12 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public GameObject GetExplFromPool()
+	public GameObject GetExplFromPool ()
 	{
-		for (int i = 0; i < itemExplPool.Length; i++) {
-			if (!itemExplPool[i].GetComponent<SpriteRenderer>().enabled) {
+		for (int i = 0; i < itemExplPool.Length; i++)
+		{
+			if (!itemExplPool[i].GetComponent<SpriteRenderer>().enabled)
+			{
 				// itemExplPool[i].SetActive(true);
 				itemExplPool[i].GetComponent<SpriteRenderer>().enabled = true;
 				StartCoroutine(HideDelayed(itemExplPool[i]));
@@ -936,10 +1048,12 @@ public class LevelManager : MonoBehaviour
 		return null;
 	}
 
-	public bool CheckFlowerStillFly()
+	public bool CheckFlowerStillFly ()
 	{ //check if any flower still not reachec his target
-		for (int i = 0; i < flowersPool.Length; i++) {
-			if (flowersPool[i].GetComponent<SpriteRenderer>().enabled) {
+		for (int i = 0; i < flowersPool.Length; i++)
+		{
+			if (flowersPool[i].GetComponent<SpriteRenderer>().enabled)
+			{
 				return true;
 			}
 
@@ -947,10 +1061,12 @@ public class LevelManager : MonoBehaviour
 		return false;
 	}
 
-	public GameObject GetFlowerFromPool()
+	public GameObject GetFlowerFromPool ()
 	{
-		for (int i = 0; i < flowersPool.Length; i++) {
-			if (!flowersPool[i].GetComponent<SpriteRenderer>().enabled) {
+		for (int i = 0; i < flowersPool.Length; i++)
+		{
+			if (!flowersPool[i].GetComponent<SpriteRenderer>().enabled)
+			{
 				//                flowersPool[i].GetComponent<SpriteRenderer>().enabled = true;
 				// StartCoroutine(HideDelayed(flowersPool[i]));
 				return flowersPool[i];
@@ -960,10 +1076,11 @@ public class LevelManager : MonoBehaviour
 		return null;
 	}
 
-	IEnumerator HideDelayed(GameObject gm)
+	IEnumerator HideDelayed (GameObject gm)
 	{
 		yield return new WaitForSeconds(1);
-		if (gm.GetComponent<Animator>()) {
+		if (gm.GetComponent<Animator>())
+		{
 			gm.GetComponent<Animator>().SetTrigger("stop");
 			gm.GetComponent<Animator>().SetInteger("color", 10);
 		}
@@ -971,16 +1088,21 @@ public class LevelManager : MonoBehaviour
 		//gm.SetActive(false);
 	}
 
-	public int GetActualIngredients()
+	public int GetActualIngredients ()
 	{
 		int count = 0;
-		if (target == Target.COLLECT) {
-			for (int i = 0; i < ingrTarget.Count; i++) {
+		if (target == Target.COLLECT)
+		{
+			for (int i = 0; i < ingrTarget.Count; i++)
+			{
 				//if (ingrTarget[i] > 0)
 				count++;
 			}
-		} else if (target == Target.ITEMS) {
-			for (int i = 0; i < collectItems.Length; i++) {
+		}
+		else if (target == Target.ITEMS)
+		{
+			for (int i = 0; i < collectItems.Length; i++)
+			{
 				//if (collectItems[i] > 0)
 				count++;
 			}
@@ -988,31 +1110,39 @@ public class LevelManager : MonoBehaviour
 		return count;
 	}
 
-	public int GetRestIngredients()
+	public int GetRestIngredients ()
 	{
 		int count = 0;
-		for (int i = 0; i < ingrTarget.Count; i++) {
+		for (int i = 0; i < ingrTarget.Count; i++)
+		{
 			count += LevelManager.THIS.ingrTarget[i].count;
 		}
 		return count;
 	}
 
-	IEnumerator StartAnimateIngredient(GameObject item, int i)
+	IEnumerator StartAnimateIngredient (GameObject item, int i)
 	{
 		ingredientFly = true;
 		GameObject[] ingr = new GameObject[GetActualIngredients()];
-		if (target == Target.COLLECT || target == Target.ITEMS) {
-			for (int j = 0; j < NumIngredients; j++) {
-				if (ingrObject.transform.Find("Ingr" + j) != null) {
+		if (target == Target.COLLECT || target == Target.ITEMS)
+		{
+			for (int j = 0; j < NumIngredients; j++)
+			{
+				if (ingrObject.transform.Find("Ingr" + j) != null)
+				{
 					ingr[j] = ingrObject.transform.Find("Ingr" + j).gameObject;
 				}
 			}
-		} else if (target == Target.BLOCKS || target == Target.BOMBS)
+		}
+		else if (target == Target.BLOCKS || target == Target.BOMBS)
 			ingr = new GameObject[1];
-		if (target == Target.BLOCKS) {
+		if (target == Target.BLOCKS)
+		{
 			ingr[0] = blocksObject.transform.gameObject;
 
-		} else if (target == Target.BOMBS) {
+		}
+		else if (target == Target.BOMBS)
+		{
 			ingr[0] = bombTargetObject.transform.gameObject;
 
 		}
@@ -1023,11 +1153,13 @@ public class LevelManager : MonoBehaviour
 		Vector3 startPos = item.transform.localPosition;
 		float speed = UnityEngine.Random.Range(0.4f, 0.6f);
 		float distCovered = 0;
-		if (ingrTarget.Count > 0) {
+		if (ingrTarget.Count > 0)
+		{
 			if (ingrTarget[i].count > 0)
 				ingrTarget[i].count--;
 		}
-		while (distCovered < 0.5f) {
+		while (distCovered < 0.5f)
+		{
 			distCovered = (Time.time - startTime) * speed;
 			item.transform.localPosition = new Vector3(curveX.Evaluate(distCovered), curveY.Evaluate(distCovered), 0);
 			item.transform.Rotate(Vector3.back, Time.deltaTime * 1000);
@@ -1042,68 +1174,97 @@ public class LevelManager : MonoBehaviour
 		ingredientFly = false;
 	}
 
-	public void CheckWinLose()
+	public void CheckWinLose ()
 	{
-		if (Limit <= 0) {
+		if (Limit <= 0)
+		{
 			bool lose = false;
 			Limit = 0;
 
-			if (LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks > 0) {
-				lose = true;
-			} else if (LevelManager.THIS.target == Target.CAGES && LevelManager.THIS.TargetCages > 0) {
-				lose = true;
-			} else if (LevelManager.THIS.target == Target.COLLECT || LevelManager.THIS.target == Target.ITEMS) {
-				if (GetRestIngredients() > 0) {
-					lose = true;
-				}
-			} else if (LevelManager.THIS.target == Target.SCORE && LevelManager.Score < GetScoresOfTargetStars()) {
+			if (LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks > 0)
+			{
 				lose = true;
 			}
-			if (LevelManager.Score < LevelManager.THIS.star1 && LevelManager.THIS.target != Target.SCORE) {
+			else if (LevelManager.THIS.target == Target.CAGES && LevelManager.THIS.TargetCages > 0)
+			{
+				lose = true;
+			}
+			else if (LevelManager.THIS.target == Target.COLLECT || LevelManager.THIS.target == Target.ITEMS)
+			{
+				if (GetRestIngredients() > 0)
+				{
+					lose = true;
+				}
+			}
+			else if (LevelManager.THIS.target == Target.SCORE && LevelManager.Score < GetScoresOfTargetStars())
+			{
+				lose = true;
+			}
+			if (LevelManager.Score < LevelManager.THIS.star1 && LevelManager.THIS.target != Target.SCORE)
+			{
 				lose = true;
 
 			}
 			if (lose)
 				gameStatus = GameState.GameOver;
-			else if (LevelManager.Score >= LevelManager.THIS.star1 && (LevelManager.THIS.target == Target.BOMBS) && LevelManager.THIS.TargetBombs >= bombsCollect) {
+			else if (LevelManager.Score >= LevelManager.THIS.star1 && (LevelManager.THIS.target == Target.BOMBS) && LevelManager.THIS.TargetBombs >= bombsCollect)
+			{
 				gameStatus = GameState.PreWinAnimations;
 
-			} else if (LevelManager.Score >= LevelManager.THIS.star1 && LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks <= 0) {
+			}
+			else if (LevelManager.Score >= LevelManager.THIS.star1 && LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks <= 0)
+			{
 				gameStatus = GameState.PreWinAnimations;
 
-			} else if (LevelManager.Score >= LevelManager.THIS.star1 && LevelManager.THIS.target == Target.CAGES && LevelManager.THIS.TargetCages <= 0) {
+			}
+			else if (LevelManager.Score >= LevelManager.THIS.star1 && LevelManager.THIS.target == Target.CAGES && LevelManager.THIS.TargetCages <= 0)
+			{
 				gameStatus = GameState.PreWinAnimations;
 
-			} else if (LevelManager.Score >= LevelManager.THIS.star1 && (LevelManager.THIS.target == Target.COLLECT || LevelManager.THIS.target == Target.ITEMS) && GetRestIngredients() <= 0) {
+			}
+			else if (LevelManager.Score >= LevelManager.THIS.star1 && (LevelManager.THIS.target == Target.COLLECT || LevelManager.THIS.target == Target.ITEMS) && GetRestIngredients() <= 0)
+			{
 				gameStatus = GameState.PreWinAnimations;
 
-			} else if (LevelManager.THIS.target == Target.SCORE && LevelManager.Score >= GetScoresOfTargetStars()) {
+			}
+			else if (LevelManager.THIS.target == Target.SCORE && LevelManager.Score >= GetScoresOfTargetStars())
+			{
 				gameStatus = GameState.PreWinAnimations;
 			}
 
 
-		} else {
+		}
+		else
+		{
 			bool win = false;
 
-			if (LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks <= 0) {
+			if (LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks <= 0)
+			{
 				win = true;
 			}
-			if (LevelManager.THIS.target == Target.CAGES && LevelManager.THIS.TargetCages <= 0) {
+			if (LevelManager.THIS.target == Target.CAGES && LevelManager.THIS.TargetCages <= 0)
+			{
 				win = true;
 			}
-			if (LevelManager.THIS.target == Target.BOMBS && LevelManager.THIS.TargetBombs >= bombsCollect) {
+			if (LevelManager.THIS.target == Target.BOMBS && LevelManager.THIS.TargetBombs >= bombsCollect)
+			{
 				win = true;
-			} else if (LevelManager.THIS.target == Target.COLLECT || LevelManager.THIS.target == Target.ITEMS) {
+			}
+			else if (LevelManager.THIS.target == Target.COLLECT || LevelManager.THIS.target == Target.ITEMS)
+			{
 				win = true;
-				if (GetRestIngredients() > 0) {
+				if (GetRestIngredients() > 0)
+				{
 					win = false;
 				}
 			}
-			if (LevelManager.THIS.target == Target.SCORE && LevelManager.Score >= GetScoresOfTargetStars()) {
+			if (LevelManager.THIS.target == Target.SCORE && LevelManager.Score >= GetScoresOfTargetStars())
+			{
 				win = true;
 			}
 
-			if (LevelManager.Score < LevelManager.THIS.star1 && LevelManager.THIS.target != Target.SCORE) {
+			if (LevelManager.Score < LevelManager.THIS.star1 && LevelManager.THIS.target != Target.SCORE)
+			{
 				win = false;
 
 			}
@@ -1113,12 +1274,12 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	public int GetScoresOfTargetStars()
+	public int GetScoresOfTargetStars ()
 	{
 		return (int)this.GetType().GetField("star" + (int)starsTargetCount).GetValue(this); //get value of appropriate field (star1, star2 or star3)
 	}
 
-	IEnumerator PreWinAnimationsCor()
+	IEnumerator PreWinAnimationsCor ()
 	{
 		if (!InitScript.Instance.losingLifeEveryGame)
 			InitScript.Instance.AddLife(1);
@@ -1132,7 +1293,8 @@ public class LevelManager : MonoBehaviour
 
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
-		for (int i = 1; i <= countFlowers; i++) {
+		for (int i = 1; i <= countFlowers; i++)
+		{
 			if (limitType == LIMIT.MOVES)
 				Limit--;
 			GameObject flowerParticle = GetFlowerFromPool();
@@ -1148,7 +1310,8 @@ public class LevelManager : MonoBehaviour
 		while (CheckFlowerStillFly())
 			yield return new WaitForSeconds(0.3f);
 
-		while (GetAllExtraItems().Count > 0) {
+		while (GetAllExtraItems().Count > 0)
+		{
 			Item item = GetAllExtraItems()[0];
 			item.DestroyItem(false, "", false, true);
 			dragBlocked = true;
@@ -1173,15 +1336,16 @@ public class LevelManager : MonoBehaviour
 		//        GameObject.Find("Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(false);
 		if (PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), 0) < stars)
 			PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), stars);
-		if (Score > PlayerPrefs.GetInt("Score" + currentLevel)) {
+		if (Score > PlayerPrefs.GetInt("Score" + currentLevel))
+		{
 			PlayerPrefs.SetInt("Score" + currentLevel, Score);
 		}
 		LevelsMap.SetActive(false);//1.4.4
-		LevelsMap.SetActive(true);//1.4.4
+//		LevelsMap.SetActive(true);//1.4.4
 #if PLAYFAB || GAMESPARKS
-		NetworkManager.dataManager.SetPlayerScore (currentLevel, Score);
-		NetworkManager.dataManager.SetPlayerLevel (currentLevel + 1);
-		NetworkManager.dataManager.SetStars ();
+		NetworkManager.dataManager.SetPlayerScore(currentLevel, Score);
+		NetworkManager.dataManager.SetPlayerLevel(currentLevel + 1);
+		NetworkManager.dataManager.SetStars();
 #endif
 
 		gameStatus = GameState.Win;
@@ -1189,14 +1353,16 @@ public class LevelManager : MonoBehaviour
 
 
 
-	void DestroyGatheredExtraItems(Item item)
+	void DestroyGatheredExtraItems (Item item)
 	{
 		//ClearHighlight(true);
-		if (gatheredTypes.Count > 1) {
+		if (gatheredTypes.Count > 1)
+		{
 			item.DestroyHorizontal();
 			item.DestroyVertical();
 		}
-		foreach (ItemsTypes itemType in gatheredTypes) {
+		foreach (ItemsTypes itemType in gatheredTypes)
+		{
 			if (itemType == ItemsTypes.HORIZONTAL_STRIPPED)
 				item.DestroyHorizontal();
 			else
@@ -1206,23 +1372,28 @@ public class LevelManager : MonoBehaviour
 
 	public BoostIcon waitingBoost;
 
-	void Update()
+	void Update ()
 	{                                               // Debug keys events for editor   
-													//if (Application.isEditor)
-													//    SetupGameCamera();
-		if (gameStatus == GameState.Playing) {
+		//if (Application.isEditor)
+		//    SetupGameCamera();
+		if (gameStatus == GameState.Playing)
+		{
 			//  AvctivatedBoostView = ActivatedBoost;
-			if (Input.GetKeyDown(KeyCode.Space)) {
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
 				NoMatches();
 			}
-			if (Input.GetKeyDown(KeyCode.W)) {            //Instant win
+			if (Input.GetKeyDown(KeyCode.W))
+			{            //Instant win
 				gameStatus = GameState.PreWinAnimations;
 			}
-			if (Input.GetKeyDown(KeyCode.L)) {            //last move 
+			if (Input.GetKeyDown(KeyCode.L))
+			{            //last move 
 				Limit = 1;
 			}
 		}
-		if (Input.GetKeyUp(KeyCode.Escape)) {    //Back button for Android
+		if (Input.GetKeyUp(KeyCode.Escape))
+		{    //Back button for Android
 			if (LevelManager.THIS.gameStatus == GameState.Playing)
 				GameObject.Find("CanvasGlobal").transform.Find("MenuPause").gameObject.SetActive(true);
 			else if (LevelManager.THIS.gameStatus == GameState.Map)
@@ -1232,8 +1403,10 @@ public class LevelManager : MonoBehaviour
 		int i = 0;
 		//line.SetVertexCount(destroyAnyway.Count*2);
 		line.SetVertexCount(destroyAnyway.Count);       //draw line effect for selected items
-		foreach (Item item in destroyAnyway) {
-			if (item != null) {
+		foreach (Item item in destroyAnyway)
+		{
+			if (item != null)
+			{
 				line.AddPoint(item.transform.position, i);
 				i++;
 			}
@@ -1243,18 +1416,29 @@ public class LevelManager : MonoBehaviour
 			//i++;
 		}
 
-		if (LevelManager.THIS.gameStatus == GameState.Playing) {
-			if (Input.GetMouseButton(0)) {        //touch detected
+		if (LevelManager.THIS.gameStatus == GameState.Playing)
+		{
+			if (Input.GetMouseButton(0))
+			{        //touch detected
 				OnStartPlay();
 				Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
-				if (hit != null) {
+				if (hit != null)
+				{
 					Item item = hit.gameObject.GetComponent<Item>();
-					if (item.currentType != ItemsTypes.INGREDIENT) {
+					if (item.currentType != ItemsTypes.INGREDIENT)
+					{
 
-						if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb && item.currentType != ItemsTypes.INGREDIENT) {       //boost action events   BOMB
-						} else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel && item.currentType != ItemsTypes.INGREDIENT) {  //boost action events   SHOVEL
-						} else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy && item.currentType != ItemsTypes.INGREDIENT) { //boost action events   ENERGY
-						} else if (selectedColor == -1 || selectedColor == item.color) {                //selection items by touch
+						if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb && item.currentType != ItemsTypes.INGREDIENT)
+						{       //boost action events   BOMB
+						}
+						else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel && item.currentType != ItemsTypes.INGREDIENT)
+						{  //boost action events   SHOVEL
+						}
+						else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy && item.currentType != ItemsTypes.INGREDIENT)
+						{ //boost action events   ENERGY
+						}
+						else if (selectedColor == -1 || selectedColor == item.color)
+						{                //selection items by touch
 							if (extraCageAddItem < 0)
 								extraCageAddItem = 0;
 							selectedColor = item.color;
@@ -1262,19 +1446,24 @@ public class LevelManager : MonoBehaviour
 							//{
 							//    if (destroyAnyway[destroyAnyway.Count - 1] == item) stopSliding = false;
 							//}
-							if (!LevelManager.THIS.DragBlocked && LevelManager.THIS.gameStatus == GameState.Playing && !stopSliding) {
-								if (destroyAnyway.Count > 1) {
+							if (!LevelManager.THIS.DragBlocked && LevelManager.THIS.gameStatus == GameState.Playing && !stopSliding)
+							{
+								if (destroyAnyway.Count > 1)
+								{
 									Vector2 pos1 = new Vector2(destroyAnyway[destroyAnyway.Count - 1].square.col, destroyAnyway[destroyAnyway.Count - 1].square.row);
 									Vector2 pos2 = new Vector2(item.square.col, item.square.row);
 									offset = Vector2.Distance(pos1, pos2);
 								}
-								if (destroyAnyway.IndexOf(item) < 0 && offset < 2) {         //add item to selection
-									if (destroyAnyway.Count > 0) {
+								if (destroyAnyway.IndexOf(item) < 0 && offset < 2)
+								{         //add item to selection
+									if (destroyAnyway.Count > 0)
+									{
 										Vector2 pos1 = new Vector2(destroyAnyway[destroyAnyway.Count - 1].square.col, destroyAnyway[destroyAnyway.Count - 1].square.row);
 										Vector2 pos2 = new Vector2(item.square.col, item.square.row);
 										offset = Vector2.Distance(pos1, pos2);
 
-										if (offset >= 2) {
+										if (offset >= 2)
+										{
 											offset = 0;
 											return;
 										}
@@ -1296,12 +1485,16 @@ public class LevelManager : MonoBehaviour
 									item.AwakeItem();
 
 
-								} else if (destroyAnyway.IndexOf(item) > -1) {                  //remove item from selection (step back by finger)
+								}
+								else if (destroyAnyway.IndexOf(item) > -1)
+								{                  //remove item from selection (step back by finger)
 									if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && item.square.cageHP > 0)
 										extraCageAddItem -= 1;
 
-									if (destroyAnyway.Count > 1) {
-										if (destroyAnyway[destroyAnyway.Count - 2] == item) {
+									if (destroyAnyway.Count > 1)
+									{
+										if (destroyAnyway[destroyAnyway.Count - 2] == item)
+										{
 
 											if (destroyAnyway[destroyAnyway.Count - 1].currentType == ItemsTypes.HORIZONTAL_STRIPPED)
 												gatheredTypes.Remove(gatheredTypes[gatheredTypes.Count - 1]);
@@ -1331,21 +1524,28 @@ public class LevelManager : MonoBehaviour
 						//}
 					}
 				}
-			} else if (Input.GetMouseButtonUp(0)) {
+			}
+			else if (Input.GetMouseButtonUp(0))
+			{
 				Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Default"));
-				if (hit != null) {
+				if (hit != null)
+				{
 					Square square = hit.gameObject.GetComponent<Square>();
 					Item item = square.item;
 					bool isIngredient = false;
-					if (item) { //1.3
+					if (item)
+					{ //1.3
 
-						if (item.currentType == ItemsTypes.INGREDIENT) {
+						if (item.currentType == ItemsTypes.INGREDIENT)
+						{
 							isIngredient = true;
 						}
 
-						if (!isIngredient) {
+						if (!isIngredient)
+						{
 
-							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb) {
+							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb)
+							{
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/bomb"), square.transform.position, square.transform.rotation) as GameObject;
@@ -1353,7 +1553,9 @@ public class LevelManager : MonoBehaviour
 								obj.GetComponent<BoostAnimation>().square = square;
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
-							} else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel) {
+							}
+							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel)
+							{
 								//SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/shovel"), square.transform.position, square.transform.rotation) as GameObject;
@@ -1361,7 +1563,9 @@ public class LevelManager : MonoBehaviour
 								obj.GetComponent<BoostAnimation>().square = square;
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
-							} else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy) {
+							}
+							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy)
+							{
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/energy"), square.transform.position, square.transform.rotation) as GameObject;
@@ -1376,15 +1580,20 @@ public class LevelManager : MonoBehaviour
 				selectedColor = -1;
 				stopSliding = false;
 				offset = 0;
-				if (destroyAnyway.Count >= 3) {
+				if (destroyAnyway.Count >= 3)
+				{
 					LevelManager.THIS.DragBlocked = true;
 					FindMatches();
-					if (LevelManager.Instance.limitType == LIMIT.MOVES) {
+					if (LevelManager.Instance.limitType == LIMIT.MOVES)
+					{
 						LevelManager.THIS.Limit--;
 					}
 					LevelManager.THIS.moveID++;
-				} else {
-					foreach (Item item in destroyAnyway) {
+				}
+				else
+				{
+					foreach (Item item in destroyAnyway)
+					{
 						item.SleepItem();
 						item.square.SetActiveCage(false);
 					}
@@ -1405,11 +1614,14 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	IEnumerator TimeTick()
+	IEnumerator TimeTick ()
 	{
-		while (true) {
-			if (gameStatus == GameState.Playing) {
-				if (LevelManager.Instance.limitType == LIMIT.TIME) {
+		while (true)
+		{
+			if (gameStatus == GameState.Playing)
+			{
+				if (LevelManager.Instance.limitType == LIMIT.TIME)
+				{
 					LevelManager.THIS.Limit--;
 					CheckWinLose();
 				}
@@ -1421,16 +1633,18 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	private void GenerateLevel()
+	private void GenerateLevel ()
 	{
 		bool chessColor = false;
 		float sqWidth = 1.6f;
 		float halfSquare = sqWidth / 2;
 		Vector3 fieldPos = new Vector3(-maxCols * sqWidth / 2 + halfSquare, maxRows / 1.4f, -10);
-		for (int row = 0; row < maxRows; row++) {
+		for (int row = 0; row < maxRows; row++)
+		{
 			if (maxCols % 2 == 0)
 				chessColor = !chessColor;
-			for (int col = 0; col < maxCols; col++) {
+			for (int col = 0; col < maxCols; col++)
+			{
 				CreateSquare(col, row, chessColor);
 				chessColor = !chessColor;
 			}
@@ -1440,7 +1654,7 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	void AnimateField(Vector3 pos)
+	void AnimateField (Vector3 pos)
 	{
 
 		float yOffset = 0;
@@ -1464,11 +1678,12 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	void CreateSquare(int col, int row, bool chessColor = false)
+	void CreateSquare (int col, int row, bool chessColor = false)
 	{
 		GameObject square = null;
 		square = Instantiate(squarePrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
-		if (chessColor) {
+		if (chessColor)
+		{
 			square.GetComponent<SpriteRenderer>().sprite = squareSprite1;
 		}
 		square.transform.SetParent(GameField);
@@ -1477,13 +1692,18 @@ public class LevelManager : MonoBehaviour
 		square.GetComponent<Square>().row = row;
 		square.GetComponent<Square>().col = col;
 		square.GetComponent<Square>().type = SquareTypes.EMPTY;
-		if (levelSquaresFile[row * maxCols + col].block == SquareTypes.EMPTY) {
+		if (levelSquaresFile[row * maxCols + col].block == SquareTypes.EMPTY)
+		{
 			CreateObstacles(col, row, square, SquareTypes.NONE);
-		} else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.NONE) {
+		}
+		else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.NONE)
+		{
 			square.GetComponent<SpriteRenderer>().enabled = false;
 			square.GetComponent<Square>().type = SquareTypes.NONE;
 
-		} else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.BLOCK) {
+		}
+		else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.BLOCK)
+		{
 			GameObject block = Instantiate(blockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.01f);
@@ -1493,7 +1713,9 @@ public class LevelManager : MonoBehaviour
 
 			// TargetBlocks++;
 			CreateObstacles(col, row, square, SquareTypes.NONE);
-		} else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.DOUBLEBLOCK) {
+		}
+		else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.DOUBLEBLOCK)
+		{
 			GameObject block = Instantiate(blockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.01f);
@@ -1517,28 +1739,34 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	void GenerateOutline()
+	void GenerateOutline ()
 	{
 		int row = 0;
 		int col = 0;
-		for (row = 0; row < maxRows; row++) { //down
+		for (row = 0; row < maxRows; row++)
+		{ //down
 			SetOutline(col, row, 0);
 		}
 		row = maxRows - 1;
-		for (col = 0; col < maxCols; col++) { //right
+		for (col = 0; col < maxCols; col++)
+		{ //right
 			SetOutline(col, row, 90);
 		}
 		col = maxCols - 1;
-		for (row = maxRows - 1; row >= 0; row--) { //up
+		for (row = maxRows - 1; row >= 0; row--)
+		{ //up
 			SetOutline(col, row, 180);
 		}
 		row = 0;
-		for (col = maxCols - 1; col >= 0; col--) { //left
+		for (col = maxCols - 1; col >= 0; col--)
+		{ //left
 			SetOutline(col, row, 270);
 		}
 		col = 0;
-		for (row = 1; row < maxRows - 1; row++) {
-			for (col = 1; col < maxCols - 1; col++) {
+		for (row = 1; row < maxRows - 1; row++)
+		{
+			for (col = 1; col < maxCols - 1; col++)
+			{
 				//  if (GetSquare(col, row).type == SquareTypes.NONE)
 				SetOutline(col, row, 0);
 			}
@@ -1546,11 +1774,13 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	void SetOutline(int col, int row, float zRot)
+	void SetOutline (int col, int row, float zRot)
 	{
 		Square square = GetSquare(col, row, true);
-		if (square.type != SquareTypes.NONE) {
-			if (row == 0 || col == 0 || col == maxCols - 1 || row == maxRows - 1) {
+		if (square.type != SquareTypes.NONE)
+		{
+			if (row == 0 || col == 0 || col == maxCols - 1 || row == maxRows - 1)
+			{
 				GameObject outline = CreateOutline(square);
 				SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 				outline.transform.localRotation = Quaternion.Euler(0, 0, zRot);
@@ -1562,29 +1792,36 @@ public class LevelManager : MonoBehaviour
 					outline.transform.localPosition = Vector3.zero + Vector3.right * 0.83f;
 				if (zRot == 270)
 					outline.transform.localPosition = Vector3.zero + Vector3.up * 0.83f;
-				if (row == 0 && col == 0) {   //top left
+				if (row == 0 && col == 0)
+				{   //top left
 					spr.sprite = outline3;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 180);
 					outline.transform.localPosition = Vector3.zero + Vector3.left * 0.01f + Vector3.up * 0.01f;
 				}
-				if (row == 0 && col == maxCols - 1) {   //top right
+				if (row == 0 && col == maxCols - 1)
+				{   //top right
 					spr.sprite = outline3;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 90);
 					outline.transform.localPosition = Vector3.zero + Vector3.right * 0.01f + Vector3.up * 0.01f;
 				}
-				if (row == maxRows - 1 && col == 0) {   //bottom left
+				if (row == maxRows - 1 && col == 0)
+				{   //bottom left
 					spr.sprite = outline3;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, -90);
 					outline.transform.localPosition = Vector3.zero + Vector3.left * 0.01f + Vector3.down * 0.01f;
 				}
-				if (row == maxRows - 1 && col == maxCols - 1) {   //bottom right
+				if (row == maxRows - 1 && col == maxCols - 1)
+				{   //bottom right
 					spr.sprite = outline3;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 0);
 					outline.transform.localPosition = Vector3.zero + Vector3.right * 0.01f + Vector3.down * 0.01f;
 				}
-			} else {
+			}
+			else
+			{
 				//top left
-				if (GetSquare(col - 1, row - 1, true).type == SquareTypes.NONE && GetSquare(col, row - 1, true).type == SquareTypes.NONE && GetSquare(col - 1, row, true).type == SquareTypes.NONE) {
+				if (GetSquare(col - 1, row - 1, true).type == SquareTypes.NONE && GetSquare(col, row - 1, true).type == SquareTypes.NONE && GetSquare(col - 1, row, true).type == SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					spr.sprite = outline3;
@@ -1592,7 +1829,8 @@ public class LevelManager : MonoBehaviour
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 180);
 				}
 				//top right
-				if (GetSquare(col + 1, row - 1, true).type == SquareTypes.NONE && GetSquare(col, row - 1, true).type == SquareTypes.NONE && GetSquare(col + 1, row, true).type == SquareTypes.NONE) {
+				if (GetSquare(col + 1, row - 1, true).type == SquareTypes.NONE && GetSquare(col, row - 1, true).type == SquareTypes.NONE && GetSquare(col + 1, row, true).type == SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					spr.sprite = outline3;
@@ -1600,7 +1838,8 @@ public class LevelManager : MonoBehaviour
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 90);
 				}
 				//bottom left
-				if (GetSquare(col - 1, row + 1, true).type == SquareTypes.NONE && GetSquare(col, row + 1, true).type == SquareTypes.NONE && GetSquare(col - 1, row, true).type == SquareTypes.NONE) {
+				if (GetSquare(col - 1, row + 1, true).type == SquareTypes.NONE && GetSquare(col, row + 1, true).type == SquareTypes.NONE && GetSquare(col - 1, row, true).type == SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					spr.sprite = outline3;
@@ -1608,7 +1847,8 @@ public class LevelManager : MonoBehaviour
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 270);
 				}
 				//bottom right
-				if (GetSquare(col + 1, row + 1, true).type == SquareTypes.NONE && GetSquare(col, row + 1, true).type == SquareTypes.NONE && GetSquare(col + 1, row, true).type == SquareTypes.NONE) {
+				if (GetSquare(col + 1, row + 1, true).type == SquareTypes.NONE && GetSquare(col, row + 1, true).type == SquareTypes.NONE && GetSquare(col + 1, row, true).type == SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					spr.sprite = outline3;
@@ -1618,9 +1858,12 @@ public class LevelManager : MonoBehaviour
 
 
 			}
-		} else {
+		}
+		else
+		{
 			bool corner = false;
-			if (GetSquare(col - 1, row, true).type != SquareTypes.NONE && GetSquare(col, row - 1, true).type != SquareTypes.NONE) {
+			if (GetSquare(col - 1, row, true).type != SquareTypes.NONE && GetSquare(col, row - 1, true).type != SquareTypes.NONE)
+			{
 				GameObject outline = CreateOutline(square);
 				SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 				spr.sprite = outline2;
@@ -1628,7 +1871,8 @@ public class LevelManager : MonoBehaviour
 				outline.transform.localRotation = Quaternion.Euler(0, 0, 0);
 				corner = true;
 			}
-			if (GetSquare(col + 1, row, true).type != SquareTypes.NONE && GetSquare(col, row + 1, true).type != SquareTypes.NONE) {
+			if (GetSquare(col + 1, row, true).type != SquareTypes.NONE && GetSquare(col, row + 1, true).type != SquareTypes.NONE)
+			{
 				GameObject outline = CreateOutline(square);
 				SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 				spr.sprite = outline2;
@@ -1636,7 +1880,8 @@ public class LevelManager : MonoBehaviour
 				outline.transform.localRotation = Quaternion.Euler(0, 0, 180);
 				corner = true;
 			}
-			if (GetSquare(col + 1, row, true).type != SquareTypes.NONE && GetSquare(col, row - 1, true).type != SquareTypes.NONE) {
+			if (GetSquare(col + 1, row, true).type != SquareTypes.NONE && GetSquare(col, row - 1, true).type != SquareTypes.NONE)
+			{
 				GameObject outline = CreateOutline(square);
 				SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 				spr.sprite = outline2;
@@ -1644,7 +1889,8 @@ public class LevelManager : MonoBehaviour
 				outline.transform.localRotation = Quaternion.Euler(0, 0, 270);
 				corner = true;
 			}
-			if (GetSquare(col - 1, row, true).type != SquareTypes.NONE && GetSquare(col, row + 1, true).type != SquareTypes.NONE) {
+			if (GetSquare(col - 1, row, true).type != SquareTypes.NONE && GetSquare(col, row + 1, true).type != SquareTypes.NONE)
+			{
 				GameObject outline = CreateOutline(square);
 				SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 				spr.sprite = outline2;
@@ -1653,26 +1899,31 @@ public class LevelManager : MonoBehaviour
 				corner = true;
 			}
 
-			if (!corner) {
-				if (GetSquare(col, row - 1, true).type != SquareTypes.NONE) {
+			if (!corner)
+			{
+				if (GetSquare(col, row - 1, true).type != SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					outline.transform.localPosition = Vector3.zero + Vector3.up * 0.79f;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 90);
 				}
-				if (GetSquare(col, row + 1, true).type != SquareTypes.NONE) {
+				if (GetSquare(col, row + 1, true).type != SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					outline.transform.localPosition = Vector3.zero + Vector3.down * 0.79f;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 90);
 				}
-				if (GetSquare(col - 1, row, true).type != SquareTypes.NONE) {
+				if (GetSquare(col - 1, row, true).type != SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					outline.transform.localPosition = Vector3.zero + Vector3.left * 0.79f;
 					outline.transform.localRotation = Quaternion.Euler(0, 0, 0);
 				}
-				if (GetSquare(col + 1, row, true).type != SquareTypes.NONE) {
+				if (GetSquare(col + 1, row, true).type != SquareTypes.NONE)
+				{
 					GameObject outline = CreateOutline(square);
 					SpriteRenderer spr = outline.GetComponent<SpriteRenderer>();
 					outline.transform.localPosition = Vector3.zero + Vector3.right * 0.79f;
@@ -1686,7 +1937,7 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	GameObject CreateOutline(Square square)
+	GameObject CreateOutline (Square square)
 	{
 		GameObject outline = new GameObject();
 		outline.name = "outline";
@@ -1699,9 +1950,10 @@ public class LevelManager : MonoBehaviour
 		return outline;
 	}
 
-	void CreateObstacles(int col, int row, GameObject square, SquareTypes type)
+	void CreateObstacles (int col, int row, GameObject square, SquareTypes type)
 	{
-		if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.WIREBLOCK && type == SquareTypes.NONE) || type == SquareTypes.WIREBLOCK) {
+		if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.WIREBLOCK && type == SquareTypes.NONE) || type == SquareTypes.WIREBLOCK)
+		{
 			GameObject block = Instantiate(wireBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
@@ -1711,7 +1963,9 @@ public class LevelManager : MonoBehaviour
 			block.GetComponent<Square>().type = SquareTypes.WIREBLOCK;
 			square.GetComponent<Square>().SetCage(cageHP);
 			//   TargetBlocks++;
-		} else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.SOLIDBLOCK && type == SquareTypes.NONE) || type == SquareTypes.SOLIDBLOCK) {
+		}
+		else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.SOLIDBLOCK && type == SquareTypes.NONE) || type == SquareTypes.SOLIDBLOCK)
+		{
 			GameObject block = Instantiate(solidBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
@@ -1721,7 +1975,9 @@ public class LevelManager : MonoBehaviour
 			block.GetComponent<Square>().type = SquareTypes.SOLIDBLOCK;
 
 			//  TargetBlocks++;
-		} else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.DOUBLESOLIDBLOCK && type == SquareTypes.NONE) || type == SquareTypes.DOUBLESOLIDBLOCK) {
+		}
+		else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.DOUBLESOLIDBLOCK && type == SquareTypes.NONE) || type == SquareTypes.DOUBLESOLIDBLOCK)
+		{
 			GameObject block = Instantiate(solidBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
@@ -1740,7 +1996,9 @@ public class LevelManager : MonoBehaviour
 			block.GetComponent<Square>().type = SquareTypes.SOLIDBLOCK;
 
 			//  TargetBlocks++;
-		} else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE && type == SquareTypes.NONE) || type == SquareTypes.UNDESTROYABLE) {
+		}
+		else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE && type == SquareTypes.NONE) || type == SquareTypes.UNDESTROYABLE)
+		{
 			GameObject block = Instantiate(undesroyableBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
@@ -1749,7 +2007,9 @@ public class LevelManager : MonoBehaviour
 			block.GetComponent<Square>().type = SquareTypes.UNDESTROYABLE;
 
 			//  TargetBlocks++;
-		} else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.THRIVING && type == SquareTypes.NONE) || type == SquareTypes.THRIVING) {
+		}
+		else if ((levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.THRIVING && type == SquareTypes.NONE) || type == SquareTypes.THRIVING)
+		{
 			GameObject block = Instantiate(thrivingBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
@@ -1765,13 +2025,18 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	void GenerateNewItems(bool falling = true)
+	void GenerateNewItems (bool falling = true)
 	{
-		for (int col = 0; col < maxCols; col++) {
-			for (int row = maxRows - 1; row >= 0; row--) {
-				if (GetSquare(col, row) != null) {
-					if (!GetSquare(col, row).IsNone() && GetSquare(col, row).CanGoInto() && GetSquare(col, row).item == null) {
-						if ((GetSquare(col, row).item == null && !GetSquare(col, row).IsHaveSolidAbove()) || !falling) {
+		for (int col = 0; col < maxCols; col++)
+		{
+			for (int row = maxRows - 1; row >= 0; row--)
+			{
+				if (GetSquare(col, row) != null)
+				{
+					if (!GetSquare(col, row).IsNone() && GetSquare(col, row).CanGoInto() && GetSquare(col, row).item == null)
+					{
+						if ((GetSquare(col, row).item == null && !GetSquare(col, row).IsHaveSolidAbove()) || !falling)
+						{
 							GetSquare(col, row).GenItem(falling);
 						}
 					}
@@ -1781,14 +2046,15 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public void NoMatches()
+	public void NoMatches ()
 	{
 		StartCoroutine(NoMatchesCor());
 	}
 
-	IEnumerator NoMatchesCor()
+	IEnumerator NoMatchesCor ()
 	{
-		if (gameStatus == GameState.Playing) {
+		if (gameStatus == GameState.Playing)
+		{
 			SoundBase.Instance.PlaySound(SoundBase.Instance.noMatch);
 
 			GameObject.Find("Level/Canvas").transform.Find("NoMoreMatches").gameObject.SetActive(true);//1.4.5
@@ -1801,7 +2067,7 @@ public class LevelManager : MonoBehaviour
 	List<int> bombTimers = new List<int>();
 	//1.3
 
-	public void ReGenLevel()
+	public void ReGenLevel ()
 	{
 
 
@@ -1821,9 +2087,10 @@ public class LevelManager : MonoBehaviour
 		// StartCoroutine(RegenMatches());
 	}
 
-	IEnumerator RegenMatches(bool onlyFalling = false)
+	IEnumerator RegenMatches (bool onlyFalling = false)
 	{
-		if (gameStatus == GameState.RegenLevel) {
+		if (gameStatus == GameState.RegenLevel)
+		{
 			//while (!itemsHided)
 			//{
 			yield return new WaitForSeconds(0.5f);
@@ -1844,10 +2111,13 @@ public class LevelManager : MonoBehaviour
 		//}
 		//combs = newCombines;
 		//matchesGot = false;
-		do {
-			foreach (List<Item> comb in combs) {
+		do
+		{
+			foreach (List<Item> comb in combs)
+			{
 				int colorOffset = 0;
-				foreach (Item item in comb) {
+				foreach (Item item in comb)
+				{
 					item.GenColor(item.color + colorOffset);
 					colorOffset++;
 				}
@@ -1862,14 +2132,16 @@ public class LevelManager : MonoBehaviour
 			//matchesGot = false;
 
 			//     yield return new WaitForFixedUpdate();
-		} while (combs.Count > 0);
+		}
+		while (combs.Count > 0);
 		yield return new WaitForFixedUpdate();
 		SetPreBoosts();
 		if (!onlyFalling)
 			DragBlocked = false;
 		LevelManager.THIS.onlyFalling = false;
 
-		if (LevelManager.THIS.target == Target.BOMBS) {
+		if (LevelManager.THIS.target == Target.BOMBS)
+		{
 			StartCoroutine(InitBombs());
 		}
 		if (gameStatus == GameState.RegenLevel)
@@ -1878,19 +2150,22 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	void SetPreBoosts()
+	void SetPreBoosts ()
 	{   //activate boosts from map
 		bool NoBoosts = true;
-		if (BoostColorfullBomb > 0) {
+		if (BoostColorfullBomb > 0)
+		{
 			InitScript.Instance.SpendBoost(BoostType.Colorful_bomb);
 			GameObject colorMix = Instantiate(Resources.Load("Prefabs/Effects/colorful_mix")) as GameObject;
 			colorMix.transform.position = Vector3.zero + Vector3.up * -5f;
 			BoostColorfullBomb = 0;
 			NoBoosts = false;
 		}
-		if (BoostStriped > 0) {
+		if (BoostStriped > 0)
+		{
 			InitScript.Instance.SpendBoost(BoostType.Stripes);
-			foreach (Item item in GetRandomItems(BoostStriped)) {
+			foreach (Item item in GetRandomItems(BoostStriped))
+			{
 				item.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 				item.ChangeType();
 			}
@@ -1904,17 +2179,23 @@ public class LevelManager : MonoBehaviour
 
 
 
-	public List<Item> GetIngredients(int i = -1)
+	public List<Item> GetIngredients (int i = -1)
 	{
 		List<Item> list = new List<Item>();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-		foreach (GameObject item in items) {
-			if (i > -1) {
-				if (item.GetComponent<Item>().currentType == ItemsTypes.INGREDIENT && item.GetComponent<Item>().color == 1000 + i) {
+		foreach (GameObject item in items)
+		{
+			if (i > -1)
+			{
+				if (item.GetComponent<Item>().currentType == ItemsTypes.INGREDIENT && item.GetComponent<Item>().color == 1000 + i)
+				{
 					list.Add(item.GetComponent<Item>());
 				}
-			} else {
-				if (item.GetComponent<Item>().currentType == ItemsTypes.INGREDIENT) {
+			}
+			else
+			{
+				if (item.GetComponent<Item>().currentType == ItemsTypes.INGREDIENT)
+				{
 					list.Add(item.GetComponent<Item>());
 				}
 			}
@@ -1924,13 +2205,16 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	public void DestroyItems(bool withoutEffects = false)
+	public void DestroyItems (bool withoutEffects = false)
 	{
 
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-		foreach (GameObject item in items) {
-			if (item != null) {
-				if (item.GetComponent<Item>().currentType != ItemsTypes.INGREDIENT) {
+		foreach (GameObject item in items)
+		{
+			if (item != null)
+			{
+				if (item.GetComponent<Item>().currentType != ItemsTypes.INGREDIENT)
+				{
 					if (!withoutEffects)
 						item.GetComponent<Item>().DestroyItem();
 					else
@@ -1941,28 +2225,32 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public IEnumerator FindMatchDelay()
+	public IEnumerator FindMatchDelay ()
 	{
 		yield return new WaitForSeconds(0.2f);
 		LevelManager.THIS.FindMatches();
 
 	}
 
-	public void FindMatches()
+	public void FindMatches ()
 	{
 		StartCoroutine(FallingDown());
 	}
 
-	public List<List<Item>> GetMatches(FindSeparating separating = FindSeparating.NONE, int matches = 3)
+	public List<List<Item>> GetMatches (FindSeparating separating = FindSeparating.NONE, int matches = 3)
 	{
 		newCombines = new List<List<Item>>();
 		//       List<Item> countedSquares = new List<Item>();
 		countedSquares = new Hashtable();
 		countedSquares.Clear();
-		for (int col = 0; col < maxCols; col++) {
-			for (int row = 0; row < maxRows; row++) {
-				if (GetSquare(col, row) != null) {
-					if (!countedSquares.ContainsValue(GetSquare(col, row).item)) {
+		for (int col = 0; col < maxCols; col++)
+		{
+			for (int row = 0; row < maxRows; row++)
+			{
+				if (GetSquare(col, row) != null)
+				{
+					if (!countedSquares.ContainsValue(GetSquare(col, row).item))
+					{
 						List<Item> newCombine = GetSquare(col, row).FindMatchesAround(separating, matches, countedSquares);
 						if (newCombine.Count >= matches)
 							newCombines.Add(newCombine);
@@ -1975,16 +2263,20 @@ public class LevelManager : MonoBehaviour
 		return newCombines;
 	}
 
-	IEnumerator GetMatchesCor(FindSeparating separating = FindSeparating.NONE, int matches = 3, bool Smooth = true)
+	IEnumerator GetMatchesCor (FindSeparating separating = FindSeparating.NONE, int matches = 3, bool Smooth = true)
 	{
 		Hashtable countedSquares = new Hashtable();
-		for (int col = 0; col < maxCols; col++) {
+		for (int col = 0; col < maxCols; col++)
+		{
 			//if (Smooth)
 			//                    yield return new WaitForFixedUpdate();
-			for (int row = 0; row < maxRows; row++) {
+			for (int row = 0; row < maxRows; row++)
+			{
 
-				if (GetSquare(col, row) != null) {
-					if (!countedSquares.ContainsValue(GetSquare(col, row).item)) {
+				if (GetSquare(col, row) != null)
+				{
+					if (!countedSquares.ContainsValue(GetSquare(col, row).item))
+					{
 						List<Item> newCombine = GetSquare(col, row).FindMatchesAround(separating, matches, countedSquares);
 						if (newCombine.Count >= matches)
 							newCombines.Add(newCombine);
@@ -1997,20 +2289,24 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	IEnumerator CheckFallingAtStart()
+	IEnumerator CheckFallingAtStart ()
 	{
 		yield return new WaitForSeconds(0.5f);
-		while (!IsAllItemsFallDown()) {
+		while (!IsAllItemsFallDown())
+		{
 			yield return new WaitForSeconds(0.1f);
 		}
 		FindMatches();
 	}
 
-	public bool CheckExtraPackage(List<List<Item>> rowItems)
+	public bool CheckExtraPackage (List<List<Item>> rowItems)
 	{
-		foreach (List<Item> items in rowItems) {
-			foreach (Item item in items) {
-				if (item.square.FindMatchesAround(FindSeparating.VERTICAL).Count > 2) {
+		foreach (List<Item> items in rowItems)
+		{
+			foreach (Item item in items)
+			{
+				if (item.square.FindMatchesAround(FindSeparating.VERTICAL).Count > 2)
+				{
 					if (LevelManager.THIS.lastDraggedItem == null)
 						LevelManager.THIS.lastDraggedItem = item;
 					return true;
@@ -2022,7 +2318,7 @@ public class LevelManager : MonoBehaviour
 
 
 
-	IEnumerator FallingDown()
+	IEnumerator FallingDown ()
 	{
 		bool throwflower = false;
 		extraCageAddItem = 0;
@@ -2030,14 +2326,17 @@ public class LevelManager : MonoBehaviour
 		int combo = 0;
 		// AI.THIS.allowShowTip = false;
 		List<Item> it = GetItems();
-		for (int i = 0; i < it.Count; i++) {
+		for (int i = 0; i < it.Count; i++)
+		{
 			Item item = it[i];
-			if (item != null) {
+			if (item != null)
+			{
 				//AI.THIS.StopAllCoroutines();
 				item.anim.StopPlayback();
 			}
 		}
-		while (true) {
+		while (true)
+		{
 
 			//find matches
 			yield return new WaitForSeconds(0.1f);
@@ -2057,15 +2356,19 @@ public class LevelManager : MonoBehaviour
 			//if (combinedItems.Count > 0)
 			//    combo++;
 			combo = destroyAnyway.Count;
-			foreach (List<Item> desrtoyItems in combinedItems) {
-				if (lastDraggedItem == null) {
-					if (desrtoyItems.Count == 4) {
+			foreach (List<Item> desrtoyItems in combinedItems)
+			{
+				if (lastDraggedItem == null)
+				{
+					if (desrtoyItems.Count == 4)
+					{
 						if (lastDraggedItem == null)
 							lastDraggedItem = desrtoyItems[UnityEngine.Random.Range(0, desrtoyItems.Count)];
 						lastDraggedItem.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 						//lastDraggedItem.ChangeType();
 					}
-					if (desrtoyItems.Count >= 5) {
+					if (desrtoyItems.Count >= 5)
+					{
 						if (lastDraggedItem == null)
 							lastDraggedItem = desrtoyItems[UnityEngine.Random.Range(0, desrtoyItems.Count)];
 						lastDraggedItem.nextType = ItemsTypes.CHOCOBOMB;
@@ -2075,25 +2378,32 @@ public class LevelManager : MonoBehaviour
 				}
 			}
 
-			if (destroyAnyway.Count >= extraItemEvery) {
+			if (destroyAnyway.Count >= extraItemEvery)
+			{
 				LevelManager.THIS.nextExtraItems = destroyAnyway.Count / (int)extraItemEvery;
 			}
 			int destroyArrayCount = destroyAnyway.Count;
 			int iCounter = 0;
-			foreach (Item item in destroyAnyway) {
+			foreach (Item item in destroyAnyway)
+			{
 				iCounter++;
 				//  if(item.sprRenderer.enabled)
-				if (item.nextType == ItemsTypes.NONE) {
-					if (item.square.IsCageGoingToBroke()) {
-						if (iCounter == destroyArrayCount) {
+				if (item.nextType == ItemsTypes.NONE)
+				{
+					if (item.square.IsCageGoingToBroke())
+					{
+						if (iCounter == destroyArrayCount)
+						{
 
 							DestroyGatheredExtraItems(item);
 						}
-						if (iCounter % extraItemEvery == 0) {
+						if (iCounter % extraItemEvery == 0)
+						{
 							startPosFlowers.Add(item.transform.position);
 							List<Item> items = GetRandomItems(1);
 							int cc = 0;
-							foreach (Item item1 in items) {
+							foreach (Item item1 in items)
+							{
 								LevelManager.THIS.DragBlocked = true;
 								throwflower = true;
 								//                                item1.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
@@ -2104,8 +2414,11 @@ public class LevelManager : MonoBehaviour
 						}
 						yield return new WaitForSeconds(0.03f);
 						item.DestroyItem(true, "", true);  //destroy items safely
-					} else {
-						if (iCounter == destroyArrayCount) {
+					}
+					else
+					{
+						if (iCounter == destroyArrayCount)
+						{
 
 							DestroyGatheredExtraItems(item);
 						}
@@ -2118,13 +2431,15 @@ public class LevelManager : MonoBehaviour
 			destroyAnyway.Clear();
 
 
-			if (lastDraggedItem != null) {
+			if (lastDraggedItem != null)
+			{
 
 				//if (LevelManager.THIS.CheckExtraPackage(GetMatches(FindSeparating.HORIZONTAL)))
 				//{
 				//    LevelManager.THIS.lastDraggedItem.nextType = ItemsTypes.PACKAGE;
 				//}
-				if (lastDraggedItem.nextType != ItemsTypes.NONE) {
+				if (lastDraggedItem.nextType != ItemsTypes.NONE)
+				{
 					//lastDraggedItem.ChangeType();
 					yield return new WaitForSeconds(0.5f);
 
@@ -2132,14 +2447,18 @@ public class LevelManager : MonoBehaviour
 				lastDraggedItem = null;
 			}
 
-			while (!IsAllDestoyFinished()) {
+			while (!IsAllDestoyFinished())
+			{
 				yield return new WaitForSeconds(0.1f);
 			}
 
 			//falling down
-			for (int i = 0; i < 20; i++) {   //just for testing
-				for (int col = 0; col < maxCols; col++) {
-					for (int row = maxRows - 1; row >= 0; row--) {   //need to enumerate rows from bottom to top
+			for (int i = 0; i < 20; i++)
+			{   //just for testing
+				for (int col = 0; col < maxCols; col++)
+				{
+					for (int row = maxRows - 1; row >= 0; row--)
+					{   //need to enumerate rows from bottom to top
 						if (GetSquare(col, row) != null)
 							GetSquare(col, row).FallOut();
 					}
@@ -2150,11 +2469,16 @@ public class LevelManager : MonoBehaviour
 				yield return new WaitForSeconds(0.2f);
 
 			CheckIngredient();
-			for (int col = 0; col < maxCols; col++) {
-				for (int row = maxRows - 1; row >= 0; row--) {
-					if (GetSquare(col, row) != null) {
-						if (!GetSquare(col, row).IsNone()) {
-							if (GetSquare(col, row).item != null) {
+			for (int col = 0; col < maxCols; col++)
+			{
+				for (int row = maxRows - 1; row >= 0; row--)
+				{
+					if (GetSquare(col, row) != null)
+					{
+						if (!GetSquare(col, row).IsNone())
+						{
+							if (GetSquare(col, row).item != null)
+							{
 								GetSquare(col, row).item.StartFalling();
 								//if (row == maxRows - 1 && GetSquare(col, row).item.currentType == ItemsTypes.INGREDIENT)
 								//{
@@ -2169,18 +2493,24 @@ public class LevelManager : MonoBehaviour
 			GenerateNewItems();
 			// StartCoroutine(RegenMatches(true));
 			yield return new WaitForSeconds(0.1f);
-			while (!IsAllItemsFallDown()) {
+			while (!IsAllItemsFallDown())
+			{
 				yield return new WaitForSeconds(0.1f);
 			}
 
 			//detect near empty squares to fall into
 			nearEmptySquareDetected = false;
 
-			for (int col = 0; col < maxCols; col++) {
-				for (int row = maxRows - 1; row >= 0; row--) {
-					if (GetSquare(col, row) != null) {
-						if (!GetSquare(col, row).IsNone()) {
-							if (GetSquare(col, row).item != null) {
+			for (int col = 0; col < maxCols; col++)
+			{
+				for (int row = maxRows - 1; row >= 0; row--)
+				{
+					if (GetSquare(col, row) != null)
+					{
+						if (!GetSquare(col, row).IsNone())
+						{
+							if (GetSquare(col, row).item != null)
+							{
 								if (GetSquare(col, row).item.GetNearEmptySquares())
 									nearEmptySquareDetected = true;
 
@@ -2196,7 +2526,8 @@ public class LevelManager : MonoBehaviour
 			//    yield return new WaitForFixedUpdate();
 			//matchesGot = false;
 			//CheckIngredient();
-			while (!IsAllItemsFallDown()) {//1.3.2
+			while (!IsAllItemsFallDown())
+			{//1.3.2
 				yield return new WaitForSeconds(0.1f);
 			}
 
@@ -2207,11 +2538,15 @@ public class LevelManager : MonoBehaviour
 		}
 
 		List<Item> item_ = GetItems();
-		for (int i = 0; i < it.Count; i++) {
-			if (item_.Count > i) {
+		for (int i = 0; i < it.Count; i++)
+		{
+			if (item_.Count > i)
+			{
 				Item item1 = item_[i];
-				if (item1 != null) {
-					if (item1 != item1.square.item) {
+				if (item1 != null)
+				{
+					if (item1 != item1.square.item)
+					{
 						Destroy(item1.gameObject);
 					}
 				}
@@ -2219,23 +2554,32 @@ public class LevelManager : MonoBehaviour
 		}
 
 		//thrive thriving blocks
-		if (!thrivingBlockDestroyed) {
+		if (!thrivingBlockDestroyed)
+		{
 			bool thrivingBlockSelected = false;
-			for (int col = 0; col < maxCols; col++) {
+			for (int col = 0; col < maxCols; col++)
+			{
 				if (thrivingBlockSelected)
 					break;
-				for (int row = maxRows - 1; row >= 0; row--) {
+				for (int row = maxRows - 1; row >= 0; row--)
+				{
 					if (thrivingBlockSelected)
 						break;
-					if (GetSquare(col, row) != null) {
-						if (GetSquare(col, row).type == SquareTypes.THRIVING) {
+					if (GetSquare(col, row) != null)
+					{
+						if (GetSquare(col, row).type == SquareTypes.THRIVING)
+						{
 							List<Square> sqList = GetSquaresAround(GetSquare(col, row));
 
-							foreach (Square sq in sqList) {
-								if (sq.CanFallInto() && UnityEngine.Random.Range(0, 5) == 0 && sq.type == SquareTypes.EMPTY) {
-									if (sq.item != null) {//1.3
-										if (sq.item.currentType == ItemsTypes.NONE) {//1.3
-																					 //GetSquare(col, row).GenThriveBlock(sq);
+							foreach (Square sq in sqList)
+							{
+								if (sq.CanFallInto() && UnityEngine.Random.Range(0, 5) == 0 && sq.type == SquareTypes.EMPTY)
+								{
+									if (sq.item != null)
+									{//1.3
+										if (sq.item.currentType == ItemsTypes.NONE)
+										{//1.3
+											//GetSquare(col, row).GenThriveBlock(sq);
 											CreateObstacles(sq.col, sq.row, sq.gameObject, SquareTypes.THRIVING);
 
 											thrivingBlockSelected = true;
@@ -2254,11 +2598,16 @@ public class LevelManager : MonoBehaviour
 		if (gameStatus == GameState.Playing && !ingredientFly)
 			LevelManager.THIS.CheckWinLose();
 
-		if (combo > 11 && gameStatus == GameState.Playing) {
+		if (combo > 11 && gameStatus == GameState.Playing)
+		{
 			gratzWords[2].SetActive(true);
-		} else if (combo > 8 && gameStatus == GameState.Playing) {
+		}
+		else if (combo > 8 && gameStatus == GameState.Playing)
+		{
 			gratzWords[1].SetActive(true);
-		} else if (combo > 5 && gameStatus == GameState.Playing) {
+		}
+		else if (combo > 5 && gameStatus == GameState.Playing)
+		{
 			gratzWords[0].SetActive(true);
 		}
 
@@ -2289,7 +2638,8 @@ public class LevelManager : MonoBehaviour
 
 		List<Item> itemss = GetItems();
 		bombTimers.Clear();
-		foreach (Item item in itemss) {
+		foreach (Item item in itemss)
+		{
 			if (item.currentType == ItemsTypes.BOMB)
 				bombTimers.Add(item.bombTimer);
 		}
@@ -2306,21 +2656,24 @@ public class LevelManager : MonoBehaviour
 	public CollectStars starsTargetCount;
 	public int extraCageAddItem;
 
-	public void CheckHighlightExtraItem(Item item)
+	public void CheckHighlightExtraItem (Item item)
 	{
 		//  if (gatheredTypes.Count >=1)
 		ClearHighlight(true);
-		foreach (Item _item in destroyAnyway) {
+		foreach (Item _item in destroyAnyway)
+		{
 			if (_item.currentType == ItemsTypes.HORIZONTAL_STRIPPED || _item.currentType == ItemsTypes.VERTICAL_STRIPPED)
 				highlightedItems.Add(_item);
 
 		}
 
-		if (gatheredTypes.Count > 1) {
+		if (gatheredTypes.Count > 1)
+		{
 			item.SetHighlight(ItemsTypes.HORIZONTAL_STRIPPED);
 			item.SetHighlight(ItemsTypes.VERTICAL_STRIPPED);
 		}
-		foreach (ItemsTypes itemType in gatheredTypes) {
+		foreach (ItemsTypes itemType in gatheredTypes)
+		{
 
 			if (itemType == ItemsTypes.HORIZONTAL_STRIPPED)
 				item.SetHighlight(ItemsTypes.HORIZONTAL_STRIPPED);
@@ -2330,15 +2683,18 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public void ClearHighlight(bool boost = false)
+	public void ClearHighlight (bool boost = false)
 	{
 
 		if (!boost)
 			return;
 		highlightedItems.Clear();
-		for (int col = 0; col < maxCols; col++) {
-			for (int row = 0; row < maxRows; row++) {
-				if (GetSquare(col, row) != null) {
+		for (int col = 0; col < maxCols; col++)
+		{
+			for (int row = 0; row < maxRows; row++)
+			{
+				if (GetSquare(col, row) != null)
+				{
 					GetSquare(col, row).SetActiveCage(false);
 					GetSquare(col, row).HighLight(false);
 				}
@@ -2346,17 +2702,19 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	public void DestroyDoubleBomb(int col)
+	public void DestroyDoubleBomb (int col)
 	{
 		StartCoroutine(DestroyDoubleBombCor(col));
 		StartCoroutine(DestroyDoubleBombCorBack(col));
 	}
 
-	IEnumerator DestroyDoubleBombCor(int col)
+	IEnumerator DestroyDoubleBombCor (int col)
 	{
-		for (int i = col; i < maxCols; i++) {
+		for (int i = col; i < maxCols; i++)
+		{
 			List<Item> list = GetColumn(i);
-			foreach (Item item in list) {
+			foreach (Item item in list)
+			{
 				if (item != null)
 					item.DestroyItem(true, "", true);
 			}
@@ -2368,11 +2726,13 @@ public class LevelManager : MonoBehaviour
 			FindMatches();
 	}
 
-	IEnumerator DestroyDoubleBombCorBack(int col)
+	IEnumerator DestroyDoubleBombCorBack (int col)
 	{
-		for (int i = col - 1; i >= 0; i--) {
+		for (int i = col - 1; i >= 0; i--)
+		{
 			List<Item> list = GetColumn(i);
-			foreach (Item item in list) {
+			foreach (Item item in list)
+			{
 				if (item != null)
 					item.DestroyItem(true, "", true);
 			}
@@ -2385,25 +2745,30 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	public Square GetSquare(int col, int row, bool safe = false)
+	public Square GetSquare (int col, int row, bool safe = false)
 	{
-		if (!safe) {
+		if (!safe)
+		{
 			if (row >= maxRows || col >= maxCols)
 				return null;
 			return squaresArray[row * maxCols + col];
-		} else {
+		}
+		else
+		{
 			row = Mathf.Clamp(row, 0, maxRows - 1);
 			col = Mathf.Clamp(col, 0, maxCols - 1);
 			return squaresArray[row * maxCols + col];
 		}
 	}
 
-	bool IsAllDestoyFinished()
+	bool IsAllDestoyFinished ()
 	{
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-		foreach (GameObject item in items) {
+		foreach (GameObject item in items)
+		{
 			Item itemComponent = item.GetComponent<Item>();
-			if (itemComponent == null) {
+			if (itemComponent == null)
+			{
 				return false;
 			}
 			if (itemComponent.destroying && !itemComponent.animationFinished)
@@ -2413,14 +2778,16 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	bool IsAllItemsFallDown()
+	bool IsAllItemsFallDown ()
 	{
 		if (gameStatus == GameState.PreWinAnimations)
 			return true;
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-		foreach (GameObject item in items) {
+		foreach (GameObject item in items)
+		{
 			Item itemComponent = item.GetComponent<Item>();
-			if (itemComponent == null) {
+			if (itemComponent == null)
+			{
 				return false;
 			}
 			if (itemComponent.falling)
@@ -2429,58 +2796,63 @@ public class LevelManager : MonoBehaviour
 		return true;
 	}
 
-	public Vector2 GetPosition(Item item)
+	public Vector2 GetPosition (Item item)
 	{
 		return GetPosition(item.square);
 	}
 
-	public Vector2 GetPosition(Square square)
+	public Vector2 GetPosition (Square square)
 	{
 		return new Vector2(square.col, square.row);
 	}
 
-	public List<Item> GetRow(int row)
+	public List<Item> GetRow (int row)
 	{
 		List<Item> itemsList = new List<Item>();
-		for (int col = 0; col < maxCols; col++) {
+		for (int col = 0; col < maxCols; col++)
+		{
 			itemsList.Add(GetSquare(col, row, true).item);
 		}
 		return itemsList;
 	}
 
-	public List<Square> GetRowSquare(int row)
+	public List<Square> GetRowSquare (int row)
 	{
 		List<Square> itemsList = new List<Square>();
-		for (int col = 0; col < maxCols; col++) {
+		for (int col = 0; col < maxCols; col++)
+		{
 			itemsList.Add(GetSquare(col, row, true));
 		}
 		return itemsList;
 	}
 
 
-	public List<Item> GetColumn(int col)
+	public List<Item> GetColumn (int col)
 	{
 		List<Item> itemsList = new List<Item>();
-		for (int row = 0; row < maxRows; row++) {
+		for (int row = 0; row < maxRows; row++)
+		{
 			itemsList.Add(GetSquare(col, row, true).item);
 		}
 		return itemsList;
 	}
 
-	public List<Square> GetColumnSquare(int col)
+	public List<Square> GetColumnSquare (int col)
 	{
 		List<Square> itemsList = new List<Square>();
-		for (int row = 0; row < maxRows; row++) {
+		for (int row = 0; row < maxRows; row++)
+		{
 			itemsList.Add(GetSquare(col, row, true));
 		}
 		return itemsList;
 	}
 
 
-	public List<Square> GetColumnSquaresObstacles(int col)
+	public List<Square> GetColumnSquaresObstacles (int col)
 	{
 		List<Square> itemsList = new List<Square>();
-		for (int row = 0; row < maxRows; row++) {
+		for (int row = 0; row < maxRows; row++)
+		{
 			if (GetSquare(col, row, true).IsHaveDestroybleObstacle())
 				itemsList.Add(GetSquare(col, row, true));
 			if (GetSquare(col, row, true).block.Count > 0)
@@ -2490,10 +2862,11 @@ public class LevelManager : MonoBehaviour
 		return itemsList;
 	}
 
-	public List<Square> GetRowSquaresObstacles(int row)
+	public List<Square> GetRowSquaresObstacles (int row)
 	{
 		List<Square> itemsList = new List<Square>();
-		for (int col = 0; col < maxCols; col++) {
+		for (int col = 0; col < maxCols; col++)
+		{
 			if (GetSquare(col, row, true).IsHaveDestroybleObstacle())
 				itemsList.Add(GetSquare(col, row, true));
 			if (GetSquare(col, row, true).block.Count > 0)
@@ -2502,7 +2875,7 @@ public class LevelManager : MonoBehaviour
 		return itemsList;
 	}
 
-	public List<Item> GetRandomItems(int count)
+	public List<Item> GetRandomItems (int count)
 	{
 		List<Item> list = new List<Item>();
 		List<Item> list2 = new List<Item>();
@@ -2511,28 +2884,34 @@ public class LevelManager : MonoBehaviour
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
 		if (items.Length < count)
 			count = items.Length;
-		foreach (GameObject item in items) {
+		foreach (GameObject item in items)
+		{
 			if (!item.GetComponent<Item>().destroying && item.GetComponent<Item>().currentType == ItemsTypes.NONE
-				&& item.GetComponent<Item>().nextType == ItemsTypes.NONE
-				&& item.GetComponent<Item>().square.type != SquareTypes.WIREBLOCK) {
+			    && item.GetComponent<Item>().nextType == ItemsTypes.NONE
+			    && item.GetComponent<Item>().square.type != SquareTypes.WIREBLOCK)
+			{
 				list.Add(item.GetComponent<Item>());
 			}
 		}
-		while (list2.Count < count) {
+		while (list2.Count < count)
+		{
 			Item newItem = list[UnityEngine.Random.Range(0, list.Count)];
-			if (list2.IndexOf(newItem) < 0) {
+			if (list2.IndexOf(newItem) < 0)
+			{
 				list2.Add(newItem);
 			}
 		}
 		return list2;
 	}
 
-	List<Item> GetAllExtraItems()
+	List<Item> GetAllExtraItems ()
 	{
 		List<Item> list = new List<Item>();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-		foreach (GameObject item in items) {
-			if (item.GetComponent<Item>().currentType != ItemsTypes.NONE) {
+		foreach (GameObject item in items)
+		{
+			if (item.GetComponent<Item>().currentType != ItemsTypes.NONE)
+			{
 				list.Add(item.GetComponent<Item>());
 			}
 		}
@@ -2541,33 +2920,37 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	public List<Item> GetItemsAround(Square square)
+	public List<Item> GetItemsAround (Square square)
 	{
 		int col = square.col;
 		int row = square.row;
 		List<Item> itemsList = new List<Item>();
-		for (int r = row - 1; r <= row + 1; r++) {
-			for (int c = col - 1; c <= col + 1; c++) {
+		for (int r = row - 1; r <= row + 1; r++)
+		{
+			for (int c = col - 1; c <= col + 1; c++)
+			{
 				itemsList.Add(GetSquare(c, r, true).item);
 			}
 		}
 		return itemsList;
 	}
 
-	public List<Square> GetSquaresAround(Square square)
+	public List<Square> GetSquaresAround (Square square)
 	{
 		int col = square.col;
 		int row = square.row;
 		List<Square> itemsList = new List<Square>();
-		for (int r = row - 1; r <= row + 1; r++) {
-			for (int c = col - 1; c <= col + 1; c++) {
+		for (int r = row - 1; r <= row + 1; r++)
+		{
+			for (int c = col - 1; c <= col + 1; c++)
+			{
 				itemsList.Add(GetSquare(c, r, true));
 			}
 		}
 		return itemsList;
 	}
 
-	public List<Item> GetItemsCross(Square square, List<Item> exceptList = null, int COLOR = -1)
+	public List<Item> GetItemsCross (Square square, List<Item> exceptList = null, int COLOR = -1)
 	{
 		if (exceptList == null)
 			exceptList = new List<Item>();
@@ -2576,22 +2959,26 @@ public class LevelManager : MonoBehaviour
 		List<Item> itemsList = new List<Item>();
 		Item item = null;
 		item = GetSquare(c - 1, r, true).item;
-		if (exceptList.IndexOf(item) <= -1) {
+		if (exceptList.IndexOf(item) <= -1)
+		{
 			if (item.color == COLOR || COLOR == -1)
 				itemsList.Add(item);
 		}
 		item = GetSquare(c + 1, r, true).item;
-		if (exceptList.IndexOf(item) <= -1) {
+		if (exceptList.IndexOf(item) <= -1)
+		{
 			if (item.color == COLOR || COLOR == -1)
 				itemsList.Add(item);
 		}
 		item = GetSquare(c, r - 1, true).item;
-		if (exceptList.IndexOf(item) <= -1) {
+		if (exceptList.IndexOf(item) <= -1)
+		{
 			if (item.color == COLOR || COLOR == -1)
 				itemsList.Add(item);
 		}
 		item = GetSquare(c, r + 1, true).item;
-		if (exceptList.IndexOf(item) <= -1) {
+		if (exceptList.IndexOf(item) <= -1)
+		{
 			if (item.color == COLOR || COLOR == -1)
 				itemsList.Add(item);
 		}
@@ -2599,13 +2986,17 @@ public class LevelManager : MonoBehaviour
 		return itemsList;
 	}
 
-	public List<Item> GetItems()
+	public List<Item> GetItems ()
 	{
 		List<Item> itemsList = new List<Item>();
-		for (int row = 0; row < maxRows; row++) {
-			for (int col = 0; col < maxCols; col++) {
-				if (GetSquare(col, row) != null) {
-					if (GetSquare(col, row).item != null) {
+		for (int row = 0; row < maxRows; row++)
+		{
+			for (int col = 0; col < maxCols; col++)
+			{
+				if (GetSquare(col, row) != null)
+				{
+					if (GetSquare(col, row).item != null)
+					{
 						itemsList.Add(GetSquare(col, row, true).item);
 					}
 				}
@@ -2614,12 +3005,15 @@ public class LevelManager : MonoBehaviour
 		return itemsList;
 	}
 
-	public List<Square> GetSquares()
+	public List<Square> GetSquares ()
 	{
 		List<Square> itemsList = new List<Square>();
-		for (int row = 0; row < maxRows; row++) {
-			for (int col = 0; col < maxCols; col++) {
-				if (GetSquare(col, row) != null) {
+		for (int row = 0; row < maxRows; row++)
+		{
+			for (int col = 0; col < maxCols; col++)
+			{
+				if (GetSquare(col, row) != null)
+				{
 					itemsList.Add(GetSquare(col, row));
 				}
 			}
@@ -2628,11 +3022,13 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	public void SetTypeByColor(int p, ItemsTypes nextType)
+	public void SetTypeByColor (int p, ItemsTypes nextType)
 	{
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-		foreach (GameObject item in items) {
-			if (item.GetComponent<Item>().color == p) {
+		foreach (GameObject item in items)
+		{
+			if (item.GetComponent<Item>().color == p)
+			{
 				if (nextType == ItemsTypes.HORIZONTAL_STRIPPED || nextType == ItemsTypes.VERTICAL_STRIPPED)
 					item.GetComponent<Item>().nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 				else
@@ -2645,17 +3041,18 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	public void SetColorToRandomItems()
+	public void SetColorToRandomItems ()
 	{
 		StartCoroutine(SetColorToRandomItemscCor());
 
 	}
 
-	IEnumerator SetColorToRandomItemscCor()
+	IEnumerator SetColorToRandomItemscCor ()
 	{
 		int p = UnityEngine.Random.Range(0, colorLimit);
 		List<Item> items = GetRandomItems((GameObject.FindGameObjectsWithTag("Item").Length) / 3);
-		foreach (Item item in items) {
+		foreach (Item item in items)
+		{
 
 			yield return new WaitForSeconds(0.01f);
 			item.SetColor(p);
@@ -2665,27 +3062,33 @@ public class LevelManager : MonoBehaviour
 
 	}
 
-	public void CheckIngredient()
+	public void CheckIngredient ()
 	{
 		int row = maxRows;
 		List<Square> sqList = GetBottomRow();
-		foreach (Square sq in sqList) {
-			if (sq.item != null) {
-				if (sq.item.currentType == ItemsTypes.INGREDIENT) {
+		foreach (Square sq in sqList)
+		{
+			if (sq.item != null)
+			{
+				if (sq.item.currentType == ItemsTypes.INGREDIENT)
+				{
 					destroyAnyway.Add(sq.item);
 				}
 			}
 		}
 	}
 
-	public List<Square> GetBottomRow()
+	public List<Square> GetBottomRow ()
 	{
 		List<Square> itemsList = new List<Square>();
 		int listCounter = 0;
-		for (int col = 0; col < maxCols; col++) {
-			for (int row = maxRows - 1; row >= 0; row--) {
+		for (int col = 0; col < maxCols; col++)
+		{
+			for (int row = maxRows - 1; row >= 0; row--)
+			{
 				Square square = GetSquare(col, row, true);
-				if (square.type != SquareTypes.NONE) {
+				if (square.type != SquareTypes.NONE)
+				{
 					itemsList.Add(square);
 					listCounter++;
 					break;
@@ -2695,10 +3098,12 @@ public class LevelManager : MonoBehaviour
 		return itemsList;
 	}
 
-	IEnumerator StartIdleCor()
+	IEnumerator StartIdleCor ()
 	{
-		for (int col = 0; col < maxCols; col++) {
-			for (int row = 0; row < maxRows; row++) {
+		for (int col = 0; col < maxCols; col++)
+		{
+			for (int row = 0; row < maxRows; row++)
+			{
 				// GetSquare(col, row, true).item.anim.SetBool("stop", false);
 				if (GetSquare(col, row, true).item != null)
 					GetSquare(col, row, true).item.StartIdleAnim();
@@ -2709,7 +3114,7 @@ public class LevelManager : MonoBehaviour
 		yield return new WaitForFixedUpdate();
 	}
 
-	public void StrippedShow(GameObject obj, bool horrizontal)
+	public void StrippedShow (GameObject obj, bool horrizontal)
 	{
 		GameObject effect = Instantiate(stripesEffect, obj.transform.position, Quaternion.identity) as GameObject;
 		if (!horrizontal)
@@ -2717,16 +3122,18 @@ public class LevelManager : MonoBehaviour
 		Destroy(effect, 1);
 	}
 
-	public void PopupScore(int value, Vector3 pos, int color)
+	public void PopupScore (int value, Vector3 pos, int color)
 	{
 		Score += value;
 		UpdateBar();
 		CheckStars();
-		if (showPopupScores) {
+		if (showPopupScores)
+		{
 			Transform parent = GameObject.Find("CanvasScore").transform;
 			GameObject poptxt = Instantiate(popupScore, pos, Quaternion.identity) as GameObject;
 			poptxt.transform.GetComponentInChildren<Text>().text = "" + value;
-			if (color <= scoresColors.Length - 1) {
+			if (color <= scoresColors.Length - 1)
+			{
 				poptxt.transform.GetComponentInChildren<Text>().color = scoresColors[color];
 				poptxt.transform.GetComponentInChildren<Outline>().effectColor = scoresColorsOutline[color];
 			}
@@ -2737,47 +3144,54 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	void UpdateBar()
+	void UpdateBar ()
 	{
 		ProgressBarScript.Instance.UpdateDisplay((float)Score * 100f / ((float)star1 / ((star1 * 100f / star3)) * 100f) / 100f);
 
 	}
 
-	void CheckStars()
+	void CheckStars ()
 	{
-		if (Score >= star1 && stars <= 0) {
+		if (Score >= star1 && stars <= 0)
+		{
 			stars = 1;
 		}
-		if (Score >= star2 && stars <= 1) {
+		if (Score >= star2 && stars <= 1)
+		{
 			stars = 2;
 		}
-		if (Score >= star3 && stars <= 2) {
+		if (Score >= star3 && stars <= 2)
+		{
 			stars = 3;
 		}
 
-		if (Score >= star1) {
+		if (Score >= star1)
+		{
 			if (!star1Anim.activeSelf)
 				SoundBase.Instance.PlaySound(SoundBase.Instance.getStarIngr);
 			star1Anim.SetActive(true);
 		}
-		if (Score >= star2) {
+		if (Score >= star2)
+		{
 			if (!star2Anim.activeSelf)
 				SoundBase.Instance.PlaySound(SoundBase.Instance.getStarIngr);
 			star2Anim.SetActive(true);
 		}
-		if (Score >= star3) {
+		if (Score >= star3)
+		{
 			if (!star3Anim.activeSelf)
 				SoundBase.Instance.PlaySound(SoundBase.Instance.getStarIngr);
 			star3Anim.SetActive(true);
 		}
 	}
 
-	public void LoadDataFromLocal(int currentLevel)
+	public void LoadDataFromLocal (int currentLevel)
 	{
 		levelLoaded = false;
 		//Read data from text file
 		TextAsset mapText = Resources.Load("Levels/" + currentLevel) as TextAsset;
-		if (mapText == null) {
+		if (mapText == null)
+		{
 			mapText = Resources.Load("Levels/" + currentLevel) as TextAsset;
 		}
 		ProcessGameDataFromString(mapText.text);
@@ -2785,27 +3199,32 @@ public class LevelManager : MonoBehaviour
 
 
 
-	void ProcessGameDataFromString(string mapText)
+	void ProcessGameDataFromString (string mapText)
 	{
 		string[] lines = mapText.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 		ingrTarget = new List<CollectedIngredients>();
 		int mapLine = 0;
-		foreach (string line in lines) {
+		foreach (string line in lines)
+		{
 			//check if line is game mode line
-			if (line.StartsWith("MODE")) {
+			if (line.StartsWith("MODE"))
+			{
 				//Replace GM to get mode number, 
 				string modeString = line.Replace("MODE", string.Empty).Trim();
 				//then parse it to interger
 				target = (Target)int.Parse(modeString);
 				//Assign game mode
-			} else if (line.StartsWith("SIZE ")) {
+			}
+			else if (line.StartsWith("SIZE "))
+			{
 				string blocksString = line.Replace("SIZE", string.Empty).Trim();
 				string[] sizes = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				maxCols = int.Parse(sizes[0]);
 				maxRows = int.Parse(sizes[1]);
 				squaresArray = new Square[maxCols * maxRows];
 				levelSquaresFile = new SquareBlocks[maxRows * maxCols];
-				for (int i = 0; i < levelSquaresFile.Length; i++) {
+				for (int i = 0; i < levelSquaresFile.Length; i++)
+				{
 
 					SquareBlocks sqBlocks = new SquareBlocks();
 					sqBlocks.block = SquareTypes.EMPTY;
@@ -2813,27 +3232,35 @@ public class LevelManager : MonoBehaviour
 
 					levelSquaresFile[i] = sqBlocks;
 				}
-			} else if (line.StartsWith("LIMIT")) {
+			}
+			else if (line.StartsWith("LIMIT"))
+			{
 				string blocksString = line.Replace("LIMIT", string.Empty).Trim();
 				string[] sizes = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				limitType = (LIMIT)int.Parse(sizes[0]);
 				Limit = int.Parse(sizes[1]);
-			} else if (line.StartsWith("COLOR LIMIT ")) {
+			}
+			else if (line.StartsWith("COLOR LIMIT "))
+			{
 				string blocksString = line.Replace("COLOR LIMIT", string.Empty).Trim();
 				colorLimit = int.Parse(blocksString);
 			}
 
 			//check third line to get missions
-			else if (line.StartsWith("STARS")) {
+			else if (line.StartsWith("STARS"))
+			{
 				string blocksString = line.Replace("STARS", string.Empty).Trim();
 				string[] blocksNumbers = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				star1 = int.Parse(blocksNumbers[0]);
 				star2 = int.Parse(blocksNumbers[1]);
 				star3 = int.Parse(blocksNumbers[2]);
-			} else if (line.StartsWith("COLLECT COUNT ")) {
+			}
+			else if (line.StartsWith("COLLECT COUNT "))
+			{
 				string blocksString = line.Replace("COLLECT COUNT", string.Empty).Trim();
 				string[] blocksNumbers = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-				for (int i = 0; i < blocksNumbers.Length; i++) {
+				for (int i = 0; i < blocksNumbers.Length; i++)
+				{
 					if (InitScript.Instance.collectedIngredients.Count <= i && target == Target.COLLECT)
 						break;
 					//ingrCountTarget[i] = int.Parse(blocksNumbers[i]);
@@ -2843,40 +3270,56 @@ public class LevelManager : MonoBehaviour
 						ingrTarget.Add(new CollectedIngredients());
 					ingrTarget[ingrTarget.Count - 1].count = int.Parse(blocksNumbers[i]);
 				}
-			} else if (line.StartsWith("COLLECT ITEMS ")) {
+			}
+			else if (line.StartsWith("COLLECT ITEMS "))
+			{
 				string blocksString = line.Replace("COLLECT ITEMS", string.Empty).Trim();
 				string[] blocksNumbers = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-				for (int i = 0; i < blocksNumbers.Length; i++) {
-					if (target == Target.COLLECT) {
-						if (ingrTarget.Count > i) {
+				for (int i = 0; i < blocksNumbers.Length; i++)
+				{
+					if (target == Target.COLLECT)
+					{
+						if (ingrTarget.Count > i)
+						{
 
 							CollectedIngredients ingFromList = InitScript.Instance.collectedIngredients[int.Parse(blocksNumbers[i])];
 							ingrTarget[i].check = true;
 							ingrTarget[i].name = ingFromList.name;
 							ingrTarget[i].sprite = ingFromList.sprite;
 						}
-					} else if (target == Target.ITEMS) {
+					}
+					else if (target == Target.ITEMS)
+					{
 						collectItems[i] = (CollectItems)int.Parse(blocksNumbers[i]) + 1;
 					}
 
 
 				}
-			} else if (line.StartsWith("CAGE ")) {
+			}
+			else if (line.StartsWith("CAGE "))
+			{
 				string blocksString = line.Replace("CAGE ", string.Empty).Trim();
 				cageHP = int.Parse(blocksString);
-			} else if (line.StartsWith("BOMBS ")) {
+			}
+			else if (line.StartsWith("BOMBS "))
+			{
 				Debug.Log("load bomb");
 				string blocksString = line.Replace("BOMBS ", string.Empty).Trim();
 				string[] blocksNumbers = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				bombsCollect = int.Parse(blocksNumbers[0]);
 				bombTimer = int.Parse(blocksNumbers[1]);
-			} else if (line.StartsWith("GETSTARS ")) {
+			}
+			else if (line.StartsWith("GETSTARS "))
+			{
 				string blocksString = line.Replace("GETSTARS ", string.Empty).Trim();
 				starsTargetCount = (CollectStars)int.Parse(blocksString);
-			} else { //Maps
-					 //Split lines again to get map numbers
+			}
+			else
+			{ //Maps
+				//Split lines again to get map numbers
 				string[] st = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-				for (int i = 0; i < st.Length; i++) {
+				for (int i = 0; i < st.Length; i++)
+				{
 					levelSquaresFile[mapLine * maxCols + i].block = (SquareTypes)int.Parse(st[i][0].ToString());
 					levelSquaresFile[mapLine * maxCols + i].obstacle = (SquareTypes)int.Parse(st[i][1].ToString());
 				}
@@ -2884,8 +3327,10 @@ public class LevelManager : MonoBehaviour
 			}
 		}
 		TargetBlocks = 0;
-		for (int row = 0; row < maxRows; row++) {
-			for (int col = 0; col < maxCols; col++) {
+		for (int row = 0; row < maxRows; row++)
+		{
+			for (int col = 0; col < maxCols; col++)
+			{
 				if (levelSquaresFile[row * maxCols + col].block == SquareTypes.BLOCK)
 					TargetBlocks++;
 				else if (levelSquaresFile[row * maxCols + col].block == SquareTypes.DOUBLEBLOCK)
@@ -2893,8 +3338,10 @@ public class LevelManager : MonoBehaviour
 			}
 		}
 		TargetCages = 0;
-		for (int row = 0; row < maxRows; row++) {
-			for (int col = 0; col < maxCols; col++) {
+		for (int row = 0; row < maxRows; row++)
+		{
+			for (int col = 0; col < maxCols; col++)
+			{
 				if (levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.WIREBLOCK)
 					TargetCages++;
 			}

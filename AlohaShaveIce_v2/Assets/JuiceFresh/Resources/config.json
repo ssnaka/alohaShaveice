@@ -32,10 +32,10 @@
       "useIosProdCert" : false,
       "useIosProdCertLive" : false
     },
-    "facebook" : {
+	"facebook" : {
       "@id" : "/integrations/facebook",
-      "facebookAppId" : "511910108966112",
-      "facebookSecret" : "9eba64023cb59a3047f35bb8383c8123",
+      "facebookAppId": "838899282930098",
+      "facebookSecret": "aec35df77d494b6e3bcbdbfb52ff41e6",
       "segmentData" : [ ]
     },
     "google" : {

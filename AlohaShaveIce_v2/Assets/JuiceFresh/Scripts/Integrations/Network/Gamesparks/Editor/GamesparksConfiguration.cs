@@ -53,17 +53,19 @@ public class GamesparksConfiguration : EditorWindow
 
 	static void CreateGame (string dest_login, string dest_password)
 	{
-		string HOST = "https://portal.gamesparks.net/";
+		string HOST = "https://config2.gamesparks.net/";//"https://portal.gamesparks.net/";
 		string REST_URL = HOST + "restv2/game/";
 
 		var Json_config = LoadResourceTextfile("config.json");
+
 		Json_config = Json_config.Replace("Jelly Garden", game_name);
+
 		string url_put = REST_URL + "/config";
 
 		WebClient wc = new WebClient();
 		NetworkCredential dest_auth = new NetworkCredential(dest_login, dest_password);
-		wc.Credentials = dest_auth;
 
+		wc.Credentials = dest_auth;
 		string put = wc.UploadString(url_put, "Post", Json_config);
 
 		var parsedJSON = GSJson.From(put)as IDictionary<string, object>;

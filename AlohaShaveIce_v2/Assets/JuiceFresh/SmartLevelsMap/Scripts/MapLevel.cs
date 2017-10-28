@@ -25,6 +25,9 @@ public class MapLevel : MonoBehaviour {
 	public Transform SolidStars2;
 	public Transform SolidStars3;
 
+	[SerializeField]
+	GameObject timerImage;
+
 	public void Awake () {
 		_originalScale = transform.localScale;
 	}
@@ -75,6 +78,28 @@ public class MapLevel : MonoBehaviour {
 		UpdateStars (starsCount);
 		IsLocked = isLocked;
 		Lock.gameObject.SetActive (isLocked);
+
+		if (!IsLocked)
+		{
+			string mapText = LevelManager.GetDataFromLocal(Number);
+
+
+			string[] lines = mapText.Split(new string[] { "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+			foreach (string line in lines)
+			{
+				if (line.StartsWith("LIMIT"))
+				{
+					string blocksString = line.Replace("LIMIT", string.Empty).Trim();
+					string[] sizes = blocksString.Split(new string[] { "/" }, System.StringSplitOptions.RemoveEmptyEntries);
+					LIMIT limit = (LIMIT)int.Parse(sizes[0]);
+					if (limit.Equals(LIMIT.TIME))
+					{
+						timerImage.SetActive(true);
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	public void UpdateStars (int starsCount) {

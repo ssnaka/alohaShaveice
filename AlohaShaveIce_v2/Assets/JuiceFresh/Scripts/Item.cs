@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.UI;
 
+using DG.Tweening;
+
 public enum ItemsTypes
 {
 	NONE = 0,
@@ -382,10 +384,56 @@ public class Item : MonoBehaviour
 
 		}
 
-
 		if (currentType == ItemsTypes.BOMB && timerText != null)
 			timerText.text = "" + bombTimer;
 
+		if (LevelManager.Instance.limitType == LIMIT.TIME && LevelManager.THIS.Limit <= 30)// && LevelManager.THIS.Limit % 10 == 0)
+		{
+			OnTimerAlert();
+		}
+	}
+
+	bool timerAlertStarted = false;
+	void OnTimerAlert ()
+	{
+		if (!timerAlertStarted)
+		{
+			timerAlertStarted = true;
+			StartShakeRotationAnimation();
+//			sprRenderer.transform.DOPunchRotation(1.0f, new Vector3(0.0f, 0.0f, 45.0f), 10, 45, false).SetLoops(-1).OnComplete(OnShakeRotationAnimationDone);
+		}
+	}
+
+	void StartShakeRotationAnimation ()
+	{
+		float maxRandomDelay = 2.0f;
+		float maxRandomZ = 20.0f;
+
+		if (LevelManager.THIS.Limit <= 5)
+		{
+			maxRandomDelay = 0.0f;
+			maxRandomZ = 45.0f;
+		}
+		else if (LevelManager.THIS.Limit <= 10)
+		{
+			maxRandomDelay = 0.8f;
+			maxRandomZ = 35.0f;
+		}
+		else if (LevelManager.THIS.Limit <= 20)
+		{
+			maxRandomDelay = 1.2f;
+			maxRandomZ = 30.0f;
+		}
+
+		float randomNumber = UnityEngine.Random.Range(maxRandomZ * -1.0f, maxRandomZ);
+
+		float randeomDelay = UnityEngine.Random.Range(0.0f, maxRandomDelay);
+		sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetDelay(randeomDelay).OnComplete(OnShakeRotationAnimationDone);
+	}
+
+	void OnShakeRotationAnimationDone ()
+	{
+		StartShakeRotationAnimation();
 	}
 
 	public void CheckChocoBomb (Item item1, Item item2)

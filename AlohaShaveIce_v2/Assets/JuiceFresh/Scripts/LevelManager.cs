@@ -3188,16 +3188,23 @@ public class LevelManager : MonoBehaviour
 	public void LoadDataFromLocal (int currentLevel)
 	{
 		levelLoaded = false;
-		//Read data from text file
-		TextAsset mapText = Resources.Load("Levels/" + currentLevel) as TextAsset;
-		if (mapText == null)
-		{
-			mapText = Resources.Load("Levels/" + currentLevel) as TextAsset;
-		}
-		ProcessGameDataFromString(mapText.text);
+		string level = GetDataFromLocal(currentLevel);
+		ProcessGameDataFromString(level);
 	}
 
+	public static string GetDataFromLocal (int currentLevel)
+	{
+		string result = null;
+		//Read data from text file
+		TextAsset mapText = Resources.Load("Levels/" + currentLevel) as TextAsset;
+		if (mapText != null)
+		{
+//			mapText = Resources.Load("Levels/" + currentLevel) as TextAsset;
+			result = mapText.text;
+		}
 
+		return result;
+	}
 
 	void ProcessGameDataFromString (string mapText)
 	{

@@ -69,8 +69,6 @@ public class GamesparksCurrencyManager : ICurrencyManager
 		{
 			if (!response.HasErrors)
 			{
-				Debug.LogError(response.JSONString);
-				Debug.LogError(response.ScriptData);
 				GSData data = response.ScriptData.GetGSData ("currency_Data");
 				if (data != null)
 				{

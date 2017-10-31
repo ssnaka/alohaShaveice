@@ -387,7 +387,7 @@ public class Item : MonoBehaviour
 		if (currentType == ItemsTypes.BOMB && timerText != null)
 			timerText.text = "" + bombTimer;
 
-		if (LevelManager.Instance.limitType == LIMIT.TIME && LevelManager.THIS.Limit <= 30)// && LevelManager.THIS.Limit % 10 == 0)
+		if (LevelManager.Instance.limitType == LIMIT.TIME && LevelManager.THIS.Limit <= 30 && LevelManager.THIS.Limit % 10 == 0 || LevelManager.THIS.Limit <= 5)
 		{
 			OnTimerAlert();
 		}
@@ -400,7 +400,6 @@ public class Item : MonoBehaviour
 		{
 			timerAlertStarted = true;
 			StartShakeRotationAnimation();
-//			sprRenderer.transform.DOPunchRotation(1.0f, new Vector3(0.0f, 0.0f, 45.0f), 10, 45, false).SetLoops(-1).OnComplete(OnShakeRotationAnimationDone);
 		}
 	}
 
@@ -408,9 +407,10 @@ public class Item : MonoBehaviour
 	{
 		float maxRandomDelay = 2.0f;
 		float maxRandomZ = 20.0f;
-
+		bool souldStop = true;
 		if (LevelManager.THIS.Limit <= 5)
 		{
+			souldStop = false;
 			maxRandomDelay = 0.0f;
 			maxRandomZ = 45.0f;
 		}
@@ -428,11 +428,24 @@ public class Item : MonoBehaviour
 		float randomNumber = UnityEngine.Random.Range(maxRandomZ * -1.0f, maxRandomZ);
 
 		float randeomDelay = UnityEngine.Random.Range(0.0f, maxRandomDelay);
-		sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetDelay(randeomDelay).OnComplete(OnShakeRotationAnimationDone);
+		if (souldStop)
+		{
+			sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetLoops(2).OnComplete(OnShakeRotationAnimationStop);
+		}
+		else
+		{
+			sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetDelay(randeomDelay).OnComplete(OnShakeRotationAnimationDone);
+		}
+	}
+
+	void OnShakeRotationAnimationStop ()
+	{
+		timerAlertStarted = false;
 	}
 
 	void OnShakeRotationAnimationDone ()
 	{
+		timerAlertStarted = false;
 		StartShakeRotationAnimation();
 	}
 

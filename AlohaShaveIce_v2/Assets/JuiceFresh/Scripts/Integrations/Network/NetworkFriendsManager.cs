@@ -104,7 +104,6 @@ public class NetworkFriendsManager {
 			int LevelNumber = PlayerPrefs.GetInt ("OpenLevel");
 			NetworkManager.leadboardList.Clear ();
 			friendsManager.GetLeadboardOnLevel (LevelNumber, (list) => {
-				Debug.LogError("----" + list.Count);
 				if (list.Count == 0)
 				{
 					Debug.LogError("no frined");

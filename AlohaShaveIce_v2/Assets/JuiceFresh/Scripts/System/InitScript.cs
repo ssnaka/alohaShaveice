@@ -231,7 +231,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		Appodeal.setBannerCallbacks(this);
 
 		Appodeal.setBannerBackground(true);
-		Debug.LogError("AppODeal Setting Done");
 #endif
 
 		Transform canvas = GameObject.Find ("CanvasGlobal").transform;
@@ -497,7 +496,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				int count = PlayerPrefs.GetInt (RewardedAdsType.Stripes.ToString() + "_watch", 0) + 1;
 				if (count >= boostAdEvent.countToReward)
 				{
-							count = 0;
+					count = 0;
 					int boostCount = PlayerPrefs.GetInt ("" + BoostType.Stripes);
 					BuyBoost(BoostType.Stripes, 0, boostCount + 1);
 				}

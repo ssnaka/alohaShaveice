@@ -22,7 +22,8 @@ using AppodealAds.Unity.Common;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum Target {
+public enum Target
+{
 	SCORE,
 	COLLECT,
 	ITEMS,
@@ -31,12 +32,14 @@ public enum Target {
 	BOMBS
 }
 
-public enum LIMIT {
+public enum LIMIT
+{
 	MOVES,
 	TIME
 }
 
-public enum Ingredients {
+public enum Ingredients
+{
 	None = 0,
 	Ingredient1,
 	Ingredient2,
@@ -45,7 +48,8 @@ public enum Ingredients {
 
 }
 
-public enum CollectItems {
+public enum CollectItems
+{
 	None = 0,
 	Item1,
 	Item2,
@@ -55,14 +59,16 @@ public enum CollectItems {
 	Item6
 }
 
-public enum CollectStars {
+public enum CollectStars
+{
 	STAR_1 = 1,
 	STARS_2 = 2,
 	STARS_3 = 3
 }
 
 
-public enum RewardedAdsType {
+public enum RewardedAdsType
+{
 	GetLifes,
 	GetGems,
 	GetGoOn,
@@ -77,7 +83,8 @@ public enum RewardedAdsType {
 	All
 }
 
-public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener {
+public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener
+{
 	public static InitScript Instance;
 	public static int openLevel;
 
@@ -89,15 +96,18 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public static string timeForReps;
 	private static int Lifes;
 
-	public List<CollectedIngredients> collectedIngredients = new List<CollectedIngredients> ();
+	public List<CollectedIngredients> collectedIngredients = new List<CollectedIngredients>();
 
 	public RewardedAdsType currentReward;
 
-	public static int lifes {
-		get {
+	public static int lifes
+	{
+		get
+		{
 			return InitScript.Lifes;
 		}
-		set {
+		set
+		{
 			InitScript.Lifes = value;
 		}
 	}
@@ -117,8 +127,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	private int BoostColorful_bomb;
 	private int BoostHand;
 	private int BoostRandom_color;
-	public List<AdEvents> adsEvents = new List<AdEvents> ();
-	public List<BoostAdEvents> boostAdsEvents = new List<BoostAdEvents> ();
+	public List<AdEvents> adsEvents = new List<AdEvents>();
+	public List<BoostAdEvents> boostAdsEvents = new List<BoostAdEvents>();
 
 	public static bool sound = false;
 	public static bool music = false;
@@ -153,37 +163,39 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public int maxVideoPerDay;
 
 	// Use this for initialization
-	void Awake () {
+	void Awake ()
+	{
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Application.targetFrameRate = 60;
 		Instance = this;
-		RestLifeTimer = PlayerPrefs.GetFloat ("RestLifeTimer");
+		RestLifeTimer = PlayerPrefs.GetFloat("RestLifeTimer");
 //		if (Application.isEditor)//TODO comment it
 //			PlayerPrefs.DeleteAll ();
 
-		DateOfExit = PlayerPrefs.GetString ("DateOfExit", "");
-		Gems = PlayerPrefs.GetInt ("Gems");
-		lifes = PlayerPrefs.GetInt ("Lifes");
-		if (PlayerPrefs.GetInt ("Lauched") == 0) {    //First lauching
+		DateOfExit = PlayerPrefs.GetString("DateOfExit", "");
+		Gems = PlayerPrefs.GetInt("Gems");
+		lifes = PlayerPrefs.GetInt("Lifes");
+		if (PlayerPrefs.GetInt("Lauched") == 0)
+		{    //First lauching
 			lifes = CapOfLife;
-			PlayerPrefs.SetInt ("Lifes", lifes);
+			PlayerPrefs.SetInt("Lifes", lifes);
 			Gems = FirstGems;
-			PlayerPrefs.SetInt ("Gems", Gems);
-			PlayerPrefs.SetInt ("Music", 1);
-			PlayerPrefs.SetInt ("Sound", 1);
+			PlayerPrefs.SetInt("Gems", Gems);
+			PlayerPrefs.SetInt("Music", 1);
+			PlayerPrefs.SetInt("Sound", 1);
 
-			PlayerPrefs.SetInt ("Lauched", 1);
-			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt("Lauched", 1);
+			PlayerPrefs.Save();
 		}
-		rate = GameObject.Find ("CanvasGlobal").transform.Find ("Rate").gameObject;
-		rate.SetActive (false);
+		rate = GameObject.Find("CanvasGlobal").transform.Find("Rate").gameObject;
+		rate.SetActive(false);
 		//rate.transform.SetParent(GameObject.Find("CanvasGlobal").transform);
 		//rate.transform.localPosition = Vector3.zero;
 		//rate.GetComponent<RectTransform>().anchoredPosition = (Resources.Load("Prefabs/Rate") as GameObject).GetComponent<RectTransform>().anchoredPosition;
 		//rate.transform.localScale = Vector3.one;
 
-		GameObject.Find ("Music").GetComponent<AudioSource> ().volume = PlayerPrefs.GetInt ("Music");
-		SoundBase.Instance.GetComponent<AudioSource> ().volume = PlayerPrefs.GetInt ("Sound");
+		GameObject.Find("Music").GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Music");
+		SoundBase.Instance.GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Sound");
 		#if UNITY_ADS//1.3
 		enableUnityAds = true;
 		#else
@@ -197,7 +209,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 
 #if FACEBOOK
-		FacebookManager fbManager = gameObject.AddComponent<FacebookManager> ();//1.3.3
+		FacebookManager fbManager = gameObject.AddComponent<FacebookManager>();//1.3.3
 		fbManager.facebookButton = facebookButton;//1.3.3
 #endif
 
@@ -233,9 +245,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		Appodeal.setBannerBackground(true);
 #endif
 
-		Transform canvas = GameObject.Find ("CanvasGlobal").transform;
-		foreach (Transform item in canvas) {
-			item.gameObject.SetActive (false);
+		Transform canvas = GameObject.Find("CanvasGlobal").transform;
+		foreach (Transform item in canvas)
+		{
+			item.gameObject.SetActive(false);
 		}
 	}
 	#if GOOGLE_MOBILE_ADS
@@ -248,31 +261,37 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		print ("HandleInterstitialFailedToLoad event received with message: " + args.Message);
 	}
 	#endif
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.LeftControl))
+	void Update ()
+	{
+		if (Input.GetKeyDown(KeyCode.LeftControl))
 			leftControl = true;
-		if (Input.GetKeyUp (KeyCode.LeftControl))
+		if (Input.GetKeyUp(KeyCode.LeftControl))
 			leftControl = false;
 
-		if (Input.GetKeyUp (KeyCode.U)) {
-			for (int i = 1; i < GameObject.Find ("Levels").transform.childCount; i++) {
-				SaveLevelStarsCount (i, 1);
+		if (Input.GetKeyUp(KeyCode.U))
+		{
+			for (int i = 1; i < GameObject.Find("Levels").transform.childCount; i++)
+			{
+				SaveLevelStarsCount(i, 1);
 			}
 
 		}
 	}
 
-	public void SaveLevelStarsCount (int level, int starsCount) {
-		Debug.Log (string.Format ("Stars count {0} of level {1} saved.", starsCount, level));
-		PlayerPrefs.SetInt (GetLevelKey (level), starsCount);
+	public void SaveLevelStarsCount (int level, int starsCount)
+	{
+		Debug.Log(string.Format("Stars count {0} of level {1} saved.", starsCount, level));
+		PlayerPrefs.SetInt(GetLevelKey(level), starsCount);
 
 	}
 
-	private string GetLevelKey (int number) {
-		return string.Format ("Level.{0:000}.StarsCount", number);
+	private string GetLevelKey (int number)
+	{
+		return string.Format("Level.{0:000}.StarsCount", number);
 	}
 
-	public bool GetRewardedUnityAdsReady () {
+	public bool GetRewardedUnityAdsReady ()
+	{
 #if UNITY_ADS
 
 		rewardedVideoZone = "rewardedVideo";
@@ -289,7 +308,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		return false;
 	}
 
-	public void ShowRewardedAds () {
+	public void ShowRewardedAds ()
+	{
 #if UNITY_ADS
 		Debug.Log ("show Unity Rewarded ads video in " + LevelManager.THIS.gameStatus);
 
@@ -311,42 +331,51 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		#endif
 	}
 
-	public void CheckAdsEvents (GameState state) {
+	public void CheckAdsEvents (GameState state)
+	{
 
-		foreach (AdEvents item in adsEvents) {
-			if (item.gameEvent == state) {
+		foreach (AdEvents item in adsEvents)
+		{
+			if (item.gameEvent == state)
+			{
 				if ((LevelManager.THIS.gameStatus == GameState.GameOver || LevelManager.THIS.gameStatus == GameState.Pause ||
 				    LevelManager.THIS.gameStatus == GameState.Playing || LevelManager.THIS.gameStatus == GameState.PrepareGame || LevelManager.THIS.gameStatus == GameState.PreWinAnimations ||
-				    LevelManager.THIS.gameStatus == GameState.RegenLevel || LevelManager.THIS.gameStatus == GameState.Win)) {
+				    LevelManager.THIS.gameStatus == GameState.RegenLevel || LevelManager.THIS.gameStatus == GameState.Win))
+				{
 					item.calls++;
 					if (item.calls % item.everyLevel == 0)
-						ShowAdByType (item.adType);
-				} else {
-					ShowAdByType (item.adType);
+						ShowAdByType(item.adType);
+				}
+				else
+				{
+					ShowAdByType(item.adType);
 
 				}
 			}
 		}
 	}
 
-	public BoostAdEvents GetBoostAdsEvent (BoostType _boostType) {
+	public BoostAdEvents GetBoostAdsEvent (BoostType _boostType)
+	{
 
 		return boostAdsEvents.Find(item => item.boostType.Equals(_boostType));
 	}
 
-	void ShowAdByType (AdType adType) {
+	void ShowAdByType (AdType adType)
+	{
 		if (adType == AdType.AdmobInterstitial)
-			ShowAds (false);
+			ShowAds(false);
 		else if (adType == AdType.UnityAdsVideo)
-			ShowVideo ();
+			ShowVideo();
 		else if (adType == AdType.ChartboostInterstitial)
-			ShowAds (true);
+			ShowAds(true);
 		else if (adType == AdType.AppODeal)
-			ShowRewardedAds ();
+			ShowRewardedAds();
 	}
 
-	public void ShowVideo () {
-		Debug.Log ("show Unity ads video on " + LevelManager.THIS.gameStatus);
+	public void ShowVideo ()
+	{
+		Debug.Log("show Unity ads video on " + LevelManager.THIS.gameStatus);
 #if UNITY_ADS
 
 		if (Advertisement.IsReady ("video")) {
@@ -359,15 +388,19 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 #endif
 	}
 
-	public void ShowAds (bool chartboost = true) {
-		if (chartboost) {
-			Debug.Log ("show Chartboost Interstitial on " + LevelManager.THIS.gameStatus);
+	public void ShowAds (bool chartboost = true)
+	{
+		if (chartboost)
+		{
+			Debug.Log("show Chartboost Interstitial on " + LevelManager.THIS.gameStatus);
 #if CHARTBOOST_ADS
 			Chartboost.showInterstitial (CBLocation.Default);
 			Chartboost.cacheInterstitial (CBLocation.Default);
 #endif
-		} else {
-			Debug.Log ("show Google mobile ads Interstitial on " + LevelManager.THIS.gameStatus);
+		}
+		else
+		{
+			Debug.Log("show Google mobile ads Interstitial on " + LevelManager.THIS.gameStatus);
 #if GOOGLE_MOBILE_ADS
 			if (interstitial.IsLoaded ()) {
 				interstitial.Show ();
@@ -388,24 +421,59 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 	}
 
-#if APPODEAL_ADS
+	#if APPODEAL_ADS
 	#region Rewarded Video callback handlers
-	public void onNonSkippableVideoLoaded() { Debug.LogError("Video Loaded"); }
-	public void onNonSkippableVideoFailedToLoad() { Debug.LogError("Video failed"); }
-	public void onNonSkippableVideoShown() { Debug.LogError("Video shown"); }
-			public void onNonSkippableVideoClosed(bool _closed) { Debug.LogError("Video closed"); }
-	public void onNonSkippableVideoFinished()
+
+	public void onNonSkippableVideoLoaded ()
+	{
+		Debug.LogError("Video Loaded");
+	}
+
+	public void onNonSkippableVideoFailedToLoad ()
+	{
+		Debug.LogError("Video failed");
+	}
+
+	public void onNonSkippableVideoShown ()
+	{
+		Debug.LogError("Video shown");
+	}
+
+	public void onNonSkippableVideoClosed (bool _closed)
+	{
+		Debug.LogError("Video closed");
+	}
+
+	public void onNonSkippableVideoFinished ()
 	{
 		Debug.LogError("Video Finished");
 		CheckRewardedAds();
 	}
+
 	#endregion
 
 	#region Banner callback handlers
-	public void onBannerLoaded( bool _loaded) { Debug.LogError("banner loaded"); }
-	public void onBannerFailedToLoad() { Debug.LogError("banner failed"); }
-	public void onBannerShown() { Debug.LogError("banner opened"); }
-	public void onBannerClicked() { Debug.LogError("banner clicked"); }
+
+	public void onBannerLoaded (bool _loaded)
+	{
+		Debug.LogError("banner loaded");
+	}
+
+	public void onBannerFailedToLoad ()
+	{
+		Debug.LogError("banner failed");
+	}
+
+	public void onBannerShown ()
+	{
+		Debug.LogError("banner opened");
+	}
+
+	public void onBannerClicked ()
+	{
+		Debug.LogError("banner clicked");
+	}
+
 	#endregion
 
 	public void EnableBannerAds (bool _enabled)
@@ -424,20 +492,22 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 	}
 
-#endif
+	#endif
 
-	public void ShowRate () {
-		rate.SetActive (true);
+	public void ShowRate ()
+	{
+		rate.SetActive(true);
 	}
 
 	public bool CanVideoBePlayed ()
 	{
 		bool canPlay = true;
 		int videoPlayedCount = PlayerPrefs.GetInt("VideoPlayedToday", 0);
-		string dateString = PlayerPrefs.GetString("NextVideoResetTime" ,"");
+		string dateString = PlayerPrefs.GetString("NextVideoResetTime", "");
 		if (!string.IsNullOrEmpty(dateString))
 		{
 			DateTime nextVideoResetTime = DateTime.Parse(dateString);
+
 			if (nextVideoResetTime.CompareTo(DateTime.Now) >= 0)
 			{
 				if (videoPlayedCount >= maxVideoPerDay)
@@ -449,6 +519,28 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			{
 				PlayerPrefs.SetString("NextVideoResetTime", "");
 				PlayerPrefs.SetInt("VideoPlayedToday", 0);
+
+				PlayerPrefs.SetInt(RewardedAdsType.Stripes.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.Stripes.ToString() + "_round", 1);
+
+				PlayerPrefs.SetInt(RewardedAdsType.Colorful_bomb.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.Colorful_bomb.ToString() + "_round", 1);
+
+				PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_round", 1);
+
+				PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_round", 1);
+
+				PlayerPrefs.SetInt(RewardedAdsType.Bomb.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.Bomb.ToString() + "_round", 1);
+
+				PlayerPrefs.SetInt(RewardedAdsType.Energy.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.Energy.ToString() + "_round", 1);
+
+				PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_watch", 0);
+				PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_round", 1);
+
 				PlayerPrefs.Save();
 			}
 		}
@@ -457,8 +549,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	}
 
 
-	public void CheckRewardedAds () {
-		string dateString = PlayerPrefs.GetString("NextVideoResetTime" ,"");
+	public void CheckRewardedAds ()
+	{
+		string dateString = PlayerPrefs.GetString("NextVideoResetTime", "");
 		if (string.IsNullOrEmpty(dateString))
 		{
 			PlayerPrefs.SetString("NextVideoResetTime", DateTime.Now.AddMinutes(-5).AddDays(1).ToString());
@@ -468,22 +561,26 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		int videoPlayed = PlayerPrefs.GetInt("VideoPlayedToday", 0);
 		PlayerPrefs.SetInt("VideoPlayedToday", ++videoPlayed);
 
-		RewardIcon reward = GameObject.Find ("CanvasGlobal").transform.Find ("Reward").GetComponent<RewardIcon> ();
+		RewardIcon reward = GameObject.Find("CanvasGlobal").transform.Find("Reward").GetComponent<RewardIcon>();
 
-		if (currentReward == RewardedAdsType.GetGems) {
-			reward.SetIconSprite (0);
-			reward.gameObject.SetActive (true);
-			AddGems (rewardedGems);
-			GameObject.Find ("CanvasGlobal").transform.Find ("GemsShop").GetComponent<AnimationManager> ().CloseMenu ();
-		} else if (currentReward == RewardedAdsType.GetLifes) {
-			reward.SetIconSprite (1);
-			reward.gameObject.SetActive (true);
-			RestoreLifes ();
-			GameObject.Find ("CanvasGlobal").transform.Find ("LiveShop").GetComponent<AnimationManager> ().CloseMenu ();
-		} else if (currentReward == RewardedAdsType.GetGoOn) {
-			GameObject.Find ("CanvasGlobal").transform.Find ("MenuFailed").GetComponent<AnimationManager> ().GoOnFailed ();
+		if (currentReward == RewardedAdsType.GetGems)
+		{
+			reward.SetIconSprite(0);
+			reward.gameObject.SetActive(true);
+			AddGems(rewardedGems);
+			GameObject.Find("CanvasGlobal").transform.Find("GemsShop").GetComponent<AnimationManager>().CloseMenu();
 		}
-
+		else if (currentReward == RewardedAdsType.GetLifes)
+		{
+			reward.SetIconSprite(1);
+			reward.gameObject.SetActive(true);
+			RestoreLifes();
+			GameObject.Find("CanvasGlobal").transform.Find("LiveShop").GetComponent<AnimationManager>().CloseMenu();
+		}
+		else if (currentReward == RewardedAdsType.GetGoOn)
+		{
+			GameObject.Find("CanvasGlobal").transform.Find("MenuFailed").GetComponent<AnimationManager>().GoOnFailed();
+		}
 		else if (currentReward == RewardedAdsType.Counter)
 		{
 			
@@ -493,11 +590,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.Stripes);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.Stripes.ToString() + "_watch", 0) + 1;
+				int count = PlayerPrefs.GetInt(RewardedAdsType.Stripes.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.Stripes.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-					count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.Stripes);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.Stripes.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.Stripes);
 					BuyBoost(BoostType.Stripes, 0, boostCount + 1);
 				}
 
@@ -509,12 +608,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.Colorful_bomb);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.Colorful_bomb.ToString() + "_watch", 0) + 1;
-
+				int count = PlayerPrefs.GetInt(RewardedAdsType.Colorful_bomb.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.Colorful_bomb.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-							count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.Colorful_bomb);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.Colorful_bomb.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.Colorful_bomb);
 					BuyBoost(BoostType.Colorful_bomb, 0, boostCount + 1);
 				}
 
@@ -526,12 +626,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.ExtraMoves);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.ExtraMoves.ToString() + "_watch", 0) + 1;
-
+				int count = PlayerPrefs.GetInt(RewardedAdsType.ExtraMoves.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.ExtraMoves.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-							count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.ExtraMoves);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.ExtraMoves);
 					BuyBoost(BoostType.ExtraMoves, 0, boostCount + 1);
 				}
 
@@ -543,12 +644,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.ExtraTime);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.ExtraTime.ToString() + "_watch", 0) + 1;
-
+				int count = PlayerPrefs.GetInt(RewardedAdsType.ExtraTime.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.ExtraTime.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-							count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.ExtraTime);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.ExtraTime);
 					BuyBoost(BoostType.ExtraTime, 0, boostCount + 1);
 				}
 				
@@ -560,12 +662,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.Bomb);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.Bomb.ToString() + "_watch", 0) + 1;
-
+				int count = PlayerPrefs.GetInt(RewardedAdsType.Bomb.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.Bomb.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-							count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.Bomb);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.Bomb.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.Bomb);
 					BuyBoost(BoostType.Bomb, 0, boostCount + 1);
 				}
 
@@ -577,12 +680,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.Energy);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.Energy.ToString() + "_watch", 0) + 1;
-
+				int count = PlayerPrefs.GetInt(RewardedAdsType.Energy.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.Energy.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-							count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.Energy);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.Energy.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.Energy);
 					BuyBoost(BoostType.Energy, 0, boostCount + 1);
 				}
 
@@ -594,11 +698,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.Shovel);
 			if (boostAdEvent != null)
 			{
-				int count = PlayerPrefs.GetInt (RewardedAdsType.Shovel.ToString() + "_watch", 0) + 1;
+				int count = PlayerPrefs.GetInt(RewardedAdsType.Shovel.ToString() + "_watch", 0) + 1;
+				int round = PlayerPrefs.GetInt(RewardedAdsType.Shovel.ToString() + "_round", 1);
 				if (count >= boostAdEvent.countToReward)
 				{
-					count = 0;
-					int boostCount = PlayerPrefs.GetInt ("" + BoostType.Shovel);
+					count = round * -1;
+					PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_round", round + 1);
+					int boostCount = PlayerPrefs.GetInt("" + BoostType.Shovel);
 					BuyBoost(BoostType.Shovel, 0, boostCount + 1);
 				}
 
@@ -609,65 +715,75 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		PlayerPrefs.Save();
 	}
 
-	public void SetGems (int count) {//1.3.3
+	public void SetGems (int count)
+	{//1.3.3
 		Gems = count;
-		PlayerPrefs.SetInt ("Gems", Gems);
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Gems", Gems);
+		PlayerPrefs.Save();
 	}
 
-	public void AddGems (int count) {
+	public void AddGems (int count)
+	{
 		Gems += count;
-		PlayerPrefs.SetInt ("Gems", Gems);
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Gems", Gems);
+		PlayerPrefs.Save();
 		#if PLAYFAB || GAMESPARKS
-		NetworkManager.currencyManager.IncBalance (count);
+		NetworkManager.currencyManager.IncBalance(count);
 		#endif
 	}
 
-	public void SpendGems (int count) {
-		SoundBase.Instance.PlaySound (SoundBase.Instance.cash);
+	public void SpendGems (int count)
+	{
+		SoundBase.Instance.PlaySound(SoundBase.Instance.cash);
 		Gems -= count;
-		PlayerPrefs.SetInt ("Gems", Gems);
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Gems", Gems);
+		PlayerPrefs.Save();
 		#if PLAYFAB || GAMESPARKS
-		NetworkManager.currencyManager.DecBalance (count);
+		NetworkManager.currencyManager.DecBalance(count);
 		#endif
 	}
 
 
-	public void RestoreLifes () {
+	public void RestoreLifes ()
+	{
 		lifes = CapOfLife;
-		PlayerPrefs.SetInt ("Lifes", lifes);
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Lifes", lifes);
+		PlayerPrefs.Save();
 	}
 
-	public void AddLife (int count) {
+	public void AddLife (int count)
+	{
 		lifes += count;
 		if (lifes > CapOfLife)
 			lifes = CapOfLife;
-		PlayerPrefs.SetInt ("Lifes", lifes);
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Lifes", lifes);
+		PlayerPrefs.Save();
 	}
 
-	public int GetLife () {
-		if (lifes > CapOfLife) {
+	public int GetLife ()
+	{
+		if (lifes > CapOfLife)
+		{
 			lifes = CapOfLife;
-			PlayerPrefs.SetInt ("Lifes", lifes);
-			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt("Lifes", lifes);
+			PlayerPrefs.Save();
 		}
 		return lifes;
 	}
 
-	public void PurchaseSucceded () {
-		AddGems (waitedPurchaseGems);
+	public void PurchaseSucceded ()
+	{
+		AddGems(waitedPurchaseGems);
 		waitedPurchaseGems = 0;
 	}
 
-	public void SpendLife (int count) {
-		if (lifes > 0) {
+	public void SpendLife (int count)
+	{
+		if (lifes > 0)
+		{
 			lifes -= count;
-			PlayerPrefs.SetInt ("Lifes", lifes);
-			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt("Lifes", lifes);
+			PlayerPrefs.Save();
 		}
 		//else
 		//{
@@ -675,21 +791,23 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		//}
 	}
 
-	public void BuyBoost (BoostType boostType, int price, int count) {
-		PlayerPrefs.SetInt ("" + boostType, count);
-		PlayerPrefs.Save ();
+	public void BuyBoost (BoostType boostType, int price, int count)
+	{
+		PlayerPrefs.SetInt("" + boostType, count);
+		PlayerPrefs.Save();
 		#if PLAYFAB ||GAMESPARKS
-		NetworkManager.dataManager.SetBoosterData ();
+		NetworkManager.dataManager.SetBoosterData();
 		#endif
 
 		//   ReloadBoosts();
 	}
 
-	public void SpendBoost (BoostType boostType) {
-		PlayerPrefs.SetInt ("" + boostType, PlayerPrefs.GetInt ("" + boostType) - 1);
-		PlayerPrefs.Save ();
+	public void SpendBoost (BoostType boostType)
+	{
+		PlayerPrefs.SetInt("" + boostType, PlayerPrefs.GetInt("" + boostType) - 1);
+		PlayerPrefs.Save();
 		#if PLAYFAB || GAMESPARKS
-		NetworkManager.dataManager.SetBoosterData ();
+		NetworkManager.dataManager.SetBoosterData();
 		#endif
 
 	}
@@ -710,60 +828,71 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	//    PurchaseSucceded();
 	//}
 
-	void OnApplicationFocus (bool focusStatus) {//1.3.3
-		if (MusicBase.Instance) {
-			MusicBase.Instance.GetComponent<AudioSource> ().Play ();
+	void OnApplicationFocus (bool focusStatus)
+	{//1.3.3
+		if (MusicBase.Instance)
+		{
+			MusicBase.Instance.GetComponent<AudioSource>().Play();
 		}
 	}
 
 
-	void OnApplicationPause (bool pauseStatus) {
-		if (pauseStatus) {
-			if (RestLifeTimer > 0) {
-				PlayerPrefs.SetFloat ("RestLifeTimer", RestLifeTimer);
+	void OnApplicationPause (bool pauseStatus)
+	{
+		if (pauseStatus)
+		{
+			if (RestLifeTimer > 0)
+			{
+				PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 			}
-			PlayerPrefs.SetInt ("Lifes", lifes);
-			PlayerPrefs.SetString ("DateOfExit", DateTime.Now.ToString ());
-			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt("Lifes", lifes);
+			PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
+			PlayerPrefs.Save();
 		}
 	}
 
-	void OnApplicationQuit () {   //1.4  added 
-		if (RestLifeTimer > 0) {
-			PlayerPrefs.SetFloat ("RestLifeTimer", RestLifeTimer);
+	void OnApplicationQuit ()
+	{   //1.4  added 
+		if (RestLifeTimer > 0)
+		{
+			PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 		}
-		PlayerPrefs.SetInt ("Lifes", lifes);
-		PlayerPrefs.SetString ("DateOfExit", DateTime.Now.ToString ());
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Lifes", lifes);
+		PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
+		PlayerPrefs.Save();
 	}
 
-	public void OnLevelClicked (object sender, LevelReachedEventArgs args) {
-		if (EventSystem.current.IsPointerOverGameObject (-1))
+	public void OnLevelClicked (object sender, LevelReachedEventArgs args)
+	{
+		if (EventSystem.current.IsPointerOverGameObject(-1))
 			return;
-		if (!GameObject.Find ("CanvasGlobal").transform.Find ("MenuPlay").gameObject.activeSelf && !GameObject.Find ("CanvasGlobal").transform.Find ("GemsShop").gameObject.activeSelf && !GameObject.Find ("CanvasGlobal").transform.Find ("LiveShop").gameObject.activeSelf) {
-			PlayerPrefs.SetInt ("OpenLevel", args.Number);
-			PlayerPrefs.Save ();
-			LevelManager.THIS.MenuPlayEvent ();
-			LevelManager.THIS.LoadLevel ();
+		if (!GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.activeSelf && !GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.activeSelf && !GameObject.Find("CanvasGlobal").transform.Find("LiveShop").gameObject.activeSelf)
+		{
+			PlayerPrefs.SetInt("OpenLevel", args.Number);
+			PlayerPrefs.Save();
+			LevelManager.THIS.MenuPlayEvent();
+			LevelManager.THIS.LoadLevel();
 			openLevel = args.Number;
 			//  currentTarget = targets[args.Number];
-			GameObject.Find ("CanvasGlobal").transform.Find ("MenuPlay").gameObject.SetActive (true);
+			GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
 		}
 	}
 
-	void OnEnable () {
+	void OnEnable ()
+	{
 		LevelsMap.LevelSelected += OnLevelClicked;
 	}
 
-	void OnDisable () {
+	void OnDisable ()
+	{
 		LevelsMap.LevelSelected -= OnLevelClicked;
 
 		//		if(RestLifeTimer>0){
-		PlayerPrefs.SetFloat ("RestLifeTimer", RestLifeTimer);
+		PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 		//		}
-		PlayerPrefs.SetInt ("Lifes", lifes);
-		PlayerPrefs.SetString ("DateOfExit", DateTime.Now.ToString ());
-		PlayerPrefs.Save ();
+		PlayerPrefs.SetInt("Lifes", lifes);
+		PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
+		PlayerPrefs.Save();
 #if GOOGLE_MOBILE_ADS
 		interstitial.OnAdLoaded -= HandleInterstitialLoaded;
 		interstitial.OnAdFailedToLoad -= HandleInterstitialFailedToLoad;

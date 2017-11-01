@@ -1330,8 +1330,8 @@ public class LevelMakerEditor : EditorWindow {
 		GUILayout.Label ("Color limit:", EditorStyles.label, new GUILayoutOption[] { GUILayout.Width (100) });
 		colorLimit = (int)GUILayout.HorizontalSlider (colorLimit, 3, 6, new GUILayoutOption[] { GUILayout.Width (100) });
 		colorLimit = EditorGUILayout.IntField ("", colorLimit, new GUILayoutOption[] { GUILayout.Width (50) });
-		if (colorLimit < 3)
-			colorLimit = 3;
+		if (colorLimit < 1)
+			colorLimit = 1;
 		if (colorLimit > 6)
 			colorLimit = 6;
 

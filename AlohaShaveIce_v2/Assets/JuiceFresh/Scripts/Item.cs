@@ -387,7 +387,7 @@ public class Item : MonoBehaviour
 		if (currentType == ItemsTypes.BOMB && timerText != null)
 			timerText.text = "" + bombTimer;
 
-		if (LevelManager.Instance.limitType == LIMIT.TIME && LevelManager.THIS.Limit <= 30 && LevelManager.THIS.Limit % 10 == 0 || LevelManager.THIS.Limit <= 5)
+		if ((LevelManager.Instance.limitType == LIMIT.TIME && LevelManager.THIS.Limit <= 30 && LevelManager.THIS.Limit % 10 == 0) || (LevelManager.Instance.limitType == LIMIT.TIME && LevelManager.THIS.Limit <= 5))
 		{
 			OnTimerAlert();
 		}

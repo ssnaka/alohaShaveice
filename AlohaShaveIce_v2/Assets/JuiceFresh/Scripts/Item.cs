@@ -393,6 +393,7 @@ public class Item : MonoBehaviour
 		}
 	}
 
+	Tweener shakeTweener;
 	bool timerAlertStarted = false;
 	void OnTimerAlert ()
 	{
@@ -405,6 +406,8 @@ public class Item : MonoBehaviour
 
 	void StartShakeRotationAnimation ()
 	{
+		shakeTweener.Kill();
+		sprRenderer.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
 		float maxRandomDelay = 2.0f;
 		float maxRandomZ = 20.0f;
 		bool souldStop = true;
@@ -430,11 +433,11 @@ public class Item : MonoBehaviour
 		float randeomDelay = UnityEngine.Random.Range(0.0f, maxRandomDelay);
 		if (souldStop)
 		{
-			sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetLoops(2).OnComplete(OnShakeRotationAnimationStop);
+			shakeTweener = sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetLoops(2).OnComplete(OnShakeRotationAnimationStop);
 		}
 		else
 		{
-			sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetDelay(randeomDelay).OnComplete(OnShakeRotationAnimationDone);
+			shakeTweener = sprRenderer.transform.DOShakeRotation(1.0f, new Vector3(0.0f, 0.0f, randomNumber), 10, 90, false).SetDelay(randeomDelay).OnComplete(OnShakeRotationAnimationDone);
 		}
 	}
 

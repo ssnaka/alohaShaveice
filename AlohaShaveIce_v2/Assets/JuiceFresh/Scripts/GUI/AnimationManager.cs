@@ -90,6 +90,19 @@ public class AnimationManager : MonoBehaviour
 				transform.Find("Image/Star" + i + "/Star").gameObject.SetActive(false);
 			}
 		}
+
+		if (name == "MenuFailed")
+		{
+			string spriteName = "Texture/see_ads_button_moves";
+			if (LevelManager.THIS.limitType == LIMIT.TIME)
+			{
+				spriteName = "Texture/see_ads_button_sec";
+			}
+
+			Sprite sprite = Resources.Load<Sprite>(spriteName);
+			transform.Find("Image/Video").GetComponent<Image>().overrideSprite = sprite;
+		}
+
 		if (transform.Find("Image/Video") != null) {
 
 #if UNITY_ADS

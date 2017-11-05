@@ -28,7 +28,23 @@ public class BoostIcon : MonoBehaviour
 				transform.Find("Indicator/Count/Check").gameObject.SetActive(false);
 			}
         }
+
+		Messenger.AddListener<BoostType, int>("BoostValueChanged", OnBoostValueChanged);
     }
+
+	void Start ()
+	{
+		Messenger.AddListener<BoostType, int>("BoostValueChanged", OnBoostValueChanged);
+
+		OnBoostValueChanged(type, PlayerPrefs.GetInt("" + type));
+
+	}
+
+	void OnDisable ()
+	{
+		Messenger.RemoveListener<BoostType, int>("BoostValueChanged", OnBoostValueChanged);
+	}
+
 
     public void ActivateBoost()
     {
@@ -132,19 +148,33 @@ public class BoostIcon : MonoBehaviour
         transform.Find("Indicator/Count").gameObject.SetActive(!show);
     }
 
+	void OnBoostValueChanged (BoostType _type, int _count)
+	{
+		if (boostCount != null && type.Equals(_type))
+		{
+			boostCount.text = _count.ToString();//"" + PlayerPrefs.GetInt("" + type);
+			if (!check)
+			{
+				if (BoostCount() > 0)
+					ShowPlus(false);
+				else
+					ShowPlus(true);
+			}
+		}
+	}
 
-    void Update()
-    {
-        if (boostCount != null)
-        {
-            boostCount.text = "" + PlayerPrefs.GetInt("" + type);
-            if (!check)
-            {
-                if (BoostCount() > 0)
-                    ShowPlus(false);
-                else
-                    ShowPlus(true);
-            }
-        }
-    }
+//    void Update()
+//    {
+//        if (boostCount != null)
+//        {
+//            boostCount.text = "" + PlayerPrefs.GetInt("" + type);
+//            if (!check)
+//            {
+//                if (BoostCount() > 0)
+//                    ShowPlus(false);
+//                else
+//                    ShowPlus(true);
+//            }
+//        }
+//    }
 }

@@ -165,7 +165,9 @@ public class NetworkDataManager
 		{
 			foreach (var item in dic)
 			{
-				PlayerPrefs.SetInt("" + (BoostType)int.Parse(item.Key.Replace("Boost_", "")), item.Value);
+				BoostType boostType = (BoostType)int.Parse(item.Key.Replace("Boost_", ""));
+				PlayerPrefs.SetInt("" + boostType, item.Value);
+				Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, item.Value);
 			}
 			PlayerPrefs.Save();
 		});

@@ -795,6 +795,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{
 		PlayerPrefs.SetInt("" + boostType, count);
 		PlayerPrefs.Save();
+		Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, count);
 		#if PLAYFAB ||GAMESPARKS
 		NetworkManager.dataManager.SetBoosterData();
 		#endif
@@ -804,8 +805,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void SpendBoost (BoostType boostType)
 	{
-		PlayerPrefs.SetInt("" + boostType, PlayerPrefs.GetInt("" + boostType) - 1);
+		int count = PlayerPrefs.GetInt("" + boostType) - 1;
+		PlayerPrefs.SetInt("" + boostType, count);
 		PlayerPrefs.Save();
+		Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, count);
+
 		#if PLAYFAB || GAMESPARKS
 		NetworkManager.dataManager.SetBoosterData();
 		#endif

@@ -76,7 +76,6 @@ static internal class Messenger {
 				messagesToRemove.Add( pair.Key );
 		}
 
-		Debug.LogError("Clean up");
 		foreach (string message in messagesToRemove) {
 			eventTable.Remove( message );
 		}

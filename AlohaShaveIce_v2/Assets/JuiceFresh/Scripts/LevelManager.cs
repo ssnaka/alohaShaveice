@@ -1495,11 +1495,14 @@ public class LevelManager : MonoBehaviour
 									{
 										if (destroyAnyway[destroyAnyway.Count - 2] == item)
 										{
-
-											if (destroyAnyway[destroyAnyway.Count - 1].currentType == ItemsTypes.HORIZONTAL_STRIPPED)
+											if (destroyAnyway[destroyAnyway.Count - 1].currentType == ItemsTypes.HORIZONTAL_STRIPPED && gatheredTypes.Count > 0)
+											{
 												gatheredTypes.Remove(gatheredTypes[gatheredTypes.Count - 1]);
-											else if (destroyAnyway[destroyAnyway.Count - 1].currentType == ItemsTypes.VERTICAL_STRIPPED)
+											}
+											else if (destroyAnyway[destroyAnyway.Count - 1].currentType == ItemsTypes.VERTICAL_STRIPPED && gatheredTypes.Count > 0)
+											{
 												gatheredTypes.Remove(gatheredTypes[gatheredTypes.Count - 1]);
+											}
 
 											destroyAnyway[destroyAnyway.Count - 1].SleepItem();
 
@@ -2884,23 +2887,27 @@ public class LevelManager : MonoBehaviour
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
 		if (items.Length < count)
 			count = items.Length;
+		
 		foreach (GameObject item in items)
 		{
-			if (!item.GetComponent<Item>().destroying && item.GetComponent<Item>().currentType == ItemsTypes.NONE
-			    && item.GetComponent<Item>().nextType == ItemsTypes.NONE
-			    && item.GetComponent<Item>().square.type != SquareTypes.WIREBLOCK)
+			Item itemScript = item.GetComponent<Item>();
+			if (!itemScript.destroying && itemScript.currentType == ItemsTypes.NONE
+				&& itemScript.nextType == ItemsTypes.NONE
+				&& itemScript.square.type != SquareTypes.WIREBLOCK)
 			{
-				list.Add(item.GetComponent<Item>());
+				list.Add(itemScript);
 			}
 		}
-		while (list2.Count < count)
+
+		while (list2.Count < count && list.Count > 0)
 		{
 			Item newItem = list[UnityEngine.Random.Range(0, list.Count)];
-			if (list2.IndexOf(newItem) < 0)
+			if (newItem != null && list2.IndexOf(newItem) < 0)
 			{
 				list2.Add(newItem);
 			}
 		}
+
 		return list2;
 	}
 

@@ -54,7 +54,7 @@ public static class ZPlayerPrefs
     {
         float retValue = defaultValue;
 
-        string strValue = GetString(key);
+		string strValue = GetString(key, retValue.ToString());
 
         if (float.TryParse(strValue, out retValue))
         {
@@ -75,7 +75,7 @@ public static class ZPlayerPrefs
     {
         int retValue = defaultValue;
 
-        string strValue = GetString(key);
+		string strValue = GetString(key, retValue.ToString());
 
         if (int.TryParse(strValue, out retValue))
         {

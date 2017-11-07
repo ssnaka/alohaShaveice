@@ -144,13 +144,13 @@ public class NetworkDataManager
 	public void SetBoosterData ()
 	{
 		Dictionary<string, string> dic = new Dictionary<string, string>() {
-			{ "Boost_" + (int)BoostType.ExtraMoves, "" + PlayerPrefs.GetInt("" + BoostType.ExtraMoves) },
-			{ "Boost_" + (int)BoostType.Stripes, "" + PlayerPrefs.GetInt("" + BoostType.Stripes) },
-			{ "Boost_" + (int)BoostType.ExtraTime, "" + PlayerPrefs.GetInt("" + BoostType.ExtraTime) },
-			{ "Boost_" + (int)BoostType.Bomb, "" + PlayerPrefs.GetInt("" + BoostType.Bomb) },
-			{ "Boost_" + (int)BoostType.Colorful_bomb, "" + PlayerPrefs.GetInt("" + BoostType.Colorful_bomb) },
-			{ "Boost_" + (int)BoostType.Shovel, "" + PlayerPrefs.GetInt("" + BoostType.Shovel) },
-			{ "Boost_" + (int)BoostType.Energy, "" + PlayerPrefs.GetInt("" + BoostType.Energy) }
+			{ "Boost_" + (int)BoostType.ExtraMoves, "" + ZPlayerPrefs.GetInt("" + BoostType.ExtraMoves) },
+			{ "Boost_" + (int)BoostType.Stripes, "" + ZPlayerPrefs.GetInt("" + BoostType.Stripes) },
+			{ "Boost_" + (int)BoostType.ExtraTime, "" + ZPlayerPrefs.GetInt("" + BoostType.ExtraTime) },
+			{ "Boost_" + (int)BoostType.Bomb, "" + ZPlayerPrefs.GetInt("" + BoostType.Bomb) },
+			{ "Boost_" + (int)BoostType.Colorful_bomb, "" + ZPlayerPrefs.GetInt("" + BoostType.Colorful_bomb) },
+			{ "Boost_" + (int)BoostType.Shovel, "" + ZPlayerPrefs.GetInt("" + BoostType.Shovel) },
+			{ "Boost_" + (int)BoostType.Energy, "" + ZPlayerPrefs.GetInt("" + BoostType.Energy) }
 		};
 
 		dataManager.SetBoosterData(dic);
@@ -166,10 +166,10 @@ public class NetworkDataManager
 			foreach (var item in dic)
 			{
 				BoostType boostType = (BoostType)int.Parse(item.Key.Replace("Boost_", ""));
-				PlayerPrefs.SetInt("" + boostType, item.Value);
+				ZPlayerPrefs.SetInt("" + boostType, item.Value);
 				Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, item.Value);
 			}
-			PlayerPrefs.Save();
+			ZPlayerPrefs.Save();
 		});
 	}
 

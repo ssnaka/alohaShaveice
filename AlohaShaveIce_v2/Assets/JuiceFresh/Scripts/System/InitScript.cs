@@ -165,6 +165,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	// Use this for initialization
 	void Awake ()
 	{
+		ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
+
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Application.targetFrameRate = 60;
 		Instance = this;
@@ -173,14 +175,14 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 //			PlayerPrefs.DeleteAll ();
 
 		DateOfExit = PlayerPrefs.GetString("DateOfExit", "");
-		Gems = PlayerPrefs.GetInt("Gems");
-		lifes = PlayerPrefs.GetInt("Lifes");
+		Gems = ZPlayerPrefs.GetInt("Gems");
+		lifes = ZPlayerPrefs.GetInt("Lifes");
 		if (PlayerPrefs.GetInt("Lauched") == 0)
 		{    //First lauching
 			lifes = CapOfLife;
-			PlayerPrefs.SetInt("Lifes", lifes);
+			ZPlayerPrefs.SetInt("Lifes", lifes);
 			Gems = FirstGems;
-			PlayerPrefs.SetInt("Gems", Gems);
+			ZPlayerPrefs.SetInt("Gems", Gems);
 			PlayerPrefs.SetInt("Music", 1);
 			PlayerPrefs.SetInt("Sound", 1);
 
@@ -596,7 +598,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.Stripes.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.Stripes);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.Stripes);
 					BuyBoost(BoostType.Stripes, 0, boostCount + 1);
 				}
 
@@ -614,7 +616,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.Colorful_bomb.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.Colorful_bomb);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.Colorful_bomb);
 					BuyBoost(BoostType.Colorful_bomb, 0, boostCount + 1);
 				}
 
@@ -632,7 +634,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.ExtraMoves);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.ExtraMoves);
 					BuyBoost(BoostType.ExtraMoves, 0, boostCount + 1);
 				}
 
@@ -650,7 +652,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.ExtraTime);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.ExtraTime);
 					BuyBoost(BoostType.ExtraTime, 0, boostCount + 1);
 				}
 				
@@ -668,7 +670,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.Bomb.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.Bomb);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.Bomb);
 					BuyBoost(BoostType.Bomb, 0, boostCount + 1);
 				}
 
@@ -686,7 +688,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.Energy.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.Energy);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.Energy);
 					BuyBoost(BoostType.Energy, 0, boostCount + 1);
 				}
 
@@ -704,7 +706,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				{
 					count = round * -1;
 					PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_round", round + 1);
-					int boostCount = PlayerPrefs.GetInt("" + BoostType.Shovel);
+					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.Shovel);
 					BuyBoost(BoostType.Shovel, 0, boostCount + 1);
 				}
 
@@ -718,15 +720,15 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public void SetGems (int count)
 	{//1.3.3
 		Gems = count;
-		PlayerPrefs.SetInt("Gems", Gems);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetInt("Gems", Gems);
+		ZPlayerPrefs.Save();
 	}
 
 	public void AddGems (int count)
 	{
 		Gems += count;
-		PlayerPrefs.SetInt("Gems", Gems);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetInt("Gems", Gems);
+		ZPlayerPrefs.Save();
 		#if PLAYFAB || GAMESPARKS
 		NetworkManager.currencyManager.IncBalance(count);
 		#endif
@@ -736,8 +738,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{
 		SoundBase.Instance.PlaySound(SoundBase.Instance.cash);
 		Gems -= count;
-		PlayerPrefs.SetInt("Gems", Gems);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetInt("Gems", Gems);
+		ZPlayerPrefs.Save();
 		#if PLAYFAB || GAMESPARKS
 		NetworkManager.currencyManager.DecBalance(count);
 		#endif
@@ -747,8 +749,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public void RestoreLifes ()
 	{
 		lifes = CapOfLife;
-		PlayerPrefs.SetInt("Lifes", lifes);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetInt("Lifes", lifes);
+		ZPlayerPrefs.Save();
 	}
 
 	public void AddLife (int count)
@@ -756,8 +758,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		lifes += count;
 		if (lifes > CapOfLife)
 			lifes = CapOfLife;
-		PlayerPrefs.SetInt("Lifes", lifes);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetInt("Lifes", lifes);
+		ZPlayerPrefs.Save();
 	}
 
 	public int GetLife ()
@@ -765,8 +767,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		if (lifes > CapOfLife)
 		{
 			lifes = CapOfLife;
-			PlayerPrefs.SetInt("Lifes", lifes);
-			PlayerPrefs.Save();
+			ZPlayerPrefs.SetInt("Lifes", lifes);
+			ZPlayerPrefs.Save();
 		}
 		return lifes;
 	}
@@ -782,8 +784,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		if (lifes > 0)
 		{
 			lifes -= count;
-			PlayerPrefs.SetInt("Lifes", lifes);
-			PlayerPrefs.Save();
+			ZPlayerPrefs.SetInt("Lifes", lifes);
+			ZPlayerPrefs.Save();
 		}
 		//else
 		//{
@@ -793,8 +795,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void BuyBoost (BoostType boostType, int price, int count)
 	{
-		PlayerPrefs.SetInt("" + boostType, count);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetInt("" + boostType, count);
+		ZPlayerPrefs.Save();
 		Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, count);
 		#if PLAYFAB ||GAMESPARKS
 		NetworkManager.dataManager.SetBoosterData();
@@ -805,9 +807,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void SpendBoost (BoostType boostType)
 	{
-		int count = PlayerPrefs.GetInt("" + boostType) - 1;
-		PlayerPrefs.SetInt("" + boostType, count);
-		PlayerPrefs.Save();
+		int count = ZPlayerPrefs.GetInt("" + boostType) - 1;
+		ZPlayerPrefs.SetInt("" + boostType, count);
+		ZPlayerPrefs.Save();
 		Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, count);
 
 		#if PLAYFAB || GAMESPARKS
@@ -849,7 +851,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			{
 				PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 			}
-			PlayerPrefs.SetInt("Lifes", lifes);
+			ZPlayerPrefs.SetInt("Lifes", lifes);
 			PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 			PlayerPrefs.Save();
 		}
@@ -861,7 +863,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		{
 			PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 		}
-		PlayerPrefs.SetInt("Lifes", lifes);
+		ZPlayerPrefs.SetInt("Lifes", lifes);
 		PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 		PlayerPrefs.Save();
 	}
@@ -894,7 +896,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		//		if(RestLifeTimer>0){
 		PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 		//		}
-		PlayerPrefs.SetInt("Lifes", lifes);
+		ZPlayerPrefs.SetInt("Lifes", lifes);
 		PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 		PlayerPrefs.Save();
 #if GOOGLE_MOBILE_ADS

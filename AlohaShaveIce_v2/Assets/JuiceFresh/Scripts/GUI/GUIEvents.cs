@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GUIEvents : MonoBehaviour {
 
 	void Start () {
+		ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
 		if (name == "FaceBook") {//1.3
 //            if (PlayerPrefs.GetInt("Facebook_Logged") == 1) {
 //                FaceBookLogin();

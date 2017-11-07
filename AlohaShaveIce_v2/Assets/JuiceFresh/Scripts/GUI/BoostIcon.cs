@@ -36,7 +36,7 @@ public class BoostIcon : MonoBehaviour
 	{
 		Messenger.AddListener<BoostType, int>("BoostValueChanged", OnBoostValueChanged);
 
-		OnBoostValueChanged(type, PlayerPrefs.GetInt("" + type));
+		OnBoostValueChanged(type, ZPlayerPrefs.GetInt("" + type));
 
 	}
 

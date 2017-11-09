@@ -796,12 +796,11 @@ public class LevelManager : MonoBehaviour
 				f++;
 			}
 		}
-		float offset = 100;
+		float offset = 110;
 		if (ForDialog)
 			offset = 200;
 
 		containerRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (f - 1) * offset + ingrPrefab.transform.GetComponent<RectTransform>().rect.width / 2 * f - ingrPrefab.transform.GetComponent<RectTransform>().rect.width / 2 * (f - 2));
-
 		int j = 0;
 		//print(ingrCountTarget[0]);
 		for (int i = 0; i < num; i++)

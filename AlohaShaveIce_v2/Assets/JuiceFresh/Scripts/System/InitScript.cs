@@ -236,7 +236,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 #endif
 
 #if APPODEAL_ADS
-		String appKey = "00b427e95e6a2a660b700aa7aa36a02f96738fd9deecc690";
+
+		String appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
+		#if UNITY_IOS
+		appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
+		#endif
 		Appodeal.disableLocationPermissionCheck();
 		Appodeal.setTesting(true);
 

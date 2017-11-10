@@ -41,6 +41,7 @@ public class GamesparksConfiguration : EditorWindow
 		{
 			if (GameSparksSettings.ApiKey == "")
 			{
+				Debug.LogError("Clean GameSparks Setting!!!");
 				CreateGame(login, password);
 			}
 			this.Close();
@@ -53,7 +54,7 @@ public class GamesparksConfiguration : EditorWindow
 
 	static void CreateGame (string dest_login, string dest_password)
 	{
-		string HOST = "https://config2.gamesparks.net/";//"https://portal.gamesparks.net/";
+		string HOST = "https://portal.gamesparks.net/";//"https://config2.gamesparks.net/";//
 		string REST_URL = HOST + "restv2/game/";
 
 		var Json_config = LoadResourceTextfile("config.json");

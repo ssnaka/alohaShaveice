@@ -12,6 +12,7 @@ namespace AppodealAds.Unity.Android {
 		
         private bool isShow;
 		AndroidJavaClass appodealClass;
+		AndroidJavaClass appodealUnityClass;
 		AndroidJavaClass appodealBannerClass;
 		AndroidJavaObject appodealBannerInstance;
 		AndroidJavaObject userSettings;
@@ -23,6 +24,13 @@ namespace AppodealAds.Unity.Android {
 				appodealClass = new AndroidJavaClass("com.appodeal.ads.Appodeal");
 			}
 			return appodealClass;
+		}
+
+		public AndroidJavaClass getAppodealUnityClass() {
+			if (appodealUnityClass == null) {
+				appodealUnityClass = new AndroidJavaClass("com.appodeal.unity.AppodealUnity");
+			}
+			return appodealUnityClass;
 		}
 
 		public AndroidJavaObject getAppodealBannerInstance() {
@@ -42,24 +50,25 @@ namespace AppodealAds.Unity.Android {
 		}
 
 		public void initialize(string appKey, int adTypes)  {
-			getAppodealClass().CallStatic("setFramework", "unity", Appodeal.getPluginVersion(), false, false);
+			getAppodealClass().CallStatic("setFramework", "unity", Appodeal.getPluginVersion());
 			#if UNITY_5_6_0 || UNITY_5_6_1
 				getAppodealClass().CallStatic("setFramework", "unity", Appodeal.getPluginVersion(), true, false);
 				getAppodealClass().CallStatic("disableNetwork", getActivity(), "amazon_ads", Appodeal.BANNER);
 			#endif
 
 			if((adTypes & Appodeal.BANNER_VIEW) > 0) {
+				getAppodealClass().CallStatic("setFramework", "unity", Appodeal.getPluginVersion(), false, false);
 				getAppodealClass().CallStatic("disableNetwork", getActivity(), "amazon_ads", Appodeal.BANNER);
 			}
 			getAppodealClass().CallStatic("initialize", getActivity(), appKey, adTypes);
 		}
 
 		public bool show(int adTypes) {
-			return getAppodealClass().CallStatic<bool>("show", getActivity(), adTypes);
+			return getAppodealUnityClass().CallStatic<bool>("show", getActivity(), adTypes);
 		}
 
 		public bool show(int adTypes, string placement) {
-			return getAppodealClass().CallStatic<bool>("show", getActivity(), adTypes, placement);
+			return getAppodealUnityClass().CallStatic<bool>("show", getActivity(), adTypes, placement);
 		}
 
 		public bool showBannerView(int YAxis, int XAxis, string Placement) {

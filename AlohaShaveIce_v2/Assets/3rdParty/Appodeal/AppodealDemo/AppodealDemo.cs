@@ -59,7 +59,7 @@ public class AppodealDemo : MonoBehaviour, IInterstitialAdListener, IBannerAdLis
 		Appodeal.muteVideosIfCallsMuted(true);
 		Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
 		
-		Appodeal.initialize (appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.REWARDED_VIDEO);
+		Appodeal.initialize (appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER_VIEW | Appodeal.REWARDED_VIDEO);
 
 		Appodeal.setBannerCallbacks (this);
 		Appodeal.setInterstitialCallbacks (this);

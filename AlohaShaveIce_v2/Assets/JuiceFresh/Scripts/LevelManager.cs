@@ -198,7 +198,7 @@ public class LevelManager : MonoBehaviour
 	//pool of explosion effects for items
 	public GameObject[] itemExplPool = new GameObject[20];
 	//pool of flowers
-	public GameObject[] flowersPool = new GameObject[20];
+	public GameObject[] flowersPool = new GameObject[5];
 	//global Score amount on current level
 	public static int Score;
 	// stars amount on current level
@@ -611,8 +611,9 @@ public class LevelManager : MonoBehaviour
 
 			// itemExplPool[i].SetActive(false);
 		}
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < flowersPool.Length; i++)
 		{
+			Debug.LogError(i);
 			flowersPool[i] = Instantiate(flower, transform.position, Quaternion.identity) as GameObject;
 			flowersPool[i].GetComponent<SpriteRenderer>().enabled = false;
 		}

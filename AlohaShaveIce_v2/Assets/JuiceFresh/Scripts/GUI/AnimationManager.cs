@@ -202,9 +202,9 @@ public class AnimationManager : MonoBehaviour
 #if UNITY_ANDROID
 		Application.OpenURL(InitScript.Instance.RateURL);
 #elif UNITY_IOS
-		Application.OpenURL (InitScript.Instance.RateURLIOS);
+//		Application.OpenURL (InitScript.Instance.RateURLIOS);
+		NativeReviewRequest.RequestReview();
 #endif
-
 		PlayerPrefs.SetInt("Rated", 1);
 		PlayerPrefs.Save();
 	}

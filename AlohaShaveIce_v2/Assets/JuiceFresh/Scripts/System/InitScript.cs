@@ -242,7 +242,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
 		#endif
 		Appodeal.disableLocationPermissionCheck();
-		Appodeal.setTesting(true);
+		Appodeal.setTesting(false);
 
 		Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
 		Appodeal.setNonSkippableVideoCallbacks(this);
@@ -840,9 +840,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	void OnApplicationFocus (bool focusStatus)
 	{//1.3.3
-		if (MusicBase.Instance)
-		{
-			MusicBase.Instance.GetComponent<AudioSource>().Play();
+		if(focusStatus) {
+			if (MusicBase.Instance)
+			{
+				MusicBase.Instance.GetComponent<AudioSource>().Play();
+			}
+			Appodeal.onResume();
 		}
 	}
 

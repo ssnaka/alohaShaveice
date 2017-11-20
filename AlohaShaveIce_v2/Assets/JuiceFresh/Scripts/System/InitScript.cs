@@ -845,7 +845,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			{
 				MusicBase.Instance.GetComponent<AudioSource>().Play();
 			}
+			#if APPODEAL_ADS
 			Appodeal.onResume();
+			#endif
 		}
 	}
 

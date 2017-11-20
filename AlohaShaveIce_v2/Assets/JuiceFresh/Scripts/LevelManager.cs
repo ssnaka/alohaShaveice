@@ -613,7 +613,6 @@ public class LevelManager : MonoBehaviour
 		}
 		for (int i = 0; i < flowersPool.Length; i++)
 		{
-			Debug.LogError(i);
 			flowersPool[i] = Instantiate(flower, transform.position, Quaternion.identity) as GameObject;
 			flowersPool[i].GetComponent<SpriteRenderer>().enabled = false;
 		}

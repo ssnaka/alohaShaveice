@@ -55,9 +55,9 @@ public class Flower : MonoBehaviour
 		float startTime = Time.time;
 		Vector3 startPos = pos1;
 		float distance = Vector3.Distance(pos1, pos2);
-//		float speed = 6.5f;
+		float aSpeed = speed;
 		if (directFly)
-			speed *= 10;
+			aSpeed *= 10;
 		float fracJourney = 0;
 		GetComponent<ParticleSystem>().gravityModifier = 0.1f;
 		GetComponent<ParticleSystem>().Play();
@@ -71,8 +71,8 @@ public class Flower : MonoBehaviour
 				StartFly(transform.position, directFly);
 				yield break;
 			}
-			// speed += 0.2f;
-			float distCovered = (Time.time - startTime) * speed;
+			// aSpeed += 0.2f;
+			float distCovered = (Time.time - startTime) * aSpeed;
 			fracJourney = distCovered / distance;
 			if (float.IsNaN(fracJourney))  //1.3
 				fracJourney = 0;   //1.3

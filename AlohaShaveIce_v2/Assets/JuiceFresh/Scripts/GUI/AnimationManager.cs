@@ -119,7 +119,11 @@ public class AnimationManager : MonoBehaviour
 
 		if (name != "Lifes" && name != "Gems" && name != "Settings")
 		{
-			InitScript.Instance.EnableBannerAds(true);
+			if (name != "gratzWord1" && name != "PrePlay")
+			{
+				InitScript.Instance.EnableBannerAds(true);
+			}
+
 
 			Button[] allButtonsArray = transform.GetComponentsInChildren<Button>();
 			if (videoButton == null)

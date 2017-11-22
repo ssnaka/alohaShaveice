@@ -40,4 +40,11 @@ public class AvatarManager : MonoBehaviour {
 		friendAvatar.GetComponent<FriendAvatar> ().FriendData = friendData;
 	}
 
+	public void EnableAvatar (bool _enabled)
+	{
+		foreach (GameObject avatar in avatars)
+		{
+			avatar.SetActive(_enabled);
+		}
+	}
 }

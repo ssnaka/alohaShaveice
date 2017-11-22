@@ -236,19 +236,18 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 #endif
 
 #if APPODEAL_ADS
-
-		String appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
+		string appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
 		#if UNITY_IOS
 		appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
 		#endif
+
 		Appodeal.disableLocationPermissionCheck();
 		Appodeal.setTesting(false);
+		Appodeal.setBannerBackground(true);
 
 		Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
 		Appodeal.setNonSkippableVideoCallbacks(this);
 		Appodeal.setBannerCallbacks(this);
-
-		Appodeal.setBannerBackground(true);
 #endif
 
 		Transform canvas = GameObject.Find("CanvasGlobal").transform;
@@ -487,10 +486,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		if (_enabled)
 		{
 //			Debug.LogError(Appodeal.isLoaded(Appodeal.BANNER));
-			if (Appodeal.isLoaded(Appodeal.BANNER))
-			{
+//			if (Appodeal.isLoaded(Appodeal.BANNER))
+//			{
 				Appodeal.show(Appodeal.BANNER_BOTTOM);
-			}
+//			}
 		}
 		else
 		{

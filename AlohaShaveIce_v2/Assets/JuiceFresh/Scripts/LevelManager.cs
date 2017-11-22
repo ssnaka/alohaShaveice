@@ -367,6 +367,7 @@ public class LevelManager : MonoBehaviour
 				MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
 				MusicBase.Instance.GetComponent<AudioSource>().Play();
 				PrepareGame();
+				avatarManager.EnableAvatar(false);
 			}
 			else if (value == GameState.WaitForPopup)
 			{
@@ -386,6 +387,7 @@ public class LevelManager : MonoBehaviour
 			}
 			else if (value == GameState.Map)
 			{
+				avatarManager.EnableAvatar(true);
 				if (PlayerPrefs.GetInt("OpenLevelTest") <= 0)
 				{
 					MusicBase.Instance.GetComponent<AudioSource>().Stop();
@@ -572,9 +574,11 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
+	AvatarManager avatarManager;
 	// Use this for initialization
 	void Start ()
 	{
+		avatarManager = GameObject.Find("AvatarManager").GetComponent<AvatarManager>();
 		ingrCountTarget = new int[NumIngredients]; //necessary amount of collectable items
 		//ingrTarget = InitScript.Instance.collectedIngredients.ToArray();  //necessary collectable items
 		//collectItems = new CollectItems[NumIngredients];   //necessary collectable items

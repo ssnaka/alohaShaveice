@@ -119,7 +119,7 @@ public class AnimationManager : MonoBehaviour
 
 		if (name != "Lifes" && name != "Gems" && name != "Settings")
 		{
-			if (name != "gratzWord1" && name != "PrePlay")
+			if (name != "gratzWord1" && name != "gratzWord2" && name != "gratzWord3" && name != "PrePlay")
 			{
 				InitScript.Instance.EnableBannerAds(true);
 			}

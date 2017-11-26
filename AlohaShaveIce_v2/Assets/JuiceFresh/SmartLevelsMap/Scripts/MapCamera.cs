@@ -47,6 +47,12 @@ public class MapCamera : MonoBehaviour
 
 	private void HandleTouchInput ()
 	{
+		int touchId = -1;
+		#if (UNITY_ANDROID || UNITY_IPHONE) && !UNITY_EDITOR
+		touchId = 0;
+		#endif
+		if (EventSystem.current.IsPointerOverGameObject(touchId))
+			return;
 		if (Input.touchCount == 1)
 		{
 			Touch touch = Input.GetTouch(0);
@@ -80,6 +86,12 @@ public class MapCamera : MonoBehaviour
 
 	private void HandleMouseInput ()
 	{
+		int touchId = -1;
+		#if (UNITY_ANDROID || UNITY_IPHONE) && !UNITY_EDITOR
+		touchId = 0;
+		#endif
+		if (EventSystem.current.IsPointerOverGameObject(touchId))
+			return;
 		if (Input.GetMouseButtonDown(0))
 		{
 			deltaV = Vector2.zero;
@@ -112,7 +124,11 @@ public class MapCamera : MonoBehaviour
 
 	private void MoveCamera (Vector2 prevPosition, Vector2 curPosition)
 	{
-		if (EventSystem.current.IsPointerOverGameObject(-1))
+		int touchId = -1;
+		#if (UNITY_ANDROID || UNITY_IPHONE) && !UNITY_EDITOR
+		touchId = 0;
+		#endif
+		if (EventSystem.current.IsPointerOverGameObject(touchId))
 			return;
 		SetPosition(
 			transform.localPosition +

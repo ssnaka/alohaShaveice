@@ -83,7 +83,7 @@ public enum RewardedAdsType
 	All
 }
 
-public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener
+public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener, IRewardedVideoAdListener
 {
 	public static InitScript Instance;
 	public static int openLevel;
@@ -247,6 +247,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 		Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
 		Appodeal.setNonSkippableVideoCallbacks(this);
+
+//		Appodeal.setRewardedVideoCallbacks(this);
 		Appodeal.setBannerCallbacks(this);
 #endif
 
@@ -428,6 +430,31 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	#if APPODEAL_ADS
 	#region Rewarded Video callback handlers
+
+			public void onRewardedVideoLoaded()
+			{
+			Debug.LogError("--Video Loaded");
+			}
+
+			public void onRewardedVideoFailedToLoad()
+			{
+			Debug.LogError("--Video failed");
+			}
+
+			public void onRewardedVideoShown()
+			{
+			Debug.LogError("--Video shown");
+			}
+
+			public void onRewardedVideoFinished(int amount, string name)
+			{
+			Debug.LogError("--Video Finished");
+			}
+
+			public void onRewardedVideoClosed(bool finished)
+			{
+			Debug.LogError("--Video closed");
+			}
 
 	public void onNonSkippableVideoLoaded ()
 	{

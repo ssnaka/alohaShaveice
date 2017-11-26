@@ -137,26 +137,55 @@ public class AnimationManager : MonoBehaviour
 
 			if (videoButton != null)
 			{
+				watchAds_text = GameObject.Find("watchAds_text").GetComponent<Text>();
 				if (!InitScript.Instance.CanVideoBePlayed())
 				{
-					videoButton.gameObject.SetActive(false);
+					string dateString = PlayerPrefs.GetString("NextVideoResetTime", "");
+					nextVideoResetTime = DateTime.Parse(dateString);
+
+					if (!string.IsNullOrEmpty(dateString))
+					{
+						videoButton.enabled = false;
+						shouldDisplayRemainingTimeForVideo = true;
+					}
+//					videoButton.gameObject.SetActive(false);
 				}
 				else
 				{
+					watchAds_text.text = "Watch Ads for Boosts";
+					videoButton.enabled = true;
 					videoButton.gameObject.SetActive(true);
+					shouldDisplayRemainingTimeForVideo = false;
 				}
-
 			}
-
 		}
 	}
 
+	bool shouldDisplayRemainingTimeForVideo = false;
+	DateTime nextVideoResetTime;
+	Text watchAds_text;
+
 	void Update()
 	{
-
 		if (Input.GetKeyUp(KeyCode.Escape)) {
 			if (name == "MenuPlay" || name == "Settings" || name == "BoostInfo" || name == "GemsShop" || name == "LiveShop" || name == "BoostShop" || name == "Reward")
 				CloseMenu();
+		}
+
+		if (shouldDisplayRemainingTimeForVideo)
+		{
+			if (nextVideoResetTime.CompareTo(DateTime.Now) >= 0)
+			{
+				TimeSpan timeLeft = nextVideoResetTime.Subtract(DateTime.Now);
+				watchAds_text.text = "Video available in " +  timeLeft.Hours + " : " + timeLeft.Minutes + " : " + timeLeft.Seconds;
+			}
+			else
+			{
+				watchAds_text.text = "Watch Ads for Boosts";
+				videoButton.enabled = true;
+				videoButton.gameObject.SetActive(true);
+				shouldDisplayRemainingTimeForVideo = false;
+			}
 		}
 	}
 

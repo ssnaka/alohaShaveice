@@ -156,7 +156,12 @@ public class LevelsMap : MonoBehaviour
 
 	public static bool GetIsClickEnabled ()
 	{
-		return _instance.IsClickEnabled;
+		int touchId = -1;
+		#if (UNITY_ANDROID || UNITY_IPHONE) && !UNITY_EDITOR
+		touchId = 0;
+		#endif
+
+		return _instance.IsClickEnabled && UnityEngine.EventSystems.EventSystem.current != null && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touchId);
 	}
 
 	public static bool GetIsConfirmationEnabled ()

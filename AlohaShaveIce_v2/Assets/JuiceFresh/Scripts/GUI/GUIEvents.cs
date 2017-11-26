@@ -12,6 +12,23 @@ public class GUIEvents : MonoBehaviour {
 //            }
 		}
 
+		else if (name == "Settings")
+		{
+			GameObject tutorialNotification = GameObject.Find("tutorialNotification");
+			if (tutorialNotification != null)
+			{
+				int tutorialNotificationView = PlayerPrefs.GetInt("tutorialNotificationView", 0);
+				if (tutorialNotificationView <= 0)
+				{
+					tutorialNotification.SetActive(true);
+				}
+				else
+				{
+					tutorialNotification.SetActive(false);
+				}
+			}
+		}
+
 	}
 
 	void Update () {
@@ -24,10 +41,28 @@ public class GUIEvents : MonoBehaviour {
 	public void Settings (GameObject settings) {
 		SoundBase.Instance.PlaySound (SoundBase.Instance.click);
 		if (!settings.activeSelf)
+		{
 			settings.SetActive (true);
+			int tutorialNotificationView = PlayerPrefs.GetInt("tutorialNotificationView", 0);
+			if (tutorialNotificationView <= 0)
+			{
+				GameObject tutorialNotification = GameObject.Find("tutorialNotification");
+				if (tutorialNotification != null)
+				{
+					PlayerPrefs.SetInt("tutorialNotificationView", 1);
+					PlayerPrefs.Save();
+					tutorialNotification.SetActive(false);
+				}
+			}
+		}
 		else
+		{
 			settings.SetActive (false);
+		}
 		// GameObject.Find("CanvasGlobal").transform.Find("Settings").gameObject.SetActive(true);
+
+
+
 
 	}
 

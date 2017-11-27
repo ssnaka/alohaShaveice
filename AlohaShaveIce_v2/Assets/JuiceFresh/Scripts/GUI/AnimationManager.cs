@@ -121,7 +121,9 @@ public class AnimationManager : MonoBehaviour
 		{
 			if (name != "gratzWord1" && name != "gratzWord2" && name != "gratzWord3" && name != "PrePlay")
 			{
+				#if APPODEAL_ADS
 				InitScript.Instance.EnableBannerAds(true);
+				#endif
 			}
 
 
@@ -253,7 +255,9 @@ public class AnimationManager : MonoBehaviour
 		//    if( !GetComponent<SequencePlayer>().sequenceArray[0].isPlaying )
 		//        GetComponent<SequencePlayer>().sequenceArray[0].Play
 		//}
+		#if APPODEAL_ADS
 		InitScript.Instance.EnableBannerAds(false);
+		#endif
 	}
 
 	public void OnFinished()

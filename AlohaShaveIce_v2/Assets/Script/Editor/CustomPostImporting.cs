@@ -32,11 +32,13 @@ public class CustomPostImporting : AssetPostprocessor
 		{
 			defines = defines + "; APPODEAL_ADS";
 		}
+
 		#elif UNITY_IOS
 		defines = defines + "; UNITY_ADS";
+
 		#endif
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, defines);
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defines);
-		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.WSA, defines);//1.3.3
+//		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.WSA, defines);//1.3.3
 	}
 }

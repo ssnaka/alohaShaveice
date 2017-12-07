@@ -83,11 +83,12 @@ public enum RewardedAdsType
 	All
 }
 
-#if UNITY_ANDROID
+
+//#if UNITY_ANDROID
 public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener, IRewardedVideoAdListener
-#elif UNITY_IOS
-public class InitScript : MonoBehaviour
-#endif
+//#elif UNITY_IOS
+//public class InitScript : MonoBehaviour
+//#endif
 {
 	public static InitScript Instance;
 	public static int openLevel;

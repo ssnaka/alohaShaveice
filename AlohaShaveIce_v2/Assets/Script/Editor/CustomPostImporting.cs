@@ -27,16 +27,16 @@ public class CustomPostImporting : AssetPostprocessor
 		if (Directory.Exists("Assets/Plugins/UnityPurchasing"))
 			defines = defines + "; UNITY_INAPPS";
 		
-		#if UNITY_ANDROID
-		if (Directory.Exists("Assets/3rdParty/Appodeal"))
+//		#if UNITY_ANDROID
+		if (Directory.Exists("Assets/Appodeal"))
 		{
 			defines = defines + "; APPODEAL_ADS";
 		}
 
-		#elif UNITY_IOS
-		defines = defines + "; UNITY_ADS";
-
-		#endif
+//		#elif UNITY_IOS
+//		defines = defines + "; UNITY_ADS";
+//
+//		#endif
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, defines);
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defines);
 //		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.WSA, defines);//1.3.3

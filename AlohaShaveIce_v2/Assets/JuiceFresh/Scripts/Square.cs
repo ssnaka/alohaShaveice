@@ -57,12 +57,14 @@ public class Square : MonoBehaviour {
         if (IsNone() && !CanGoInto())
             return null;
         GameObject item = Instantiate(LevelManager.THIS.itemPrefab) as GameObject;
-        item.transform.localScale = Vector2.one * 0.9f;
+        
         item.GetComponent<Item>().square = this;
         //if (!falling)
         //    item.GetComponent<Item>().anim.SetTrigger("reAppear");
 
         item.transform.SetParent(transform.parent);
+		item.transform.localScale = Vector2.one * 0.9f;
+
         if (falling) {
             item.transform.position = transform.position + Vector3.back * 0.2f + Vector3.up * 3f;
             item.GetComponent<Item>().justCreatedItem = true;

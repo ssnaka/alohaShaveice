@@ -641,6 +641,7 @@ public class LevelManager : MonoBehaviour
 		//        ReGenLevel();
 		RestartTimer();
 		InitTargets();
+
 		GameField.gameObject.SetActive(true);
 
 	}
@@ -1642,7 +1643,15 @@ public class LevelManager : MonoBehaviour
 	private void GenerateLevel ()
 	{
 		bool chessColor = false;
+		float screenRatio = (float)Screen.height / (float)Screen.width;
+
 		float sqWidth = 1.6f;
+		if(screenRatio >= 2.0f)
+		{
+			sqWidth = 1.27f;
+			GameField.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+		}
+
 		float halfSquare = sqWidth / 2;
 		Vector3 fieldPos = new Vector3(-maxCols * sqWidth / 2 + halfSquare, maxRows / 1.4f, -10);
 		for (int row = 0; row < maxRows; row++)
@@ -1679,7 +1688,7 @@ public class LevelManager : MonoBehaviour
 		anim.AddClip(clip, "appear");
 		anim.Play("appear");
 
-		//print(pos);
+//		print(pos);
 		GameField.transform.position = new Vector2(pos.x + 15, pos.y + yOffset);
 
 	}
@@ -1688,11 +1697,13 @@ public class LevelManager : MonoBehaviour
 	{
 		GameObject square = null;
 		square = Instantiate(squarePrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
+
 		if (chessColor)
 		{
 			square.GetComponent<SpriteRenderer>().sprite = squareSprite1;
 		}
 		square.transform.SetParent(GameField);
+		square.transform.localScale = Vector3.one;
 		square.transform.localPosition = firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight);
 		squaresArray[row * maxCols + col] = square.GetComponent<Square>();
 		square.GetComponent<Square>().row = row;

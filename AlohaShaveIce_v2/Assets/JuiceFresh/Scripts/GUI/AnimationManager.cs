@@ -139,7 +139,12 @@ public class AnimationManager : MonoBehaviour
 
 			if (videoButton != null)
 			{
-				watchAds_text = GameObject.Find("watchAds_text").GetComponent<Text>();
+				GameObject watchAdsTextObj = GameObject.Find("watchAds_text");
+				if (watchAdsTextObj != null)
+				{
+					watchAds_text = watchAdsTextObj.GetComponent<Text>();
+				}
+				
 				if (!InitScript.Instance.CanVideoBePlayed())
 				{
 					string dateString = PlayerPrefs.GetString("NextVideoResetTime", "");
@@ -154,7 +159,10 @@ public class AnimationManager : MonoBehaviour
 				}
 				else
 				{
-					watchAds_text.text = "Watch Ads for Boosts";
+					if (watchAds_text != null)
+					{
+						watchAds_text.text = "Watch Ads for Boosts";
+					}
 					videoButton.enabled = true;
 					videoButton.gameObject.SetActive(true);
 					shouldDisplayRemainingTimeForVideo = false;
@@ -179,11 +187,17 @@ public class AnimationManager : MonoBehaviour
 			if (nextVideoResetTime.CompareTo(DateTime.Now) >= 0)
 			{
 				TimeSpan timeLeft = nextVideoResetTime.Subtract(DateTime.Now);
-				watchAds_text.text = "Video available in " +  timeLeft.Hours + " : " + timeLeft.Minutes + " : " + timeLeft.Seconds;
+				if (watchAds_text != null)
+				{
+					watchAds_text.text = "Video available in " +  timeLeft.Hours + " : " + timeLeft.Minutes + " : " + timeLeft.Seconds;
+				}
 			}
 			else
 			{
-				watchAds_text.text = "Watch Ads for Boosts";
+				if (watchAds_text != null)
+				{
+					watchAds_text.text = "Watch Ads for Boosts";
+				}
 				videoButton.enabled = true;
 				videoButton.gameObject.SetActive(true);
 				shouldDisplayRemainingTimeForVideo = false;

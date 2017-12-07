@@ -8,7 +8,11 @@ using System.Collections.Generic;
 using UnityEngine.Advertisements;
 #endif
 
-
+public class LevelInfo 
+{
+	public Target target;
+	public LIMIT limitType;
+}
 
 
 public class AnimationManager : MonoBehaviour
@@ -30,9 +34,23 @@ public class AnimationManager : MonoBehaviour
 			//    GetComponent<SequencePlayer>().Play();
 		}
 		if (name == "MenuPlay") {
-			// LoadLevel(PlayerPrefs.GetInt("OpenLevel"));
-			LevelManager.THIS.LoadLevel();
+//			LoadLevel(PlayerPrefs.GetInt("OpenLevel"));
+			LevelInfo levelInfo = LevelManager.THIS.LoadLevel();
 			LevelManager.THIS.CreateCollectableTarget(transform.Find("Image/TargetIngr/TargetIngr").gameObject, target);
+
+			Transform timerImage = transform.Find("Image/TimerImage");
+			if (timerImage != null)
+			{
+				if (levelInfo.limitType.Equals(LIMIT.TIME))
+				{
+					timerImage.gameObject.SetActive(true);
+				}
+				else
+				{
+					timerImage.gameObject.SetActive(false);
+				}
+			}
+
 			// for (int i = 1; i <= 3; i++)
 			// {
 			//     transform.Find("Image").Find("Star" + i).gameObject.SetActive(false);

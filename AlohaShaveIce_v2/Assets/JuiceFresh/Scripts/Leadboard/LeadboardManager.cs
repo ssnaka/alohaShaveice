@@ -16,7 +16,7 @@ public class LeadboardManager : MonoBehaviour {
 		GetComponent<Image> ().enabled = false;
 		#if PLAYFAB || GAMESPARKS
 		//PlayFabManager.OnLevelLeadboardLoaded += ShowLeadboard;
-		Debug.Log ("leadboard enable");
+//		Debug.Log ("leadboard enable");
 		NetworkManager.leadboardList.Clear ();
 		StartCoroutine (WaitForLeadboard ());
 		#endif
@@ -41,7 +41,7 @@ public class LeadboardManager : MonoBehaviour {
 	#if PLAYFAB || GAMESPARKS
 	IEnumerator WaitForLeadboard () {
 		yield return new WaitForSeconds (0.5f);
-		Debug.Log (NetworkManager.leadboardList.Count);
+//		Debug.Log (NetworkManager.leadboardList.Count);
 		yield return new WaitUntil (() => NetworkManager.leadboardList.Count > 0);
 		print (NetworkManager.leadboardList.Count);
 		if (FB.IsLoggedIn) {

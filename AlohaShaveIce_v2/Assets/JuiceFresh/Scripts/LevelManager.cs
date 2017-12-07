@@ -480,14 +480,15 @@ public class LevelManager : MonoBehaviour
 	}
 
 
-	public void LoadLevel ()
+	public LevelInfo LoadLevel ()
 	{
 		currentLevel = PlayerPrefs.GetInt("OpenLevel");// TargetHolder.level;
 		if (currentLevel == 0)
 			currentLevel = 1;
-		LoadDataFromLocal(currentLevel);
+		LevelInfo result = LoadDataFromLocal(currentLevel);
 		NumIngredients = ingrTarget.Count;
 
+		return result;
 	}
 
 	void SetupGameCamera ()
@@ -840,6 +841,7 @@ public class LevelManager : MonoBehaviour
 				//    heightPos += 8;
 
 				ingr.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(j * offset - containerRect.rect.width / 2 + ingr.transform.GetComponent<RectTransform>().rect.width / 2, heightPos);
+				ingr.transform.localPosition = new Vector3(ingr.transform.localPosition.x, ingr.transform.localPosition.y, 0.0f);
 
 				j++;
 			}
@@ -3206,11 +3208,11 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	public void LoadDataFromLocal (int currentLevel)
+	public LevelInfo LoadDataFromLocal (int currentLevel)
 	{
 		levelLoaded = false;
 		string level = GetDataFromLocal(currentLevel);
-		ProcessGameDataFromString(level);
+		return ProcessGameDataFromString(level);
 	}
 
 	public static string GetDataFromLocal (int currentLevel)
@@ -3227,7 +3229,7 @@ public class LevelManager : MonoBehaviour
 		return result;
 	}
 
-	void ProcessGameDataFromString (string mapText)
+	LevelInfo ProcessGameDataFromString (string mapText)
 	{
 		string[] lines = mapText.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 		ingrTarget = new List<CollectedIngredients>();
@@ -3376,6 +3378,12 @@ public class LevelManager : MonoBehaviour
 		}
 		//print(TargetBlocks);
 		levelLoaded = true;
+
+		LevelInfo result = new LevelInfo();
+		result.target = target;
+		result.limitType = limitType;
+
+		return result;
 	}
 
 }

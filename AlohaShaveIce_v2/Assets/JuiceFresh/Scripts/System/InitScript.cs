@@ -322,6 +322,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void ShowRewardedAds ()
 	{
+		if (MusicBase.Instance)
+		{
+			MusicBase.Instance.GetComponent<AudioSource>().Stop();
+		}
 #if UNITY_ADS
 		Debug.Log ("show Unity Rewarded ads video in " + LevelManager.THIS.gameStatus);
 
@@ -750,6 +754,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 
 		PlayerPrefs.Save();
+
+		if (MusicBase.Instance)
+		{
+			MusicBase.Instance.GetComponent<AudioSource>().Play();
+		}
 	}
 
 	public void SetGems (int count)

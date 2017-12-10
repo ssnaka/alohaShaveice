@@ -279,7 +279,10 @@ public class AnimationManager : MonoBehaviour
 	void OnDisable()
 	{
 		if (transform.Find("Image/Video") != null) {
-			transform.Find("Image/Video").gameObject.SetActive(true);
+			if (!name.Equals("LiveShop") && !name.Equals("GemsShop"))
+			{
+				transform.Find("Image/Video").gameObject.SetActive(true);
+			}
 		}
 
 		//if( PlayOnEnable )

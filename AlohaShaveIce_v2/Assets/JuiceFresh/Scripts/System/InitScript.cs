@@ -322,10 +322,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void ShowRewardedAds ()
 	{
-		if (MusicBase.Instance)
-		{
-			MusicBase.Instance.GetComponent<AudioSource>().Stop();
-		}
 #if UNITY_ADS
 		Debug.Log ("show Unity Rewarded ads video in " + LevelManager.THIS.gameStatus);
 
@@ -342,6 +338,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		#if APPODEAL_ADS
 		if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
 		{
+			if (MusicBase.Instance)
+			{
+				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+			}
 			Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
 		}
 		#endif

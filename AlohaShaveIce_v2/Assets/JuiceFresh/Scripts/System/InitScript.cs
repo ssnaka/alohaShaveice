@@ -592,6 +592,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void CheckRewardedAds ()
 	{
+		Debug.LogError(currentReward);
 		string dateString = PlayerPrefs.GetString("NextVideoResetTime", "");
 		if (string.IsNullOrEmpty(dateString))
 		{
@@ -680,6 +681,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_watch", count);
 			}
 		}
+
 		else if (currentReward == RewardedAdsType.ExtraTime)
 		{
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.ExtraTime);

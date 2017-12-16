@@ -221,6 +221,12 @@ public class AnimationManager : MonoBehaviour
 				shouldDisplayRemainingTimeForVideo = false;
 			}
 		}
+
+		if (shouldPlaySwishSound)
+		{
+			shouldPlaySwishSound = false;
+			SoundBase.Instance.PlaySound(SoundBase.Instance.swish[1]);
+		}
 	}
 
 	public void ShowAds()
@@ -454,10 +460,10 @@ public class AnimationManager : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 	}
 
+	bool shouldPlaySwishSound = false;
 	public void CloseMenu()
 	{
-
-		SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+		
 		if (gameObject.name == "MenuPreGameOver") {
 			ShowGameOver();
 		}
@@ -496,7 +502,10 @@ public class AnimationManager : MonoBehaviour
 				Destroy(item.gameObject);
 			}
 		}
-		SoundBase.Instance.PlaySound(SoundBase.Instance.swish[1]);
+
+		shouldPlaySwishSound = true;
+//		SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+//		SoundBase.Instance.PlaySound(SoundBase.Instance.swish[1]);
 
 		gameObject.SetActive(false);
 	}
@@ -705,7 +714,7 @@ public class AnimationManager : MonoBehaviour
 			LevelManager.THIS.RechargeBombs();
 		//GetComponent<Animation>()["bannerFailed"].speed = 1;
 		keepGaming = true;
-		MusicBase.Instance.GetComponent<AudioSource>().Play();
+//		MusicBase.Instance.GetComponent<AudioSource>().Play();
 		CloseMenu();
 
 		LevelManager.THIS.gameStatus = GameState.Playing;

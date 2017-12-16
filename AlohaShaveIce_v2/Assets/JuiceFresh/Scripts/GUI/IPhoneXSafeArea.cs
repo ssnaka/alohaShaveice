@@ -12,7 +12,7 @@ public class IPhoneXSafeArea : MonoBehaviour {
 	{
 		float screenRatio = (float)Screen.height / (float)Screen.width;
 
-		if(screenRatio >= 2.0f)
+		if (screenRatio >= 2.0f)
 		{
 			topPanel.anchoredPosition = new Vector2(topPanel.anchoredPosition.x, -120.0f);
 			bottomanel.anchoredPosition = new Vector2(bottomanel.anchoredPosition.x, 68.0f);

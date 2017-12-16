@@ -273,6 +273,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		print ("HandleInterstitialFailedToLoad event received with message: " + args.Message);
 	}
 	#endif
+
 	void Update ()
 	{
 		if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -288,6 +289,13 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			}
 
 		}
+
+		if (shouldCheckRewardedAdsInMainThreaad)
+		{
+			shouldCheckRewardedAdsInMainThreaad = false;
+			CheckRewardedAdsInMainThread();
+		}
+
 	}
 
 	public void SaveLevelStarsCount (int level, int starsCount)
@@ -349,7 +357,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void CheckAdsEvents (GameState state)
 	{
-
 		foreach (AdEvents item in adsEvents)
 		{
 			if (item.gameEvent == state)
@@ -365,7 +372,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				else
 				{
 					ShowAdByType(item.adType);
-
 				}
 			}
 		}
@@ -442,52 +448,52 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 			public void onRewardedVideoLoaded()
 			{
-			Debug.LogError("--Video Loaded");
+			Debug.Log("--Video Loaded");
 			}
 
 			public void onRewardedVideoFailedToLoad()
 			{
-			Debug.LogError("--Video failed");
+			Debug.Log("--Video failed");
 			}
 
 			public void onRewardedVideoShown()
 			{
-			Debug.LogError("--Video shown");
+			Debug.Log("--Video shown");
 			}
 
 			public void onRewardedVideoFinished(int amount, string name)
 			{
-			Debug.LogError("--Video Finished");
+			Debug.Log("--Video Finished");
 			}
 
 			public void onRewardedVideoClosed(bool finished)
 			{
-			Debug.LogError("--Video closed");
+			Debug.Log("--Video closed");
 			}
 
 	public void onNonSkippableVideoLoaded ()
 	{
-		Debug.LogError("Video Loaded");
+			Debug.Log("Video Loaded");
 	}
 
 	public void onNonSkippableVideoFailedToLoad ()
 	{
-		Debug.LogError("Video failed");
+			Debug.Log("Video failed");
 	}
 
 	public void onNonSkippableVideoShown ()
 	{
-		Debug.LogError("Video shown");
+			Debug.Log("Video shown");
 	}
 
 	public void onNonSkippableVideoClosed (bool _closed)
 	{
-		Debug.LogError("Video closed");
+			Debug.Log("Video closed");
 	}
 
 	public void onNonSkippableVideoFinished ()
 	{
-		Debug.LogError("Video Finished");
+			Debug.Log("Video Finished");
 		CheckRewardedAds();
 	}
 
@@ -589,10 +595,21 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		return canPlay;
 	}
 
-
-	public void CheckRewardedAds ()
+	void CheckRewardedAdsInMainThread ()
 	{
-		Debug.LogError(currentReward);
+		if (LevelManager.THIS.gameStatus == GameState.GameOver && currentReward == RewardedAdsType.GetGoOn)
+		{
+			foreach (AdEvents item in adsEvents)
+			{
+				if ((LevelManager.THIS.gameStatus == GameState.GameOver || LevelManager.THIS.gameStatus == GameState.Pause ||
+					LevelManager.THIS.gameStatus == GameState.Playing || LevelManager.THIS.gameStatus == GameState.PrepareGame || LevelManager.THIS.gameStatus == GameState.PreWinAnimations ||
+					LevelManager.THIS.gameStatus == GameState.RegenLevel || LevelManager.THIS.gameStatus == GameState.Win))
+				{
+					item.calls = item.calls > 0 ? item.calls - 1 : 0;
+				}
+			}
+		}
+
 		string dateString = PlayerPrefs.GetString("NextVideoResetTime", "");
 		if (string.IsNullOrEmpty(dateString))
 		{
@@ -625,7 +642,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 		else if (currentReward == RewardedAdsType.Counter)
 		{
-			
+
 		}
 		else if (currentReward == RewardedAdsType.Stripes)
 		{
@@ -696,7 +713,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 					int boostCount = ZPlayerPrefs.GetInt("" + BoostType.ExtraTime);
 					BuyBoost(BoostType.ExtraTime, 0, boostCount + 1);
 				}
-				
+
 				PlayerPrefs.SetInt(RewardedAdsType.ExtraTime.ToString() + "_watch", count);
 			}
 		}
@@ -761,6 +778,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		{
 			MusicBase.Instance.GetComponent<AudioSource>().Play();
 		}
+	}
+
+	bool shouldCheckRewardedAdsInMainThreaad = false;
+	public void CheckRewardedAds ()
+	{
+		shouldCheckRewardedAdsInMainThreaad = true;
 	}
 
 	public void SetGems (int count)

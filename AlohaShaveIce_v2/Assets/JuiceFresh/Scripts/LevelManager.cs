@@ -1648,7 +1648,7 @@ public class LevelManager : MonoBehaviour
 		float screenRatio = (float)Screen.height / (float)Screen.width;
 
 		float sqWidth = 1.6f;
-		if(screenRatio >= 2.0f)
+		if (screenRatio >= 2.0f)
 		{
 			sqWidth = 1.27f;
 			GameField.localScale = new Vector3(0.8f, 0.8f, 0.8f);
@@ -1667,8 +1667,8 @@ public class LevelManager : MonoBehaviour
 			}
 
 		}
-		AnimateField(fieldPos);
 
+		AnimateField(fieldPos);
 	}
 
 	void AnimateField (Vector3 pos)
@@ -1690,9 +1690,7 @@ public class LevelManager : MonoBehaviour
 		anim.AddClip(clip, "appear");
 		anim.Play("appear");
 
-//		print(pos);
 		GameField.transform.position = new Vector2(pos.x + 15, pos.y + yOffset);
-
 	}
 
 	void CreateSquare (int col, int row, bool chessColor = false)

@@ -21,8 +21,9 @@ public class GamesparksLogin : ILoginManager
 	public void LoginWithFB (string accessToken, string titleId)
 	{
 		Debug.Log ("login to Gamesparks... " + " token " + accessToken);
-		new FacebookConnectRequest ().SetSwitchIfPossible (true).SetAccessToken (accessToken).SetDurable (true).SetMaxQueueTimeInSeconds (30)
-			.SetMaxResponseTimeInSeconds (30).Send ((response) =>
+//		new FacebookConnectRequest ().SetSwitchIfPossible (true).SetAccessToken (accessToken).SetDurable (true).SetMaxQueueTimeInSeconds (30)
+//			.SetMaxResponseTimeInSeconds (30).Send ((response) =>
+		new FacebookConnectRequest().SetSwitchIfPossible(true).SetAccessToken(accessToken).SetDurable(true).Send((response) =>
 		{
 			if (!response.HasErrors)
 			{

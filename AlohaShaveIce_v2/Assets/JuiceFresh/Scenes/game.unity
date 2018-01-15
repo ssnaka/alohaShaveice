@@ -24663,7 +24663,7 @@ MonoBehaviour:
   TargetScore: 1000
   currentLevel: 187
   FailedCost: 10
-  ExtraFailedMoves: 30
+  ExtraFailedMoves: 5
   ExtraFailedSecs: 30
   gemsProducts:
   - count: 10

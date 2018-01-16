@@ -24918,10 +24918,10 @@ MonoBehaviour:
   scoreForWireBlock: 100
   scoreForSolidBlock: 100
   scoreForThrivingBlock: 100
-  limitType: 0
-  Limit: 20
+  limitType: 1
+  Limit: 60
   TargetScore: 1000
-  currentLevel: 172
+  currentLevel: 188
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -25007,15 +25007,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   colorLimit: 5
   ingrCountTarget: 0200000002000000
-  ingrTarget:
-  - name: Ingredient1
-    sprite: {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
-    check: 1
-    count: 5
-  - name: Ingredient2
-    sprite: {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
-    check: 1
-    count: 5
+  ingrTarget: []
   ingrediendSprites:
   - {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
   - {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
@@ -25048,7 +25040,7 @@ MonoBehaviour:
   - {fileID: 118832954}
   passLevelCounter: 0
   friendsAvatars: []
-  target: 1
+  target: 5
   TargetCages: 0
   TargetBombs: 0
   itemsHided: 0
@@ -25063,7 +25055,7 @@ MonoBehaviour:
   flower: {fileID: 107552, guid: 0a071ea80298917468648bade3061b0a, type: 2}
   bombsCollect: 10
   bombTimer: 10
-  NumIngredients: 2
+  NumIngredients: 0
   waitingBoost: {fileID: 0}
   highlightedItems: []
   testByPlay: 0
@@ -31521,7 +31513,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.8549999, y: 234.00005}
+  m_AnchoredPosition: {x: 0.8549999, y: 234.00003}
   m_SizeDelta: {x: 13.03, y: 11.909999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &641363274
@@ -31673,15 +31665,15 @@ RectTransform:
   m_GameObject: {fileID: 641601988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1838795, y: 0.18387952, z: 0.12071004}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_Children: []
   m_Father: {fileID: 1672437368}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 44.5, y: -17.4}
-  m_SizeDelta: {x: 518.5, y: 148}
+  m_AnchoredPosition: {x: 150, y: -30}
+  m_SizeDelta: {x: 800, y: 148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &641601990
 MonoBehaviour:
@@ -31734,15 +31726,17 @@ MonoBehaviour:
     m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 100
+    m_MinSize: 1
+    m_MaxSize: 200
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: '1
+
+'
 --- !u!222 &641601993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -83353,7 +83347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1672437368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -83370,8 +83364,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -92.200195, y: -75.09961}
-  m_SizeDelta: {x: 92, y: 34}
+  m_AnchoredPosition: {x: -546, y: -256}
+  m_SizeDelta: {x: 300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672437369
 MonoBehaviour:

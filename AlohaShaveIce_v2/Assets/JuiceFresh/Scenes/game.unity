@@ -24640,11 +24640,11 @@ MonoBehaviour:
   - name: Ingredient1
     sprite: {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
     check: 1
-    count: 5
+    count: 2
   - name: Ingredient2
     sprite: {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
     check: 1
-    count: 5
+    count: 2
   currentReward: 0
   CapOfLife: 5
   TotalTimeForRestLifeHours: 0
@@ -24659,10 +24659,6 @@ MonoBehaviour:
   - gameEvent: 8
     adType: 3
     everyLevel: 7
-    calls: 0
-  - gameEvent: 17
-    adType: 3
-    everyLevel: 3
     calls: 0
   - gameEvent: 6
     adType: 3
@@ -24848,33 +24844,12 @@ MonoBehaviour:
   lifeShop: {fileID: 285581711}
   GameField: {fileID: 1050245871}
   enableInApps: 0
-  maxRows: 8
+  maxRows: 5
   maxCols: 7
   squareWidth: 1.6
   squareHeight: 1.6
   firstSquarePosition: {x: -2.4, y: 3.3}
   squaresArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -24919,9 +24894,9 @@ MonoBehaviour:
   scoreForSolidBlock: 100
   scoreForThrivingBlock: 100
   limitType: 1
-  Limit: 60
+  Limit: 120
   TargetScore: 1000
-  currentLevel: 188
+  currentLevel: 239
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -25005,7 +24980,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  colorLimit: 5
+  colorLimit: 3
   ingrCountTarget: 0200000002000000
   ingrTarget: []
   ingrediendSprites:
@@ -25053,7 +25028,7 @@ MonoBehaviour:
   FacebookEnable: 0
   PlayFab: 0
   flower: {fileID: 107552, guid: 0a071ea80298917468648bade3061b0a, type: 2}
-  bombsCollect: 10
+  bombsCollect: 5
   bombTimer: 10
   NumIngredients: 0
   waitingBoost: {fileID: 0}

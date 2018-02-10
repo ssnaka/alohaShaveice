@@ -1297,6 +1297,43 @@ public class LevelManager : MonoBehaviour
 
 		yield return new WaitForSeconds(1);
 
+//		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
+//		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
+//		for (int i = 1; i <= countFlowers; i++)
+//		{
+//			if (limitType == LIMIT.MOVES)
+//				Limit--;
+//			GameObject flowerParticle = GetFlowerFromPool();
+//			flowerParticle.GetComponent<SpriteRenderer>().sortingLayerName = "UI";
+//			flowerParticle.GetComponent<Flower>().StartFly(pos1, true);
+//
+//			//            item.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
+//			//            item.ChangeType();
+//			yield return new WaitForSeconds(0.3f);
+//		}
+//		Limit = 0;
+//
+//		while (CheckFlowerStillFly())
+//			yield return new WaitForSeconds(0.3f);
+
+		while (GetAllExtraItems().Count > 0)
+		{
+			Item item = GetAllExtraItems()[0];
+			item.DestroyItem(false, "", false, true);
+			dragBlocked = true;
+			yield return new WaitForSeconds(0.1f);
+			FindMatches();
+			yield return new WaitForSeconds(0.5f);
+
+			//           GenerateNewItems();
+			while (dragBlocked)
+				yield return new WaitForFixedUpdate();
+		}
+
+		yield return new WaitForSeconds(0.5f);
+
+
+
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
 		for (int i = 1; i <= countFlowers; i++)
@@ -1309,7 +1346,7 @@ public class LevelManager : MonoBehaviour
 
 			//            item.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 			//            item.ChangeType();
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.3f);
 		}
 		Limit = 0;
 
@@ -1331,6 +1368,11 @@ public class LevelManager : MonoBehaviour
 		}
 
 		yield return new WaitForSeconds(1f);
+
+
+
+
+
 		while (dragBlocked)
 			yield return new WaitForSeconds(0.2f);
 
@@ -2483,7 +2525,9 @@ public class LevelManager : MonoBehaviour
 				// yield return new WaitForFixedUpdate();
 			}
 			if (!nearEmptySquareDetected)
-				yield return new WaitForSeconds(0.2f);
+			{
+				yield return new WaitForSeconds(0.1f);
+			}
 
 			CheckIngredient();
 			for (int col = 0; col < maxCols; col++)

@@ -24710,7 +24710,7 @@ MonoBehaviour:
   rewardedGems: 5
   losingLifeEveryGame: 0
   facebookButton: {fileID: 1163204533}
-  maxVideoPerDay: 25
+  maxVideoPerDay: 1000
 --- !u!120 &511786110
 LineRenderer:
   m_ObjectHideFlags: 0

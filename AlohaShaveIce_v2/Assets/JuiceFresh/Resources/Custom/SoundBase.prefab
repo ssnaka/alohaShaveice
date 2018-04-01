@@ -39,7 +39,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bbe6371953c9f4d5aa8c9398bed67270, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -175,6 +175,7 @@ MonoBehaviour:
   destroyPackage: {fileID: 8300000, guid: ff50ce15df285d8439647ee563a30b94, type: 3}
   colorBombExpl: {fileID: 8300000, guid: 6ba8d93623bf10e4e9cac87683fb56bc, type: 3}
   iceCrack: {fileID: 8300000, guid: 15685ea1b04ff424abf5398339965460, type: 3}
+  audioSource: {fileID: 8200000}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

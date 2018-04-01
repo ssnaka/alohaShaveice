@@ -167,6 +167,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public int maxVideoPerDay;
 
+	bool didTutorialShown = false;
 	// Use this for initialization
 	void Awake ()
 	{
@@ -182,6 +183,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		DateOfExit = PlayerPrefs.GetString("DateOfExit", "");
 		Gems = ZPlayerPrefs.GetInt("Gems");
 		lifes = ZPlayerPrefs.GetInt("Lifes");
+		didTutorialShown = PlayerPrefs.GetInt("didTutorialShown", 0) == 1;
+
 		if (PlayerPrefs.GetInt("Lauched") == 0)
 		{    //First lauching
 			lifes = CapOfLife;
@@ -201,8 +204,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		//rate.GetComponent<RectTransform>().anchoredPosition = (Resources.Load("Prefabs/Rate") as GameObject).GetComponent<RectTransform>().anchoredPosition;
 		//rate.transform.localScale = Vector3.one;
 
-		GameObject.Find("Music").GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Music");
-		SoundBase.Instance.GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Sound");
+		MusicBase.Instance.SetVolume(PlayerPrefs.GetInt("Music"));
+//		GameObject.Find("Music").GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Music");
+		SoundBase.Instance.audioSource.volume = PlayerPrefs.GetInt("Sound");
 		#if UNITY_ADS//1.3
 		enableUnityAds = true;
 		#else
@@ -262,6 +266,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		{
 			item.gameObject.SetActive(false);
 		}
+
+		ShowFirstTutorial();
 	}
 	#if GOOGLE_MOBILE_ADS
 	
@@ -273,6 +279,18 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		print ("HandleInterstitialFailedToLoad event received with message: " + args.Message);
 	}
 	#endif
+
+	void ShowFirstTutorial ()
+	{
+		if (didTutorialShown)
+		{
+			return;
+		}
+
+		didTutorialShown = true;
+		PlayerPrefs.SetInt("didTutorialShown", 1);
+		GameObject.Find("CanvasGlobal").transform.Find("Tutorial").gameObject.SetActive(true);
+	}
 
 	void Update ()
 	{
@@ -348,7 +366,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		{
 			if (MusicBase.Instance)
 			{
-				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+				MusicBase.Instance.StopCurrentBGM();
+//				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 			}
 			Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
 		}
@@ -776,7 +795,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 		if (MusicBase.Instance)
 		{
-			MusicBase.Instance.GetComponent<AudioSource>().Play();
+			MusicBase.Instance.PlayCurrentBGM();
+//			MusicBase.Instance.GetComponent<AudioSource>().Play();
 		}
 	}
 
@@ -908,7 +928,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		if(focusStatus) {
 			if (MusicBase.Instance)
 			{
-				MusicBase.Instance.GetComponent<AudioSource>().Play();
+				MusicBase.Instance.PlayCurrentBGM();
+//				MusicBase.Instance.GetComponent<AudioSource>().Play();
 			}
 			#if APPODEAL_ADS
 			Appodeal.onResume();

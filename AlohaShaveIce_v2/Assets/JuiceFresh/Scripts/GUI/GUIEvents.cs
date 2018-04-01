@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GUIEvents : MonoBehaviour {
 
@@ -60,17 +61,33 @@ public class GUIEvents : MonoBehaviour {
 			settings.SetActive (false);
 		}
 		// GameObject.Find("CanvasGlobal").transform.Find("Settings").gameObject.SetActive(true);
-
-
-
-
 	}
 
 	public void Play () {
 		SoundBase.Instance.PlaySound (SoundBase.Instance.click);
 
-		transform.Find ("Loading").gameObject.SetActive (true);//1.4
-		SceneManager.LoadScene ("game");
+		Transform loadingTransform = transform.Find ("Loading");
+		loadingTransform.gameObject.SetActive (true);//1.4
+//		Transform loadingText = loadingTransform.Find("Text");
+//		iTween.ScaleTo(loadingText.gameObject, iTween.Hash("scale", new Vector3(2.0f, 2.0f, 2.0f), "time", 2.0f, "easeType", "easeInOutExpo"));
+//		SceneManager.LoadScene ("game");
+		StartCoroutine(LoadScene());
+	}
+
+	IEnumerator LoadScene ()
+	{
+		AsyncOperation loadingOperation = SceneManager.LoadSceneAsync("game");
+		while (!loadingOperation.isDone)
+		{
+			yield return null;
+		}
+
+		AsyncOperation unloadingOperation = SceneManager.UnloadSceneAsync("main");
+		while (!unloadingOperation.isDone)
+		{
+			yield return null;
+		}
+//		MusicBase.Instance.GetComponent<AudioSource>().Stop();
 	}
 
 	public void Pause () {

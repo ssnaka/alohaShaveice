@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(AudioSource))]
-public class SoundBase : MonoBehaviour {
-    public static SoundBase Instance;
+
+//[RequireComponent(typeof(AudioSource))]
+[Prefab("Custom/SoundBase")]
+public class SoundBase : Singleton<SoundBase> {
+//    public static SoundBase Instance;
     public AudioClip click;
     public AudioClip[] selecting;
     public AudioClip[] pops;
@@ -34,22 +36,27 @@ public class SoundBase : MonoBehaviour {
     public AudioClip colorBombExpl;
     public AudioClip iceCrack;
 
-    AudioSource audioSource;
+	[SerializeField]
+    public AudioSource audioSource;
 
     List<AudioClip> clipsPlaying = new List<AudioClip>();
 
     //SoundBase.Instance.GetComponent<AudioSource>().PlayOneShot(clip);
     //SoundBase.Instance.PlaySound(SoundBase.Instance.timeOut);
 
+	public void Init ()
+	{
+	}
+
     // Use this for initialization
     void Awake() {
-        if (transform.parent == null) {
-            transform.parent = Camera.main.transform;
-            transform.localPosition = Vector3.zero;
-        }
-        audioSource = GetComponent<AudioSource>();
-        DontDestroyOnLoad(gameObject);
-        Instance = this;
+//        if (transform.parent == null) {
+//            transform.parent = Camera.main.transform;
+//            transform.localPosition = Vector3.zero;
+//        }
+//        audioSource = GetComponent<AudioSource>();
+//        DontDestroyOnLoad(gameObject);
+//        Instance = this;
     }
 
     public void PlaySound(AudioClip clip) {
@@ -57,7 +64,7 @@ public class SoundBase : MonoBehaviour {
     }
 
     public void PlaySoundsRandom(AudioClip[] clip) {
-        SoundBase.Instance.PlaySound(clip[Random.Range(0, clip.Length)]);
+        PlaySound(clip[Random.Range(0, clip.Length)]);
     }
 
     public void PlayLimitSound(AudioClip clip) {
@@ -75,7 +82,7 @@ public class SoundBase : MonoBehaviour {
 
 
     // Update is called once per frame
-    void Update() {
-
-    }
+//    void Update() {
+//
+//    }
 }

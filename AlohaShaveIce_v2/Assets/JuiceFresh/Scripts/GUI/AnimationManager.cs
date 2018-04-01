@@ -775,19 +775,23 @@ public class AnimationManager : MonoBehaviour
 
 	public void MusicOff(GameObject Off)
 	{
+		float volume = 0.0f;
 		if (!Off.activeSelf) {
-			GameObject.Find("Music").GetComponent<AudioSource>().volume = 0;
+//			GameObject.Find("Music").GetComponent<AudioSource>().volume = 0;
+			MusicBase.Instance.StopCurrentBGM();
+			MusicBase.Instance.SetVolume(volume);
 			InitScript.music = false;
-
 			Off.SetActive(true);
 		} else {
-			GameObject.Find("Music").GetComponent<AudioSource>().volume = 1;
+			volume = 1.0f;
+			MusicBase.Instance.SetVolume(volume);
+			MusicBase.Instance.PlayCurrentBGM();
+//			GameObject.Find("Music").GetComponent<AudioSource>().volume = 1;
 			InitScript.music = true;
-
 			Off.SetActive(false);
-
 		}
-		PlayerPrefs.SetInt("Music", (int)GameObject.Find("Music").GetComponent<AudioSource>().volume);
+
+		PlayerPrefs.SetInt("Music", (int)volume);
 		PlayerPrefs.Save();
 
 	}

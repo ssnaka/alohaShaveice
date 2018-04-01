@@ -362,10 +362,11 @@ public class LevelManager : MonoBehaviour
 
 			if (value == GameState.PrepareGame)
 			{
-				MusicBase.Instance.GetComponent<AudioSource>().Stop();
-				MusicBase.Instance.GetComponent<AudioSource>().loop = true;
-				MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
-				MusicBase.Instance.GetComponent<AudioSource>().Play();
+				MusicBase.Instance.PlayBGM("game_music", true, true);
+//				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+//				MusicBase.Instance.GetComponent<AudioSource>().loop = true;
+//				MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
+//				MusicBase.Instance.GetComponent<AudioSource>().Play();
 				PrepareGame();
 				avatarManager.EnableAvatar(false);
 			}
@@ -390,10 +391,11 @@ public class LevelManager : MonoBehaviour
 				avatarManager.EnableAvatar(true);
 				if (PlayerPrefs.GetInt("OpenLevelTest") <= 0)
 				{
-					MusicBase.Instance.GetComponent<AudioSource>().Stop();
-					MusicBase.Instance.GetComponent<AudioSource>().loop = true;
-					MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[0];
-					MusicBase.Instance.GetComponent<AudioSource>().Play();
+					MusicBase.Instance.PlayBGM("game_music", true, true);
+//					MusicBase.Instance.GetComponent<AudioSource>().Stop();
+//					MusicBase.Instance.GetComponent<AudioSource>().loop = true;
+//					MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
+//					MusicBase.Instance.GetComponent<AudioSource>().Play();
 					EnableMap(true);
 					OnMapState();
 				}
@@ -431,14 +433,16 @@ public class LevelManager : MonoBehaviour
 			}
 			else if (value == GameState.GameOver)
 			{
-				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+				MusicBase.Instance.StopCurrentBGM();
+//				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				SoundBase.Instance.PlaySound(SoundBase.Instance.gameOver[0]);
 				GameObject.Find("CanvasGlobal").transform.Find("MenuFailed").gameObject.SetActive(true);
 				OnLose();
 			}
 			else if (value == GameState.PreWinAnimations)
 			{
-				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+				MusicBase.Instance.StopCurrentBGM();
+//				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				StartCoroutine(PreWinAnimationsCor());
 			}
 			else if (value == GameState.Win)

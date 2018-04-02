@@ -268,6 +268,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 
 		ShowFirstTutorial();
+
+//		LoadingCanvasScript.Instance.HideLoading();
 	}
 	#if GOOGLE_MOBILE_ADS
 	

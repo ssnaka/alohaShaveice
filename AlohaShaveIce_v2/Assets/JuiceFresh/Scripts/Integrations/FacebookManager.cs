@@ -111,9 +111,9 @@ public class FacebookManager : MonoBehaviour
 	#if FACEBOOK
 	public void CallFBInit ()
 	{
+		//TODO: Start loading here.
 		Debug.Log("init facebook");
 		FB.Init(OnInitComplete, OnHideUnity);
-
 	}
 
 	private void OnInitComplete ()
@@ -123,7 +123,10 @@ public class FacebookManager : MonoBehaviour
 		{//1.3
 			LoggedSuccefull();//1.4.5
 		}
-
+		else
+		{
+			LoadingCanvasScript.Instance.HideLoading();
+		}
 	}
 
 	private void OnHideUnity (bool isGameShown)
@@ -146,6 +149,7 @@ public class FacebookManager : MonoBehaviour
 	{
 		if (!loginOnce)
 		{//1.4.5
+			LoadingCanvasScript.Instance.ShowLoading();
 			loginOnce = true;
 			Debug.Log("login");
 			FB.LogInWithReadPermissions(new List<string>() { "public_profile", "email", "user_friends" }, this.HandleResult);
@@ -167,14 +171,6 @@ public class FacebookManager : MonoBehaviour
 		FB.LogOut();
 		facebookButton.SetActive(true);
 
-
-
-
-
-
-
-
-	
 #if PLAYFAB || GAMESPARKS
 		NetworkManager.THIS.IsLoggedIn = false;
 		#endif
@@ -255,15 +251,6 @@ public class FacebookManager : MonoBehaviour
 		userID = AccessToken.CurrentAccessToken.UserId;
 		GetPicture(AccessToken.CurrentAccessToken.UserId);
 
-
-
-
-
-
-
-
-
-	
 #if PLAYFAB || GAMESPARKS
 		NetworkManager.facebookUserID = AccessToken.CurrentAccessToken.UserId;
 		NetworkManager.THIS.LoginWithFB(AccessToken.CurrentAccessToken.TokenString);
@@ -282,16 +269,10 @@ public class FacebookManager : MonoBehaviour
 			IDictionary dict = result.ResultDictionary as IDictionary;
 			string fbname = dict["first_name"].ToString();
 
-
-
-
-	
 #if PLAYFAB || GAMESPARKS
 			NetworkManager.THIS.UpdateName(fbname);
 			#endif
-	
 		}
-
 	}
 
 
@@ -308,18 +289,13 @@ public class FacebookManager : MonoBehaviour
 			sprite = Sprite.Create(result.Texture, new Rect(0, 0, 50, 50), new Vector2(0, 0), 1f);
 			InitScript.profilePic = sprite;
 
-
-
-
-
-	
 #if PLAYFAB || GAMESPARKS
 			SetPicture(NetworkManager.UserID, InitScript.profilePic);//1.4.4
 			NetworkManager.PlayerPictureLoaded();
 
 			#endif
 		}
-
+		LoadingCanvasScript.Instance.HideLoading();
 	}
 
 

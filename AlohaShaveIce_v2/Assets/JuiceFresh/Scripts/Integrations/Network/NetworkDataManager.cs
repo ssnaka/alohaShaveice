@@ -186,7 +186,7 @@ public class NetworkDataManager
 		SetTotalStars();
 		SetPlayerLevel(LevelsMap._instance.GetLastestReachedLevel());
 		//		SetPlayerScoreTotal ();
-
+		Debug.LogError("SyncAllData");
 	}
 
 }

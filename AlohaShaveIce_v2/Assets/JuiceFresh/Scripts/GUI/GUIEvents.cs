@@ -65,9 +65,9 @@ public class GUIEvents : MonoBehaviour {
 
 	public void Play () {
 		SoundBase.Instance.PlaySound (SoundBase.Instance.click);
-
-		Transform loadingTransform = transform.Find ("Loading");
-		loadingTransform.gameObject.SetActive (true);//1.4
+		LoadingCanvasScript.Instance.ShowLoading();
+//		Transform loadingTransform = transform.Find ("Loading");
+//		loadingTransform.gameObject.SetActive (true);//1.4
 //		Transform loadingText = loadingTransform.Find("Text");
 //		iTween.ScaleTo(loadingText.gameObject, iTween.Hash("scale", new Vector3(2.0f, 2.0f, 2.0f), "time", 2.0f, "easeType", "easeInOutExpo"));
 //		SceneManager.LoadScene ("game");
@@ -87,6 +87,7 @@ public class GUIEvents : MonoBehaviour {
 		{
 			yield return null;
 		}
+//		LoadingCanvasScript.Instance.HideLoading();
 //		MusicBase.Instance.GetComponent<AudioSource>().Stop();
 	}
 

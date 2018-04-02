@@ -61,7 +61,7 @@ public class NetworkCurrencyManager {
 
 		if (currencyMananager != null) {
 			currencyMananager.GetBalance ((balance) => {
-				Debug.Log (balance);
+//				Debug.Log (balance);
 				currentBalance = balance;
 				if (currentBalance >= InitScript.Gems)
 					InitScript.Instance.SetGems (balance);

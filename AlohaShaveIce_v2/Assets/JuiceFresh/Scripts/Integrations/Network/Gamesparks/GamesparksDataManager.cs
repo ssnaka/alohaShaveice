@@ -98,6 +98,7 @@ public class GamesparksDataManager : IDataManager
 			{
 				Debug.Log("Error Saving Level Data...");
 			}
+			LoadingCanvasScript.Instance.HideLoading();
 		});
 	}
 
@@ -167,6 +168,8 @@ public class GamesparksDataManager : IDataManager
 			{
 				Debug.Log("Error Retrieving Stars Data...");
 			}
+
+			LoadingCanvasScript.Instance.HideLoading();
 		});
 
 	}

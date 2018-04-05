@@ -255,8 +255,11 @@ public class LevelManager : MonoBehaviour
 	private bool matchesGot;
 	//inner using
 	bool ingredientFly;
+
 	//UI objects
-	public GameObject[] gratzWords;
+	[SerializeField]
+	GameObject gratzWordPrefabs;
+	GratzWord gratzWord;
 
 	//UI object
 	public GameObject Level;
@@ -1336,7 +1339,13 @@ public class LevelManager : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f);
 
-
+		if (gratzWord == null)
+		{
+			gratzWord = Instantiate(gratzWordPrefabs, new Vector3(1000.0f, 0.0f, 0.0f), Quaternion.identity, Level.transform.Find("Canvas").transform).GetComponent<GratzWord>();
+			gratzWord.transform.localScale = Vector3.one;
+		}
+		gratzWord.SetupGartz(GratzType.LevelEnd);
+		yield return new WaitForSeconds(0.8f);
 
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
@@ -2663,17 +2672,26 @@ public class LevelManager : MonoBehaviour
 		if (gameStatus == GameState.Playing && !ingredientFly)
 			LevelManager.THIS.CheckWinLose();
 
+		if (gratzWord == null)
+		{
+			gratzWord = Instantiate(gratzWordPrefabs, new Vector3(1000.0f, 0.0f, 0.0f), Quaternion.identity, Level.transform.Find("Canvas").transform).GetComponent<GratzWord>();
+			gratzWord.transform.localScale = Vector3.one;
+		}
+
 		if (combo > 11 && gameStatus == GameState.Playing)
 		{
-			gratzWords[2].SetActive(true);
+			gratzWord.SetupGartz(GratzType.GratzLarge);
+//			gratzWords[2].SetActive(true);
 		}
 		else if (combo > 8 && gameStatus == GameState.Playing)
 		{
-			gratzWords[1].SetActive(true);
+			gratzWord.SetupGartz(GratzType.GratzMedium);
+//			gratzWords[1].SetActive(true);
 		}
 		else if (combo > 5 && gameStatus == GameState.Playing)
 		{
-			gratzWords[0].SetActive(true);
+			gratzWord.SetupGartz(GratzType.GratzSmall);
+//			gratzWords[0].SetActive(true);
 		}
 
 		combo = 0;
@@ -2942,6 +2960,7 @@ public class LevelManager : MonoBehaviour
 
 	public List<Item> GetRandomItems (int count)
 	{
+//		Debug.LogError(":::: " + count);
 		List<Item> list = new List<Item>();
 		List<Item> list2 = new List<Item>();
 		if (count <= 0)

@@ -76,17 +76,17 @@ public class GUIEvents : MonoBehaviour {
 
 	IEnumerator LoadScene ()
 	{
-		AsyncOperation loadingOperation = SceneManager.LoadSceneAsync("game");
+		AsyncOperation loadingOperation = SceneManager.LoadSceneAsync("game", LoadSceneMode.Single);
 		while (!loadingOperation.isDone)
 		{
 			yield return null;
 		}
 
-		AsyncOperation unloadingOperation = SceneManager.UnloadSceneAsync("main");
-		while (!unloadingOperation.isDone)
-		{
-			yield return null;
-		}
+//		AsyncOperation unloadingOperation = SceneManager.UnloadSceneAsync("main");
+//		while (!unloadingOperation.isDone)
+//		{
+//			yield return null;
+//		}
 //		LoadingCanvasScript.Instance.HideLoading();
 //		MusicBase.Instance.GetComponent<AudioSource>().Stop();
 	}

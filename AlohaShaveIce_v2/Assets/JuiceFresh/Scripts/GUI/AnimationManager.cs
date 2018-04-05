@@ -366,8 +366,8 @@ public class AnimationManager : MonoBehaviour
 
 		}
 
-		if (name.Contains("gratzWord"))
-			gameObject.SetActive(false);
+//		if (name.Contains("gratzWord"))
+//			gameObject.SetActive(false);
 		if (name == "NoMoreMatches")
 			gameObject.SetActive(false);
 		if (name == "CompleteLabel")

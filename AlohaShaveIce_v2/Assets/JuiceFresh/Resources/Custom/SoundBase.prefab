@@ -175,6 +175,8 @@ MonoBehaviour:
   destroyPackage: {fileID: 8300000, guid: ff50ce15df285d8439647ee563a30b94, type: 3}
   colorBombExpl: {fileID: 8300000, guid: 6ba8d93623bf10e4e9cac87683fb56bc, type: 3}
   iceCrack: {fileID: 8300000, guid: 15685ea1b04ff424abf5398339965460, type: 3}
+  ono: {fileID: 8300000, guid: 98fab0f0e53c54468847b09d1ce48d2e, type: 3}
+  cheehoo: {fileID: 8300000, guid: 94ae66b58a3a84b2490c8f4cfad57e7e, type: 3}
   audioSource: {fileID: 8200000}
 --- !u!1001 &100100000
 Prefab:

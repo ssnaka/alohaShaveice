@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class MapLevel : MonoBehaviour {
 	private Vector3 _originalScale;
@@ -14,7 +15,16 @@ public class MapLevel : MonoBehaviour {
 	public string SceneName;
 
 	public int StarsCount;
+	[SerializeField]
+	List<Vector3> starPositions;
+	[SerializeField]
+	List<Vector3> starRotations;
+	[SerializeField]
+	List<Vector3> starScales;
 	public Transform StarsHoster;
+	[SerializeField]
+	GameObject starPrefab;
+	List<Transform> stars = new List<Transform>();
 	public Transform Star1;
 	public Transform Star2;
 	public Transform Star3;
@@ -102,19 +112,43 @@ public class MapLevel : MonoBehaviour {
 		}
 	}
 
-	public void UpdateStars (int starsCount) {
-		Star1.gameObject.SetActive (starsCount >= 1);
-		Star2.gameObject.SetActive (starsCount >= 2);
-		Star3.gameObject.SetActive (starsCount >= 3);
+	public void UpdateStars (int starsCount) 
+	{
+		for (int i = 0 ; i < starsCount; i++)
+		{
+			CreateStar(i);
+		}
+//		Star1.gameObject.SetActive (starsCount >= 1);
+//		Star2.gameObject.SetActive (starsCount >= 2);
+//		Star3.gameObject.SetActive (starsCount >= 3);
 
-		SolidStars0.gameObject.SetActive (starsCount == 0);
-		SolidStars1.gameObject.SetActive (starsCount == 1);
-		SolidStars2.gameObject.SetActive (starsCount == 2);
-		SolidStars3.gameObject.SetActive (starsCount == 3);
+//		SolidStars0.gameObject.SetActive (starsCount == 0);
+//		SolidStars1.gameObject.SetActive (starsCount == 1);
+//		SolidStars2.gameObject.SetActive (starsCount == 2);
+//		SolidStars3.gameObject.SetActive (starsCount == 3);
+	}
+
+	void CreateStar (int _index)
+	{
+		GameObject starObject = null;
+		if (stars.Count <= _index)
+		{
+			starObject = Instantiate<GameObject>(starPrefab, StarsHoster.transform);
+			stars.Add(starObject.transform);
+		}
+		else
+		{
+			starObject = stars[_index].gameObject;
+		}
+
+		starObject.name = starPrefab.name + "_" + (_index + 1).ToString();
+		starObject.transform.localScale = starScales[_index];
+		starObject.transform.localPosition = starPositions[_index];
+		starObject.transform.eulerAngles = starRotations[_index];
 	}
 
 	public void UpdateStarsType (StarsType starsType) {
 		StarsHoster.gameObject.SetActive (starsType == StarsType.Separated);
-		SolidStarsHoster.gameObject.SetActive (starsType == StarsType.Solid);
+//		SolidStarsHoster.gameObject.SetActive (starsType == StarsType.Solid);
 	}
 }

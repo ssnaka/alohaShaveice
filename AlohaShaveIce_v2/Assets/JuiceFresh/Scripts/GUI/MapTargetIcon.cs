@@ -56,9 +56,4 @@ public class MapTargetIcon : MonoBehaviour
         }
 
     }
-
-    void Update()
-    {
-
-    }
 }

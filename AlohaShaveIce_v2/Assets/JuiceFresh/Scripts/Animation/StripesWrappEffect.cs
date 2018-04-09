@@ -21,10 +21,4 @@ public class StripesWrappEffect : MonoBehaviour
         topArrow.GetComponent<SpriteRenderer>().sortingOrder = itemSprite.sortingOrder - 1;
         bottomArrow.GetComponent<SpriteRenderer>().sortingOrder = itemSprite.sortingOrder - 1;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

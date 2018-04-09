@@ -13,9 +13,4 @@ public class MovesLabel : MonoBehaviour {
             else GetComponent<Text>().text = "TIME";
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

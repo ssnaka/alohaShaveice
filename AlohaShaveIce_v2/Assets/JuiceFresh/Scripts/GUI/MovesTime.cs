@@ -19,10 +19,4 @@ public class MovesTime : MonoBehaviour
         else
             GetComponent<Image>().sprite = sprites[1];
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

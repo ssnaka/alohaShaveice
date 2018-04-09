@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 public class MapLevel : MonoBehaviour {
+	[SerializeField]
+	GameObject renderGroup;
+
 	private Vector3 _originalScale;
 	private bool _isScaled;
 	public float OverScale = 1.05f;
@@ -9,7 +12,8 @@ public class MapLevel : MonoBehaviour {
 
 	public int Number;
 	public bool IsLocked;
-	public Transform Lock;
+	Transform Lock;
+	MapLevelNumber mapLevelNumber;
 	public Transform PathPivot;
 	public Object LevelScene;
 	public string SceneName;
@@ -35,10 +39,15 @@ public class MapLevel : MonoBehaviour {
 	public Transform SolidStars2;
 	public Transform SolidStars3;
 
-	[SerializeField]
 	GameObject timerImage;
+	[SerializeField]
+	Vector3 timerImagePosition;
+	LIMIT levelLimit;
+
+	Camera aCamera;
 
 	public void Awake () {
+		aCamera = Camera.main;
 		_originalScale = transform.localScale;
 	}
 
@@ -67,6 +76,7 @@ public class MapLevel : MonoBehaviour {
 	public void OnDisable () {
 		if (LevelsMap.GetIsClickEnabled ())
 			ResetScale ();
+		CleanLevel();
 	}
 
 	public void OnMouseUpAsButton () {
@@ -87,7 +97,7 @@ public class MapLevel : MonoBehaviour {
 		StarsCount = starsCount;
 		UpdateStars (starsCount);
 		IsLocked = isLocked;
-		Lock.gameObject.SetActive (isLocked);
+//		Lock.gameObject.SetActive (isLocked);
 
 		if (!IsLocked)
 		{
@@ -101,11 +111,11 @@ public class MapLevel : MonoBehaviour {
 				{
 					string blocksString = line.Replace("LIMIT", string.Empty).Trim();
 					string[] sizes = blocksString.Split(new string[] { "/" }, System.StringSplitOptions.RemoveEmptyEntries);
-					LIMIT limit = (LIMIT)int.Parse(sizes[0]);
-					if (limit.Equals(LIMIT.TIME))
-					{
-						timerImage.SetActive(true);
-					}
+					levelLimit = (LIMIT)int.Parse(sizes[0]);
+//					if (levelLimit.Equals(LIMIT.TIME))
+//					{
+//						timerImage.SetActive(true);
+//					}
 					break;
 				}
 			}
@@ -114,10 +124,10 @@ public class MapLevel : MonoBehaviour {
 
 	public void UpdateStars (int starsCount) 
 	{
-		for (int i = 0 ; i < starsCount; i++)
-		{
-			CreateStar(i);
-		}
+//		for (int i = 0 ; i < starsCount; i++)
+//		{
+//			CreateStar(i);
+//		}
 //		Star1.gameObject.SetActive (starsCount >= 1);
 //		Star2.gameObject.SetActive (starsCount >= 2);
 //		Star3.gameObject.SetActive (starsCount >= 3);
@@ -133,7 +143,7 @@ public class MapLevel : MonoBehaviour {
 		GameObject starObject = null;
 		if (stars.Count <= _index)
 		{
-			starObject = Instantiate<GameObject>(starPrefab, StarsHoster.transform);
+			starObject = LevelManager.Instance.GetLevelStarFromPool();
 			stars.Add(starObject.transform);
 		}
 		else
@@ -141,14 +151,147 @@ public class MapLevel : MonoBehaviour {
 			starObject = stars[_index].gameObject;
 		}
 
-		starObject.name = starPrefab.name + "_" + (_index + 1).ToString();
 		starObject.transform.localScale = starScales[_index];
-		starObject.transform.localPosition = starPositions[_index];
+		starObject.transform.position = transform.position + starPositions[_index];
 		starObject.transform.eulerAngles = starRotations[_index];
+	}
+
+	void CreateLock ()
+	{
+		if (!IsLocked)
+		{
+			levelShown = false;
+			CleanLock();
+			return;
+		}
+
+		if (IsLocked && Lock == null)
+		{
+			Lock = LevelManager.Instance.GetLevelLockFromPool().transform;
+			Lock.SetParent(renderGroup.transform);
+			Lock.localScale = Vector3.one;
+			Lock.localPosition = Vector3.zero;
+		}
+	}
+
+	void CreateNumber ()
+	{
+		if (IsLocked)
+		{
+			levelShown = false;
+			CleanNumber();
+			return;
+		}
+
+		if (!IsLocked && mapLevelNumber == null)
+		{
+			mapLevelNumber = LevelManager.Instance.GetLevelNumberFromPool();
+			mapLevelNumber.SetLevel(Number);
+			mapLevelNumber.transform.SetParent(renderGroup.transform);
+//			mapLevelNumber.transform.localScale = Vector3.one;
+			mapLevelNumber.transform.localPosition = Vector3.zero;
+		}
+	}
+
+	void CreateTimer ()
+	{
+		if (levelLimit.Equals(LIMIT.TIME) && timerImage == null)
+		{
+			timerImage = LevelManager.Instance.GetLevelTimerFromPool();
+			timerImage.transform.SetParent(renderGroup.transform);
+//			timerImage.transform.localScale = Vector3.one;
+			timerImage.transform.localPosition = timerImagePosition;
+		}
 	}
 
 	public void UpdateStarsType (StarsType starsType) {
 		StarsHoster.gameObject.SetActive (starsType == StarsType.Separated);
 //		SolidStarsHoster.gameObject.SetActive (starsType == StarsType.Solid);
+	}
+
+	bool levelShown = false;
+	void Update ()
+	{
+		Vector3 screenPoint = aCamera.WorldToViewportPoint(transform.position);
+		bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1.1;
+		if (onScreen)
+		{	
+			CreateLock();
+			CreateNumber();
+			CreateTimer();
+			if (!levelShown)
+			{
+				if (!renderGroup.activeSelf)
+				{
+					renderGroup.SetActive(true);
+				}
+				levelShown = true;
+				for (int i = 0 ; i < StarsCount; i++)
+				{
+					CreateStar(i);
+				}
+			}
+		}
+		else
+		{
+			if (renderGroup.activeSelf)
+			{
+				renderGroup.SetActive(false);
+				CleanLevel();
+			}
+		}
+	}
+
+	void CleanLevel ()
+	{
+		CleanStars();
+		CleanLock();
+		CleanNumber();
+		CleanTimer();
+		levelShown = false;
+	}
+
+	void CleanStars ()
+	{
+		for (int i = 0 ; i < stars.Count ; i++)
+		{
+			if (stars[i] == null)
+			{
+				continue;
+			}
+			GameObject star = stars[i].gameObject;
+			star.SetActive(false);
+		}
+		stars.Clear();
+	}
+
+	void CleanLock ()
+	{
+		if (Lock != null)
+		{
+			Lock.SetParent(LevelManager.Instance.objectPoolParent);
+			Lock.gameObject.SetActive(false);
+			Lock = null;
+		}
+	}
+
+	void CleanNumber ()
+	{
+		if (mapLevelNumber != null)
+		{
+			mapLevelNumber.transform.SetParent(LevelManager.Instance.objectPoolParent);
+			mapLevelNumber.gameObject.SetActive(false);
+			mapLevelNumber = null;
+		}
+	}
+
+	void CleanTimer ()
+	{
+		if (timerImage != null)
+		{
+			timerImage.transform.SetParent(LevelManager.Instance.objectPoolParent);
+			timerImage.SetActive(false);
+			timerImage = null;
+		}
 	}
 }

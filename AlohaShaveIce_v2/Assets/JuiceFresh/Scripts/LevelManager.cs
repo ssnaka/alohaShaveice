@@ -195,6 +195,21 @@ public class LevelManager : MonoBehaviour
 	//amount of blocks for collecting
 	public int targetBlocks;
 
+	[SerializeField]
+	public Transform objectPoolParent;
+
+	public GameObject levelStar;
+	//pool of level stars
+	List<GameObject> starPool = new List<GameObject>();
+	public GameObject levelLockPrefab;
+	//pool of level lock
+	List<GameObject> levelLockPool = new List<GameObject>();
+	public GameObject levelNumberPrefab;
+	//pool of level number
+	List<MapLevelNumber> levelNumberPool = new List<MapLevelNumber>();
+	public GameObject levelTimerPrefab;
+	//pool of level timer
+	List<GameObject> levelTimerPool = new List<GameObject>();
 	//pool of explosion effects for items
 	public GameObject[] itemExplPool = new GameObject[20];
 	//pool of flowers
@@ -616,16 +631,50 @@ public class LevelManager : MonoBehaviour
 			GameObject.Find("Gems").gameObject.SetActive(false);
 
 		gameStatus = GameState.Map;
+
+		for (int i = 0; i < 30; i++)
+		{
+			GameObject go = Instantiate(levelStar, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+			go.name = levelStar.name + "_" + i;
+			go.SetActive(false);
+			starPool.Add(go);
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			GameObject go = Instantiate(levelLockPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+			go.name = levelLockPrefab.name + "_" + i;
+			go.SetActive(false);
+			levelLockPool.Add(go);
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			GameObject go = Instantiate(levelNumberPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+			go.name = levelNumberPrefab.name + "_" + i;
+			go.SetActive(false);
+			MapLevelNumber mapLevelNumber = go.GetComponent<MapLevelNumber>();
+			levelNumberPool.Add(mapLevelNumber);
+		}
+
+		for (int i = 0; i < 3; i++)
+		{
+			GameObject go = Instantiate(levelTimerPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+			go.name = levelTimerPrefab.name + "_" + i;
+			go.SetActive(false);
+			levelTimerPool.Add(go);
+		}
+
 		for (int i = 0; i < 20; i++)
 		{
-			itemExplPool[i] = Instantiate(Resources.Load("Prefabs/Effects/ItemExpl"), transform.position, Quaternion.identity) as GameObject;
+			itemExplPool[i] = Instantiate(Resources.Load("Prefabs/Effects/ItemExpl"), transform.position, Quaternion.identity, objectPoolParent) as GameObject;
 			itemExplPool[i].GetComponent<SpriteRenderer>().enabled = false;
 
 			// itemExplPool[i].SetActive(false);
 		}
 		for (int i = 0; i < flowersPool.Length; i++)
 		{
-			flowersPool[i] = Instantiate(flower, transform.position, Quaternion.identity) as GameObject;
+			flowersPool[i] = Instantiate(flower, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
 			flowersPool[i].GetComponent<SpriteRenderer>().enabled = false;
 		}
 		passLevelCounter = 0;
@@ -1041,8 +1090,75 @@ public class LevelManager : MonoBehaviour
 
 			}
 		}
+	}
 
+	public GameObject GetLevelStarFromPool ()
+	{
+		for (int i = 0; i < starPool.Count; i++)
+		{
+			if (!starPool[i].activeSelf)
+			{
+				starPool[i].SetActive(true);
+				return starPool[i];
+			}
+		}
 
+		GameObject go = Instantiate(levelStar, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+		go.name = levelStar.name + "_" + starPool.Count;
+		starPool.Add(go);
+		return go;
+	}
+
+	public GameObject GetLevelLockFromPool ()
+	{
+		for (int i = 0; i < levelLockPool.Count; i++)
+		{
+			if (!levelLockPool[i].activeSelf)
+			{
+				levelLockPool[i].SetActive(true);
+				return levelLockPool[i];
+			}
+		}
+
+		GameObject go = Instantiate(levelLockPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+		go.name = levelLockPrefab.name + "_" + levelLockPool.Count;
+		levelLockPool.Add(go);
+		return go;
+	}
+
+	public MapLevelNumber GetLevelNumberFromPool ()
+	{
+		for (int i = 0; i < levelNumberPool.Count; i++)
+		{
+			if (!levelNumberPool[i].gameObject.activeSelf)
+			{
+				levelNumberPool[i].gameObject.SetActive(true);
+				return levelNumberPool[i];
+			}
+		}
+
+		GameObject go = Instantiate(levelNumberPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+		go.name = levelNumberPrefab.name + "_" + levelNumberPool.Count;
+		MapLevelNumber mapLevelNumber = go.GetComponent<MapLevelNumber>();
+		levelNumberPool.Add(mapLevelNumber);
+		return mapLevelNumber;
+	}
+
+	public GameObject GetLevelTimerFromPool ()
+	{
+		for (int i = 0; i < levelTimerPool.Count; i++)
+		{
+			if (!levelTimerPool[i].activeSelf)
+			{
+				levelTimerPool[i].SetActive(true);
+				return levelTimerPool[i];
+			}
+		}
+
+		GameObject go = Instantiate(levelTimerPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+		go.name = levelTimerPrefab.name + "_" + levelTimerPool.Count;
+		levelTimerPool.Add(go);
+		return null;
 	}
 
 	public GameObject GetExplFromPool ()

@@ -4,30 +4,23 @@ using System.Collections.Generic;
 
 [Prefab("Custom/MusicBase")]
 public class MusicBase : Singleton<MusicBase> {
-
-//    public static MusicBase Instance;
+	
 	[SerializeField]
 	public List<AudioClip> musicList;
-    public AudioClip[] music;
 	[SerializeField]
 	List<AudioSource> bgmSources;
 
-//	[SerializeField]
-//	AudioSource currentBGM;
-//	[SerializeField]
-//	AudioSource nextBGM;
 	AudioSource fadeOutAudioSource = null;
 	const float bgmFadeDuration = 1.5f;
 
 	int masterVolume = 1;
 
 	int currentPlayingIndex = 0;
-    // Use this for initialization
+    
+	// Use this for initialization
     void Awake()
     {
 		masterVolume = PlayerPrefs.GetInt("Music", 1);
-//        DontDestroyOnLoad(gameObject);
-//        Instance = this;
     }
 
 	public void PlayCurrentBGM ()
@@ -109,8 +102,6 @@ public class MusicBase : Singleton<MusicBase> {
 			return;
 		}
 
-//		nextBGM = currentBGM;
-//		currentBGM = _audioSource;
 		_audioSource.gameObject.SetActive(true);
 		_audioSource.volume = 0.0f;
 		_audioSource.Play();

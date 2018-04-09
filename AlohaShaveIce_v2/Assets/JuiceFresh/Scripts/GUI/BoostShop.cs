@@ -32,16 +32,6 @@ public class BoostShop : MonoBehaviour
 	[SerializeField]
 	Text videoCounter;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-    }
-
     // Update is called once per frame
     public void SetBoost(BoostType _boostType)
     {

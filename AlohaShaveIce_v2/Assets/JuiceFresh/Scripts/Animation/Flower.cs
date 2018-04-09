@@ -9,17 +9,24 @@ public class Flower : MonoBehaviour
 	[SerializeField]
 	float speed = 6.5f;
 
+	ParticleSystem particleSystem;
+	SpriteRenderer spriteRenderer;
 	// Use this for initialization
 	void Start ()
 	{
-		GetComponent<ParticleSystem>().Stop();
+		particleSystem = GetComponent<ParticleSystem>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		particleSystem.Stop();
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		transform.Rotate(Vector3.back * Time.deltaTime * 1000);
-		transform.position = new Vector3(transform.position.x, transform.position.y, -15f);
+		if (particleSystem.isPlaying)
+		{
+			transform.Rotate(Vector3.back * Time.deltaTime * 1000);
+			transform.position = new Vector3(transform.position.x, transform.position.y, -15f);
+		}
 	}
 
 	public void StartFly (Vector3 pos1, bool directFly = false)
@@ -46,8 +53,8 @@ public class Flower : MonoBehaviour
 		}
 		if (item == null)
 		{
-			GetComponent<ParticleSystem>().Stop();
-			GetComponent<SpriteRenderer>().enabled = false;
+			particleSystem.Stop();
+			spriteRenderer.enabled = false;
 			yield break;
 		}
 		Item _item = item;
@@ -59,8 +66,8 @@ public class Flower : MonoBehaviour
 		if (directFly)
 			aSpeed *= 30;
 		float fracJourney = 0;
-		GetComponent<ParticleSystem>().gravityModifier = 0.1f;
-		GetComponent<ParticleSystem>().Play();
+		particleSystem.gravityModifier = 0.1f;
+		particleSystem.Play();
 
 		//        iTween.MoveTo(gameObject, iTween.Hash("position", pos2, "time", 1, "oncomplete", "AnimCallBack"));
 		while (fracJourney < 1)
@@ -80,15 +87,15 @@ public class Flower : MonoBehaviour
 			yield return new WaitForFixedUpdate();
 		}
 
-		GetComponent<ParticleSystem>().gravityModifier = 0;
+		particleSystem.gravityModifier = 0;
 
 		AnimCallBack();
 	}
 
 	void AnimCallBack ()
 	{
-		GetComponent<ParticleSystem>().Stop();
-		GetComponent<SpriteRenderer>().enabled = false;
+		particleSystem.Stop();
+		spriteRenderer.enabled = false;
 		item.ChangeType();
 		LevelManager.THIS.DragBlocked = false;
 

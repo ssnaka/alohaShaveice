@@ -37,12 +37,6 @@ public class ProgressBarScript : MonoBehaviour
         UpdateDisplay(slider.fillAmount * 100 / maxWidth / 100 + x);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public bool IsFull()
     {
         if (slider.fillAmount >= maxWidth)

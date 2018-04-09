@@ -8,9 +8,4 @@ public class ParticleSorting : MonoBehaviour {
         GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingLayerID = 0;
         GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingOrder = sortingOrder;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

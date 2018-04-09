@@ -13,10 +13,4 @@ public class LifeShop : MonoBehaviour
 			transform.Find ("Image/BuyLife").gameObject.SetActive (false);
 		
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
 }

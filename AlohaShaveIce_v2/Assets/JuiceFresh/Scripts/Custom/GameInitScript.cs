@@ -8,9 +8,4 @@ public class GameInitScript : MonoBehaviour {
 	void Start () {
 		MusicBase.Instance.PlayBGM("alohaShaveIce_music_03paipai", true, true);
 	}
-	
-//	// Update is called once per frame
-//	void Update () {
-//		
-//	}
 }

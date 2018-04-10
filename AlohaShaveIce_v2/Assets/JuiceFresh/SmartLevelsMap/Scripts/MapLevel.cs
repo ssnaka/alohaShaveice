@@ -168,9 +168,8 @@ public class MapLevel : MonoBehaviour {
 		if (IsLocked && Lock == null)
 		{
 			Lock = LevelManager.Instance.GetLevelLockFromPool().transform;
-			Lock.SetParent(renderGroup.transform);
 			Lock.localScale = Vector3.one;
-			Lock.localPosition = Vector3.zero;
+			Lock.position = transform.position;
 		}
 	}
 
@@ -187,9 +186,7 @@ public class MapLevel : MonoBehaviour {
 		{
 			mapLevelNumber = LevelManager.Instance.GetLevelNumberFromPool();
 			mapLevelNumber.SetLevel(Number);
-			mapLevelNumber.transform.SetParent(renderGroup.transform);
-//			mapLevelNumber.transform.localScale = Vector3.one;
-			mapLevelNumber.transform.localPosition = Vector3.zero;
+			mapLevelNumber.transform.position = transform.position;
 		}
 	}
 
@@ -198,9 +195,7 @@ public class MapLevel : MonoBehaviour {
 		if (levelLimit.Equals(LIMIT.TIME) && timerImage == null)
 		{
 			timerImage = LevelManager.Instance.GetLevelTimerFromPool();
-			timerImage.transform.SetParent(renderGroup.transform);
-//			timerImage.transform.localScale = Vector3.one;
-			timerImage.transform.localPosition = timerImagePosition;
+			timerImage.transform.position = transform.position + timerImagePosition;
 		}
 	}
 
@@ -269,7 +264,6 @@ public class MapLevel : MonoBehaviour {
 	{
 		if (Lock != null)
 		{
-			Lock.SetParent(LevelManager.Instance.objectPoolParent);
 			Lock.gameObject.SetActive(false);
 			Lock = null;
 		}
@@ -279,7 +273,6 @@ public class MapLevel : MonoBehaviour {
 	{
 		if (mapLevelNumber != null)
 		{
-			mapLevelNumber.transform.SetParent(LevelManager.Instance.objectPoolParent);
 			mapLevelNumber.gameObject.SetActive(false);
 			mapLevelNumber = null;
 		}
@@ -289,7 +282,6 @@ public class MapLevel : MonoBehaviour {
 	{
 		if (timerImage != null)
 		{
-			timerImage.transform.SetParent(LevelManager.Instance.objectPoolParent);
 			timerImage.SetActive(false);
 			timerImage = null;
 		}

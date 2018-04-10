@@ -150,6 +150,7 @@ public class MapCamera : MonoBehaviour
 		position.y = Mathf.Max(position.y, Bounds.min.y + cameraHeight / 2f);
 		position.x = Mathf.Min(position.x, Bounds.max.x - cameraWidth / 2f);
 		position.y = Mathf.Min(position.y, Bounds.max.y - cameraHeight / 2f);
+//		position.y = Mathf.Max(position.y, 0.0f);
 		return position;
 	}
 

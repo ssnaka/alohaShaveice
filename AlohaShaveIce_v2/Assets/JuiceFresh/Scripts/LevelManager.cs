@@ -195,9 +195,9 @@ public class LevelManager : MonoBehaviour
 	//amount of blocks for collecting
 	public int targetBlocks;
 
+	[Header("ObjectPool")]
 	[SerializeField]
 	public Transform objectPoolParent;
-
 	public GameObject levelStar;
 	//pool of level stars
 	List<GameObject> starPool = new List<GameObject>();
@@ -214,6 +214,8 @@ public class LevelManager : MonoBehaviour
 	public GameObject[] itemExplPool = new GameObject[20];
 	//pool of flowers
 	public GameObject[] flowersPool = new GameObject[5];
+
+
 	//global Score amount on current level
 	public static int Score;
 	// stars amount on current level
@@ -475,6 +477,10 @@ public class LevelManager : MonoBehaviour
 
 		}
 	}
+
+	[Header("Background")]
+	[SerializeField]
+	Vector3 backgroundCenters;
 
 	public void MenuPlayEvent ()
 	{

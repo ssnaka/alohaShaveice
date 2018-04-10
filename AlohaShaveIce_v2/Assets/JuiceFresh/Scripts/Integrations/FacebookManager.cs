@@ -239,6 +239,8 @@ public class FacebookManager : MonoBehaviour
 			this.LastResponse = "Empty Response\n";
 			Debug.Log(this.LastResponse);
 		}
+
+		LoadingCanvasScript.Instance.HideLoading();
 	}
 
 	public void LoggedSuccefull ()

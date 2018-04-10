@@ -27,6 +27,8 @@ public class LevelsMap : MonoBehaviour
 	public bool IsClickEnabled;
 	public bool IsConfirmationEnabled;
 
+	public event Action OnReset;
+
 	public void Awake ()
 	{
 		_instance = this;
@@ -60,6 +62,11 @@ public class LevelsMap : MonoBehaviour
 		UpdateMapLevels();
 		PlaceCharacterToLastUnlockedLevel();
 		SetCameraToCharacter();
+
+		if (OnReset != null)
+		{
+			OnReset();
+		}
 	}
 
 	private void UpdateMapLevels ()

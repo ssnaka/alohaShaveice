@@ -37,6 +37,13 @@ public enum GameState
 
 public class LevelManager : MonoBehaviour
 {
+	public event Action<int> OnScoreUpdate;
+	public event Action<int> OnStarUpdate;
+	public event Action<int> OnTargetBlockUpdate;
+	public event Action<int> OnTargetCageUpdate;
+	public event Action<int> OnTargetBombUpdate;
+	public event Action<int> OnTargetIngredientUpdate;
+	public event Action<int> OnLimitUpdate;
 
 	//inctance of LevelManager for direct references
 	public static LevelManager THIS;
@@ -302,6 +309,12 @@ public class LevelManager : MonoBehaviour
 			if (targetBlocks < 0)
 				targetBlocks = 0;
 			targetBlocks = value;
+
+			if (OnTargetBlockUpdate != null)
+			{
+				OnTargetBlockUpdate(targetBlocks);
+			}
+
 		}
 	}
 
@@ -638,38 +651,38 @@ public class LevelManager : MonoBehaviour
 
 		gameStatus = GameState.Map;
 
-		for (int i = 0; i < 30; i++)
-		{
-			GameObject go = Instantiate(levelStar, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
-			go.name = levelStar.name + "_" + i;
-			go.SetActive(false);
-			starPool.Add(go);
-		}
-
-		for (int i = 0; i < 10; i++)
-		{
-			GameObject go = Instantiate(levelLockPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
-			go.name = levelLockPrefab.name + "_" + i;
-			go.SetActive(false);
-			levelLockPool.Add(go);
-		}
-
-		for (int i = 0; i < 10; i++)
-		{
-			GameObject go = Instantiate(levelNumberPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
-			go.name = levelNumberPrefab.name + "_" + i;
-			go.SetActive(false);
-			MapLevelNumber mapLevelNumber = go.GetComponent<MapLevelNumber>();
-			levelNumberPool.Add(mapLevelNumber);
-		}
-
-		for (int i = 0; i < 3; i++)
-		{
-			GameObject go = Instantiate(levelTimerPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
-			go.name = levelTimerPrefab.name + "_" + i;
-			go.SetActive(false);
-			levelTimerPool.Add(go);
-		}
+//		for (int i = 0; i < 30; i++)
+//		{
+//			GameObject go = Instantiate(levelStar, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+//			go.name = levelStar.name + "_" + i;
+//			go.SetActive(false);
+//			starPool.Add(go);
+//		}
+//
+//		for (int i = 0; i < 10; i++)
+//		{
+//			GameObject go = Instantiate(levelLockPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+//			go.name = levelLockPrefab.name + "_" + i;
+//			go.SetActive(false);
+//			levelLockPool.Add(go);
+//		}
+//
+//		for (int i = 0; i < 10; i++)
+//		{
+//			GameObject go = Instantiate(levelNumberPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+//			go.name = levelNumberPrefab.name + "_" + i;
+//			go.SetActive(false);
+//			MapLevelNumber mapLevelNumber = go.GetComponent<MapLevelNumber>();
+//			levelNumberPool.Add(mapLevelNumber);
+//		}
+//
+//		for (int i = 0; i < 3; i++)
+//		{
+//			GameObject go = Instantiate(levelTimerPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+//			go.name = levelTimerPrefab.name + "_" + i;
+//			go.SetActive(false);
+//			levelTimerPool.Add(go);
+//		}
 
 		for (int i = 0; i < 20; i++)
 		{
@@ -751,20 +764,20 @@ public class LevelManager : MonoBehaviour
 		{
 			blocksObject.SetActive(true);
 
-			blocksObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().totalCount = targetBlocks;
+			blocksObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().SetUpTotalCount(targetBlocks);
 			//CreateCollectableTarget(ingrObject, target, false);
 		}
 		else if (LevelManager.THIS.target == Target.CAGES)
 		{
 			cageTargetObject.SetActive(true);
-			cageTargetObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().totalCount = TargetCages;
+			cageTargetObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().SetUpTotalCount(TargetCages);
 			//CreateCollectableTarget(ingrObject, target, false);
 		}
 		else if (LevelManager.THIS.target == Target.BOMBS)
 		{
 			StartCoroutine(InitBombs());
 			bombTargetObject.SetActive(true);
-			bombTargetObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().totalCount = bombsCollect;
+			bombTargetObject.GetComponent<TargetGUI>().text.GetComponent<Counter_>().SetUpTotalCount(bombsCollect);
 			//CreateCollectableTarget(ingrObject, target, false);
 		}
 		else if (target == Target.SCORE)
@@ -881,11 +894,11 @@ public class LevelManager : MonoBehaviour
 				listIngredientsGUIObjects.Add(ingr);
 				if (tar != Target.COLLECT)
 					ingr.transform.Find("Image").GetComponent<Image>().sprite = spr[j];
-				ingr.transform.Find("CountIngr").GetComponent<Counter_>().ingrTrackNumber = i;
-				ingr.transform.Find("CountIngr").GetComponent<Counter_>().totalCount = ingrTarget[i].count;
-				ingr.transform.Find("CountIngrForMenu").GetComponent<Counter_>().totalCount = ingrTarget[i].count;
+				ingr.transform.Find("CountIngr").GetComponent<Counter_>().SetupIngredientTargetIndex(i);
+				ingr.transform.Find("CountIngr").GetComponent<Counter_>().SetUpTotalCount(ingrTarget[i].count);
+				ingr.transform.Find("CountIngrForMenu").GetComponent<Counter_>().SetUpTotalCount(ingrTarget[i].count);
 				if (tar == Target.SCORE)
-					ingr.transform.Find("CountIngrForMenu").GetComponent<Counter_>().totalCount = (int)LevelManager.THIS.starsTargetCount;
+					ingr.transform.Find("CountIngrForMenu").GetComponent<Counter_>().SetUpTotalCount((int)LevelManager.THIS.starsTargetCount);
 				else if (tar == Target.BLOCKS)
 					ingr.transform.Find("CountIngr").name = "TargetBlocks";
 				else if (tar == Target.CAGES)
@@ -1164,7 +1177,7 @@ public class LevelManager : MonoBehaviour
 		GameObject go = Instantiate(levelTimerPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
 		go.name = levelTimerPrefab.name + "_" + levelTimerPool.Count;
 		levelTimerPool.Add(go);
-		return null;
+		return go;
 	}
 
 	public GameObject GetExplFromPool ()
@@ -1291,7 +1304,13 @@ public class LevelManager : MonoBehaviour
 		if (ingrTarget.Count > 0)
 		{
 			if (ingrTarget[i].count > 0)
+			{
 				ingrTarget[i].count--;
+				if (OnTargetIngredientUpdate != null)
+				{
+					OnTargetIngredientUpdate(i);
+				}
+			}
 		}
 		while (distCovered < 0.5f)
 		{
@@ -1302,7 +1321,13 @@ public class LevelManager : MonoBehaviour
 		}
 		//     SoundBase.Instance.audio.PlayOneShot(SoundBase.Instance.getStarIngr);
 		if (target == Target.BOMBS)
+		{
 			TargetBombs++;
+			if (OnTargetBombUpdate != null)
+			{
+				OnTargetBombUpdate(TargetBombs);
+			}
+		}
 		Destroy(item);
 		if (gameStatus == GameState.Playing)
 			CheckWinLose();
@@ -1315,6 +1340,10 @@ public class LevelManager : MonoBehaviour
 		{
 			bool lose = false;
 			Limit = 0;
+			if (OnLimitUpdate != null)
+			{
+				OnLimitUpdate(Limit);
+			}
 
 			if (LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks > 0)
 			{
@@ -1475,6 +1504,12 @@ public class LevelManager : MonoBehaviour
 		{
 			if (limitType == LIMIT.MOVES)
 				Limit--;
+
+			if (OnLimitUpdate != null)
+			{
+				OnLimitUpdate(Limit);
+			}
+
 			GameObject flowerParticle = GetFlowerFromPool();
 			flowerParticle.GetComponent<SpriteRenderer>().sortingLayerName = "UI";
 			flowerParticle.GetComponent<Flower>().StartFly(pos1, true);
@@ -1484,6 +1519,10 @@ public class LevelManager : MonoBehaviour
 			yield return new WaitForSeconds(0.3f);
 		}
 		Limit = 0;
+		if (OnLimitUpdate != null)
+		{
+			OnLimitUpdate(Limit);
+		}
 
 		while (CheckFlowerStillFly())
 			yield return new WaitForSeconds(0.3f);
@@ -1774,6 +1813,12 @@ public class LevelManager : MonoBehaviour
 					{
 						LevelManager.THIS.Limit--;
 					}
+
+					if (OnLimitUpdate != null)
+					{
+						OnLimitUpdate(Limit);
+					}
+
 					LevelManager.THIS.moveID++;
 				}
 				else
@@ -1809,6 +1854,10 @@ public class LevelManager : MonoBehaviour
 				if (LevelManager.Instance.limitType == LIMIT.TIME)
 				{
 					LevelManager.THIS.Limit--;
+					if (OnLimitUpdate != null)
+					{
+						OnLimitUpdate(Limit);
+					}
 					CheckWinLose();
 				}
 			}
@@ -3335,6 +3384,11 @@ public class LevelManager : MonoBehaviour
 	public void PopupScore (int value, Vector3 pos, int color)
 	{
 		Score += value;
+		if (OnScoreUpdate != null)
+		{
+			OnScoreUpdate(Score);
+		}
+
 		UpdateBar();
 		CheckStars();
 		if (showPopupScores)
@@ -3375,23 +3429,38 @@ public class LevelManager : MonoBehaviour
 			stars = 3;
 		}
 
+		bool shouldUpdateStar = false;
 		if (Score >= star1)
 		{
 			if (!star1Anim.activeSelf)
+			{
 				SoundBase.Instance.PlaySound(SoundBase.Instance.getStarIngr);
-			star1Anim.SetActive(true);
+				shouldUpdateStar = true;
+				star1Anim.SetActive(true);
+			}
 		}
 		if (Score >= star2)
 		{
 			if (!star2Anim.activeSelf)
+			{
 				SoundBase.Instance.PlaySound(SoundBase.Instance.getStarIngr);
-			star2Anim.SetActive(true);
+				star2Anim.SetActive(true);
+				shouldUpdateStar = true;
+			}
 		}
 		if (Score >= star3)
 		{
 			if (!star3Anim.activeSelf)
+			{
 				SoundBase.Instance.PlaySound(SoundBase.Instance.getStarIngr);
-			star3Anim.SetActive(true);
+				star3Anim.SetActive(true);
+				shouldUpdateStar = true;
+			}
+		}
+
+		if (shouldUpdateStar && OnStarUpdate != null)
+		{
+			OnStarUpdate(stars);
 		}
 	}
 
@@ -3456,6 +3525,10 @@ public class LevelManager : MonoBehaviour
 				string[] sizes = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				limitType = (LIMIT)int.Parse(sizes[0]);
 				Limit = int.Parse(sizes[1]);
+				if (OnLimitUpdate != null)
+				{
+					OnLimitUpdate(Limit);
+				}
 			}
 			else if (line.StartsWith("COLOR LIMIT "))
 			{
@@ -3563,6 +3636,11 @@ public class LevelManager : MonoBehaviour
 					TargetCages++;
 			}
 		}
+		if (TargetCages > 0 && OnTargetCageUpdate != null)
+		{
+			OnTargetCageUpdate(TargetCages);
+		}
+
 		//print(TargetBlocks);
 		levelLoaded = true;
 

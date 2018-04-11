@@ -103,7 +103,7 @@ public class LIFESAddCounter : MonoBehaviour
             }
             else
             {
-                text.text = "   Full";
+				text.text = "  Full";
             }
         }
     }

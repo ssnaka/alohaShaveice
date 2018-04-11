@@ -90,6 +90,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 //public class InitScript : MonoBehaviour
 //#endif
 {
+	public event Action<int> OnLifeUpdate;
+	public event Action<int> OnGemUpdate;
+
+
 	public static InitScript Instance;
 	public static int openLevel;
 
@@ -813,6 +817,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		Gems = count;
 		ZPlayerPrefs.SetInt("Gems", Gems);
 		ZPlayerPrefs.Save();
+
+		if (OnGemUpdate != null)
+		{
+			OnGemUpdate(Gems);
+		}
 	}
 
 	public void AddGems (int count)
@@ -823,6 +832,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		#if PLAYFAB || GAMESPARKS
 		NetworkManager.currencyManager.IncBalance(count);
 		#endif
+
+		if (OnGemUpdate != null)
+		{
+			OnGemUpdate(Gems);
+		}
 	}
 
 	public void SpendGems (int count)
@@ -834,14 +848,23 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		#if PLAYFAB || GAMESPARKS
 		NetworkManager.currencyManager.DecBalance(count);
 		#endif
-	}
 
+		if (OnGemUpdate != null)
+		{
+			OnGemUpdate(Gems);
+		}
+	}
 
 	public void RestoreLifes ()
 	{
 		lifes = CapOfLife;
 		ZPlayerPrefs.SetInt("Lifes", lifes);
 		ZPlayerPrefs.Save();
+
+		if (OnLifeUpdate != null)
+		{
+			OnLifeUpdate(lifes);
+		}
 	}
 
 	public void AddLife (int count)
@@ -851,6 +874,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			lifes = CapOfLife;
 		ZPlayerPrefs.SetInt("Lifes", lifes);
 		ZPlayerPrefs.Save();
+
+		if (OnLifeUpdate != null)
+		{
+			OnLifeUpdate(lifes);
+		}
 	}
 
 	public int GetLife ()
@@ -877,6 +905,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			lifes -= count;
 			ZPlayerPrefs.SetInt("Lifes", lifes);
 			ZPlayerPrefs.Save();
+
+			if (OnLifeUpdate != null)
+			{
+				OnLifeUpdate(lifes);
+			}
 		}
 		//else
 		//{

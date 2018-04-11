@@ -2,9 +2,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class MapCamera : MonoBehaviour
 {
+	public event Action OnCameraMove;
 	private Vector2 _prevPosition;
 	private Transform _transform;
 
@@ -140,6 +142,11 @@ public class MapCamera : MonoBehaviour
 		Vector2 validatedPosition = ApplyBounds(position);
 		_transform = transform;
 		_transform.position = new Vector3(validatedPosition.x, validatedPosition.y, _transform.position.z);
+
+		if (OnCameraMove != null)
+		{
+			OnCameraMove();
+		}
 	}
 
 	private Vector2 ApplyBounds (Vector2 position)

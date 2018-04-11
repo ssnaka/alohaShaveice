@@ -165,7 +165,7 @@ public class Item : MonoBehaviour
 			}
 		}
 
-		//       print(remainColors.Count);
+//		Debug.LogError(remainColors.Count);
 		int randColor = UnityEngine.Random.Range (0, LevelManager.Instance.colorLimit);
 		if (remainColors.Count > 0)
 			randColor = remainColors [UnityEngine.Random.Range (0, remainColors.Count)];
@@ -173,6 +173,9 @@ public class Item : MonoBehaviour
 			randColor = (randColor++) % items.Length;
 		LevelManager.THIS.lastRandColor = randColor;
 		sprRenderer.sprite = items [randColor];
+
+
+
 		if (nextType == ItemsTypes.HORIZONTAL_STRIPPED)
 			sprRenderer.sprite = stripedItems [color].horizontal;
 		else if (nextType == ItemsTypes.VERTICAL_STRIPPED)
@@ -181,6 +184,8 @@ public class Item : MonoBehaviour
 			sprRenderer.sprite = packageItems [color];
 		else if (nextType == ItemsTypes.CHOCOBOMB)
 			sprRenderer.sprite = ChocoBombItems [0];
+		else if (nextType == ItemsTypes.BOMB)
+			sprRenderer.sprite = bombItems [0];
 		else if (LevelManager.THIS.target == Target.COLLECT) {
 
 			for (int i = 0; i < LevelManager.THIS.NumIngredients; i++) {
@@ -406,12 +411,16 @@ public class Item : MonoBehaviour
 
 	void StartShakeRotationAnimation ()
 	{
-		shakeTweener.Kill();
+		shakeTweener.Kill(true);
 		sprRenderer.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
 		float maxRandomDelay = 2.0f;
 		float maxRandomZ = 20.0f;
 		bool souldStop = true;
-		if (LevelManager.THIS.Limit <= 5)
+		if (LevelManager.THIS.Limit == 0)
+		{
+			return;
+		}
+		else if (LevelManager.THIS.Limit <= 5)
 		{
 			souldStop = false;
 			maxRandomDelay = 0.0f;

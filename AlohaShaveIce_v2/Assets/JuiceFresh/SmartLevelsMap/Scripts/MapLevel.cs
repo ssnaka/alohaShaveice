@@ -45,10 +45,47 @@ public class MapLevel : MonoBehaviour {
 	LIMIT levelLimit;
 
 	Camera aCamera;
+	MapCamera mapCamera;
 
 	public void Awake () {
-		aCamera = Camera.main;
 		_originalScale = transform.localScale;
+	}
+
+	void MapCamera_OnCameraMove ()
+	{
+		if (LevelManager.Instance == null)
+		{
+			return;
+		}
+
+		Vector3 screenPoint = aCamera.WorldToViewportPoint(transform.position);
+		bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1.1;
+		if (onScreen)
+		{	
+			CreateLock();
+			CreateNumber();
+			CreateTimer();
+			if (!levelShown)
+			{
+				if (!renderGroup.activeSelf)
+				{
+					renderGroup.SetActive(true);
+				}
+				levelShown = true;
+				for (int i = 0 ; i < StarsCount; i++)
+				{
+					CreateStar(i);
+				}
+			}
+		}
+		else
+		{
+			if (renderGroup.activeSelf)
+			{
+				renderGroup.SetActive(false);
+				CleanLevel();
+			}
+		}
 	}
 
 	#region Enable click
@@ -73,7 +110,19 @@ public class MapLevel : MonoBehaviour {
 		_isScaled = true;
 	}
 
+	void OnEnable ()
+	{
+		if (aCamera == null)
+		{
+			aCamera = Camera.main;
+			mapCamera = Camera.main.GetComponent<MapCamera>();
+		}
+		mapCamera.OnCameraMove += MapCamera_OnCameraMove;
+		MapCamera_OnCameraMove();
+	}
+
 	public void OnDisable () {
+		mapCamera.OnCameraMove -= MapCamera_OnCameraMove;
 		if (LevelsMap.GetIsClickEnabled ())
 			ResetScale ();
 		CleanLevel();
@@ -205,37 +254,37 @@ public class MapLevel : MonoBehaviour {
 	}
 
 	bool levelShown = false;
-	void Update ()
-	{
-		Vector3 screenPoint = aCamera.WorldToViewportPoint(transform.position);
-		bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1.1;
-		if (onScreen)
-		{	
-			CreateLock();
-			CreateNumber();
-			CreateTimer();
-			if (!levelShown)
-			{
-				if (!renderGroup.activeSelf)
-				{
-					renderGroup.SetActive(true);
-				}
-				levelShown = true;
-				for (int i = 0 ; i < StarsCount; i++)
-				{
-					CreateStar(i);
-				}
-			}
-		}
-		else
-		{
-			if (renderGroup.activeSelf)
-			{
-				renderGroup.SetActive(false);
-				CleanLevel();
-			}
-		}
-	}
+//	void Update ()
+//	{
+//		Vector3 screenPoint = aCamera.WorldToViewportPoint(transform.position);
+//		bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1.1;
+//		if (onScreen)
+//		{	
+//			CreateLock();
+//			CreateNumber();
+//			CreateTimer();
+//			if (!levelShown)
+//			{
+//				if (!renderGroup.activeSelf)
+//				{
+//					renderGroup.SetActive(true);
+//				}
+//				levelShown = true;
+//				for (int i = 0 ; i < StarsCount; i++)
+//				{
+//					CreateStar(i);
+//				}
+//			}
+//		}
+//		else
+//		{
+//			if (renderGroup.activeSelf)
+//			{
+//				renderGroup.SetActive(false);
+//				CleanLevel();
+//			}
+//		}
+//	}
 
 	void CleanLevel ()
 	{

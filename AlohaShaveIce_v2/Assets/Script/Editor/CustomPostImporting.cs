@@ -33,6 +33,8 @@ public class CustomPostImporting : AssetPostprocessor
 			defines = defines + "; APPODEAL_ADS";
 		}
 
+		defines = defines + "; UNITY_ANALYTICS";
+
 //		#elif UNITY_IOS
 //		defines = defines + "; UNITY_ADS";
 //

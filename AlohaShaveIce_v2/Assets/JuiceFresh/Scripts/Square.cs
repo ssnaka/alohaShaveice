@@ -287,7 +287,7 @@ public class Square : MonoBehaviour {
             if (type == SquareTypes.WIREBLOCK) {
                 if (cageHP > 0)
                     return;
-                LevelManager.THIS.TargetCages--;
+				LevelManager.THIS.DecreaseTargetCage();
                 LevelManager.THIS.PopupScore(LevelManager.THIS.scoreForWireBlock, transform.position, 0);
             }
             if (type == SquareTypes.SOLIDBLOCK) {

@@ -3636,10 +3636,6 @@ public class LevelManager : MonoBehaviour
 					TargetCages++;
 			}
 		}
-		if (TargetCages > 0 && OnTargetCageUpdate != null)
-		{
-			OnTargetCageUpdate(TargetCages);
-		}
 
 		//print(TargetBlocks);
 		levelLoaded = true;
@@ -3649,6 +3645,15 @@ public class LevelManager : MonoBehaviour
 		result.limitType = limitType;
 
 		return result;
+	}
+
+	public void DecreaseTargetCage ()
+	{
+		TargetCages--;
+		if (OnTargetCageUpdate != null)
+		{
+			OnTargetCageUpdate(TargetCages);
+		}
 	}
 
 }

@@ -538,7 +538,7 @@ public class AnimationManager : MonoBehaviour
 		} else if (gameObject.name == "MenuFailed") {
 			LevelManager.Instance.gameStatus = GameState.Map;
 		} else if (gameObject.name == "MenuPlay") {
-			if (InitScript.lifes > 0) {
+			if (InitScript.lifes > 0 || InitScript.Instance.HasInfiniteLife()) {
 				//InitScript.Instance.SpendLife(1);
 				LevelManager.THIS.gameStatus = GameState.PrepareGame;
 				CloseMenu();

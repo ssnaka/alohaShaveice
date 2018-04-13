@@ -118,6 +118,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		set
 		{
 			InitScript.Lifes = value;
+			if (InitScript.Instance.OnLifeUpdate != null)
+			{
+				InitScript.Instance.OnLifeUpdate(value);
+			}
 		}
 	}
 
@@ -125,6 +129,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public float TotalTimeForRestLifeHours = 0;
 	public float TotalTimeForRestLifeMin = 15;
 	public float TotalTimeForRestLifeSec = 60;
+
+	public float TotalTimerForResetInfiniteLife = 360;
+
 	public int FirstGems = 20;
 	public static int Gems;
 	public static int waitedPurchaseGems;
@@ -172,6 +179,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public int maxVideoPerDay;
 
 	bool didTutorialShown = false;
+
+	[SerializeField]
+	LIFESAddCounter lifesAddCounterScript;
+
 	// Use this for initialization
 	void Awake ()
 	{
@@ -180,11 +191,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Application.targetFrameRate = 60;
 		Instance = this;
-		RestLifeTimer = PlayerPrefs.GetFloat("RestLifeTimer");
+		RestLifeTimer = ZPlayerPrefs.GetFloat("RestLifeTimer");
 //		if (Application.isEditor)//TODO comment it
 //			PlayerPrefs.DeleteAll ();
 
-		DateOfExit = PlayerPrefs.GetString("DateOfExit", "");
+		DateOfExit = ZPlayerPrefs.GetString("DateOfExit", "");
 		Gems = ZPlayerPrefs.GetInt("Gems");
 		lifes = ZPlayerPrefs.GetInt("Lifes");
 		didTutorialShown = PlayerPrefs.GetInt("didTutorialShown", 0) == 1;
@@ -273,6 +284,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 		ShowFirstTutorial();
 
+		SetupInfiniteLife(false);
 //		LoadingCanvasScript.Instance.HideLoading();
 	}
 	#if GOOGLE_MOBILE_ADS
@@ -471,54 +483,54 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	#if APPODEAL_ADS
 	#region Rewarded Video callback handlers
 
-			public void onRewardedVideoLoaded()
-			{
-			Debug.Log("--Video Loaded");
-			}
+	public void onRewardedVideoLoaded ()
+	{
+		Debug.Log("--Video Loaded");
+	}
 
-			public void onRewardedVideoFailedToLoad()
-			{
-			Debug.Log("--Video failed");
-			}
+	public void onRewardedVideoFailedToLoad ()
+	{
+		Debug.Log("--Video failed");
+	}
 
-			public void onRewardedVideoShown()
-			{
-			Debug.Log("--Video shown");
-			}
+	public void onRewardedVideoShown ()
+	{
+		Debug.Log("--Video shown");
+	}
 
-			public void onRewardedVideoFinished(int amount, string name)
-			{
-			Debug.Log("--Video Finished");
-			}
+	public void onRewardedVideoFinished (int amount, string name)
+	{
+		Debug.Log("--Video Finished");
+	}
 
-			public void onRewardedVideoClosed(bool finished)
-			{
-			Debug.Log("--Video closed");
-			}
+	public void onRewardedVideoClosed (bool finished)
+	{
+		Debug.Log("--Video closed");
+	}
 
 	public void onNonSkippableVideoLoaded ()
 	{
-			Debug.Log("Video Loaded");
+		Debug.Log("Video Loaded");
 	}
 
 	public void onNonSkippableVideoFailedToLoad ()
 	{
-			Debug.Log("Video failed");
+		Debug.Log("Video failed");
 	}
 
 	public void onNonSkippableVideoShown ()
 	{
-			Debug.Log("Video shown");
+		Debug.Log("Video shown");
 	}
 
 	public void onNonSkippableVideoClosed (bool _closed)
 	{
-			Debug.Log("Video closed");
+		Debug.Log("Video closed");
 	}
 
 	public void onNonSkippableVideoFinished ()
 	{
-			Debug.Log("Video Finished");
+		Debug.Log("Video Finished");
 		CheckRewardedAds();
 	}
 
@@ -555,7 +567,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 //			Debug.LogError(Appodeal.isLoaded(Appodeal.BANNER));
 //			if (Appodeal.isLoaded(Appodeal.BANNER))
 //			{
-				Appodeal.show(Appodeal.BANNER_BOTTOM);
+			Appodeal.show(Appodeal.BANNER_BOTTOM);
 //			}
 		}
 		else
@@ -627,8 +639,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			foreach (AdEvents item in adsEvents)
 			{
 				if ((LevelManager.THIS.gameStatus == GameState.GameOver || LevelManager.THIS.gameStatus == GameState.Pause ||
-					LevelManager.THIS.gameStatus == GameState.Playing || LevelManager.THIS.gameStatus == GameState.PrepareGame || LevelManager.THIS.gameStatus == GameState.PreWinAnimations ||
-					LevelManager.THIS.gameStatus == GameState.RegenLevel || LevelManager.THIS.gameStatus == GameState.Win))
+				    LevelManager.THIS.gameStatus == GameState.Playing || LevelManager.THIS.gameStatus == GameState.PrepareGame || LevelManager.THIS.gameStatus == GameState.PreWinAnimations ||
+				    LevelManager.THIS.gameStatus == GameState.RegenLevel || LevelManager.THIS.gameStatus == GameState.Win))
 				{
 					item.calls = item.calls > 0 ? item.calls - 1 : 0;
 				}
@@ -723,7 +735,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				PlayerPrefs.SetInt(RewardedAdsType.ExtraMoves.ToString() + "_watch", count);
 			}
 		}
-
 		else if (currentReward == RewardedAdsType.ExtraTime)
 		{
 			BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(BoostType.ExtraTime);
@@ -807,6 +818,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	}
 
 	bool shouldCheckRewardedAdsInMainThreaad = false;
+
 	public void CheckRewardedAds ()
 	{
 		shouldCheckRewardedAdsInMainThreaad = true;
@@ -860,11 +872,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		lifes = CapOfLife;
 		ZPlayerPrefs.SetInt("Lifes", lifes);
 		ZPlayerPrefs.Save();
-
-		if (OnLifeUpdate != null)
-		{
-			OnLifeUpdate(lifes);
-		}
 	}
 
 	public void AddLife (int count)
@@ -874,11 +881,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			lifes = CapOfLife;
 		ZPlayerPrefs.SetInt("Lifes", lifes);
 		ZPlayerPrefs.Save();
-
-		if (OnLifeUpdate != null)
-		{
-			OnLifeUpdate(lifes);
-		}
 	}
 
 	public int GetLife ()
@@ -905,16 +907,16 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			lifes -= count;
 			ZPlayerPrefs.SetInt("Lifes", lifes);
 			ZPlayerPrefs.Save();
-
-			if (OnLifeUpdate != null)
-			{
-				OnLifeUpdate(lifes);
-			}
 		}
 		//else
 		//{
 		//    GameObject.Find("Canvas").transform.Find("RestoreLifes").gameObject.SetActive(true);
 		//}
+	}
+
+	public bool HasInfiniteLife ()
+	{
+		return lifesAddCounterScript.isInfiniteLife;
 	}
 
 	public void BuyBoost (BoostType boostType, int price, int count)
@@ -960,7 +962,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	void OnApplicationFocus (bool focusStatus)
 	{//1.3.3
-		if(focusStatus) {
+		if (focusStatus)
+		{
 			if (MusicBase.Instance)
 			{
 				MusicBase.Instance.PlayCurrentBGM();
@@ -979,10 +982,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		{
 			if (RestLifeTimer > 0)
 			{
-				PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
+				ZPlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 			}
 			ZPlayerPrefs.SetInt("Lifes", lifes);
-			PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
+			ZPlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 			PlayerPrefs.Save();
 		}
 	}
@@ -991,10 +994,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{   //1.4  added 
 		if (RestLifeTimer > 0)
 		{
-			PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
+			ZPlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 		}
 		ZPlayerPrefs.SetInt("Lifes", lifes);
-		PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
+		ZPlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 		PlayerPrefs.Save();
 	}
 
@@ -1014,6 +1017,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 	}
 
+	
+	public void SetupInfiniteLife (bool _forceUpdate = true)
+	{
+		lifesAddCounterScript.SetupInfiniteLife(_forceUpdate);
+	}
+
 	void OnEnable ()
 	{
 		LevelsMap.LevelSelected += OnLevelClicked;
@@ -1024,10 +1033,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		LevelsMap.LevelSelected -= OnLevelClicked;
 
 		//		if(RestLifeTimer>0){
-		PlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
+		ZPlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
 		//		}
 		ZPlayerPrefs.SetInt("Lifes", lifes);
-		PlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
+		ZPlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 		PlayerPrefs.Save();
 #if GOOGLE_MOBILE_ADS
 		interstitial.OnAdLoaded -= HandleInterstitialLoaded;

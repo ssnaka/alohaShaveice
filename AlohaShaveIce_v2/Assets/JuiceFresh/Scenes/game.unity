@@ -24478,6 +24478,7 @@ MonoBehaviour:
   TotalTimeForRestLifeHours: 0
   TotalTimeForRestLifeMin: 15
   TotalTimeForRestLifeSec: 0
+  TotalTimerForResetInfiniteLife: 360
   FirstGems: 30
   adsEvents:
   - gameEvent: 5
@@ -24539,6 +24540,7 @@ MonoBehaviour:
   losingLifeEveryGame: 0
   facebookButton: {fileID: 1163204533}
   maxVideoPerDay: 1000
+  lifesAddCounterScript: {fileID: 587375267}
 --- !u!120 &511786110
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -30049,6 +30051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914631e573b6dff42af5e525b29e729c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInfiniteLife: 0
 --- !u!114 &587375268
 MonoBehaviour:
   m_ObjectHideFlags: 0

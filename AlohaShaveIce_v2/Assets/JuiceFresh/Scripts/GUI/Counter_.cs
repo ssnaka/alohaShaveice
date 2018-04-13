@@ -35,24 +35,23 @@ public class Counter_ : MonoBehaviour
 
 		if (name == "Score")
 		{
-			txt.text = "0";
 			LevelManager.Instance.OnScoreUpdate += LevelManager_Instance_OnScoreUpdate;
+			LevelManager_Instance_OnScoreUpdate(0);
 		}
 		else if (name == "CountStar")
 		{
 			LevelManager.Instance.OnStarUpdate += LevelManager_Instance_OnStarUpdate;
-			;
-			txt.text = "0/" + (int)LevelManager.THIS.starsTargetCount;
+			LevelManager_Instance_OnStarUpdate(0);
 		}
 		else if (name == "Lifes")
 		{
 			InitScript.Instance.OnLifeUpdate += InitScript_Instance_OnLifeUpdate;
-			txt.text = "" + InitScript.Instance.GetLife();
+			InitScript_Instance_OnLifeUpdate(InitScript.Instance.GetLife());
 		}
 		else if (name == "Gems")
 		{
 			InitScript.Instance.OnGemUpdate += InitScript_Instance_OnGemUpdate;
-			txt.text = "" + InitScript.Gems;
+			InitScript_Instance_OnGemUpdate(InitScript.Gems);
 		}
 		else if (name == "TargetBlocks")
 		{
@@ -61,7 +60,6 @@ public class Counter_ : MonoBehaviour
 		else if (name == "TargetCages")
 		{
 			LevelManager.Instance.OnTargetCageUpdate += LevelManager_Instance_OnTargetCageUpdate;
-
 		}
 		else if (name == "TargetBombs")
 		{
@@ -200,6 +198,12 @@ public class Counter_ : MonoBehaviour
 
 	void InitScript_Instance_OnLifeUpdate (int _lifeCount)
 	{
+		if (_lifeCount < 0)
+		{
+			txt.text = "∞";
+			return;
+		}
+
 		txt.text = "" + _lifeCount;
 	}
 

@@ -10,12 +10,20 @@ public class LIFESAddCounter : MonoBehaviour
     float TotalTimeForRestLife = 15f * 60;  //8 minutes for restore life
     bool startTimer;
     DateTime templateTime;
+
+	static int infiniteLifeRnadomStart = 300;
+	static int infiniteLifeRnadomEnd = 3600;
+	static int infiniteLifeCut = 30;
+	public bool isInfiniteLife = false;
+
+	bool readyToUpdate;
     // Use this for initialization
     void Start()
     {
         text = GetComponent<Text>();
-        TotalTimeForRestLife = InitScript.Instance.TotalTimeForRestLifeHours * 60 * 60 + InitScript.Instance.TotalTimeForRestLifeMin * 60 + InitScript.Instance.TotalTimeForRestLifeSec;
+        
         //if (TotalTimeForRestLife != InitScript.RestLifeTimer) { InitScript.RestLifeTimer = TotalTimeForRestLife;  }
+//		SetupInfiniteLife();
     }
 
     bool CheckPassedTime()
@@ -46,12 +54,24 @@ public class LIFESAddCounter : MonoBehaviour
             ResetTimer();
 
         InitScript.RestLifeTimer -= tick;
-        if (InitScript.RestLifeTimer <= 1 && InitScript.lifes < InitScript.Instance.CapOfLife)
-        {
-            InitScript.Instance.AddLife(1);
-            ResetTimer();
-        }
-        //		}
+
+		if (isInfiniteLife)
+		{
+			if (InitScript.RestLifeTimer <= 1)
+			{
+				InitScript.Instance.AddLife(InitScript.Instance.CapOfLife * 2);
+				ResetTimer();
+				isInfiniteLife = false;
+			}
+		}
+		else
+		{
+	        if (InitScript.RestLifeTimer <= 1 && InitScript.lifes < InitScript.Instance.CapOfLife)
+	        {
+	            InitScript.Instance.AddLife(1);
+	            ResetTimer();
+	        }
+		}
     }
 
     void ResetTimer()
@@ -62,9 +82,15 @@ public class LIFESAddCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (!readyToUpdate)
+		{
+			return;
+		}
+
         if (!startTimer && DateTime.Now.Subtract(DateTime.Now).Days == 0)
         {
             InitScript.DateOfRestLife = DateTime.Now;
+
             if (InitScript.lifes < InitScript.Instance.CapOfLife)
             {
                 if (CheckPassedTime())
@@ -134,6 +160,37 @@ public class LIFESAddCounter : MonoBehaviour
     {
         InitScript.DateOfExit = DateTime.Now.ToString();
         //print(InitScript.DateOfExit);
-
     }
+
+	public void SetupInfiniteLife (bool _forceUpdate = true)
+	{
+		if (_forceUpdate)
+		{
+			int randomDuration = UnityEngine.Random.Range(infiniteLifeRnadomStart, infiniteLifeRnadomEnd);
+			int mod = randomDuration % infiniteLifeCut;
+			randomDuration += (infiniteLifeCut - mod);
+
+			SetupInfiniteLifeWithTime(randomDuration);
+		}
+
+		isInfiniteLife = InitScript.lifes < 0 ? true : false;
+
+		if (!isInfiniteLife)
+		{
+			TotalTimeForRestLife = InitScript.Instance.TotalTimeForRestLifeHours * 60 * 60 + InitScript.Instance.TotalTimeForRestLifeMin * 60 + InitScript.Instance.TotalTimeForRestLifeSec;
+		}
+
+		readyToUpdate = true;
+	}
+
+	public void SetupInfiniteLifeWithTime (int _duration)
+	{
+		InitScript.lifes = -1;
+
+		InitScript.RestLifeTimer = _duration;
+		InitScript.DateOfExit = DateTime.Now.ToString();
+
+		ZPlayerPrefs.SetFloat("RestLifeTimer", InitScript.RestLifeTimer);
+		TotalTimeForRestLife = _duration;
+	}
 }

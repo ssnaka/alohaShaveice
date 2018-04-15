@@ -191,11 +191,26 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Application.targetFrameRate = 60;
 		Instance = this;
+
+		if (PlayerPrefs.HasKey("RestLifeTimer"))
+		{
+			RestLifeTimer = PlayerPrefs.GetFloat("RestLifeTimer");
+			ZPlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
+			PlayerPrefs.DeleteKey("RestLifeTimer");
+		}
 		RestLifeTimer = ZPlayerPrefs.GetFloat("RestLifeTimer");
+
 //		if (Application.isEditor)//TODO comment it
 //			PlayerPrefs.DeleteAll ();
 
+		if (PlayerPrefs.HasKey("DateOfExit"))
+		{
+			DateOfExit = PlayerPrefs.GetString("DateOfExit", "");
+			ZPlayerPrefs.SetString("DateOfExit", DateOfExit);
+			PlayerPrefs.DeleteKey("DateOfExit");
+		}
 		DateOfExit = ZPlayerPrefs.GetString("DateOfExit", "");
+
 		Gems = ZPlayerPrefs.GetInt("Gems");
 		lifes = ZPlayerPrefs.GetInt("Lifes");
 		didTutorialShown = PlayerPrefs.GetInt("didTutorialShown", 0) == 1;

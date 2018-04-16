@@ -1661,6 +1661,14 @@ public class LevelManager : MonoBehaviour
 						}
 						else if (selectedColor == -1 || selectedColor == item.color)
 						{                //selection items by touch
+							
+							if (selectedColor >= 0)
+							{
+								if (item.currentType == ItemsTypes.SQUARE_BOMB || item.currentType == ItemsTypes.CROSS_BOMB)
+								{
+									return;
+								}
+							}
 							if (extraCageAddItem < 0)
 								extraCageAddItem = 0;
 							selectedColor = item.color;
@@ -1740,6 +1748,10 @@ public class LevelManager : MonoBehaviour
 									}
 								}
 
+								if (item.currentType == ItemsTypes.SQUARE_BOMB || item.currentType == ItemsTypes.CROSS_BOMB)
+								{
+									stopSliding = true;
+								}
 							}
 						}
 
@@ -1768,9 +1780,9 @@ public class LevelManager : MonoBehaviour
 
 						if (!isIngredient)
 						{
-
-							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb)
+							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb || item.currentType == ItemsTypes.SQUARE_BOMB)
 							{
+								LevelManager.THIS.ActivatedBoost.type = BoostType.Bomb;
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/bomb"), square.transform.position, square.transform.rotation) as GameObject;
@@ -1789,8 +1801,9 @@ public class LevelManager : MonoBehaviour
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
 							}
-							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy)
+							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy || item.currentType == ItemsTypes.CROSS_BOMB)
 							{
+								LevelManager.THIS.ActivatedBoost.type = BoostType.Energy;
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/energy"), square.transform.position, square.transform.rotation) as GameObject;
@@ -1802,6 +1815,7 @@ public class LevelManager : MonoBehaviour
 						}
 					}
 				}
+
 				selectedColor = -1;
 				stopSliding = false;
 				offset = 0;
@@ -2410,6 +2424,7 @@ public class LevelManager : MonoBehaviour
 			foreach (Item item in GetRandomItems(BoostStriped))
 			{
 				item.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
+				Debug.LogError("1-- " + item.nextType);
 				item.ChangeType();
 			}
 			BoostStriped = 0;
@@ -2608,6 +2623,7 @@ public class LevelManager : MonoBehaviour
 						if (lastDraggedItem == null)
 							lastDraggedItem = desrtoyItems[UnityEngine.Random.Range(0, desrtoyItems.Count)];
 						lastDraggedItem.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
+						Debug.LogError("2-- " + lastDraggedItem.nextType);
 						//lastDraggedItem.ChangeType();
 					}
 					if (desrtoyItems.Count >= 5)
@@ -2651,7 +2667,7 @@ public class LevelManager : MonoBehaviour
 								throwflower = true;
 								//                                item1.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 								GameObject flowerParticle = GetFlowerFromPool();
-								flowerParticle.GetComponent<Flower>().StartFly(item.transform.position);
+								flowerParticle.GetComponent<Flower>().StartFly(item.transform.position, false, iCounter);
 								cc++;
 							}
 						}
@@ -3292,7 +3308,8 @@ public class LevelManager : MonoBehaviour
 					item.GetComponent<Item>().nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 				else
 					item.GetComponent<Item>().nextType = nextType;
-
+				
+				Debug.LogError("-- " + item.GetComponent<Item>().nextType);
 				item.GetComponent<Item>().ChangeType();
 				if (nextType == ItemsTypes.NONE)
 					destroyAnyway.Add(item.GetComponent<Item>());

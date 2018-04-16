@@ -21,6 +21,7 @@ public class BoostAnimation : MonoBehaviour {
         Destroy(effect, 2);
 
         if (LevelManager.THIS.waitingBoost.type == BoostType.Bomb) {
+			LevelManager.THIS.ActivatedBoost.type = BoostType.None;
             LevelManager.THIS.waitingBoost = null;
             List<Square> itemsList = LevelManager.THIS.GetSquaresAround(square);
             foreach (Square _square in itemsList) {
@@ -28,8 +29,6 @@ public class BoostAnimation : MonoBehaviour {
                 if (_square.item != null) {
                     if (_square.item.currentType != ItemsTypes.CHOCOBOMB && _square.item.currentType != ItemsTypes.INGREDIENT && _square.CheckDamage(5))
                         _square.item.DestroyItem(true, "destroy_package");
-
-
                 }
                 if (_square.IsHaveDestroybleObstacle()) {
                     _square.DestroyBlock();
@@ -37,6 +36,7 @@ public class BoostAnimation : MonoBehaviour {
             }
         }
         else if (LevelManager.THIS.waitingBoost.type == BoostType.Shovel) {
+			LevelManager.THIS.ActivatedBoost.type = BoostType.None;
             LevelManager.THIS.waitingBoost = null;
             if (square.CheckDamage(5) && square.item)
                 square.item.DestroyItem(false, "", false, true);
@@ -45,6 +45,7 @@ public class BoostAnimation : MonoBehaviour {
             }
         }
         else if (LevelManager.THIS.waitingBoost.type == BoostType.Energy) {
+			LevelManager.THIS.ActivatedBoost.type = BoostType.None;
             LevelManager.THIS.waitingBoost = null;
             Item item = square.item;
             if (!item) {
@@ -59,12 +60,12 @@ public class BoostAnimation : MonoBehaviour {
                 item.DestroyItem(false, "", false, true);
 
         }
+
         LevelManager.THIS.StartCoroutine(LevelManager.THIS.FindMatchDelay());
         if (!name.Contains("shovel"))
             SoundBase.Instance.PlaySound(SoundBase.Instance.explosion);
         else
             SoundBase.Instance.PlaySound(SoundBase.Instance.shovel);
-
         LevelManager.THIS.ClearHighlight(true);
         Destroy(gameObject);
     }

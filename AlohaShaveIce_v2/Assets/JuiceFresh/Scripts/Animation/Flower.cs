@@ -29,13 +29,13 @@ public class Flower : MonoBehaviour
 		}
 	}
 
-	public void StartFly (Vector3 pos1, bool directFly = false)
+	public void StartFly (Vector3 pos1, bool directFly = false, int _index = 0)
 	{
 		GetComponent<SpriteRenderer>().enabled = true;
 		StartCoroutine(FlyCor(pos1, directFly));
 	}
 
-	IEnumerator FlyCor (Vector3 pos1, bool directFly = false)
+	IEnumerator FlyCor (Vector3 pos1, bool directFly = false, int _index = 0)
 	{
 		Vector3 pos2 = Vector3.zero;
 		yield return new WaitForFixedUpdate();
@@ -58,7 +58,17 @@ public class Flower : MonoBehaviour
 			yield break;
 		}
 		Item _item = item;
-		_item.nextType = (ItemsTypes)Random.Range(1, 3);
+
+		int minRandomRange = 3;
+		int maxRandomRange = 5;
+		if (_index == 0)
+		{
+			minRandomRange = 1;
+			maxRandomRange = 4;
+		}
+		//if flower count is greater than 1, it only will show square bomb or cross bomb.
+		_item.nextType = (ItemsTypes)Random.Range(minRandomRange, maxRandomRange);
+
 		float startTime = Time.time;
 		Vector3 startPos = pos1;
 		float distance = Vector3.Distance(pos1, pos2);
@@ -75,7 +85,7 @@ public class Flower : MonoBehaviour
 			if (_item.awaken && _item.gameObject != null)
 			{
 				_item.nextType = ItemsTypes.NONE;
-				StartFly(transform.position, directFly);
+				StartFly(transform.position, directFly, _index);
 				yield break;
 			}
 			// aSpeed += 0.2f;

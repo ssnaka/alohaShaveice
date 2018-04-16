@@ -149,7 +149,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   ChocoBombItems:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: a56f0447bec3e474d837a848c5ebd01e, type: 3}
   bombItems:
   - {fileID: 21300000, guid: 4a9e13b8bcaa2fe44a73978320d25b48, type: 3}
   - {fileID: 21300000, guid: 3a580c639ecceda419e55655571164bc, type: 3}
@@ -157,6 +157,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3b1bd66b152e01449abb014ef3bd7215, type: 3}
   - {fileID: 21300000, guid: 44adce5cb3edcaa4e9399171ccb89d38, type: 3}
   - {fileID: 21300000, guid: 8553d0ab877d72a4d92424ac5c119c0f, type: 3}
+  squareBomb: {fileID: 21300000, guid: 77025425a69e74cfe99428c35f084cd2, type: 3}
+  crossBomb: {fileID: 21300000, guid: 9493f2cb835404bdf9afc17a57186bc7, type: 3}
   sprRenderer: {fileID: 21290506}
   square: {fileID: 0}
   dragThis: 0

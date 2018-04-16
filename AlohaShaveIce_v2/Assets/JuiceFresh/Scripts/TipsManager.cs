@@ -38,7 +38,7 @@ public class TipsManager : MonoBehaviour
 		if (!square)
 			return;
 		if (square.item != null) {
-			if (square.item.color == COLOR) {
+			if (square.item.color == COLOR && square.item.currentType != ItemsTypes.SQUARE_BOMB && square.item.currentType != ItemsTypes.CROSS_BOMB) {
 				if (moveThis && square.type != SquareTypes.WIREBLOCK) {
 					nextMoveItems.Add (square.item);
 				} else if (!moveThis)

@@ -11,6 +11,8 @@ public enum ItemsTypes
 	NONE = 0,
 	VERTICAL_STRIPPED,
 	HORIZONTAL_STRIPPED,
+	SQUARE_BOMB,
+	CROSS_BOMB,
 	PACKAGE,
 	CHOCOBOMB,
 	INGREDIENT,
@@ -26,6 +28,12 @@ public class Item : MonoBehaviour
 	public Sprite[] ChocoBombItems;
 	public Sprite[] bombItems;
 	Sprite[] ingredientItems;
+
+	[SerializeField]
+	Sprite squareBomb;
+	[SerializeField]
+	Sprite crossBomb;
+
 	public SpriteRenderer sprRenderer;
 	public Square square;
 	public bool dragThis;
@@ -225,10 +233,17 @@ public class Item : MonoBehaviour
 		awaken = true;
 		anim.SetTrigger ("Idle");
 
-		if (currentType != ItemsTypes.BOMB)
-			sprRenderer.sprite = itemsAnimation [color];
-		else if (currentType == ItemsTypes.BOMB) {
+		if (currentType == ItemsTypes.CHOCOBOMB)
+		{
 			SetLight ();
+		}
+		else
+		{
+			if (currentType != ItemsTypes.BOMB && currentType != ItemsTypes.SQUARE_BOMB && currentType != ItemsTypes.CROSS_BOMB)
+				sprRenderer.sprite = itemsAnimation [color];
+			else if (currentType == ItemsTypes.BOMB) {
+				SetLight ();
+			}
 		}
 	}
 
@@ -255,7 +270,7 @@ public class Item : MonoBehaviour
 			return;//1.3
 		anim.SetTrigger ("IdleStop");
 
-		if (currentType != ItemsTypes.BOMB)
+		if (currentType != ItemsTypes.BOMB && currentType != ItemsTypes.SQUARE_BOMB && currentType != ItemsTypes.CROSS_BOMB)
 			sprRenderer.sprite = items [color];
 		if (light != null) {
 			light.SetActive (false);
@@ -382,8 +397,8 @@ public class Item : MonoBehaviour
 	{
 		COLORView = color;
 		if (currentType != debugType && currentType != ItemsTypes.INGREDIENT && LevelManager.THIS.gameStatus == GameState.Playing) {
-			print ("debug type " + debugType);
-			print ("current type " + currentType);
+//			print ("debug type " + debugType);
+//			print ("current type " + currentType);
 			nextType = debugType;
 			ChangeType ();
 
@@ -565,21 +580,35 @@ public class Item : MonoBehaviour
 
 	void StripeEffect (ItemsTypes _itemType)
 	{
-		GameObject obj = Instantiate (Resources.Load ("Prefabs/StripeEffect")) as GameObject;
-		obj.transform.SetParent (transform.Find ("Sprite"));
-		obj.transform.localScale = Vector3.one;
-		obj.GetComponent<StripesWrappEffect> ().itemSprite = transform.Find ("Sprite").GetComponent<SpriteRenderer> ();
-		obj.transform.localPosition = Vector3.zero;
+		GameObject obj = CreateStripEffect();
 		if (_itemType == ItemsTypes.HORIZONTAL_STRIPPED)
 			obj.transform.eulerAngles = new Vector3 (0, 0, 90);
+		else if (_itemType == ItemsTypes.SQUARE_BOMB)
+		{
+			obj.transform.eulerAngles = new Vector3 (0, 0, 45);
+			obj = CreateStripEffect();
+			obj.transform.eulerAngles = new Vector3 (0, 0, -45);
+		}
+		else if (_itemType == ItemsTypes.CROSS_BOMB)
+		{
+			obj = CreateStripEffect();
+			obj.transform.eulerAngles = new Vector3 (0, 0, 90);
+		}
 		transform.Find ("Sprite").GetComponent<SpriteRenderer> ().sortingOrder = 3;
 
 		GameObject effect = Instantiate (appearingEffect) as GameObject;
 		effect.transform.position = transform.position;
 		Destroy (effect, 2);
+	}
 
-
-
+	GameObject CreateStripEffect ()
+	{
+		GameObject obj = Instantiate (Resources.Load ("Prefabs/StripeEffect")) as GameObject;
+		obj.transform.SetParent (transform.Find ("Sprite"));
+		obj.transform.localScale = Vector3.one;
+		obj.GetComponent<StripesWrappEffect> ().itemSprite = transform.Find ("Sprite").GetComponent<SpriteRenderer> ();
+		obj.transform.localPosition = Vector3.zero;
+		return obj;
 	}
 
 	public void ChangeType ()
@@ -595,6 +624,16 @@ public class Item : MonoBehaviour
 			anim.SetTrigger ("appear");
 			SoundBase.Instance.PlaySound (SoundBase.Instance.appearStipedColorBomb);
 		} else if (nextType == ItemsTypes.VERTICAL_STRIPPED) {
+			StripeEffect (nextType);
+			anim.SetTrigger ("appear");
+			SoundBase.Instance.PlaySound (SoundBase.Instance.appearStipedColorBomb);
+		} else if (nextType == ItemsTypes.SQUARE_BOMB) {
+			sprRenderer.sprite = squareBomb;
+			StripeEffect (nextType);
+			anim.SetTrigger ("appear");
+			SoundBase.Instance.PlaySound (SoundBase.Instance.appearStipedColorBomb);
+		} else if (nextType == ItemsTypes.CROSS_BOMB) {
+			sprRenderer.sprite = crossBomb;
 			StripeEffect (nextType);
 			anim.SetTrigger ("appear");
 			SoundBase.Instance.PlaySound (SoundBase.Instance.appearStipedColorBomb);
@@ -709,6 +748,7 @@ public class Item : MonoBehaviour
 
 	public void SetHighlight (ItemsTypes thisType)
 	{
+		Debug.LogError("!!!! " + thisType);
 		List<Item> itemsList = new List<Item> ();
 		if (thisType == ItemsTypes.HORIZONTAL_STRIPPED)
 			itemsList = LevelManager.THIS.GetRow (square.row);
@@ -729,7 +769,6 @@ public class Item : MonoBehaviour
 				itemSelected.square.HighLight (true);
 			}
 		}
-
 	}
 
 	IEnumerator DestroyCor (bool showScore = false, string anim_name = "", bool explEffect = false, bool directly = false)
@@ -737,10 +776,13 @@ public class Item : MonoBehaviour
 		//if (anim_name == "")
 		//{
 		anim.SetTrigger ("IdleStop");
-
 		if (currentType == ItemsTypes.HORIZONTAL_STRIPPED)
 			PlayDestroyAnimation ("destroy");
 		else if (currentType == ItemsTypes.VERTICAL_STRIPPED)
+			PlayDestroyAnimation ("destroy");
+		else if (currentType == ItemsTypes.SQUARE_BOMB)
+			PlayDestroyAnimation ("destroy");
+		else if (currentType == ItemsTypes.CROSS_BOMB)
 			PlayDestroyAnimation ("destroy");
 		else if (currentType == ItemsTypes.PACKAGE) {
 			PlayDestroyAnimation ("destroy");
@@ -828,6 +870,27 @@ public class Item : MonoBehaviour
 			else if (currentType == ItemsTypes.VERTICAL_STRIPPED)
 				DestroyVertical ();
 		}
+
+		if (currentType == ItemsTypes.SQUARE_BOMB)
+		{
+			List<Square> itemsList = LevelManager.THIS.GetSquaresAround(square);
+			foreach (Square _square in itemsList) {
+
+				if (_square.item != null) {
+					if (_square.item.currentType != ItemsTypes.CHOCOBOMB && _square.item.currentType != ItemsTypes.INGREDIENT && _square.CheckDamage(5))
+						_square.item.DestroyItem(true, "destroy_package");
+				}
+				if (_square.IsHaveDestroybleObstacle()) {
+					_square.DestroyBlock();
+				}
+			}
+		}
+		else if (currentType == ItemsTypes.CROSS_BOMB)
+		{
+			DestroyHorizontal();
+			DestroyVertical ();
+		}
+
 		if (currentType == ItemsTypes.PACKAGE)
 			DestroyPackage ();
 		else if (currentType == ItemsTypes.CHOCOBOMB && LevelManager.THIS.gameStatus == GameState.PreWinAnimations)

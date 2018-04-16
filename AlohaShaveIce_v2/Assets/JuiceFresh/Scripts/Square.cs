@@ -60,6 +60,7 @@ public class Square : MonoBehaviour {
 
 		Item generatedItem = item.GetComponent<Item>();
 		generatedItem.square = this;
+
         //if (!falling)
         //    item.GetComponent<Item>().anim.SetTrigger("reAppear");
 

@@ -748,7 +748,6 @@ public class Item : MonoBehaviour
 
 	public void SetHighlight (ItemsTypes thisType)
 	{
-		Debug.LogError("!!!! " + thisType);
 		List<Item> itemsList = new List<Item> ();
 		if (thisType == ItemsTypes.HORIZONTAL_STRIPPED)
 			itemsList = LevelManager.THIS.GetRow (square.row);
@@ -878,7 +877,7 @@ public class Item : MonoBehaviour
 
 				if (_square.item != null) {
 					if (_square.item.currentType != ItemsTypes.CHOCOBOMB && _square.item.currentType != ItemsTypes.INGREDIENT && _square.CheckDamage(5))
-						_square.item.DestroyItem(true, "destroy_package");
+						_square.item.DestroyItem(true, "destroy_package", false, true);
 				}
 				if (_square.IsHaveDestroybleObstacle()) {
 					_square.DestroyBlock();

@@ -1839,6 +1839,18 @@ public class LevelManager : MonoBehaviour
 				{
 					foreach (Item item in destroyAnyway)
 					{
+						if (item.currentType == ItemsTypes.SQUARE_BOMB || item.currentType == ItemsTypes.CROSS_BOMB)
+						{
+							if (LevelManager.Instance.limitType == LIMIT.MOVES)
+							{
+								LevelManager.THIS.Limit--;
+
+								if (OnLimitUpdate != null)
+								{
+									OnLimitUpdate(Limit);
+								}
+							}
+						}
 						item.SleepItem();
 						item.square.SetActiveCage(false);
 					}
@@ -2424,7 +2436,6 @@ public class LevelManager : MonoBehaviour
 			foreach (Item item in GetRandomItems(BoostStriped))
 			{
 				item.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
-				Debug.LogError("1-- " + item.nextType);
 				item.ChangeType();
 			}
 			BoostStriped = 0;
@@ -2623,7 +2634,6 @@ public class LevelManager : MonoBehaviour
 						if (lastDraggedItem == null)
 							lastDraggedItem = desrtoyItems[UnityEngine.Random.Range(0, desrtoyItems.Count)];
 						lastDraggedItem.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
-						Debug.LogError("2-- " + lastDraggedItem.nextType);
 						//lastDraggedItem.ChangeType();
 					}
 					if (desrtoyItems.Count >= 5)

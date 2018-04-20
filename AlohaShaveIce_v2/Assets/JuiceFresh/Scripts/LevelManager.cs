@@ -1474,15 +1474,16 @@ public class LevelManager : MonoBehaviour
 //		while (CheckFlowerStillFly())
 //			yield return new WaitForSeconds(0.3f);
 
-		while (GetAllExtraItems().Count > 0)
+		List<Item> allExtraItems = GetAllExtraItems();
+		while (allExtraItems.Count > 0)
 		{
-			Item item = GetAllExtraItems()[0];
+			Item item = allExtraItems[0];
 			item.DestroyItem(false, "", false, true);
 			dragBlocked = true;
 			yield return new WaitForSeconds(0.1f);
 			FindMatches();
 			yield return new WaitForSeconds(0.5f);
-
+			allExtraItems.RemoveAt(0);
 			//           GenerateNewItems();
 			while (dragBlocked)
 				yield return new WaitForFixedUpdate();
@@ -1527,15 +1528,17 @@ public class LevelManager : MonoBehaviour
 		while (CheckFlowerStillFly())
 			yield return new WaitForSeconds(0.3f);
 
-		while (GetAllExtraItems().Count > 0)
+//		yield return new WaitForSeconds(0.3f);
+		allExtraItems = GetAllExtraItems();
+		while (allExtraItems.Count > 0)
 		{
-			Item item = GetAllExtraItems()[0];
+			Item item = allExtraItems[0];
 			item.DestroyItem(false, "", false, true);
 			dragBlocked = true;
 			yield return new WaitForSeconds(0.1f);
 			FindMatches();
 			yield return new WaitForSeconds(1f);
-
+			allExtraItems.RemoveAt(0);
 			//           GenerateNewItems();
 			while (dragBlocked)
 				yield return new WaitForFixedUpdate();
@@ -3195,9 +3198,19 @@ public class LevelManager : MonoBehaviour
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
 		foreach (GameObject item in items)
 		{
-			if (item.GetComponent<Item>().currentType != ItemsTypes.NONE)
+			Item itemScript = item.GetComponent<Item>();
+			if (itemScript.currentType != ItemsTypes.NONE)
 			{
-				list.Add(item.GetComponent<Item>());
+				list.Add(itemScript);
+			}
+			if (gameStatus == GameState.PreWinAnimations)
+			{
+				if (itemScript.nextType != ItemsTypes.NONE)
+				{
+					itemScript.currentType = itemScript.nextType;
+					itemScript.nextType = ItemsTypes.NONE;
+					list.Add(itemScript);
+				}
 			}
 		}
 

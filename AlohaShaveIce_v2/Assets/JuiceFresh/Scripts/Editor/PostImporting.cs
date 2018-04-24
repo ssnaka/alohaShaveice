@@ -11,11 +11,12 @@ public class PostImporting : AssetPostprocessor
 	private InitScript initscript;
 
 
-	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
 	{
 
 
-		if (Directory.Exists("Assets/Plugins/Android/google-play-services_lib") && Directory.Exists("Assets/PlayServicesResolver")) {
+		if (Directory.Exists("Assets/Plugins/Android/google-play-services_lib") && Directory.Exists("Assets/PlayServicesResolver"))
+		{
 			bool check = AssetDatabase.DeleteAsset("Assets/Plugins/Android/google-play-services_lib");
 			if (check)
 				Debug.Log("deleted google-play-services_lib ");
@@ -24,16 +25,19 @@ public class PostImporting : AssetPostprocessor
 
 		SetScriptingDefineSymbols();//1.3
 
-		if (Directory.Exists("Assets/FacebookSDK")) {
+		if (Directory.Exists("Assets/3rdParty/FacebookSDK"))
+		{
 			ModifyManifest();
 		}
 
-		if (Directory.Exists("Assets/FacebookSDK") && Directory.Exists("Assets/GoogleMobileAds")) {//1.4.5
-			AssetDatabase.DeleteAsset("Assets/FacebookSDK/Plugins/Android/libs/support-annotations-23.4.0.jar");
-			AssetDatabase.DeleteAsset("Assets/FacebookSDK/Plugins/Android/libs/support-v4-23.4.0.aar");
+		if (Directory.Exists("Assets/3rdParty/FacebookSDK") && Directory.Exists("Assets/GoogleMobileAds"))
+		{//1.4.5
+			AssetDatabase.DeleteAsset("Assets/3rdParty/FacebookSDK/Plugins/Android/libs/support-annotations-23.4.0.jar");
+			AssetDatabase.DeleteAsset("Assets/3rdParty/FacebookSDK/Plugins/Android/libs/support-v4-23.4.0.aar");
 		}
 
-		if (Directory.Exists("Assets/PlayServicesResolver")) {
+		if (Directory.Exists("Assets/PlayServicesResolver"))
+		{
 			//if (!imported)
 			//{
 
@@ -63,27 +67,31 @@ public class PostImporting : AssetPostprocessor
 	//    Debug.Log("Sprites: " + sprites.Length);
 	//}
 
-	static void ModifyManifest()
+	static void ModifyManifest ()
 	{
 		var outputFile = Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml");
-		if (File.Exists(outputFile)) {
+		if (File.Exists(outputFile))
+		{
 			XmlDocument doc = new XmlDocument();
 			doc.Load(outputFile);
 
-			if (doc == null) {
+			if (doc == null)
+			{
 				//Debug.LogError("Couldn't load " + outputFile);
 				return;
 			}
 			XmlNode manNode = FindChildNode(doc, "manifest");
 			XmlNode dict = FindChildNode(manNode, "uses-sdk");
-			if (dict == null) {
+			if (dict == null)
+			{
 				//Debug.LogError("Error parsing " + outputFile);
 				return;
 			}
 
 			XmlAttributeCollection attributes = dict.Attributes;
 			XmlAttribute attr = attributes[0];
-			if (attr.Name == "android:minSdkVersion") {
+			if (attr.Name == "android:minSdkVersion")
+			{
 				attr.Value = "" + 15;
 			}
 
@@ -98,11 +106,13 @@ public class PostImporting : AssetPostprocessor
 		}
 	}
 
-	private static XmlNode FindChildNode(XmlNode parent, string name)
+	private static XmlNode FindChildNode (XmlNode parent, string name)
 	{
 		XmlNode curr = parent.FirstChild;
-		while (curr != null) {
-			if (curr.Name.Equals(name)) {
+		while (curr != null)
+		{
+			if (curr.Name.Equals(name))
+			{
 				return curr;
 			}
 
@@ -112,7 +122,7 @@ public class PostImporting : AssetPostprocessor
 		return null;
 	}
 
-	static void SetScriptingDefineSymbols()
+	static void SetScriptingDefineSymbols ()
 	{  //1.3
 
 		string defines = "";
@@ -120,7 +130,8 @@ public class PostImporting : AssetPostprocessor
 			defines = defines + "; GOOGLE_MOBILE_ADS";
 		if (Directory.Exists("Assets/Chartboost"))
 			defines = defines + "; CHARTBOOST_ADS";
-		if (Directory.Exists("Assets/FacebookSDK")) {
+		if (Directory.Exists("Assets/3rdParty/FacebookSDK"))
+		{
 			defines = defines + "; FACEBOOK";
 			if (Directory.Exists("Assets/PlayFabSDK"))
 				defines = defines + "; PLAYFAB";

@@ -131,6 +131,13 @@ public class PostImporting : AssetPostprocessor
 		if (Directory.Exists("Assets/Plugins/UnityPurchasing"))
 			defines = defines + "; UNITY_INAPPS";
 
+		if (Directory.Exists("Assets/Appodeal"))
+		{
+			defines = defines + "; APPODEAL_ADS";
+		}
+
+		defines = defines + "; UNITY_ANALYTICS";
+
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, defines);
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defines);
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.WSA, defines);//1.3.3

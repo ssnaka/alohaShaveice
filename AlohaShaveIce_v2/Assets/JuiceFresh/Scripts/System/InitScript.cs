@@ -1010,7 +1010,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			{
 				double notificationTimeAfter = ZPlayerPrefs.GetFloat("RestLifeTimer") + ((CapOfLife - lifes - 1) * TotalTimeForRestLifeMin * 60);
 				Debug.LogError(notificationTimeAfter);
-				RegisterLocalNotification(notificationTimeAfter, "Aloha", "Your heart is full. Come back to play!");
+				RegisterLocalNotification(notificationTimeAfter, "Aloha", "Your life is full. Come back to play!");
 			}
 		}
 		else

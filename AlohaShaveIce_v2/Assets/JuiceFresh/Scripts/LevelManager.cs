@@ -373,6 +373,8 @@ public class LevelManager : MonoBehaviour
 
 	public delegate void GameStateEvents ();
 
+	public static event GameStateEvents OnAppStart;
+	public static event GameStateEvents OnAppEnd;
 	public static event GameStateEvents OnMapState;
 	public static event GameStateEvents OnEnterGame;
 	public static event GameStateEvents OnLevelLoaded;
@@ -381,6 +383,7 @@ public class LevelManager : MonoBehaviour
 	public static event GameStateEvents OnStartPlay;
 	public static event GameStateEvents OnWin;
 	public static event GameStateEvents OnLose;
+	public static event GameStateEvents OnPowerUpUsed;
 
 
 	public GameState gameStatus
@@ -1474,16 +1477,16 @@ public class LevelManager : MonoBehaviour
 //		while (CheckFlowerStillFly())
 //			yield return new WaitForSeconds(0.3f);
 
-		List<Item> allExtraItems = GetAllExtraItems();
-		while (allExtraItems.Count > 0)
+//		List<Item> allExtraItems = GetAllExtraItems();
+		while (GetAllExtraItems().Count > 0)
 		{
-			Item item = allExtraItems[0];
+			Item item = GetAllExtraItems()[0];
 			item.DestroyItem(false, "", false, true);
 			dragBlocked = true;
 			yield return new WaitForSeconds(0.1f);
 			FindMatches();
 			yield return new WaitForSeconds(0.5f);
-			allExtraItems.RemoveAt(0);
+//			allExtraItems.RemoveAt(0);
 			//           GenerateNewItems();
 			while (dragBlocked)
 				yield return new WaitForFixedUpdate();
@@ -1497,7 +1500,7 @@ public class LevelManager : MonoBehaviour
 			gratzWord.transform.localScale = Vector3.one;
 		}
 		gratzWord.SetupGartz(GratzType.LevelEnd);
-		yield return new WaitForSeconds(0.8f);
+		yield return new WaitForSeconds(0.5f);
 
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
@@ -1529,16 +1532,16 @@ public class LevelManager : MonoBehaviour
 			yield return new WaitForSeconds(0.3f);
 
 //		yield return new WaitForSeconds(0.3f);
-		allExtraItems = GetAllExtraItems();
-		while (allExtraItems.Count > 0)
+//		allExtraItems = GetAllExtraItems();
+		while (GetAllExtraItems().Count > 0)
 		{
-			Item item = allExtraItems[0];
+			Item item = GetAllExtraItems()[0];
 			item.DestroyItem(false, "", false, true);
 			dragBlocked = true;
 			yield return new WaitForSeconds(0.1f);
 			FindMatches();
 			yield return new WaitForSeconds(1f);
-			allExtraItems.RemoveAt(0);
+//			allExtraItems.RemoveAt(0);
 			//           GenerateNewItems();
 			while (dragBlocked)
 				yield return new WaitForFixedUpdate();
@@ -1643,38 +1646,39 @@ public class LevelManager : MonoBehaviour
 
 		if (LevelManager.THIS.gameStatus == GameState.Playing)
 		{
+			Item itemSelected = null;
 			if (Input.GetMouseButton(0))
 			{        //touch detected
 				OnStartPlay();
 				Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
+
 				if (hit != null)
 				{
-					Item item = hit.gameObject.GetComponent<Item>();
-					if (item.currentType != ItemsTypes.INGREDIENT)
+					itemSelected = hit.gameObject.GetComponent<Item>();
+					if (itemSelected.currentType != ItemsTypes.INGREDIENT)
 					{
 
-						if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb && item.currentType != ItemsTypes.INGREDIENT)
+						if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb && itemSelected.currentType != ItemsTypes.INGREDIENT)
 						{       //boost action events   BOMB
 						}
-						else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel && item.currentType != ItemsTypes.INGREDIENT)
+						else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel && itemSelected.currentType != ItemsTypes.INGREDIENT)
 						{  //boost action events   SHOVEL
 						}
-						else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy && item.currentType != ItemsTypes.INGREDIENT)
+						else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy && itemSelected.currentType != ItemsTypes.INGREDIENT)
 						{ //boost action events   ENERGY
 						}
-						else if (selectedColor == -1 || selectedColor == item.color)
+						else if (selectedColor == -1 || selectedColor == itemSelected.color)
 						{                //selection items by touch
-							
 							if (selectedColor >= 0)
 							{
-								if (item.currentType == ItemsTypes.SQUARE_BOMB || item.currentType == ItemsTypes.CROSS_BOMB)
+								if (itemSelected.currentType == ItemsTypes.SQUARE_BOMB || itemSelected.currentType == ItemsTypes.CROSS_BOMB)
 								{
 									return;
 								}
 							}
 							if (extraCageAddItem < 0)
 								extraCageAddItem = 0;
-							selectedColor = item.color;
+							selectedColor = itemSelected.color;
 							//if (destroyAnyway.Count > 0)
 							//{
 							//    if (destroyAnyway[destroyAnyway.Count - 1] == item) stopSliding = false;
@@ -1684,15 +1688,15 @@ public class LevelManager : MonoBehaviour
 								if (destroyAnyway.Count > 1)
 								{
 									Vector2 pos1 = new Vector2(destroyAnyway[destroyAnyway.Count - 1].square.col, destroyAnyway[destroyAnyway.Count - 1].square.row);
-									Vector2 pos2 = new Vector2(item.square.col, item.square.row);
+									Vector2 pos2 = new Vector2(itemSelected.square.col, itemSelected.square.row);
 									offset = Vector2.Distance(pos1, pos2);
 								}
-								if (destroyAnyway.IndexOf(item) < 0 && offset < 2)
+								if (destroyAnyway.IndexOf(itemSelected) < 0 && offset < 2)
 								{         //add item to selection
 									if (destroyAnyway.Count > 0)
 									{
 										Vector2 pos1 = new Vector2(destroyAnyway[destroyAnyway.Count - 1].square.col, destroyAnyway[destroyAnyway.Count - 1].square.row);
-										Vector2 pos2 = new Vector2(item.square.col, item.square.row);
+										Vector2 pos2 = new Vector2(itemSelected.square.col, itemSelected.square.row);
 										offset = Vector2.Distance(pos1, pos2);
 
 										if (offset >= 2)
@@ -1701,32 +1705,32 @@ public class LevelManager : MonoBehaviour
 											return;
 										}
 									}
-									destroyAnyway.Add(item);
+									destroyAnyway.Add(itemSelected);
 									int selectingSoundNum = Mathf.Clamp(destroyAnyway.Count - 1, 0, 9);
 									SoundBase.Instance.PlaySound(SoundBase.Instance.selecting[selectingSoundNum]);
-									if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && item.square.cageHP <= 0)
-										item.SetLight();
-									else if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && item.square.cageHP > 0)
+									if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && itemSelected.square.cageHP <= 0)
+										itemSelected.SetLight();
+									else if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && itemSelected.square.cageHP > 0)
 										extraCageAddItem += 1;
-									if (item.currentType == ItemsTypes.HORIZONTAL_STRIPPED)
-										gatheredTypes.Add(item.currentType);
-									else if (item.currentType == ItemsTypes.VERTICAL_STRIPPED)
-										gatheredTypes.Add(item.currentType);
-									HighlightManager.SelectItem(item);
+									if (itemSelected.currentType == ItemsTypes.HORIZONTAL_STRIPPED)
+										gatheredTypes.Add(itemSelected.currentType);
+									else if (itemSelected.currentType == ItemsTypes.VERTICAL_STRIPPED)
+										gatheredTypes.Add(itemSelected.currentType);
+									HighlightManager.SelectItem(itemSelected);
 									//CheckHighlightExtraItem(item);
-									item.square.SetActiveCage(true);
-									item.AwakeItem();
+									itemSelected.square.SetActiveCage(true);
+									itemSelected.AwakeItem();
 
 
 								}
-								else if (destroyAnyway.IndexOf(item) > -1)
+								else if (destroyAnyway.IndexOf(itemSelected) > -1)
 								{                  //remove item from selection (step back by finger)
-									if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && item.square.cageHP > 0)
+									if ((destroyAnyway.Count % (extraItemEvery + extraCageAddItem) == 0) && itemSelected.square.cageHP > 0)
 										extraCageAddItem -= 1;
 
 									if (destroyAnyway.Count > 1)
 									{
-										if (destroyAnyway[destroyAnyway.Count - 2] == item)
+										if (destroyAnyway[destroyAnyway.Count - 2] == itemSelected)
 										{
 											if (destroyAnyway[destroyAnyway.Count - 1].currentType == ItemsTypes.HORIZONTAL_STRIPPED && gatheredTypes.Count > 0)
 											{
@@ -1742,7 +1746,7 @@ public class LevelManager : MonoBehaviour
 
 
 											destroyAnyway[destroyAnyway.Count - 1].square.SetActiveCage(false);
-											HighlightManager.DeselectItem(destroyAnyway[destroyAnyway.Count - 1], item);
+											HighlightManager.DeselectItem(destroyAnyway[destroyAnyway.Count - 1], itemSelected);
 											destroyAnyway.Remove(destroyAnyway[destroyAnyway.Count - 1]);
 											//CheckHighlightExtraItem(destroyAnyway[destroyAnyway.Count - 1]);
 											//highlightedItems.Clear();
@@ -1751,7 +1755,7 @@ public class LevelManager : MonoBehaviour
 									}
 								}
 
-								if (item.currentType == ItemsTypes.SQUARE_BOMB || item.currentType == ItemsTypes.CROSS_BOMB)
+								if (itemSelected.currentType == ItemsTypes.SQUARE_BOMB || itemSelected.currentType == ItemsTypes.CROSS_BOMB)
 								{
 									stopSliding = true;
 								}
@@ -1783,8 +1787,13 @@ public class LevelManager : MonoBehaviour
 
 						if (!isIngredient)
 						{
-							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb || item.currentType == ItemsTypes.SQUARE_BOMB)
+//							bool shouldIgnitePower = false;
+							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb || (item.currentType == ItemsTypes.SQUARE_BOMB && destroyAnyway.Count == 1 && destroyAnyway.Contains(item)))// && gatheredTypes.Count == 0))
 							{
+								if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb)
+								{
+									OnPowerUpUsed();
+								}
 								LevelManager.THIS.ActivatedBoost.type = BoostType.Bomb;
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
@@ -1797,6 +1806,7 @@ public class LevelManager : MonoBehaviour
 							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Shovel)
 							{
 								//SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
+								OnPowerUpUsed();
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/shovel"), square.transform.position, square.transform.rotation) as GameObject;
 								obj.GetComponent<SpriteRenderer>().sortingOrder = 5;
@@ -1804,8 +1814,12 @@ public class LevelManager : MonoBehaviour
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
 							}
-							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy || item.currentType == ItemsTypes.CROSS_BOMB)
+							else if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy || (item.currentType == ItemsTypes.CROSS_BOMB && destroyAnyway.Count == 1 && destroyAnyway.Contains(item)))
 							{
+								if (LevelManager.THIS.ActivatedBoost.type == BoostType.Energy)
+								{
+									OnPowerUpUsed();
+								}
 								LevelManager.THIS.ActivatedBoost.type = BoostType.Energy;
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
@@ -1863,6 +1877,7 @@ public class LevelManager : MonoBehaviour
 				}
 				HighlightManager.StopAndClearAll();
 
+				itemSelected = null;
 				//Collider2D hit = Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition));
 				//if (hit != null) {
 				//	Item item = hit.gameObject.GetComponent<Item> ();

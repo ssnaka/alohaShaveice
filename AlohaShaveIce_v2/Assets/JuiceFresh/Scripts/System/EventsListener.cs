@@ -19,6 +19,9 @@ public class EventsListener : MonoBehaviour
 		LevelManager.OnStartPlay += OnStartPlay;
 		LevelManager.OnWin += OnWin;
 		LevelManager.OnLose += OnLose;
+
+
+		LevelManager.OnPowerUpUsed += LevelManager_OnPowerUpUsed;
 	}
 
 	void OnDisable ()
@@ -31,6 +34,10 @@ public class EventsListener : MonoBehaviour
 		LevelManager.OnStartPlay -= OnStartPlay;
 		LevelManager.OnWin -= OnWin;
 		LevelManager.OnLose -= OnLose;
+
+		LevelManager.OnAppStart += LevelManager_OnAppStart;
+		LevelManager.OnAppEnd += LevelManager_OnAppEnd;
+		LevelManager.OnPowerUpUsed += LevelManager_OnPowerUpUsed;
 	}
 
 	#region GAME_EVENTS
@@ -70,13 +77,31 @@ public class EventsListener : MonoBehaviour
 		AnalyticsEvent("OnLose", LevelManager.THIS.currentLevel);
 	}
 
+	void LevelManager_OnAppStart ()
+	{
+		AnalyticsEvent("OnAppStart", System.DateTime.Now);
+	}
+
+	void LevelManager_OnAppEnd ()
+	{
+		AnalyticsEvent("OnAppEnd", System.DateTime.Now);
+	}
+
+	void LevelManager_OnPowerUpUsed ()
+	{
+		AnalyticsEvent("OnPowerUpUsed", LevelManager.THIS.currentLevel, LevelManager.THIS.ActivatedBoost.type.ToString());
+	}
+
 	#endregion
 
-	void AnalyticsEvent (string _event, int level)
+	void AnalyticsEvent (string _event, params object[] _obj)
 	{
 #if UNITY_ANALYTICS
 		Dictionary<string, object> dic = new Dictionary<string, object>();
-		dic.Add(_event, level);
+		for (int i = 0 ; i < _obj.Length; i++)
+		{
+			dic.Add(_event, _obj[i]);
+		}
 		Analytics.CustomEvent(_event, dic);
 
 #endif

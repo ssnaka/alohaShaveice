@@ -300,6 +300,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		ShowFirstTutorial();
 
 		SetupInfiniteLife(false);
+
+		NotificationCenter.Instance.Init();
 //		LoadingCanvasScript.Instance.HideLoading();
 	}
 	#if GOOGLE_MOBILE_ADS
@@ -1002,6 +1004,20 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			ZPlayerPrefs.SetInt("Lifes", lifes);
 			ZPlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 			PlayerPrefs.Save();
+
+			// notification
+			if (lifes >= 0 && lifes < CapOfLife)
+			{
+				double notificationTimeAfter = ZPlayerPrefs.GetFloat("RestLifeTimer") + ((CapOfLife - lifes - 1) * TotalTimeForRestLifeMin * 60);
+				Debug.LogError(notificationTimeAfter);
+				RegisterLocalNotification(notificationTimeAfter, "Aloha", "Your heart is full. Come back to play!");
+			}
+		}
+		else
+		{
+			// Cancel all local notification.
+			localNotificationId = 1;
+			NotificationCenter.Instance.CancelAllLocalNotification();
 		}
 	}
 
@@ -1059,6 +1075,25 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 #endif
 
 	}
-
-
+				
+	int localNotificationId = 1;
+	public void RegisterLocalNotification (double _secondsLater, string _title, string _message)
+	{
+		// Register local notification.
+		List<LocalNotificationItem> localNotificationItemList = new List<LocalNotificationItem>();
+		System.DateTime fireDate = System.DateTime.Now.AddSeconds(_secondsLater);
+		
+		DateTime midnight = fireDate.Date.AddDays(1);
+		DateTime morning = fireDate.Date.AddDays(1).AddHours(8);
+		// make sure notification alert doesn't trigger at night time.
+		if (fireDate.CompareTo(midnight) > 0 &&  fireDate.CompareTo(morning) < 0)
+		{
+			fireDate = morning;
+		}
+				Debug.LogError(fireDate);
+		LocalNotificationItem item_01 = new LocalNotificationItem(localNotificationId++, _title, _message, fireDate);
+		localNotificationItemList.Add(item_01);
+		// can add more notification by adding to list.
+		NotificationCenter.Instance.RegisterLocalNotifications(localNotificationItemList);
+	}
 }

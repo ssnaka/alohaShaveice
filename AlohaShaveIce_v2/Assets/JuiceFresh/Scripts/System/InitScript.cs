@@ -178,7 +178,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public int maxVideoPerDay;
 
-	bool didTutorialShown = false;
+	public bool didTutorialShown = false;
 
 	[SerializeField]
 	LIFESAddCounter lifesAddCounterScript;
@@ -322,9 +322,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			return;
 		}
 
+		GameObject.Find("CanvasGlobal").transform.Find("Tutorial").gameObject.SetActive(true);
 		didTutorialShown = true;
 		PlayerPrefs.SetInt("didTutorialShown", 1);
-		GameObject.Find("CanvasGlobal").transform.Find("Tutorial").gameObject.SetActive(true);
 	}
 
 	void Update ()

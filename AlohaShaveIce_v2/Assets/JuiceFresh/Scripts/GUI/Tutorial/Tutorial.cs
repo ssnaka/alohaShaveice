@@ -11,6 +11,25 @@ public class Tutorial : MonoBehaviour {
     public Image image;
     int i;
 
+	[SerializeField]
+	Text welcomeText;
+	[SerializeField]
+	Text okText;
+
+	void OnEnable ()
+	{
+		if (!InitScript.Instance.didTutorialShown)
+		{
+			welcomeText.text = "WELINA";
+			okText.text = "Skip";
+		}
+		else
+		{
+			welcomeText.text = "HOW TO PLAY";
+			okText.text = "OK";
+		}
+	}
+
 	void Start ()
 	{
 		if (tutorials != null && tutorials.Length > 0)

@@ -24540,6 +24540,7 @@ MonoBehaviour:
   losingLifeEveryGame: 0
   facebookButton: {fileID: 1163204533}
   maxVideoPerDay: 1000
+  didTutorialShown: 0
   lifesAddCounterScript: {fileID: 587375267}
 --- !u!120 &511786110
 LineRenderer:
@@ -92613,6 +92614,8 @@ MonoBehaviour:
   - {fileID: 1948568221497288, guid: 5beb4d833391f49b8852e164cfe8b6de, type: 2}
   - {fileID: 1948568221497288, guid: ab0ce91929e2c4a9fb7737f6e0b44dda, type: 2}
   image: {fileID: 200573215}
+  welcomeText: {fileID: 1896194472}
+  okText: {fileID: 1296272665}
 --- !u!1 &1891173372
 GameObject:
   m_ObjectHideFlags: 0

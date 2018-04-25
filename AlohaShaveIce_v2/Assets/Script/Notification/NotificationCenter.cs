@@ -127,6 +127,15 @@ public class NotificationCenter : Singleton<NotificationCenter>
 #endif
 	}
 
+	public void HandleNotification (string action) {
+		if (!string.IsNullOrEmpty(action)) {
+			Debug.LogError(action);
+//			if (action == ACTION_GET_COINS) {
+//				//give the player some coins!
+//			}
+		}
+	}
+
 	//		public void RegisterPushNotification ()
 	//		{
 	//			UnityEngine.iOS.

@@ -1009,7 +1009,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (lifes >= 0 && lifes < CapOfLife)
 			{
 				double notificationTimeAfter = ZPlayerPrefs.GetFloat("RestLifeTimer") + ((CapOfLife - lifes - 1) * TotalTimeForRestLifeMin * 60);
-				Debug.LogError(notificationTimeAfter);
+//				Debug.LogError(notificationTimeAfter);
 				RegisterLocalNotification(notificationTimeAfter, "Aloha", "Your life is full. Come back to play!");
 			}
 		}
@@ -1090,7 +1090,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		{
 			fireDate = morning;
 		}
-				Debug.LogError(fireDate);
+//				Debug.LogError(fireDate);
 		LocalNotificationItem item_01 = new LocalNotificationItem(localNotificationId++, _title, _message, fireDate);
 		localNotificationItemList.Add(item_01);
 		// can add more notification by adding to list.

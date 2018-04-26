@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 222034564561422160}
   - component: {fileID: 114671896915239186}
   - component: {fileID: 114302133557953462}
+  - component: {fileID: 114786937362069780}
+  - component: {fileID: 114341996705429430}
   m_Layer: 5
   m_Name: Label (5)
   m_TagString: Untagged
@@ -77,6 +79,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0.4, g: 0.15686275, b: 0.050980393, a: 0.947}
   m_EffectDistance: {x: 7, y: 7}
   m_UseGraphicAlpha: 1
+--- !u!114 &114341996705429430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1108704347300906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddcac81930fa7c447a71acded3021a89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Component: {fileID: 114671896915239186}
+  m_Property: font
+  m_LocalizedAsset: {fileID: 11400000, guid: 82dff0b4d1f974a38a0c90a6f2b68efe, type: 2}
 --- !u!114 &114387094463223162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,6 +155,21 @@ MonoBehaviour:
   m_Text: 'Connect 3 or more to win
 
     Connect 5 or more for Super Shave ice'
+--- !u!114 &114786937362069780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1108704347300906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725bf5ddb878f09429d39010d9e2d59a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Component: {fileID: 114671896915239186}
+  m_Property: text
+  m_LocalizedAsset: {fileID: 0}
+  m_FormatArgs: []
 --- !u!114 &114983182627603700
 MonoBehaviour:
   m_ObjectHideFlags: 1

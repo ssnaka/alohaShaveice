@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using GameToolkit.Localization;
 
 public class Tutorial : MonoBehaviour {
 //    public Sprite[] sprites;
@@ -12,21 +13,32 @@ public class Tutorial : MonoBehaviour {
     int i;
 
 	[SerializeField]
-	Text welcomeText;
+	LocalizedTextBehaviour welcomeText;
 	[SerializeField]
-	Text okText;
+	LocalizedTextBehaviour okText;
+
+	[SerializeField]
+	LocalizedText welcomeTextAsset;
+	[SerializeField]
+	LocalizedText playTextAsset;
+	[SerializeField]
+	LocalizedText okTextAsset;
+	[SerializeField]
+	LocalizedText skipTextAsset;
 
 	void OnEnable ()
 	{
+//		Debug.LogError(Localization.Instance.CurrentLanguage);
+//		Localization.Instance.CurrentLanguage = SystemLanguage.Korean;
 		if (!InitScript.Instance.didTutorialShown)
 		{
-			welcomeText.text = "WELINA";
-			okText.text = "Skip";
+			welcomeText.LocalizedAsset = welcomeTextAsset;//.text = "WELINA";
+			okText.LocalizedAsset = skipTextAsset;//.text = "Skip";
 		}
 		else
 		{
-			welcomeText.text = "HOW TO PLAY";
-			okText.text = "OK";
+			welcomeText.LocalizedAsset = playTextAsset;//.text = "HOW TO PLAY";
+			okText.LocalizedAsset = okTextAsset;//.text = "OK";
 		}
 	}
 

@@ -22,8 +22,12 @@ public class DailyRewardChest : MonoBehaviour
 
 	[SerializeField]
 	Text timerText;
+	[SerializeField]
+	Button adButton;
+
 	// this will be loaded from resources
 	GameObject chest3DPrefab;
+	GameObject chest3D;
 //	[SerializeField]
 //	GameObject openChestBoxPrefab;
 
@@ -73,13 +77,16 @@ public class DailyRewardChest : MonoBehaviour
 
 	void SetupView (int _day, bool _isNewReward)
 	{
+		adButton.gameObject.SetActive(false);
 		boxTitle.text = data.type.ToString().ToUpper();
 		chest3DPrefab = Resources.Load<GameObject>("Custom/Chest/" + data.chestPrefab);
-		GameObject box3D = Instantiate<GameObject>(chest3DPrefab, boxImage.transform);
-//		box3D.transform.SetParent(boxImage.transform);
-		box3D.transform.localPosition = new Vector3(0.0f, 0.0f, -120.0f);
-		box3D.transform.eulerAngles = new Vector3(0.0f, 162.0f, 0.0f);
-		box3D.transform.localScale = new Vector3(50.0f, 50.0f, 50.0f);
+		if (chest3D == null)
+		{
+			chest3D = Instantiate<GameObject>(chest3DPrefab, transform);
+			chest3D.transform.localPosition = new Vector3(0.0f, -12.0f, -120.0f);
+			chest3D.transform.eulerAngles = new Vector3(0.0f, 162.0f, 0.0f);
+			chest3D.transform.localScale = new Vector3(50.0f, 50.0f, 50.0f);
+		}
 
 		string priceString = "Open";
 		bool shouldShowCurrencyImage = true;
@@ -90,13 +97,9 @@ public class DailyRewardChest : MonoBehaviour
 				{
 					if (openCountToday == 1)
 					{
-						priceString = "Watch Ads";
-						shouldShowCurrencyImage = false;
+						adButton.gameObject.SetActive(true);
 					}
-					else
-					{
-						priceString = data.price.ToString();
-					}
+					priceString = data.price.ToString();
 				}
 				else
 				{
@@ -116,6 +119,7 @@ public class DailyRewardChest : MonoBehaviour
 
 		currencyImage.gameObject.SetActive(shouldShowCurrencyImage);
 		currencyText.alignment = TextAnchor.MiddleCenter;
+		currencyText.rectTransform.sizeDelta = new Vector2(100.0f, currencyText.rectTransform.sizeDelta.y);
 		if (shouldShowCurrencyImage)
 		{
 			currencyText.rectTransform.sizeDelta = new Vector2(30.0f, currencyText.rectTransform.sizeDelta.y);
@@ -158,6 +162,8 @@ public class DailyRewardChest : MonoBehaviour
 					isNewRewardForToday = true;
 					dailyRewardDayCount += 1;
 					openCountToday = 0;
+					PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
+					PlayerPrefs.Save();
 				}
 				break;
 			case ChestType.premium:
@@ -199,12 +205,18 @@ public class DailyRewardChest : MonoBehaviour
 		return null;
 	}
 
+	public void OnAdsButtonPressed ()
+	{
+//		adButton.gameObject.SetActive(false);
+		InitScript.Instance.currentReward = RewardedAdsType.ChestBox;
+		InitScript.Instance.ShowRewardedAds();
+	}
+
 	public void OnOpenButtonPressed ()
 	{
 		// Open box
 //		box3DPrefab
 		bool shouldSpendGems = false;
-		bool shouldWatchAds = false;
 		switch (data.type)
 		{
 			case ChestType.daily:
@@ -223,10 +235,6 @@ public class DailyRewardChest : MonoBehaviour
 							shouldSpendGems = true;
 						}
 					}
-					else
-					{
-						shouldWatchAds = true;
-					}
 				}
 
 				break;
@@ -237,13 +245,7 @@ public class DailyRewardChest : MonoBehaviour
 			break;
 		}
 
-		if (shouldWatchAds)
-		{
-			InitScript.Instance.currentReward = RewardedAdsType.ChestBox;
-			InitScript.Instance.ShowRewardedAds();
-			return;
-		}
-		else if (shouldSpendGems)
+		if (shouldSpendGems)
 		{
 			InitScript.Instance.SpendGems(data.price);
 		}
@@ -261,6 +263,8 @@ public class DailyRewardChest : MonoBehaviour
 			string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 			dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 			nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
+
+			PlayerPrefs.Save();
 		}
 
 		ShowOpenChest();
@@ -270,6 +274,7 @@ public class DailyRewardChest : MonoBehaviour
 	{
 		openCountToday += 1;
 		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
+		PlayerPrefs.Save();
 		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
 		CheckDailyReward();
 	}

@@ -56,6 +56,7 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 		{
 			ChestData chestData = data.chests[i];
 			DailyRewardChest chestScript = Instantiate<GameObject>(rewardChestItemPrefab, Vector3.one, Quaternion.identity, rewardChestContainer.transform).GetComponent<DailyRewardChest>();
+			chestScript.transform.localPosition = Vector3.zero;
 			chestScript.SetupData(chestData);
 			chestList.Add(chestScript);
 		}

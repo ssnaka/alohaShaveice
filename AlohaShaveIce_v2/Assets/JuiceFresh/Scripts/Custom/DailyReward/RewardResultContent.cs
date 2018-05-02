@@ -20,7 +20,8 @@ public class RewardResultContent : MonoBehaviour {
 		switch(_possibleReward.type)
 		{
 		case RewardedAdsType.Unlimited_Life:
-			newText = _possibleReward.count.ToString() + "sec";
+			int min =_possibleReward.count / 60;
+			newText = min.ToString() + ":00";
 			break;
 			default:
 			break;

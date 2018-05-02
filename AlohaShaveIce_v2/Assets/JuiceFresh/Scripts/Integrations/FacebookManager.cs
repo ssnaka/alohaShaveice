@@ -126,6 +126,7 @@ public class FacebookManager : MonoBehaviour
 		else
 		{
 			LoadingCanvasScript.Instance.HideLoading();
+			DailyRewardManager.Instance.CheckRewardToShow();
 		}
 	}
 
@@ -298,6 +299,7 @@ public class FacebookManager : MonoBehaviour
 			#endif
 		}
 		LoadingCanvasScript.Instance.HideLoading();
+		DailyRewardManager.Instance.CheckRewardToShow();
 	}
 
 

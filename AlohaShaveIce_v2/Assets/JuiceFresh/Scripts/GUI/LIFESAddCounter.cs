@@ -187,7 +187,7 @@ public class LIFESAddCounter : MonoBehaviour
 	{
 		InitScript.lifes = -1;
 
-		InitScript.RestLifeTimer = _duration;
+		InitScript.RestLifeTimer += _duration;
 		InitScript.DateOfExit = DateTime.Now.ToString();
 
 		ZPlayerPrefs.SetFloat("RestLifeTimer", InitScript.RestLifeTimer);

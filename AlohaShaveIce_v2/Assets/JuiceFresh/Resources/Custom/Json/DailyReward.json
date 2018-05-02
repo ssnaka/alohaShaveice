@@ -1,0 +1,386 @@
+{
+  "chests": [
+    {
+      "type": "daily",
+      "price": 5,
+      "chestImage": "regularChestbox",
+      "chestPrefab": "regularChestbox",
+      "data": [
+        {
+          "day": 1,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "Shovel",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 2
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 900
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "ExtraMoves",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Bomb",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 1200
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 3
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "ExtraTime",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Colorful_bomb",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 1500
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 4
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "Stripes",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Energy",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 1500
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 5
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "Shovel",
+                  "count": 1
+                },
+                {
+                  "type": "Bomb",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Shovel",
+                  "count": 1
+                },
+                {
+                  "type": "Colorful_bomb",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 1800
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 5
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "day": 6,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "Bomb",
+                  "count": 1
+                },
+                {
+                  "type": "Colorful_bomb",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Stripes",
+                  "count": 1
+                },
+                {
+                  "type": "Energy",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 1800
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 5
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "day": 7,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "Bomb",
+                  "count": 1
+                },
+                {
+                  "type": "Colorful_bomb",
+                  "count": 1
+                },
+                {
+                  "type": "Unlimited_Life",
+                  "count": 1800
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Stripes",
+                  "count": 1
+                },
+                {
+                  "type": "Energy",
+                  "count": 1
+                },
+                {
+                  "type": "GetGems",
+                  "count": 5
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "premium",
+      "price": 15,
+      "chestImage": "premiumChestbox",
+      "chestPrefab": "premiumChestbox",
+      "data": [
+        {
+          "day": -1,
+          "items": [
+            {
+              "possibleRewards": [
+                {
+                  "type": "Shovel",
+                  "count": 2
+                },
+                {
+                  "type": "Bomb",
+                  "count": 2
+                },
+                {
+                  "type": "Colorful_bomb",
+                  "count": 2
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 30
+                },
+                {
+                  "type": "ExtraMoves",
+                  "count": 1
+                },
+                {
+                  "type": "ExtraTime",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 50
+                },
+                {
+                  "type": "Stripes",
+                  "count": 1
+                },
+                {
+                  "type": "Energy",
+                  "count": 1
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "GetGems",
+                  "count": 100
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 3600
+                }
+              ],
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

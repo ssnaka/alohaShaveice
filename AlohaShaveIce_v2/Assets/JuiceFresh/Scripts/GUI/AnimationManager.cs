@@ -487,6 +487,12 @@ public class AnimationManager : MonoBehaviour
 		}
 		if (gameObject.name == "Tutorial") {
 			//LevelManager.Instance.gameStatus = GameState.WaitForPopup;
+			if (!InitScript.Instance.didTutorialShown)
+			{
+				DailyRewardManager.Instance.EnableReward(true);
+			}
+			InitScript.Instance.didTutorialShown = true;
+			PlayerPrefs.SetInt("didTutorialShown", 1);
 		}
 
 		if (Application.loadedLevelName == "game") {

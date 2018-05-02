@@ -170,6 +170,7 @@ public class GamesparksDataManager : IDataManager
 			}
 
 			LoadingCanvasScript.Instance.HideLoading();
+			DailyRewardManager.Instance.CheckRewardToShow();
 		});
 
 	}

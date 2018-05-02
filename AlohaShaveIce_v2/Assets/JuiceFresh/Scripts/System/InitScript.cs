@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 
 using System.Collections.Generic;
+using GameToolkit.Localization;
 
 #if UNITY_ADS
 using UnityEngine.Advertisements;
@@ -80,6 +81,8 @@ public enum RewardedAdsType
 	Colorful_bomb,
 	Shovel,
 	Energy,
+	Unlimited_Life,
+	ChestBox,
 	All
 }
 
@@ -186,6 +189,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	// Use this for initialization
 	void Awake ()
 	{
+//		Localization.Instance.CurrentLanguage = Application.systemLanguage;
 		ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
 
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -303,6 +307,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 		NotificationCenter.Instance.Init();
 //		LoadingCanvasScript.Instance.HideLoading();
+
+		DailyRewardManager.Instance.Init();
+
 	}
 	#if GOOGLE_MOBILE_ADS
 	
@@ -323,8 +330,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 
 		GameObject.Find("CanvasGlobal").transform.Find("Tutorial").gameObject.SetActive(true);
-		didTutorialShown = true;
-		PlayerPrefs.SetInt("didTutorialShown", 1);
 	}
 
 	void Update ()
@@ -824,6 +829,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_watch", count);
 			}
 		}
+				else if (currentReward == RewardedAdsType.ChestBox)
+				{
+					DailyRewardManager.Instance.ShowOpenChestAsVideoAds();
+				}
 
 		PlayerPrefs.Save();
 
@@ -834,8 +843,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 	}
 
-	bool shouldCheckRewardedAdsInMainThreaad = false;
+			public void GiveReward ()
+			{
+			}
 
+	bool shouldCheckRewardedAdsInMainThreaad = false;
 	public void CheckRewardedAds ()
 	{
 		shouldCheckRewardedAdsInMainThreaad = true;
@@ -1053,6 +1065,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{
 		lifesAddCounterScript.SetupInfiniteLife(_forceUpdate);
 	}
+	
+	public void SetupInfiniteLifeWithDuration (int _duration)
+	{
+		lifesAddCounterScript.SetupInfiniteLifeWithTime(_duration);
+	}
 
 	void OnEnable ()
 	{
@@ -1096,4 +1113,58 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		// can add more notification by adding to list.
 		NotificationCenter.Instance.RegisterLocalNotifications(localNotificationItemList);
 	}
+
+	public void GiveDailyReward (PossibleReward _reward)
+	{
+		BoostType boostType = BoostType.None;
+		switch(_reward.type)
+		{
+			case RewardedAdsType.GetGems:
+				AddGems(_reward.count);
+				break;
+			case RewardedAdsType.GetLifes:
+				AddLife(_reward.count);
+				break;
+			case RewardedAdsType.Unlimited_Life:
+				SetupInfiniteLifeWithDuration(_reward.count);
+				break;
+			case RewardedAdsType.Stripes:
+				boostType = BoostType.Stripes;
+				break;
+			case RewardedAdsType.Bomb:
+				boostType = BoostType.Bomb;
+				break;
+			case RewardedAdsType.Colorful_bomb:
+				boostType = BoostType.Colorful_bomb;
+				break;
+			case RewardedAdsType.ExtraMoves:
+				boostType = BoostType.ExtraMoves;
+				break;
+			case RewardedAdsType.ExtraTime:
+				boostType = BoostType.ExtraTime;
+				break;
+			case RewardedAdsType.Energy:
+				boostType = BoostType.Energy;
+				break;
+			case RewardedAdsType.Shovel:
+				boostType = BoostType.Shovel;
+				break;
+			default:
+				break;
+		}
+
+		if (boostType != BoostType.None)
+		{
+			int boostCount = ZPlayerPrefs.GetInt("" + boostType);
+			BuyBoost(boostType, 0, boostCount + 1);
+		}
+
+		PlayerPrefs.Save();
+	}
+
+	public void OnRewardButtonPressed ()
+	{
+		DailyRewardManager.Instance.EnableReward(true);
+	}
+
 }

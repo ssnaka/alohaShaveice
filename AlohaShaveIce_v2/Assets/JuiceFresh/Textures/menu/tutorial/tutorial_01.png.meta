@@ -68,7 +68,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: iPhone
     maxTextureSize: 512
-    textureFormat: 33
+    textureFormat: 4
     textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
@@ -76,9 +76,9 @@ TextureImporter:
     overridden: 1
   - buildTarget: Android
     maxTextureSize: 512
-    textureFormat: 47
+    textureFormat: 4
     textureCompression: 0
-    compressionQuality: 100
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 1
@@ -102,7 +102,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Tutorial
   userData: 
   assetBundleName: 
   assetBundleVariant: 

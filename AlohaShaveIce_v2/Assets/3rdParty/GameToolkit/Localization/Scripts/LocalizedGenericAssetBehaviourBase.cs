@@ -13,10 +13,10 @@ namespace GameToolkit.Localization
     public abstract class LocalizedGenericAssetBehaviourBase : LocalizedAssetBehaviour
     {
         [SerializeField]
-        protected Component m_Component;
+        public Component m_Component;
 
         [SerializeField]
-        protected string m_Property = "";
+		public string m_Property = "";
 
         protected PropertyInfo m_PropertyInfo;
 

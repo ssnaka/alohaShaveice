@@ -189,7 +189,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	// Use this for initialization
 	void Awake ()
 	{
-//		Localization.Instance.CurrentLanguage = Application.systemLanguage;
+		Localization.Instance.CurrentLanguage = Application.systemLanguage; //SystemLanguage.Korean;
 		ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
 
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af65ee6b0f35f974dba93979a07edbce, type: 3}
+  m_Name: Aloha_LocalizedText_Tutorial11_description01
+  m_EditorClassIdentifier: 
+  m_LocaleItems:
+  - m_Language: 10
+    m_Value: Login to facebook to save progress and play with friends
+  - m_Language: 23
+    m_Value: "\uD398\uBD81\uC5D0 \uC5F0\uACB0\uC744 \uD558\uBA74 \uC9C4\uD589\uC0C1\uD669\uB3C4
+      \uC800\uC7A5\uD560 \uC218 \uC788\uACE0, \uCE5C\uAD6C\uB4E4\uACFC\uB3C4 \uACBD\uC7C1\uD560
+      \uC218 \uC788\uC5B4\uC694."

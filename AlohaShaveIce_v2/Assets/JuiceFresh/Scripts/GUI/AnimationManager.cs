@@ -99,8 +99,8 @@ public class AnimationManager : MonoBehaviour
 
 		if (name == "GemsShop") {
 			for (int i = 1; i <= 4; i++) {
-				transform.Find("Image/Pack" + i + "/Count").GetComponent<Text>().text = "" + LevelManager.THIS.gemsProducts[i - 1].count;
-				transform.Find("Image/Pack" + i + "/Buy/Price").GetComponent<Text>().text = "" + LevelManager.THIS.gemsProducts[i - 1].price;
+				transform.Find("Image/Pack" + i + "/Count").GetComponent<Text>().text = "x " + LevelManager.THIS.gemsProducts[i - 1].count;
+				transform.Find("Image/Pack" + i + "/Buy/Price").GetComponent<Text>().text = "$" + LevelManager.THIS.gemsProducts[i - 1].price;
 			}
 		}
 		if (name == "MenuComplete") {

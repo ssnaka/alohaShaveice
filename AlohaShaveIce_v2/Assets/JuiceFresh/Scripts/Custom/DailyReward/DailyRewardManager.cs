@@ -91,6 +91,16 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 		script.SetupOpenChest(_possibleRewards, _chestPrefab);
 	}
 
+	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite)
+	{
+		if (openChestBoxCanvas == null)
+		{
+			openChestBoxCanvas = Instantiate<GameObject>(openChestBoxPrefab);
+		}
+		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
+		script.SetupOpenChest(_possibleRewards, _chestSprite);
+	}
+
 	public void ShowOpenChestAsVideoAds ()
 	{
 		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));

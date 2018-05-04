@@ -38,9 +38,11 @@ public class EditorHelper : Editor
 					fontBehaviour.m_Component = component;
 					fontBehaviour.m_Property = "font";
 					LocalizedFont localizeAsset = AssetDatabase.LoadAssetAtPath<LocalizedFont>("Assets/JuiceFresh/Prefabs/Custom/Localization/Aloha_LocalizedFont.asset");
-					Debug.LogError(localizeAsset);
 					fontBehaviour.LocalizedAsset = localizeAsset;
 					textList.Add(component.gameObject);
+
+					Text text = component as Text;
+					text.font = AssetDatabase.LoadAssetAtPath<Font>("Assets/JuiceFresh/Fonts/BorisBlackBloxx.ttf");
 				}
 			}
 		}

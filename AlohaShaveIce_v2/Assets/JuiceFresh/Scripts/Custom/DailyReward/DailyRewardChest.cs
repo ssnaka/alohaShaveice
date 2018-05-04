@@ -27,6 +27,8 @@ public class DailyRewardChest : MonoBehaviour
 
 	// this will be loaded from resources
 	GameObject chest3DPrefab;
+	Sprite chestSprite;
+
 	GameObject chest3D;
 //	[SerializeField]
 //	GameObject openChestBoxPrefab;
@@ -79,14 +81,16 @@ public class DailyRewardChest : MonoBehaviour
 	{
 		adButton.gameObject.SetActive(false);
 		boxTitle.text = data.type.ToString().ToUpper();
-		chest3DPrefab = Resources.Load<GameObject>("Custom/Chest/" + data.chestPrefab);
-		if (chest3D == null)
-		{
-			chest3D = Instantiate<GameObject>(chest3DPrefab, transform);
-			chest3D.transform.localPosition = new Vector3(0.0f, -12.0f, -120.0f);
-			chest3D.transform.eulerAngles = new Vector3(0.0f, 162.0f, 0.0f);
-			chest3D.transform.localScale = new Vector3(50.0f, 50.0f, 50.0f);
-		}
+		chestSprite = Resources.Load<Sprite>("Custom/Sprite/" + data.chestImage);
+		boxImage.overrideSprite = chestSprite;
+//		chest3DPrefab = Resources.Load<GameObject>("Custom/Chest/" + data.chestPrefab);
+//		if (chest3D == null)
+//		{
+//			chest3D = Instantiate<GameObject>(chest3DPrefab, transform);
+//			chest3D.transform.localPosition = new Vector3(0.0f, -12.0f, -120.0f);
+//			chest3D.transform.eulerAngles = new Vector3(0.0f, 162.0f, 0.0f);
+//			chest3D.transform.localScale = new Vector3(50.0f, 50.0f, 50.0f);
+//		}
 
 		string priceString = "Open";
 		bool shouldShowCurrencyImage = true;
@@ -108,7 +112,7 @@ public class DailyRewardChest : MonoBehaviour
 
 				break;
 			case ChestType.premium:
-				boxImage.rectTransform.sizeDelta = boxImage.rectTransform.sizeDelta * 1.3f;
+				boxImage.rectTransform.sizeDelta = boxImage.rectTransform.sizeDelta * 1.15f;
 				priceString = data.price.ToString();
 				break;
 			default:
@@ -275,7 +279,8 @@ public class DailyRewardChest : MonoBehaviour
 		openCountToday += 1;
 		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
 		PlayerPrefs.Save();
-		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
+//		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
+		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite);
 		CheckDailyReward();
 	}
 

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DailyRewardOpenChestCanvasScript : MonoBehaviour 
 {
-
+	[SerializeField]
+	Image chestImage;
 	[SerializeField]
 	GameObject chest3DContainer;
 	[SerializeField]
@@ -60,6 +62,37 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		StartCoroutine(RunOpenChestRoutine());
 	}
 
+	public void SetupOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite)
+	{
+		DailyRewardManager.Instance.EnableReward(false);
+		gameObject.SetActive(true);
+		rewardItemsView.SetActive(false);
+
+		possibleRewards = _possibleRewards;
+		for (int i = 0 ; i < rewardResultContentList.Count ; i++)
+		{
+			RewardResultContent rewardResultContent = rewardResultContentList[i];
+			Destroy(rewardResultContent.gameObject);
+		}
+		rewardResultContentList.Clear();
+
+		for (int i = 0 ; i < possibleRewards.Count ; i++)
+		{
+			PossibleReward possibleReward = possibleRewards[i];
+
+			GameObject rewardItem = Instantiate(rewardItemPrefab, rewardItemContainer.transform);
+			rewardItem.transform.localScale = Vector3.one;
+
+			RewardResultContent rewardResultContent = rewardItem.GetComponent<RewardResultContent>();
+			rewardResultContent.SetItemImage(possibleReward);
+			rewardResultContentList.Add(rewardResultContent);
+		}
+
+		chestImage.sprite = _chestSprite;
+		chestImage.gameObject.SetActive(false);
+		StartCoroutine(RunOpenChestRoutine());
+	}
+
 	void CreateNewChest (GameObject _chestPrefab)
 	{
 		chest3DObject = Instantiate<GameObject>(_chestPrefab, chest3DContainer.transform);
@@ -72,11 +105,13 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 	IEnumerator RunOpenChestRoutine ()
 	{
 		//chest animation
-		chest3DContainer.SetActive(true);
+//		chest3DContainer.SetActive(true);
+		chestImage.gameObject.SetActive(true);
 		yield return new WaitForSeconds(3.0f);
 
 		rewardItemsView.SetActive(true);
-		chest3DContainer.SetActive(false);
+		chestImage.gameObject.SetActive(false);
+//		chest3DContainer.SetActive(false);
 	}
 
 	public void OnCloseButtonPressed ()

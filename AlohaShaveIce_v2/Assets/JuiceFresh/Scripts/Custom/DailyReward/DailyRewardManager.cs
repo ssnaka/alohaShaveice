@@ -70,7 +70,7 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 	public void CheckRewardToShow ()
 	{
 		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));
-		if (dailyRewardChest.CheckDailyReward())
+		if (dailyRewardChest.CheckDailyReward() && InitScript.Instance.didTutorialShown)
 		{
 			EnableReward(true);
 		}

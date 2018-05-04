@@ -65,21 +65,24 @@ public class DailyRewardChest : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (data.type.Equals(ChestType.daily) && DateTime.Now.CompareTo(nextDailyRewardTime) < 0)
+		if (data.type.Equals(ChestType.daily))
 		{
-			timerText.gameObject.SetActive(true);
-			didCheckDailyRewardOnceFromUpdate = false;
-			TimeSpan timeLeftSpan = nextDailyRewardTime.Subtract(DateTime.Now);
-			timerText.text = string.Format("{0:00}:{1:00}:{2:00}", timeLeftSpan.Hours, timeLeftSpan.Minutes, timeLeftSpan.Seconds);
-		}
-		else
-		{
-			didWatchRewardAds = false;
-			PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
-			PlayerPrefs.Save();
-//			openCountToday = 0;
-			timerText.gameObject.SetActive(false);
-			CheckDailyRewardOnceFromUpdate();
+			if (DateTime.Now.CompareTo(nextDailyRewardTime) < 0)
+			{
+				timerText.gameObject.SetActive(true);
+				didCheckDailyRewardOnceFromUpdate = false;
+				TimeSpan timeLeftSpan = nextDailyRewardTime.Subtract(DateTime.Now);
+				timerText.text = string.Format("{0:00}:{1:00}:{2:00}", timeLeftSpan.Hours, timeLeftSpan.Minutes, timeLeftSpan.Seconds);
+			}
+			else
+			{
+				didWatchRewardAds = false;
+				PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
+				PlayerPrefs.Save();
+				//			openCountToday = 0;
+				timerText.gameObject.SetActive(false);
+				CheckDailyRewardOnceFromUpdate();
+			}
 		}
 	}
 
@@ -118,7 +121,6 @@ public class DailyRewardChest : MonoBehaviour
 				if (!_isNewReward)
 				{
 					if (!didWatchRewardAds)
-//					if (didWatchRewardAds == 1)
 					{
 						adButton.gameObject.SetActive(true);
 					}
@@ -166,7 +168,6 @@ public class DailyRewardChest : MonoBehaviour
 
 	public bool CheckDailyReward ()
 	{
-		
 		int dailyRewardDayCount = -1;
 		string lastDailyRewardAwardedTime = string.Empty;
 		isNewRewardForToday = false;

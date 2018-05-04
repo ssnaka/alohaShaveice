@@ -25,6 +25,9 @@ public class DailyRewardChest : MonoBehaviour
 	[SerializeField]
 	Button adButton;
 
+	[SerializeField]
+	Animation chestImageAnimation;
+
 	// this will be loaded from resources
 	GameObject chest3DPrefab;
 	Sprite chestSprite;
@@ -38,17 +41,24 @@ public class DailyRewardChest : MonoBehaviour
 	DateTime dailyRewardAwardedTime;
 	DateTime nextDailyRewardTime;
 	bool isNewRewardForToday = false;
-	int openCountToday = 0;
+	bool didWatchRewardAds = false;
+
+//	int openCountToday = 0;
+	Vector2 originalBoxSize = Vector2.zero;
 
 	void OnEnable ()
 	{
-		openCountToday = PlayerPrefs.GetInt("dailyRewardOpenCountToday", 0);
+		didWatchRewardAds = System.Convert.ToBoolean(PlayerPrefs.GetInt("didWatchRewardAds", 0));
+//		openCountToday = PlayerPrefs.GetInt("dailyRewardOpenCountToday", 0);
 		string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 		dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 		nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
 		if (data.type.Equals(ChestType.premium))
 		{
 			timerText.gameObject.SetActive(false);
+			chestImageAnimation.clip = chestImageAnimation.GetClip("chest_button_premium_image_idle");
+			chestImageAnimation.Stop();
+			chestImageAnimation.Play();
 		}
 	}
 
@@ -64,7 +74,10 @@ public class DailyRewardChest : MonoBehaviour
 		}
 		else
 		{
-			openCountToday = 0;
+			didWatchRewardAds = false;
+			PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
+			PlayerPrefs.Save();
+//			openCountToday = 0;
 			timerText.gameObject.SetActive(false);
 			CheckDailyRewardOnceFromUpdate();
 		}
@@ -79,6 +92,11 @@ public class DailyRewardChest : MonoBehaviour
 
 	void SetupView (int _day, bool _isNewReward)
 	{
+		if (originalBoxSize.Equals(Vector2.zero))
+		{
+			originalBoxSize = boxImage.rectTransform.sizeDelta;
+		}
+
 		adButton.gameObject.SetActive(false);
 		boxTitle.text = data.type.ToString().ToUpper();
 		chestSprite = Resources.Load<Sprite>("Custom/Sprite/" + data.chestImage);
@@ -99,7 +117,8 @@ public class DailyRewardChest : MonoBehaviour
 			case ChestType.daily:
 				if (!_isNewReward)
 				{
-					if (openCountToday == 1)
+					if (!didWatchRewardAds)
+//					if (didWatchRewardAds == 1)
 					{
 						adButton.gameObject.SetActive(true);
 					}
@@ -112,7 +131,7 @@ public class DailyRewardChest : MonoBehaviour
 
 				break;
 			case ChestType.premium:
-				boxImage.rectTransform.sizeDelta = boxImage.rectTransform.sizeDelta * 1.15f;
+				boxImage.rectTransform.sizeDelta = originalBoxSize * 1.15f;
 				priceString = data.price.ToString();
 				break;
 			default:
@@ -147,6 +166,7 @@ public class DailyRewardChest : MonoBehaviour
 
 	public bool CheckDailyReward ()
 	{
+		
 		int dailyRewardDayCount = -1;
 		string lastDailyRewardAwardedTime = string.Empty;
 		isNewRewardForToday = false;
@@ -154,19 +174,20 @@ public class DailyRewardChest : MonoBehaviour
 		switch (data.type)
 		{
 			case ChestType.daily:
-			openCountToday = PlayerPrefs.GetInt("dailyRewardOpenCountToday", 0);
-			dailyRewardDayCount = PlayerPrefs.GetInt("dailyRewardDayCount", 0);
-			lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
-
+				dailyRewardDayCount = PlayerPrefs.GetInt("dailyRewardDayCount", 0);
+				lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
+				didWatchRewardAds = System.Convert.ToBoolean(PlayerPrefs.GetInt("didWatchRewardAds", 0));
+				
 				dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 				nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
 
-				if (dailyRewardDayCount <= 0 || DateTime.Now.CompareTo(nextDailyRewardTime) >= 0)
+				if (DateTime.Now.CompareTo(nextDailyRewardTime) >= 0)
 				{
 					isNewRewardForToday = true;
 					dailyRewardDayCount += 1;
-					openCountToday = 0;
-					PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
+					
+					didWatchRewardAds = false;
+					PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
 					PlayerPrefs.Save();
 				}
 				break;
@@ -226,24 +247,30 @@ public class DailyRewardChest : MonoBehaviour
 			case ChestType.daily:
 				if (!isNewRewardForToday)
 				{
-					if (openCountToday > 1)
+					if (InitScript.Gems <= data.price)
 					{
-						if (InitScript.Gems <= data.price)
-						{
-							SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-							GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
-							return;
-						}
-						else
-						{
-							shouldSpendGems = true;
-						}
+						SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+						GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+						return;
+					}
+					else
+					{
+						shouldSpendGems = true;
 					}
 				}
 
 				break;
 			case ChestType.premium:
-				shouldSpendGems = true;
+				if (InitScript.Gems <= data.price)
+				{
+					SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+					GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+					return;
+				}
+				else
+				{
+					shouldSpendGems = true;
+				}
 				break;
 			default:
 			break;
@@ -274,13 +301,19 @@ public class DailyRewardChest : MonoBehaviour
 		ShowOpenChest();
 	}
 
-	public void ShowOpenChest ()
+	public void ShowOpenChest (bool _fromAds = false)
 	{
-		openCountToday += 1;
-		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
-		PlayerPrefs.Save();
+		if (_fromAds)
+		{
+			didWatchRewardAds = true;
+			PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
+			PlayerPrefs.Save();
+		}
+//		openCountToday += 1;
+//		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
+//		PlayerPrefs.Save();
 //		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
-		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite);
+		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type);
 		CheckDailyReward();
 	}
 

@@ -91,20 +91,20 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 		script.SetupOpenChest(_possibleRewards, _chestPrefab);
 	}
 
-	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite)
+	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType)
 	{
 		if (openChestBoxCanvas == null)
 		{
 			openChestBoxCanvas = Instantiate<GameObject>(openChestBoxPrefab);
 		}
 		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
-		script.SetupOpenChest(_possibleRewards, _chestSprite);
+		script.SetupOpenChest(_possibleRewards, _chestSprite, _chestType);
 	}
 
 	public void ShowOpenChestAsVideoAds ()
 	{
 		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));
-		dailyRewardChest.ShowOpenChest();
+		dailyRewardChest.ShowOpenChest(true);
 	}
 
 	#region Animation callback

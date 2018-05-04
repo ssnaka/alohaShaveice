@@ -8,6 +8,8 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 	[SerializeField]
 	Image chestImage;
 	[SerializeField]
+	Image chestImageOpen;
+	[SerializeField]
 	GameObject chest3DContainer;
 	[SerializeField]
 	GameObject rewardItemsView;
@@ -88,8 +90,11 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 			rewardResultContentList.Add(rewardResultContent);
 		}
 
-		chestImage.sprite = _chestSprite;
+		chestImage.overrideSprite = _chestSprite;
 		chestImage.gameObject.SetActive(false);
+		chestImageOpen.overrideSprite = Resources.Load<Sprite>("Custom/Sprite/" + _chestSprite.name + "_open");
+		chestImageOpen.gameObject.SetActive(false);
+
 		StartCoroutine(RunOpenChestRoutine());
 	}
 
@@ -111,6 +116,7 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 
 		rewardItemsView.SetActive(true);
 		chestImage.gameObject.SetActive(false);
+		chestImageOpen.gameObject.SetActive(false);
 //		chest3DContainer.SetActive(false);
 	}
 

@@ -1057,6 +1057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestImage: {fileID: 114369196752106504}
+  chestImageOpen: {fileID: 114324601079657066}
   chest3DContainer: {fileID: 1554180034640968}
   rewardItemsView: {fileID: 1842313235898026}
   rewardItemContainer: {fileID: 1160093567142288}
@@ -1391,7 +1392,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000103, y: 1.0000103, z: 1.0000103}
   m_Children: []
   m_Father: {fileID: 224758669879834676}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1502,9 +1503,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224491591503458618}
+  - {fileID: 224384159816915120}
   - {fileID: 224976871715586934}
   - {fileID: 224979919392340808}
-  - {fileID: 224384159816915120}
   m_Father: {fileID: 224448940092450572}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.312}
@@ -1562,7 +1563,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224758669879834676}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1583,7 +1584,7 @@ RectTransform:
   - {fileID: 224316084358918524}
   - {fileID: 224336173195952132}
   m_Father: {fileID: 224758669879834676}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

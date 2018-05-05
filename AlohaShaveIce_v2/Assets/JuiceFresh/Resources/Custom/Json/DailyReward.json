@@ -22,7 +22,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 2
+                  "count": 1
                 }
               ],
               "weight": 1
@@ -72,7 +72,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 3
+                  "count": 2
                 }
               ],
               "weight": 1
@@ -113,7 +113,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 4
+                  "count": 3
                 }
               ],
               "weight": 1
@@ -154,7 +154,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 5
+                  "count": 4
                 }
               ],
               "weight": 1
@@ -324,13 +324,13 @@
                   "count": 2
                 }
               ],
-              "weight": 1
+              "weight": 3
             },
             {
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 30
+                  "count": 10
                 },
                 {
                   "type": "ExtraMoves",
@@ -341,13 +341,13 @@
                   "count": 1
                 }
               ],
-              "weight": 1
+              "weight": 3
             },
             {
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 50
+                  "count": 10
                 },
                 {
                   "type": "Stripes",
@@ -358,13 +358,22 @@
                   "count": 1
                 }
               ],
-              "weight": 1
+              "weight": 3
             },
             {
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 100
+                  "count": 20
+                }
+              ],
+              "weight": 2
+            },
+            {
+              "possibleRewards": [
+                {
+                  "type": "Unlimited_Life",
+                  "count": 3600
                 }
               ],
               "weight": 1
@@ -372,8 +381,8 @@
             {
               "possibleRewards": [
                 {
-                  "type": "Unlimited_Life",
-                  "count": 3600
+                  "type": "GetGems",
+                  "count": 30
                 }
               ],
               "weight": 1

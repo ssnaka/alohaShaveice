@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using GameToolkit.Localization;
 
 public enum BoostType
 {
@@ -22,6 +23,8 @@ public class BoostShop : MonoBehaviour
     public int[] prices;
     public Image icon;
     public Text description;
+	[SerializeField]
+	LocalizedTextBehaviour descriptionTextBehaviour;
 
 	public BoostType boostType { get; private set; }
 
@@ -38,7 +41,8 @@ public class BoostShop : MonoBehaviour
         boostType = _boostType;
         gameObject.SetActive(true);
         icon.sprite = boostProducts[(int)_boostType].icon;
-        description.text = boostProducts[(int)_boostType].description;
+		descriptionTextBehaviour.LocalizedAsset = boostProducts[(int)_boostType].descriptionLocalizedText;
+//        description.text = boostProducts[(int)_boostType].description;
         for (int i = 0; i < 3; i++)
         {
             transform.Find("Image/BuyBoost" + (i + 1) + "/Count").GetComponent<Text>().text = "x" + boostProducts[(int)_boostType].count[i];
@@ -70,6 +74,7 @@ public class BoostProduct
 {
     public Sprite icon;
     public string description;
+	public LocalizedText descriptionLocalizedText;
     public int[] count;
     public int[] GemPrices;
 }

@@ -37,7 +37,7 @@ public class LeadboardObject : MonoBehaviour {
 		PlayerData.picture = PlayerData.friendData.picture;
 		icon.sprite = PlayerData.picture;
 		place.text = "" + PlayerData.position;
-		playerName.text = PlayerData.Name;
+		playerName.text = PlayerData.Name.Split(new string[] {" "}, System.StringSplitOptions.None)[0];
 		score.text = "" + PlayerData.score;
 		if (NetworkManager.THIS.IsYou (PlayerData.userID)) {
 			playerName.text = "YOU";

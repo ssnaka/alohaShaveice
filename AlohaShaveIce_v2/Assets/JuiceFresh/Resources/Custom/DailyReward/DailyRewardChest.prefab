@@ -250,7 +250,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 20
+    m_MaxSize: 30
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -284,12 +284,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxTitle: {fileID: 114196517099733942}
+  titleTextBehaviour: {fileID: 114566178438182374}
   boxImage: {fileID: 114970345774091668}
   currencyImage: {fileID: 114960711383164410}
   currencyText: {fileID: 114447209076869770}
+  currencyTextBehaviour: {fileID: 114817267815146812}
   timerText: {fileID: 114621551915537510}
   adButton: {fileID: 114736468535078908}
   chestImageAnimation: {fileID: 111900609577613060}
+  titleTextAssets:
+  - {fileID: 11400000, guid: 0462a9ff20d9b4773b70f59d03869ad2, type: 2}
+  - {fileID: 11400000, guid: 709e6abb51c5e4dffae072fdf215c98b, type: 2}
+  openTextAsset: {fileID: 11400000, guid: 7b8b6fec42a2c4a68a010b042460b0cf, type: 2}
 --- !u!114 &114278978584792930
 MonoBehaviour:
   m_ObjectHideFlags: 1

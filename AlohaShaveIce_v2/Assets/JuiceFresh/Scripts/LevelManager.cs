@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using GameToolkit.Localization;
 
 public class SquareBlocks
 {
@@ -265,6 +266,7 @@ public class LevelManager : MonoBehaviour
 	public Sprite[] ingrediendSprites;
 	//editor values of description tasks
 	public string[] targetDiscriptions;
+	public List<LocalizedText> targetDiscriptionAssets;
 	//UI object
 	public GameObject ingrObject;
 	//UI object

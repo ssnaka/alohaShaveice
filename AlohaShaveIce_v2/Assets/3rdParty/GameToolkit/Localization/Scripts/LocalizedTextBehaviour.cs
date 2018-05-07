@@ -35,7 +35,7 @@ namespace GameToolkit.Localization
             }
         }
 
-        protected override object GetLocalizedValue()
+        public override object GetLocalizedValue()
         {
             var value = (string)base.GetLocalizedValue();
             if (FormatArgs.Length > 0 && !string.IsNullOrEmpty(value))

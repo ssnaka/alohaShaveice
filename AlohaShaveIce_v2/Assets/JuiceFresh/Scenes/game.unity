@@ -7759,7 +7759,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b08b1744d4e29eb46a4e670ad7bf5c13, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11415882, guid: b08b1744d4e29eb46a4e670ad7bf5c13, type: 2}
       propertyPath: Path
@@ -9206,10 +9206,10 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 200
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 4
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -9236,7 +9236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 95012361}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: deed8e7471bd548ee8a581023b83d1dd, type: 2}
   m_FormatArgs: []
 --- !u!114 &95012364
 MonoBehaviour:
@@ -9611,7 +9611,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00000023842, y: 459.29}
+  m_AnchoredPosition: {x: 0.00000023842, y: 442}
   m_SizeDelta: {x: 1240.7, y: 324.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &102114649
@@ -9641,6 +9641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &102114651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9664,7 +9665,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 150
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 200
     m_Alignment: 4
@@ -9693,7 +9694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 102114651}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: a4fff655b7dcd44c18f40dd8543a0980, type: 2}
   m_FormatArgs: []
 --- !u!114 &102114654
 MonoBehaviour:
@@ -14328,7 +14329,7 @@ GameObject:
   - component: {fileID: 150704159}
   - component: {fileID: 150704158}
   m_Layer: 5
-  m_Name: Gems
+  m_Name: GemsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14346,12 +14347,12 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 168, y: -418}
-  m_SizeDelta: {x: 301, y: 147}
+  m_SizeDelta: {x: 301, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &150704154
 MonoBehaviour:
@@ -14366,6 +14367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &150704155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14405,9 +14407,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -15028,7 +15030,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -337, y: 5}
-  m_SizeDelta: {x: 626, y: 352}
+  m_SizeDelta: {x: 626, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &176439855
 MonoBehaviour:
@@ -15043,6 +15045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &176439856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15082,9 +15085,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -15143,7 +15146,7 @@ GameObject:
   - component: {fileID: 180501778}
   - component: {fileID: 180501777}
   m_Layer: 5
-  m_Name: Level (1)
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15164,7 +15167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 458.3}
+  m_AnchoredPosition: {x: 3, y: 440}
   m_SizeDelta: {x: 887, y: 173.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180501773
@@ -15194,6 +15197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &180501775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15217,9 +15221,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -15246,7 +15250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 180501775}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: 34c873f884f9e436dbffa6a98be25b09, type: 2}
   m_FormatArgs: []
 --- !u!114 &180501778
 MonoBehaviour:
@@ -15782,6 +15786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &199406565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16348,7 +16353,7 @@ RectTransform:
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18732,7 +18737,7 @@ RectTransform:
   - {fileID: 1889353246}
   - {fileID: 320336462}
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18866,7 +18871,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 10, y: 7}
-  m_SizeDelta: {x: 626, y: 352}
+  m_SizeDelta: {x: 626, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &320336463
 MonoBehaviour:
@@ -18881,6 +18886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &320336464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18920,9 +18926,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -21769,6 +21775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &396120551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21793,10 +21800,10 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 120
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 120
-    m_Alignment: 1
+    m_MaxSize: 200
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -21823,7 +21830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 396120551}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: 7e58a0aa89b1b4b3bbd48f0ca89e231f, type: 2}
   m_FormatArgs: []
 --- !u!114 &396120554
 MonoBehaviour:
@@ -21983,6 +21990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &403656892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22024,7 +22032,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 250
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -22052,7 +22060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 403656893}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: 6aadf26d026f146e9b889fc49411ec56, type: 2}
   m_FormatArgs: []
 --- !u!114 &403656896
 MonoBehaviour:
@@ -22364,6 +22372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &417392869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22934,6 +22943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &430102415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23095,6 +23105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &432957323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23598,8 +23609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 6}
-  m_SizeDelta: {x: 473.4, y: 224.5}
+  m_AnchoredPosition: {x: 10, y: 10}
+  m_SizeDelta: {x: 473.4, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459916302
 MonoBehaviour:
@@ -23639,10 +23650,10 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 150
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
-    m_Alignment: 1
+    m_MaxSize: 250
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -24264,7 +24275,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1404877723}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &476641819
 Prefab:
@@ -25423,6 +25434,14 @@ MonoBehaviour:
   - Break all ice blocks
   - Destroy bombs
   - Get %s star(s)
+  targetDiscriptionAssets:
+  - {fileID: 11400000, guid: 5de4e6c60d01241e69d15c01ebb094b9, type: 2}
+  - {fileID: 11400000, guid: ffb5d8fac3f9f483789e9152d91e3e38, type: 2}
+  - {fileID: 11400000, guid: 4bc091d7dadf848ac842fd89e92b7400, type: 2}
+  - {fileID: 11400000, guid: 47c024d269e7e47edb2d486410563a8b, type: 2}
+  - {fileID: 11400000, guid: ffb5d8fac3f9f483789e9152d91e3e38, type: 2}
+  - {fileID: 11400000, guid: f5abe3101fe214be6bc93f6b8b07ae81, type: 2}
+  - {fileID: 11400000, guid: fa7dce7ebe84e4c578bc1982e045c803, type: 2}
   ingrObject: {fileID: 1329699253}
   blocksObject: {fileID: 1392166698}
   scoreTargetObject: {fileID: 913142532}
@@ -25615,7 +25634,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1075431069}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29471,7 +29490,7 @@ GameObject:
   - component: {fileID: 545869170}
   - component: {fileID: 545869169}
   m_Layer: 5
-  m_Name: Level (1)
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29488,11 +29507,11 @@ RectTransform:
   m_LocalScale: {x: 0.27939537, y: 0.27939537, z: 0.27939537}
   m_Children: []
   m_Father: {fileID: 1075431069}
-  m_RootOrder: 6
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 456.7}
+  m_AnchoredPosition: {x: 2, y: 444}
   m_SizeDelta: {x: 1486.2, y: 361}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &545869165
@@ -29522,6 +29541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &545869167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29545,9 +29565,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 121
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -29574,7 +29594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 545869167}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: c63b3a313320647fc9404ec3c44d05af, type: 2}
   m_FormatArgs: []
 --- !u!114 &545869170
 MonoBehaviour:
@@ -29691,7 +29711,7 @@ RectTransform:
   - {fileID: 1796284166}
   - {fileID: 1474083041}
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29987,6 +30007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &571118699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30041,7 +30062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 571118699}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: ae004a943eee54ed6b8850e9779ddec1, type: 2}
   m_FormatArgs: []
 --- !u!114 &571118702
 MonoBehaviour:
@@ -30215,6 +30236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &578543455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30606,6 +30628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &586887122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30814,7 +30837,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 125, y: -24}
-  m_SizeDelta: {x: 180, y: 200}
+  m_SizeDelta: {x: 180, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &587375267
 MonoBehaviour:
@@ -30829,6 +30852,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInfiniteLife: 0
+  fullTextAsset: {fileID: 11400000, guid: 5ce4e5a74722b4d54b7ad758b68cf39a, type: 2}
+  fullTextBehaviour: {fileID: 587375270}
 --- !u!114 &587375268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30855,8 +30880,8 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 55
-    m_Alignment: 3
+    m_MaxSize: 80
+    m_Alignment: 6
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -31259,7 +31284,7 @@ RectTransform:
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -32232,33 +32257,48 @@ MonoBehaviour:
   prices: 
   icon: {fileID: 215232628}
   description: {fileID: 1509741449}
+  descriptionTextBehaviour: {fileID: 1509741451}
   boostProducts:
   - icon: {fileID: 21300000, guid: bb123560a2ff3ca43b93c397beebf95f, type: 3}
     description: Gives you the 5 extra moves
+    descriptionLocalizedText: {fileID: 11400000, guid: 1f609aea551cf4d048ad83cb01c90bf8,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 140000001900000023000000
   - icon: {fileID: 21300000, guid: fcfbd73bb3ee57d418cea28db0fe8e8c, type: 3}
     description: Places 2 special items
+    descriptionLocalizedText: {fileID: 11400000, guid: dc27c0a7545274fa79e35aeefcb331cb,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 0a0000000f00000019000000
   - icon: {fileID: 21300000, guid: 71af414c8b112174f8c814815a4d75b1, type: 3}
     description: Gives you the 30 extra seconds
+    descriptionLocalizedText: {fileID: 11400000, guid: 30124fa0f0a364d859b92a72039b7d20,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 140000001900000023000000
   - icon: {fileID: 21300000, guid: 43c8115232176bd40849df3c77a06cb3, type: 3}
     description: Detroy some items around
+    descriptionLocalizedText: {fileID: 11400000, guid: 865c2ba3123974b229981213d0427dc5,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 0a0000000f00000019000000
   - icon: {fileID: 21300000, guid: 35495283bcfecd444b7e7ba2ba26b7a8, type: 3}
     description: Replace some colors
+    descriptionLocalizedText: {fileID: 11400000, guid: 755b8ab2f96364ae6ba4116c170d983f,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 0a0000000f00000019000000
   - icon: {fileID: 21300000, guid: 0d4e2fa76c25d467fb2b712b07a5eabd, type: 3}
     description: Destroy an item
+    descriptionLocalizedText: {fileID: 11400000, guid: b564e83a745154fbb89bca74871c5bfb,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 0a0000000f00000019000000
   - icon: {fileID: 21300000, guid: 539dd0ec19b224a5694fe24ee72e5e9c, type: 3}
     description: Destroy the row and column crosswise
+    descriptionLocalizedText: {fileID: 11400000, guid: f89f6ac247f454c16b2b857b309c2eca,
+      type: 2}
     count: 03000000050000000a000000
     GemPrices: 0f000000140000001e000000
   videoButtonObject: {fileID: 934685783}
@@ -32329,6 +32369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &641601992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39445,7 +39486,7 @@ RectTransform:
   m_LocalScale: {x: 1.3587629, y: 1.3587635, z: 1.3587635}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -40169,6 +40210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &714408331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44778,7 +44820,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 0.6438321}
   m_Children: []
   m_Father: {fileID: 1075431069}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -49376,6 +49418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &876208533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52901,6 +52944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &889710429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52927,8 +52971,8 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
-    m_Alignment: 4
+    m_MaxSize: 200
+    m_Alignment: 7
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -54439,6 +54483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &940085374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54864,7 +54909,7 @@ RectTransform:
   - {fileID: 176439854}
   - {fileID: 1548103454}
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -56160,18 +56205,18 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 619790144}
   - {fileID: 1046390194}
+  - {fileID: 1778521766}
   - {fileID: 657070514}
+  - {fileID: 1707615363}
   - {fileID: 150704153}
   - {fileID: 958190979}
   - {fileID: 318224441}
   - {fileID: 557729075}
-  - {fileID: 619790144}
-  - {fileID: 1778521766}
   - {fileID: 1856610325}
   - {fileID: 215232627}
   - {fileID: 1509741446}
-  - {fileID: 1707615363}
   - {fileID: 934685784}
   m_Father: {fileID: 641363273}
   m_RootOrder: 0
@@ -56363,6 +56408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1010257175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57182,7 +57228,7 @@ RectTransform:
   m_LocalScale: {x: 1.4523606, y: 1.4523604, z: 1.4523604}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -57647,12 +57693,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 863753173}
+  - {fileID: 545869164}
   - {fileID: 1595662233}
   - {fileID: 523520124}
   - {fileID: 1356905187}
   - {fileID: 825215778}
   - {fileID: 1600817961}
-  - {fileID: 545869164}
   m_Father: {fileID: 285581706}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -58764,6 +58810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1126313157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59262,7 +59309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 1147107613}
   m_Property: text
-  m_LocalizedAsset: {fileID: 11400000, guid: 36c7d944508b84ac8b247a87d3ef8af1, type: 2}
+  m_LocalizedAsset: {fileID: 11400000, guid: 5247c6e7901f0427c9c2de90baa63ce0, type: 2}
   m_FormatArgs: []
 --- !u!114 &1147107616
 MonoBehaviour:
@@ -64378,7 +64425,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 66, y: 9}
-  m_SizeDelta: {x: 230, y: 100}
+  m_SizeDelta: {x: 230, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1211884333
 MonoBehaviour:
@@ -64394,6 +64441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1211884334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64420,7 +64468,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 60
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -64905,6 +64953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1227791840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65552,6 +65601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1257355130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65785,6 +65835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1266147124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66084,6 +66135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1272687394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66972,6 +67024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!222 &1299804324
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -67189,8 +67242,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 458}
-  m_SizeDelta: {x: 1397, y: 367}
+  m_AnchoredPosition: {x: 3, y: 441}
+  m_SizeDelta: {x: 1200, y: 367}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1308435757
 MonoBehaviour:
@@ -67219,6 +67272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1308435759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67242,9 +67296,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 137
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
+    m_MaxSize: 200
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -67271,7 +67325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 1308435759}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: ff4ecc66a7e5447aa9cf86e4bdff5dbd, type: 2}
   m_FormatArgs: []
 --- !u!114 &1308435762
 MonoBehaviour:
@@ -68873,7 +68927,7 @@ RectTransform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 1075431069}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -70403,7 +70457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 456.89996}
+  m_AnchoredPosition: {x: 2, y: 443}
   m_SizeDelta: {x: 974.2, y: 323.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1403683481
@@ -70433,6 +70487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1403683483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70456,9 +70511,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
+    m_MaxSize: 200
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -70485,7 +70540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 1403683483}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: dbe24660685814cbcb099ec758ac2e86, type: 2}
   m_FormatArgs: []
 --- !u!114 &1403683486
 MonoBehaviour:
@@ -70555,8 +70610,8 @@ Transform:
   - {fileID: 219019751}
   - {fileID: 1438696739}
   - {fileID: 365346600}
-  - {fileID: 51718273}
   - {fileID: 474795692}
+  - {fileID: 51718273}
   - {fileID: 322804609}
   - {fileID: 82365905}
   - {fileID: 1670974537}
@@ -71223,6 +71278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1428425310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71807,6 +71863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1440471978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71830,7 +71887,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 300
     m_Alignment: 4
@@ -72226,6 +72283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1451457624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72651,7 +72709,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 10, y: 7}
-  m_SizeDelta: {x: 626, y: 352}
+  m_SizeDelta: {x: 626, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1474083042
 MonoBehaviour:
@@ -72666,6 +72724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1474083043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72705,9 +72764,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -73328,6 +73387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1501974746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73429,7 +73489,7 @@ RectTransform:
   m_LocalScale: {x: 0.3480219, y: 0.3480219, z: 0.6960438}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -73449,6 +73509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1509741448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73488,9 +73549,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 200
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -74231,7 +74292,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 10, y: 7}
-  m_SizeDelta: {x: 626, y: 352}
+  m_SizeDelta: {x: 626, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1548103455
 MonoBehaviour:
@@ -74246,6 +74307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1548103456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74285,9 +74347,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -74890,6 +74952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1569431767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74916,7 +74979,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 250
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -74944,7 +75007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 1569431767}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: fda189e5886524651b781e17c71ea4c8, type: 2}
   m_FormatArgs: []
 --- !u!114 &1569431770
 MonoBehaviour:
@@ -75293,6 +75356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1595587046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75370,7 +75434,7 @@ RectTransform:
   - {fileID: 1731737147}
   - {fileID: 459916301}
   m_Father: {fileID: 1075431069}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -75713,7 +75777,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1075431069}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -76145,6 +76209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1609037243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76576,7 +76641,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.9999998, y: -2}
+  m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 1650, y: 202}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1622443717
@@ -76607,6 +76672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1622443719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76631,10 +76697,10 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 135
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 141
-    m_Alignment: 1
+    m_MaxSize: 200
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -83823,6 +83889,7 @@ GameObject:
   - component: {fileID: 1669494092}
   - component: {fileID: 1669494094}
   - component: {fileID: 1669494093}
+  - component: {fileID: 1669494095}
   m_Layer: 5
   m_Name: DailyReward
   m_TagString: Untagged
@@ -83882,6 +83949,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1669494091}
+--- !u!111 &1669494095
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1669494091}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d57de69793fde4e23a7e3555b5596552, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d57de69793fde4e23a7e3555b5596552, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!4 &1669940507 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 105903d664c39294e926aed54de8b6c8, type: 2}
@@ -84839,7 +84921,7 @@ GameObject:
   - component: {fileID: 1707615369}
   - component: {fileID: 1707615368}
   m_Layer: 5
-  m_Name: Gems (1)
+  m_Name: YouHaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84857,12 +84939,12 @@ RectTransform:
   m_LocalScale: {x: 0.3034777, y: 0.3034777, z: 0.6069554}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 11
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -131, y: -417}
-  m_SizeDelta: {x: 888, y: 355}
+  m_SizeDelta: {x: 888, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707615364
 MonoBehaviour:
@@ -84877,6 +84959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1707615365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84916,9 +84999,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 116
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 146
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -86207,6 +86290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1746114594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89961,6 +90045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1772253476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90208,7 +90293,7 @@ GameObject:
   - component: {fileID: 1778521771}
   - component: {fileID: 1778521770}
   m_Layer: 5
-  m_Name: Label
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90226,12 +90311,12 @@ RectTransform:
   m_LocalScale: {x: 0.27486125, y: 0.27486128, z: 0.54972255}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: 455.9}
-  m_SizeDelta: {x: 1696.3, y: 352}
+  m_AnchoredPosition: {x: 5, y: 440}
+  m_SizeDelta: {x: 1400, y: 352}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1778521767
 MonoBehaviour:
@@ -90272,9 +90357,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 130
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -90302,7 +90387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 1778521768}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: a84e6b51520104a198d2f1c072eda5d7, type: 2}
   m_FormatArgs: []
 --- !u!114 &1778521771
 MonoBehaviour:
@@ -90744,6 +90829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1794366206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91025,7 +91111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -337, y: 5}
-  m_SizeDelta: {x: 626, y: 352}
+  m_SizeDelta: {x: 626, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1796284167
 MonoBehaviour:
@@ -91040,6 +91126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1796284168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91079,9 +91166,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -91329,6 +91416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1797532649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93681,7 +93769,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1001622836}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -94733,7 +94821,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -337, y: 5}
-  m_SizeDelta: {x: 626, y: 352}
+  m_SizeDelta: {x: 626, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1889353247
 MonoBehaviour:
@@ -94748,6 +94836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1889353248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94787,9 +94876,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -99448,7 +99537,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 37, y: -31}
-  m_SizeDelta: {x: 435, y: 262.53}
+  m_SizeDelta: {x: 435, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1955052508
 MonoBehaviour:
@@ -99477,6 +99566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1955052510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99500,9 +99590,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 160
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 200
+    m_MaxSize: 180
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -100359,6 +100449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &1982205524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101595,6 +101686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &2035258194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101677,7 +101769,7 @@ GameObject:
   - component: {fileID: 2035937091}
   - component: {fileID: 2035937090}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ChestImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102340,7 +102432,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 5}
-  m_SizeDelta: {x: 1214.8, y: 305.1}
+  m_SizeDelta: {x: 1100, y: 305.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2065175458
 MonoBehaviour:
@@ -102369,6 +102461,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList:
+  - {fileID: 11400000, guid: 20f43bf961b3d4a9788456f8bd6b9825, type: 2}
+  - {fileID: 11400000, guid: 7b11c8ff4d8514c9588d18be426709ea, type: 2}
 --- !u!114 &2065175460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102392,9 +102487,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
     m_FontSize: 150
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 150
+    m_MaxSize: 200
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -102436,7 +102531,8 @@ MonoBehaviour:
   m_Component: {fileID: 2065175460}
   m_Property: text
   m_LocalizedAsset: {fileID: 0}
-  m_FormatArgs: []
+  m_FormatArgs:
+  - 
 --- !u!114 &2065175464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102785,6 +102881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!222 &2072506528
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -103014,6 +103111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &2081848571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103340,6 +103438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &2083842136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103644,6 +103743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingrTrackNumber: 0
   totalCount: 0
+  localizedTextList: []
 --- !u!114 &2096183107
 MonoBehaviour:
   m_ObjectHideFlags: 0

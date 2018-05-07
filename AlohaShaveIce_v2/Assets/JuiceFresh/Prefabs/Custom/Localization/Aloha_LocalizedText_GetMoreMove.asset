@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af65ee6b0f35f974dba93979a07edbce, type: 3}
-  m_Name: Aloha_LocalizedText_Loading
+  m_Name: Aloha_LocalizedText_GetMoreMove
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Loading...
+    m_Value: Get +{0} Moves
   - m_Language: 23
-    m_Value: "\uB85C\uB529 \uC911..."
+    m_Value: "+{0} \uD134 \uCD94\uAC00"

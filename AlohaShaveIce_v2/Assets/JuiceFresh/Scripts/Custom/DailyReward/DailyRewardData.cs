@@ -15,6 +15,7 @@ public class DailyRewardData
 public class ChestData
 {
 	public ChestType type {get; set;}
+	public string textAssetName {get; set;}
 	public int price {get; set;}
 	public string chestImage {get; set;}
 	public string chestPrefab {get; set;}

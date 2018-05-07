@@ -16,7 +16,7 @@ namespace GameToolkit.Localization
             return typeof(string);
         }
 
-        protected override object GetLocalizedValue()
+        public override object GetLocalizedValue()
         {
             return m_LocalizedAsset ? m_LocalizedAsset.Value.text : null;
         }

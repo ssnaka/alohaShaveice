@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using GameToolkit.Localization;
 
 public class LIFESAddCounter : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class LIFESAddCounter : MonoBehaviour
 	public bool isInfiniteLife = false;
 
 	bool readyToUpdate;
+
+	[SerializeField]
+	LocalizedText fullTextAsset;
+	[SerializeField]
+	LocalizedTextBehaviour fullTextBehaviour;
+
     // Use this for initialization
     void Start()
     {
@@ -104,6 +111,10 @@ public class LIFESAddCounter : MonoBehaviour
 
         if (gameObject.activeSelf)
         {
+			if (fullTextBehaviour.LocalizedAsset != null)
+			{
+				fullTextBehaviour.LocalizedAsset = null;
+			}
             if (InitScript.lifes < InitScript.Instance.CapOfLife)
             {
                 if (InitScript.Instance.TotalTimeForRestLifeHours > 0)
@@ -129,7 +140,11 @@ public class LIFESAddCounter : MonoBehaviour
             }
             else
             {
-				text.text = "  Full";
+				if (fullTextBehaviour.LocalizedAsset == null)
+				{
+					fullTextBehaviour.LocalizedAsset = fullTextAsset;
+				}
+//				text.text = "  Full";
             }
         }
     }

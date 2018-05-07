@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using GameToolkit.Localization;
+using System.Collections.Generic;
 
 public class Counter_ : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class Counter_ : MonoBehaviour
 	bool alert;
 	public int totalCount;
 	TargetGUI parentGUI;
+
+	[SerializeField]
+	List<LocalizedText> localizedTextList;
+	LocalizedTextBehaviour localizedTextBehaviour;
 	//	∞
 	// Use this for initialization
 	void Start ()
@@ -23,6 +29,7 @@ public class Counter_ : MonoBehaviour
 		if (txt == null)
 		{
 			txt = GetComponent<Text>();
+			localizedTextBehaviour = txt.GetComponent<LocalizedTextBehaviour>();
 		}
 
 		lastTime = 0;
@@ -76,9 +83,17 @@ public class Counter_ : MonoBehaviour
 		else if (name == "LabelKeepPlay")
 		{
 			if (LevelManager.THIS.limitType == LIMIT.MOVES)
-				txt.text = "GET + " + LevelManager.THIS.ExtraFailedMoves + " moves";
+			{
+				localizedTextBehaviour.FormatArgs[0] = LevelManager.THIS.ExtraFailedMoves.ToString();
+				localizedTextBehaviour.LocalizedAsset = localizedTextList.Find(item => item.name.Contains("Move"));
+//				txt.text = "GET + " + LevelManager.THIS.ExtraFailedMoves + " moves";
+			}
 			else
-				txt.text = "GET + " + LevelManager.THIS.ExtraFailedSecs + " secs";
+			{
+				localizedTextBehaviour.FormatArgs[0] = LevelManager.THIS.ExtraFailedSecs.ToString();
+				localizedTextBehaviour.LocalizedAsset = localizedTextList.Find(item => item.name.Contains("Time"));
+//				txt.text = "GET + " + LevelManager.THIS.ExtraFailedSecs + " secs";
+			}
 		}
 		else if (name == "BestScore")
 		{
@@ -86,22 +101,46 @@ public class Counter_ : MonoBehaviour
 		}
 		else if (name == "Level")
 		{
-			txt.text = "LEVEL " + PlayerPrefs.GetInt("OpenLevel");
+//			txt.GetComponent<LocalizedTextBehaviour>().FormatArgs[0] = PlayerPrefs.GetInt("OpenLevel").ToString();
+//			txt.text = txt.GetComponent<LocalizedTextBehaviour>().GetLocalizedValue() as string;
+//			Debug.LogError(txt.GetComponent<LocalizedTextBehaviour>().FormatArgs[0]);
+			txt.text = txt.text.Split(new string[]{" "}, System.StringSplitOptions.None)[0] + " " + PlayerPrefs.GetInt("OpenLevel");
 		}
 		else if (name == "TargetDescription1")
 		{
+			LocalizedTextBehaviour textBehaviour = GetComponent<LocalizedTextBehaviour>();
+//			textBehaviour.LocalizedAsset = 
 			if (LevelManager.THIS.target == Target.SCORE)
-				txt.text = LevelManager.THIS.targetDiscriptions[6].Replace("%n", "" + LevelManager.THIS.GetScoresOfTargetStars()).Replace("%s", "" + (int)LevelManager.THIS.starsTargetCount);
+			{
+				textBehaviour.LocalizedAsset = LevelManager.THIS.targetDiscriptionAssets[6];
+				txt.text = txt.text.Replace("%n", "" + LevelManager.THIS.GetScoresOfTargetStars()).Replace("%s", "" + (int)LevelManager.THIS.starsTargetCount);
+//				txt.text = LevelManager.THIS.targetDiscriptions[6].Replace("%n", "" + LevelManager.THIS.GetScoresOfTargetStars()).Replace("%s", "" + (int)LevelManager.THIS.starsTargetCount);
+			}
 			else if (LevelManager.THIS.target == Target.BLOCKS)
-				txt.text = LevelManager.THIS.targetDiscriptions[1];
+			{
+				textBehaviour.LocalizedAsset = LevelManager.THIS.targetDiscriptionAssets[1];
+//				txt.text = LevelManager.THIS.targetDiscriptions[1];
+			}
 			else if (LevelManager.THIS.target == Target.COLLECT)
-				txt.text = LevelManager.THIS.targetDiscriptions[2];
+			{
+				textBehaviour.LocalizedAsset = LevelManager.THIS.targetDiscriptionAssets[2];
+//				txt.text = LevelManager.THIS.targetDiscriptions[2];
+			}
 			else if (LevelManager.THIS.target == Target.ITEMS)
-				txt.text = LevelManager.THIS.targetDiscriptions[3];
+			{
+				textBehaviour.LocalizedAsset = LevelManager.THIS.targetDiscriptionAssets[3];
+//				txt.text = LevelManager.THIS.targetDiscriptions[3];
+			}
 			else if (LevelManager.THIS.target == Target.CAGES)
-				txt.text = LevelManager.THIS.targetDiscriptions[4];
+			{
+				textBehaviour.LocalizedAsset = LevelManager.THIS.targetDiscriptionAssets[4];
+//				txt.text = LevelManager.THIS.targetDiscriptions[4];
+			}
 			else if (LevelManager.THIS.target == Target.BOMBS)
-				txt.text = LevelManager.THIS.targetDiscriptions[5];
+			{
+				textBehaviour.LocalizedAsset = LevelManager.THIS.targetDiscriptionAssets[5];
+//				txt.text = LevelManager.THIS.targetDiscriptions[5];
+			}
 		}
 	}
 

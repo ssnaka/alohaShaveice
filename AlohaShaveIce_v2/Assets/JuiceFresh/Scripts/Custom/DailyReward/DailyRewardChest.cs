@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using GameToolkit.Localization;
 
 public class DailyRewardChest : MonoBehaviour
 {
@@ -12,13 +13,16 @@ public class DailyRewardChest : MonoBehaviour
 	[SerializeField]
 	Text boxTitle;
 	[SerializeField]
+	LocalizedTextBehaviour titleTextBehaviour;
+	[SerializeField]
 	Image boxImage;
-
 
 	[SerializeField]
 	Image currencyImage;
 	[SerializeField]
 	Text currencyText;
+	[SerializeField]
+	LocalizedTextBehaviour currencyTextBehaviour;
 
 	[SerializeField]
 	Text timerText;
@@ -45,6 +49,11 @@ public class DailyRewardChest : MonoBehaviour
 
 //	int openCountToday = 0;
 	Vector2 originalBoxSize = Vector2.zero;
+
+	[SerializeField]
+	List<LocalizedText> titleTextAssets;
+	[SerializeField]
+	LocalizedText openTextAsset;
 
 	void OnEnable ()
 	{
@@ -101,7 +110,8 @@ public class DailyRewardChest : MonoBehaviour
 		}
 
 		adButton.gameObject.SetActive(false);
-		boxTitle.text = data.type.ToString().ToUpper();
+//		boxTitle.text = data.type.ToString().ToUpper();
+		titleTextBehaviour.LocalizedAsset = titleTextAssets.Find(item => item.name.Equals(data.textAssetName));
 		chestSprite = Resources.Load<Sprite>("Custom/Sprite/" + data.chestImage);
 		boxImage.overrideSprite = chestSprite;
 //		chest3DPrefab = Resources.Load<GameObject>("Custom/Chest/" + data.chestPrefab);
@@ -113,7 +123,8 @@ public class DailyRewardChest : MonoBehaviour
 //			chest3D.transform.localScale = new Vector3(50.0f, 50.0f, 50.0f);
 //		}
 
-		string priceString = "Open";
+		currencyTextBehaviour.LocalizedAsset = null;
+		string priceString = currencyText.text;
 		bool shouldShowCurrencyImage = true;
 		switch (data.type)
 		{
@@ -128,6 +139,8 @@ public class DailyRewardChest : MonoBehaviour
 				}
 				else
 				{
+					currencyTextBehaviour.LocalizedAsset = openTextAsset;
+					priceString = currencyText.text;
 					shouldShowCurrencyImage = false;
 				}
 

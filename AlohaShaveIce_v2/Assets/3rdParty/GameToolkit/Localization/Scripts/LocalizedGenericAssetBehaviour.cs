@@ -35,7 +35,7 @@ namespace GameToolkit.Localization
             return typeof(T);
         }
 
-        protected virtual object GetLocalizedValue()
+        public virtual object GetLocalizedValue()
         {
             return m_LocalizedAsset ? m_LocalizedAsset.Value : default(T);
         }

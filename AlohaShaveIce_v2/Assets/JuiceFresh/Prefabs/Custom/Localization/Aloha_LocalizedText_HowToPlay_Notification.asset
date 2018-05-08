@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af65ee6b0f35f974dba93979a07edbce, type: 3}
-  m_Name: Aloha_LocalizedText_Tutorial03_description
+  m_Name: Aloha_LocalizedText_HowToPlay_Notification
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Changes the color of some shave ice to one color.
+    m_Value: Click settings to learn how to play
   - m_Language: 23
-    m_Value: "\uB2E4\uB978 \uC0C9\uAE54\uC758 \uBE59\uC218\uB97C \uAC19\uC740 \uC0C9\uC73C\uB85C
-      \uB9CC\uB4E4\uC5B4 \uC918\uC694."
+    m_Value: "\uAC8C\uC784 \uBC29\uBC95\uC774 \uAD81\uAE08\uD574\uC694~? \uAD81\uAE08\uD558\uBA74
+      \uC124\uC815\uC744 \uB20C\uB7EC\uBD10."

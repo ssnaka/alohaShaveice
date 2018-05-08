@@ -1156,7 +1156,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		if (boostType != BoostType.None)
 		{
 			int boostCount = ZPlayerPrefs.GetInt("" + boostType);
-			BuyBoost(boostType, 0, boostCount + 1);
+			BuyBoost(boostType, 0, boostCount + _reward.count);
 		}
 
 		PlayerPrefs.Save();

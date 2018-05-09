@@ -100,7 +100,7 @@ public class EventsListener : MonoBehaviour
 		Dictionary<string, object> dic = new Dictionary<string, object>();
 		for (int i = 0 ; i < _obj.Length; i++)
 		{
-			dic.Add(_event, _obj[i]);
+			dic[_event] = _obj[i];
 		}
 		Analytics.CustomEvent(_event, dic);
 

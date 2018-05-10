@@ -236,6 +236,56 @@ public class GamesparksDataManager : IDataManager
 
 	#endregion
 
+#region tutorial
+	public void UpdateTutorial (TutorialSaveData _tutorialSaveData)
+	{
+		string tutorialJson = Newtonsoft.Json.JsonConvert.SerializeObject(_tutorialSaveData);
+
+		new GameSparks.Api.Requests.LogEventRequest().SetEventKey("UpdateTutorial").SetEventAttribute("Tutorials", tutorialJson).Send((response) =>
+		{
+			if (!response.HasErrors)
+			{
+				Debug.Log("Tutorial Saved To GameSparks...");
+			}
+			else
+			{
+				
+				Debug.Log("Error Saving Tutorial Data..." + response.JSONString);
+			}
+		});
+	}
+
+	public void GetTutorial (Action<TutorialSaveData> _Callback)
+	{
+		new GameSparks.Api.Requests.LogEventRequest().SetEventKey("GetTutorial").Send((response) =>
+		{
+			if (!response.HasErrors)
+			{
+				Debug.Log("Getting tutorial");
+				TutorialSaveData tutorialSaveData = null;
+				var cursor = response.ScriptData.GetGSData("tutorial_Data");
+				Debug.LogError(cursor);
+				if (cursor == null)
+					return;
+
+				foreach (var item in  cursor.BaseData)
+				{
+					if (item.Key == "Tutorials")
+					{
+						tutorialSaveData = Newtonsoft.Json.JsonConvert.DeserializeObject<TutorialSaveData>(item.Value.ToString());
+					}
+					_Callback(tutorialSaveData);
+				}
+			}
+			else
+			{
+				Debug.Log("Error Retrieving Tutorials Data...");
+			}
+		});
+
+	}
+#endregion
+
 	public void Logout ()
 	{
 

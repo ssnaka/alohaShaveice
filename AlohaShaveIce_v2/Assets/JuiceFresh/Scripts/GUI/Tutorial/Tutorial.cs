@@ -30,7 +30,7 @@ public class Tutorial : MonoBehaviour {
 	{
 //		Debug.LogError(Localization.Instance.CurrentLanguage);
 //		Localization.Instance.CurrentLanguage = SystemLanguage.Korean;
-		if (!InitScript.Instance.didTutorialShown)
+		if (!GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial))
 		{
 			welcomeText.LocalizedAsset = welcomeTextAsset;//.text = "WELINA";
 			okText.LocalizedAsset = skipTextAsset;//.text = "Skip";

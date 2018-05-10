@@ -679,6 +679,13 @@ public class Item : MonoBehaviour
 		currentType = nextType;
 		nextType = ItemsTypes.NONE;
 
+		if (LevelManager.THIS.Limit > 0 && LevelManager.THIS.gameStatus == GameState.Playing)
+		{
+			if (currentType.Equals(ItemsTypes.SQUARE_BOMB))
+			{
+				GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Use_Bomb_InLevel, square.transform);
+			}
+		}
 	}
 
 	void SetupBomb ()
@@ -688,8 +695,9 @@ public class Item : MonoBehaviour
 
 		GameObject t = Instantiate (timerTextPrefab) as GameObject;
 		t.transform.SetParent (transform);
-		t.transform.localPosition = new Vector3 (1.5f, -0.8f, 0);
-		t.transform.localScale = Vector3.one;
+//		t.transform.localPosition = new Vector3 (1.5f, -0.8f, 0);
+		t.transform.localPosition = new Vector3 (0.9f, -0.8f, 0);
+//		t.transform.localScale = Vector3.one;
 		timerText = t.transform.GetChild (0).GetComponent<Text> ();
 		if (bombTimer <= 0)//1.3
 			bombTimer = LevelManager.Instance.bombTimer;

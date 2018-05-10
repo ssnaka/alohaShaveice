@@ -106,7 +106,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ' Swipe on the shave ice of the same color to destroy them.'
+  m_Text: 5
 --- !u!222 &22239528
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -141,7 +141,7 @@ RectTransform:
   m_GameObject: {fileID: 146320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0078077316, y: 0.0078077307, z: 0.0078077307}
+  m_LocalScale: {x: 0.004, y: 0.004, z: 0.004}
   m_Children:
   - {fileID: 22495730}
   m_Father: {fileID: 0}
@@ -149,8 +149,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -10.42}
-  m_SizeDelta: {x: 689, y: 919}
+  m_AnchoredPosition: {x: 0.35, y: -0.29}
+  m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22495730
 RectTransform:
@@ -167,7 +167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 781}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1224, y: 174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000

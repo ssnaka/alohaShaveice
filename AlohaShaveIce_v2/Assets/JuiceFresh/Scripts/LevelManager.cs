@@ -1456,7 +1456,7 @@ public class LevelManager : MonoBehaviour
 		GameObject.Find("Level/Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(true);//1.4.5
 		yield return new WaitForSeconds(3);
 		GameObject.Find("Level/Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(false);//1.4.5
-		Vector3 pos1 = GameObject.Find("Limit").transform.position;
+		Vector3 pos1 = Camera.main.ScreenToWorldPoint(GameObject.Find("Limit").transform.position);
 
 		yield return new WaitForSeconds(1);
 
@@ -1506,7 +1506,8 @@ public class LevelManager : MonoBehaviour
 
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
-		for (int i = 1; i <= countFlowers; i++)
+		while (countFlowers > 0)
+//		for (int i = 1; i <= countFlowers; i++)
 		{
 			if (limitType == LIMIT.MOVES)
 				Limit--;
@@ -1522,8 +1523,10 @@ public class LevelManager : MonoBehaviour
 
 			//            item.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 			//            item.ChangeType();
+			countFlowers--;
 			yield return new WaitForSeconds(0.3f);
 		}
+
 		Limit = 0;
 		if (OnLimitUpdate != null)
 		{
@@ -1799,7 +1802,16 @@ public class LevelManager : MonoBehaviour
 								LevelManager.THIS.ActivatedBoost.type = BoostType.Bomb;
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
-								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/bomb"), square.transform.position, square.transform.rotation) as GameObject;
+								GameObject obj = null;
+								if (item.currentType == ItemsTypes.SQUARE_BOMB)
+								{
+									GameTutorialManager.Instance.CloseTutorial();
+									obj = Instantiate(Resources.Load("Prefabs/Effects/item_bomb"), square.transform.position, square.transform.rotation) as GameObject;
+								}
+								else
+								{
+									obj = Instantiate(Resources.Load("Prefabs/Effects/bomb"), square.transform.position, square.transform.rotation) as GameObject;
+								}
 								obj.GetComponent<SpriteRenderer>().sortingOrder = 5;
 								obj.GetComponent<BoostAnimation>().square = square;
 								waitingBoost = LevelManager.THIS.ActivatedBoost;

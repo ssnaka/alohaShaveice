@@ -20,6 +20,9 @@ public interface IDataManager {
 
 	void GetBoosterData (Action<Dictionary<string,int>> Callback);
 
+	void UpdateTutorial (TutorialSaveData _tutorialSaveData);
+	void GetTutorial (Action<TutorialSaveData> _Callback);
+
 	void Logout ();
 }
 

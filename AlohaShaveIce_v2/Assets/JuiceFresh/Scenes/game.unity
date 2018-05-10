@@ -8621,7 +8621,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 322804609}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -19362,13 +19362,13 @@ RectTransform:
   - {fileID: 1313243132}
   - {fileID: 89110454}
   - {fileID: 488398742}
+  - {fileID: 1669494092}
   - {fileID: 1243633791}
   - {fileID: 1824505029}
   - {fileID: 1293626732}
   - {fileID: 1163204534}
   - {fileID: 2099205872}
   - {fileID: 75764518}
-  - {fileID: 1669494092}
   - {fileID: 1477644479}
   m_Father: {fileID: 1404877723}
   m_RootOrder: 5
@@ -25359,11 +25359,11 @@ MonoBehaviour:
   - name: Ingredient1
     sprite: {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
     check: 1
-    count: 7
+    count: 1
   - name: Ingredient2
     sprite: {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
     check: 1
-    count: 7
+    count: 1
   currentReward: 0
   CapOfLife: 5
   TotalTimeForRestLifeHours: 0
@@ -25431,7 +25431,6 @@ MonoBehaviour:
   losingLifeEveryGame: 0
   facebookButton: {fileID: 1163204533}
   maxVideoPerDay: 1000
-  didTutorialShown: 0
   lifesAddCounterScript: {fileID: 587375267}
 --- !u!120 &511786110
 LineRenderer:
@@ -25567,27 +25566,11 @@ MonoBehaviour:
   GameField: {fileID: 1050245871}
   enableInApps: 0
   maxRows: 8
-  maxCols: 7
+  maxCols: 5
   squareWidth: 1.6
   squareHeight: 1.6
   firstSquarePosition: {x: -2.4, y: 3.3}
   squaresArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -25637,9 +25620,9 @@ MonoBehaviour:
   scoreForSolidBlock: 100
   scoreForThrivingBlock: 100
   limitType: 0
-  Limit: 25
+  Limit: 15
   TargetScore: 1000
-  currentLevel: 273
+  currentLevel: 210
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -25731,7 +25714,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  colorLimit: 3
+  colorLimit: 5
   ingrCountTarget: 0200000002000000
   ingrTarget: []
   ingrediendSprites:
@@ -25772,7 +25755,7 @@ MonoBehaviour:
   - {fileID: 118832954}
   passLevelCounter: 0
   friendsAvatars: []
-  target: 0
+  target: 5
   TargetCages: 0
   TargetBombs: 0
   itemsHided: 0
@@ -25786,7 +25769,7 @@ MonoBehaviour:
   PlayFab: 0
   flower: {fileID: 107552, guid: 0a071ea80298917468648bade3061b0a, type: 2}
   bombsCollect: 10
-  bombTimer: 10
+  bombTimer: 16
   NumIngredients: 0
   backgroundCenters: {x: 0, y: 0, z: 0}
   waitingBoost: {fileID: 0}
@@ -60311,7 +60294,7 @@ RectTransform:
   m_LocalScale: {x: 0.9999697, y: 0.9999697, z: 0.9999697}
   m_Children: []
   m_Father: {fileID: 322804609}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -66123,7 +66106,7 @@ RectTransform:
   m_Children:
   - {fileID: 2069182695}
   m_Father: {fileID: 322804609}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -67461,7 +67444,7 @@ RectTransform:
   m_LocalScale: {x: 0.9999697, y: 0.9999697, z: 0.9999697}
   m_Children: []
   m_Father: {fileID: 322804609}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -73771,9 +73754,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -15}
+  m_AnchoredPosition: {x: 0, y: 120}
   m_SizeDelta: {x: 1536, y: 270}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1477644480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84889,13 +84872,13 @@ RectTransform:
   m_Children:
   - {fileID: 2035937089}
   m_Father: {fileID: 322804609}
-  m_RootOrder: 9
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 315, y: 317}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -353, y: 416.99994}
   m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1669494093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93581,7 +93564,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 322804609}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -101401,7 +101384,7 @@ Canvas:
   m_GameObject: {fileID: 1970235629}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 511786107}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -105163,7 +105146,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 322804609}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}

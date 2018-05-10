@@ -27,6 +27,8 @@ public class DailyRewardChest : MonoBehaviour
 	[SerializeField]
 	Text timerText;
 	[SerializeField]
+	Button openButton;
+	[SerializeField]
 	Button adButton;
 
 	[SerializeField]
@@ -249,12 +251,15 @@ public class DailyRewardChest : MonoBehaviour
 //		adButton.gameObject.SetActive(false);
 		InitScript.Instance.currentReward = RewardedAdsType.ChestBox;
 		InitScript.Instance.ShowRewardedAds();
+
+		GameTutorialManager.Instance.CloseTutorial();
 	}
 
 	public void OnOpenButtonPressed ()
 	{
 		// Open box
 //		box3DPrefab
+		GameTutorialManager.Instance.CloseTutorial();
 		bool shouldSpendGems = false;
 		switch (data.type)
 		{
@@ -331,5 +336,13 @@ public class DailyRewardChest : MonoBehaviour
 		CheckDailyReward();
 	}
 
+	public void CheckTutorial ()
+	{
+		if (data.type.Equals(ChestType.daily))
+		{
+			GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Open_ChestBox, openButton.image.rectTransform);
+			GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Open_ChestBox_WithAd, adButton.image.rectTransform);
+		}
+	}
 
 }

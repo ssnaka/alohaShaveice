@@ -487,11 +487,11 @@ public class AnimationManager : MonoBehaviour
 		}
 		if (gameObject.name == "Tutorial") {
 			//LevelManager.Instance.gameStatus = GameState.WaitForPopup;
-			if (!InitScript.Instance.didTutorialShown)
+			if (!GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial))
 			{
 				DailyRewardManager.Instance.EnableReward(true);
 			}
-			InitScript.Instance.didTutorialShown = true;
+			GameTutorialManager.Instance.SetLocalTutorialStatus(TutorialType.First_Tutorial);
 			PlayerPrefs.SetInt("didTutorialShown", 1);
 		}
 
@@ -514,6 +514,11 @@ public class AnimationManager : MonoBehaviour
 //		SoundBase.Instance.PlaySound(SoundBase.Instance.swish[1]);
 
 		gameObject.SetActive(false);
+
+		if (name == "MenuPlay") 
+		{
+			GameTutorialManager.Instance.CheckBoostShopTutorial();
+		}
 	}
 
 	public void SwishSound()

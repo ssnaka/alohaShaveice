@@ -74,7 +74,7 @@ public class Flower : MonoBehaviour
 		float distance = Vector3.Distance(pos1, pos2);
 		float aSpeed = speed;
 		if (directFly)
-			aSpeed *= 30;
+			aSpeed *= 5;
 		float fracJourney = 0;
 		particleSystem.gravityModifier = 0.1f;
 		particleSystem.Play();

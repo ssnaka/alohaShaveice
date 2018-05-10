@@ -21,7 +21,6 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 
 	public void Init()
 	{
-		// do nothing
 		EnableReward(false);
 		ReadData();
 		SetupChestBoxes();
@@ -69,16 +68,25 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 
 	public void CheckRewardToShow ()
 	{
+		bool result = false;
 		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));
-		if (dailyRewardChest.CheckDailyReward() && InitScript.Instance.didTutorialShown)
+		if (dailyRewardChest.CheckDailyReward() && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial))
 		{
+			result = true;
 			EnableReward(true);
+		}
+
+		if (!result)
+		{
+			GameTutorialManager.Instance.CheckBoostShopTutorial();
 		}
 	}
 
 	public void OnCloseButtonPressed ()
 	{
 		EnableReward(false);
+		GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Try_ChestBox, GameObject.Find("DailyReward").GetComponent<RectTransform>());
+		GameTutorialManager.Instance.CheckBoostShopTutorial();
 	}
 
 	public void ShowOpenChest (List<PossibleReward> _possibleRewards, GameObject _chestPrefab)
@@ -115,7 +123,14 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 
 	public void OnFinished()
 	{
-		
+		StartCoroutine(TutorialCheckRoutine());
 	}
 	#endregion
+
+	IEnumerator TutorialCheckRoutine ()
+	{
+		yield return new WaitForEndOfFrame();
+		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));
+		dailyRewardChest.CheckTutorial();
+	}
 }

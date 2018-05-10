@@ -59,6 +59,8 @@ public class BoostShop : MonoBehaviour
 				videoButtonObject.SetActive(false);
 			}
 		}
+
+		GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Buy_Boosts_WithAd, videoButtonObject.GetComponent<RectTransform>());
     }
 
     public void BuyBoost(GameObject button)

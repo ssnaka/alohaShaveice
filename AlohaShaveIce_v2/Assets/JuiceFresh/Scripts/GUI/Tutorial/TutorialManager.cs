@@ -8,27 +8,34 @@ public class TutorialManager : MonoBehaviour {
     public GameObject text;
     public GameObject canvas;
     bool showed;
-    void OnEnable() {
+
+    void OnEnable() 
+	{
         LevelManager.OnLevelLoaded += CheckNewTarget;
         LevelManager.OnStartPlay += DisableTutorial;
     }
 
-    void OnDisable() {
+    void OnDisable() 
+	{
         LevelManager.OnLevelLoaded -= CheckNewTarget;
         LevelManager.OnStartPlay -= DisableTutorial;
     }
 
-    void DisableTutorial() {
+    void DisableTutorial() 
+	{
         if (!showed && LevelManager.THIS.currentLevel == 1) {
             ChangeLayerNum(0);
             tutorial.SetActive(false);
+			GameTutorialManager.Instance.SetLocalTutorialStatus(TutorialType.Level1);
             showed = true;
         }
     }
 
 
-    void CheckNewTarget() {
-        if (LevelManager.THIS.currentLevel == 1 && !showed)
+    void CheckNewTarget() 
+	{
+		showed = GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1);
+		if (LevelManager.THIS.currentLevel == 1 && !showed)
             StartCoroutine(WaitForCombine());
 
     }

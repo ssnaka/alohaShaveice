@@ -290,6 +290,7 @@ MonoBehaviour:
   currencyText: {fileID: 114447209076869770}
   currencyTextBehaviour: {fileID: 114817267815146812}
   timerText: {fileID: 114621551915537510}
+  openButton: {fileID: 114588385288088422}
   adButton: {fileID: 114736468535078908}
   chestImageAnimation: {fileID: 111900609577613060}
   titleTextAssets:

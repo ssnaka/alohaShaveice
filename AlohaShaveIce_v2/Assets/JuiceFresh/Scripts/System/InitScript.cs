@@ -181,8 +181,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public int maxVideoPerDay;
 
-	public bool didTutorialShown = false;
-
 	[SerializeField]
 	LIFESAddCounter lifesAddCounterScript;
 
@@ -217,7 +215,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 		Gems = ZPlayerPrefs.GetInt("Gems");
 		lifes = ZPlayerPrefs.GetInt("Lifes");
-		didTutorialShown = PlayerPrefs.GetInt("didTutorialShown", 0) == 1;
 
 		if (PlayerPrefs.GetInt("Lauched") == 0)
 		{    //First lauching
@@ -324,12 +321,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	void ShowFirstTutorial ()
 	{
-		if (didTutorialShown)
-		{
-			return;
-		}
-
-		GameObject.Find("CanvasGlobal").transform.Find("Tutorial").gameObject.SetActive(true);
+		GameTutorialManager.Instance.ShowFirstTutorial();
 	}
 
 	void Update ()
@@ -1164,6 +1156,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void OnRewardButtonPressed ()
 	{
+		GameTutorialManager.Instance.CloseTutorial();
 		DailyRewardManager.Instance.EnableReward(true);
 	}
 

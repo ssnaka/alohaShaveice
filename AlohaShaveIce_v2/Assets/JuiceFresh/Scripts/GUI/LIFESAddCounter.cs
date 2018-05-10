@@ -188,8 +188,6 @@ public class LIFESAddCounter : MonoBehaviour
 			SetupInfiniteLifeWithTime(randomDuration);
 		}
 
-		isInfiniteLife = InitScript.lifes < 0 ? true : false;
-
 		if (!isInfiniteLife)
 		{
 			TotalTimeForRestLife = InitScript.Instance.TotalTimeForRestLifeHours * 60 * 60 + InitScript.Instance.TotalTimeForRestLifeMin * 60 + InitScript.Instance.TotalTimeForRestLifeSec;
@@ -201,11 +199,14 @@ public class LIFESAddCounter : MonoBehaviour
 	public void SetupInfiniteLifeWithTime (int _duration)
 	{
 		InitScript.lifes = -1;
+		isInfiniteLife = InitScript.lifes < 0 ? true : false;
 
 		InitScript.RestLifeTimer += _duration;
 		InitScript.DateOfExit = DateTime.Now.ToString();
 
 		ZPlayerPrefs.SetFloat("RestLifeTimer", InitScript.RestLifeTimer);
 		TotalTimeForRestLife = _duration;
+
+		readyToUpdate = true;
 	}
 }

@@ -71,6 +71,7 @@ public class BoostIcon : MonoBehaviour
 	                Check();
 	            }
 
+				GameTutorialManager.Instance.CloseTutorial();
 	        }
 	        else
 	        {
@@ -98,6 +99,23 @@ public class BoostIcon : MonoBehaviour
         LevelManager.THIS.BoostPackage = 0;
         LevelManager.THIS.BoostStriped = 0;
         check = false;
+
+		TutorialType tutorialType = TutorialType.Use_ColorBomb;
+		if (BoostCount() > 0)
+		{
+			switch (type)
+			{
+			case BoostType.Stripes:
+				tutorialType = TutorialType.Use_Stripe;
+				break;
+			case BoostType.Colorful_bomb:
+				break;
+			default:
+				break;
+			}
+
+			GameTutorialManager.Instance.ShowMenuTutorial(tutorialType, GetComponent<RectTransform>());
+		}
     }
 
     void Check()
@@ -159,9 +177,41 @@ public class BoostIcon : MonoBehaviour
 				else
 					ShowPlus(true);
 			}
+			if (LevelManager.THIS != null)
+			{
+				if (LevelManager.THIS.gameStatus == GameState.PrepareGame && BoostCount() > 0 && LevelManager.THIS.currentLevel > 1)
+				{
+					TutorialType tutorialType = GetTutorialType();
+					GameTutorialManager.Instance.ShowMenuTutorial(tutorialType, GetComponent<RectTransform>());
+				}
+			}
 		}
 	}
 
+	TutorialType GetTutorialType ()
+	{
+		TutorialType tutorialType = TutorialType.None;
+		switch (type)
+		{
+		case BoostType.Bomb:
+			tutorialType = TutorialType.Use_Bomb;
+			break;
+		case BoostType.Energy:
+			tutorialType = TutorialType.Use_Energy;
+			break;
+		case BoostType.Shovel:
+			tutorialType = TutorialType.Use_Shovel;
+			break;
+		case BoostType.ExtraMoves:
+			tutorialType = TutorialType.Use_ExtraMove;
+			break;
+		case BoostType.ExtraTime:
+			tutorialType = TutorialType.Use_ExtraTime;
+			break;
+		}
+
+		return tutorialType;
+	}
 //    void Update()
 //    {
 //        if (boostCount != null)

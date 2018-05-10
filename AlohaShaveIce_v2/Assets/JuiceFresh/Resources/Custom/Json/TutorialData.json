@@ -1,0 +1,71 @@
+{
+  "tutorials" :
+  [
+    
+    {
+      "type" : "Buy_Boosts",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Buy_Boosts"
+    },
+    {
+      "type" : "Buy_Boosts_WithAd",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Buy_Boosts_WithAd"
+    },
+    {
+      "type" : "Open_ChestBox",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Open_ChestBox"
+    },
+    {
+      "type" : "Open_ChestBox_WithAd",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Open_ChestBox_WithAd"
+    },
+    {
+      "type" : "Try_ChestBox",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Try_ChestBox"
+    },
+    {
+      "type" : "Use_Stripe",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_Stripe"
+    },
+    {
+      "type" : "Use_Bomb",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_Bomb"
+    },
+    {
+      "type" : "Use_ColorBomb",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_ColorBomb"
+    },
+    {
+      "type" : "Use_Shovel",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_Shovel"
+    },
+    {
+      "type" : "Use_Energy",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_Energy"
+    },
+    {
+      "type" : "Use_ExtraMove",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_ExtraMove"
+    },
+    {
+      "type" : "Use_ExtraTime",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_ExtraTime"
+    },
+    {
+      "type" : "Use_Bomb_InLevel",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_Bomb_InLevel"
+    }
+  ]
+}

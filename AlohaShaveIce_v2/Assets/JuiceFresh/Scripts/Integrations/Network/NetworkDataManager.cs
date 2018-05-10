@@ -22,6 +22,8 @@ public class NetworkDataManager
 #elif GAMESPARKS
 		dataManager = new GamesparksDataManager();
 #endif
+
+		NetworkManager.OnLoginEvent += GetTutorial;
 		NetworkManager.OnLoginEvent += GetPlayerLevel;
 		LevelManager.OnEnterGame += GetPlayerScore;
 		NetworkManager.OnLogoutEvent += Logout;
@@ -31,6 +33,7 @@ public class NetworkDataManager
 	public void Logout ()
 	{
 		dataManager.Logout();
+		NetworkManager.OnLoginEvent -= GetTutorial;
 		NetworkManager.OnLoginEvent -= GetPlayerLevel;
 		LevelManager.OnEnterGame -= GetPlayerScore;
 		NetworkManager.OnLoginEvent -= GetBoosterData;
@@ -175,6 +178,26 @@ public class NetworkDataManager
 
 
 	#endregion
+
+#region Tutorial
+	public void UpdateTutorial ()
+	{
+		string tutorialJson = PlayerPrefs.GetString("tutorialSaveData");
+		TutorialSaveData tutorialSaveData = Newtonsoft.Json.JsonConvert.DeserializeObject<TutorialSaveData>(tutorialJson);
+		dataManager.UpdateTutorial(tutorialSaveData);
+	}
+
+	public void GetTutorial ()
+	{
+		if (!NetworkManager.THIS.IsLoggedIn)
+			return;
+
+		dataManager.GetTutorial((tutorialSaveData) =>
+		{
+			GameTutorialManager.Instance.SaveLocalTutorialData(tutorialSaveData);
+		});
+	}
+#endregion
 
 	public	void SetTotalStars ()
 	{

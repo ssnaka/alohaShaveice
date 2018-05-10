@@ -78,7 +78,10 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 
 		if (!result)
 		{
-			GameTutorialManager.Instance.CheckBoostShopTutorial();
+			if (GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial))
+			{
+				GameTutorialManager.Instance.CheckBoostShopTutorial();
+			}
 		}
 	}
 

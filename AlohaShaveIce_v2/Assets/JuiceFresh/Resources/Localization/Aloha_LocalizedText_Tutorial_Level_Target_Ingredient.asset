@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af65ee6b0f35f974dba93979a07edbce, type: 3}
-  m_Name: Aloha_LocalizedText_LevelTarget_Item
+  m_Name: Aloha_LocalizedText_Tutorial_Level_Target_Ingredient
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Collect the items
+    m_Value: Collect all ingredients by dropping to the bottm
   - m_Language: 23
-    m_Value: "\uBE59\uC218 \uBAA8\uC73C\uAE30"
+    m_Value: "\uBE59\uC218\uC5D0 \uB4E4\uC5B4\uAC08 \uC7AC\uB8CC\uB97C \uBC14\uB2E5\uC73C\uB85C
+      \uBCF4\uB0B4\uC11C \uBAA8\uC544\uBCF4\uC544\uC694."

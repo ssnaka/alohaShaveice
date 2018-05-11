@@ -3,25 +3,31 @@ using System.Collections.Generic;
 
 public enum TutorialType
 {
-	First_Tutorial,
-	Level1,
+	First_Tutorial,			//0
+	Level1,					//1
 
-	Buy_Boosts,
-	Buy_Boosts_WithAd,
+	Buy_Boosts,				//2
+	Buy_Boosts_WithAd,		//3
 
-	Open_ChestBox,
-	Open_ChestBox_WithAd,
-	Try_ChestBox,
+	Open_ChestBox,			//4
+	Open_ChestBox_WithAd,	//5
+	Try_ChestBox,			//6
 
-	Use_Stripe,
-	Use_Bomb,
-	Use_ColorBomb,
-	Use_Shovel,
-	Use_Energy,
-	Use_ExtraTime,
-	Use_ExtraMove,
+	Use_Stripe,				//7
+	Use_Bomb,				//8
+	Use_ColorBomb,			//9
+	Use_Shovel,				//10
+	Use_Energy,				//11
+	Use_ExtraTime,			//12
+	Use_ExtraMove,			//13
 
-	Use_Bomb_InLevel,
+	Use_Bomb_InLevel,		//14
+
+	Level_Target_Block,		//15
+	Level_Target_Bomb,		//16
+	Level_Target_Bubble,	//17
+	Level_Target_Ingredient,//18
+	Level_Target_Item,		//19
 
 	None,
 }

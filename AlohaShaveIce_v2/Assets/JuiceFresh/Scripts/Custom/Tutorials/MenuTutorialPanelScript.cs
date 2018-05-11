@@ -87,6 +87,7 @@ public class MenuTutorialPanelScript : MonoBehaviour
 
 	public void SetUpTutorialForLevel (ATutorial _tutorialData, Transform _pivot, Canvas _tutorialCanvas)
 	{
+		LevelManager.OnStartPlay += OnCloseButtonPressed;
 		float aMergin = mergin * 2;
 		tutorialData = _tutorialData;
 		Vector3 pivotScreenPosition = Camera.main.WorldToScreenPoint(_pivot.position);
@@ -142,6 +143,7 @@ public class MenuTutorialPanelScript : MonoBehaviour
 
 	public void OnDisable ()
 	{
+		LevelManager.OnStartPlay -= OnCloseButtonPressed;
 		GameTutorialManager.Instance.SetLocalTutorialStatus(tutorialData.type);
 	}
 }

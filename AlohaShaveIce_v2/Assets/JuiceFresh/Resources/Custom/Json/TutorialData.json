@@ -66,6 +66,31 @@
       "type" : "Use_Bomb_InLevel",
       "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
       "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_Bomb_InLevel"
+    },
+    {
+      "type" : "Level_Target_Block",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Level_Target_Block"
+    },
+    {
+      "type" : "Level_Target_Bomb",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Level_Target_Bomb"
+    },
+    {
+      "type" : "Level_Target_Bubble",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Level_Target_Bubble"
+    },
+    {
+      "type" : "Level_Target_Ingredient",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Level_Target_Ingredient"
+    },
+    {
+      "type" : "Level_Target_Item",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Level_Target_Item"
     }
   ]
 }

@@ -466,6 +466,72 @@ public class LevelManager : MonoBehaviour
 			{
 				Time.timeScale = 1;
 
+				switch (LevelManager.THIS.target)
+				{
+					case Target.BLOCKS:
+						for (int col = 0; col < maxCols; col++)
+						{
+							for (int row = maxRows - 1; row >= 0; row--)
+							{
+								Square square = GetSquare(col, row);
+								if (square.type == SquareTypes.BLOCK)
+								{
+									GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Level_Target_Block, square.transform);
+									break;
+								}
+							}
+						}
+						break;
+					case Target.BOMBS:
+						// Handled in IntiBombs()
+						break;
+					case Target.CAGES:
+						for (int col = 0; col < maxCols; col++)
+						{
+							for (int row = maxRows - 1; row >= 0; row--)
+							{
+								Square square = GetSquare(col, row);
+								if (square.type == SquareTypes.WIREBLOCK)
+								{
+									GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Level_Target_Bubble, square.transform);
+									break;
+								}
+							}
+						}
+						break;
+					case Target.COLLECT:
+						for (int col = 0; col < maxCols; col++)
+						{
+							for (int row = maxRows - 1; row >= 0; row--)
+							{
+								Square square = GetSquare(col, row);
+								Item item = square.item;
+								if (item != null && item.currentType == ItemsTypes.INGREDIENT)
+								{
+									GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Level_Target_Ingredient, square.transform);
+									break;
+								}
+							}
+						}
+						break;
+					case Target.ITEMS:
+						for (int col = 0; col < maxCols; col++)
+						{
+							for (int row = maxRows - 1; row >= 0; row--)
+							{
+								Square square = GetSquare(col, row);
+								Item item = square.item;
+								if (item != null && item.color == (int)collectItems[0] - 1)
+								{
+									GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Level_Target_Item, square.transform);
+									break;
+								}
+							}
+						}
+						break;
+					default:
+						break;
+				}
 
 				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
 			}
@@ -948,7 +1014,6 @@ public class LevelManager : MonoBehaviour
 
 		foreach (Item item in itemsRand)
 		{
-
 			item.nextType = ItemsTypes.BOMB;
 
 			if (bombTimers.Count > 0)//1.3
@@ -956,7 +1021,8 @@ public class LevelManager : MonoBehaviour
 			i++;
 			item.ChangeType();
 		}
-
+			
+		GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Level_Target_Bomb, itemsRand[0].square.transform);
 	}
 
 	public void RechargeBombs ()

@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af65ee6b0f35f974dba93979a07edbce, type: 3}
-  m_Name: Aloha_LocalizedText_LevelTarget_Item
+  m_Name: Aloha_LocalizedText_Tutorial_Level_Target_Bubble
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Collect the items
+    m_Value: Pop bubble by connecting same color of sahved ice.
   - m_Language: 23
-    m_Value: "\uBE59\uC218 \uBAA8\uC73C\uAE30"
+    m_Value: "\uAC19\uC740 \uC0C9\uC758 \uBE59\uC218\uB97C \uC5F0\uACB0\uD574\uC11C
+      \uBB3C\uBC29\uC6B8\uC744 \uD130\uB728\uB824\uBCF4\uC544\uC694."

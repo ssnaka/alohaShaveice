@@ -10,10 +10,6 @@ public class GameInitScript : MonoBehaviour
 	{
 		Localization.Instance.CurrentLanguage = Application.systemLanguage; //SystemLanguage.Korean;
 		MusicBase.Instance.PlayBGM("alohaShaveIce_music_03paipai", true, true);
-	}
-
-	void OnApplicationPause (bool pauseStatus)
-	{
-		NotificationCenter.Instance.CancelAllLocalNotification();
+		NotificationCenter.Instance.Init();
 	}
 }

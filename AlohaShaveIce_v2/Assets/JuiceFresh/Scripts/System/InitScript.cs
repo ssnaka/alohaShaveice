@@ -187,7 +187,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	// Use this for initialization
 	void Awake ()
 	{
-		Localization.Instance.CurrentLanguage = Application.systemLanguage; //SystemLanguage.Korean;
+		Localization.Instance.CurrentLanguage = SystemLanguage.Korean;//Application.systemLanguage; //SystemLanguage.Korean;
 		ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
 
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -302,7 +302,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 		SetupInfiniteLife(false);
 
-		NotificationCenter.Instance.Init();
+//		NotificationCenter.Instance.Init();
 //		LoadingCanvasScript.Instance.HideLoading();
 
 		DailyRewardManager.Instance.Init();
@@ -1013,8 +1013,19 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			if (lifes >= 0 && lifes < CapOfLife)
 			{
 				double notificationTimeAfter = ZPlayerPrefs.GetFloat("RestLifeTimer") + ((CapOfLife - lifes - 1) * TotalTimeForRestLifeMin * 60);
-//				Debug.LogError(notificationTimeAfter);
+				Debug.LogError(notificationTimeAfter);
 				RegisterLocalNotification(notificationTimeAfter, "Aloha", "Your life is full. Come back to play!");
+			}
+
+			string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
+			DateTime dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
+			DateTime nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
+			if (DateTime.Now.CompareTo(nextDailyRewardTime) < 0)
+			{
+				TimeSpan timeSpan = nextDailyRewardTime.Subtract(DateTime.Now);
+				double notificationTimeAfter = timeSpan.TotalSeconds;
+				Debug.LogError(notificationTimeAfter);
+				RegisterLocalNotification(notificationTimeAfter, "Aloha", "New Chest is reay. Come and open it!");
 			}
 		}
 		else
@@ -1104,6 +1115,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		localNotificationItemList.Add(item_01);
 		// can add more notification by adding to list.
 		NotificationCenter.Instance.RegisterLocalNotifications(localNotificationItemList);
+		Debug.LogError(localNotificationId);
 	}
 
 	public void GiveDailyReward (PossibleReward _reward)

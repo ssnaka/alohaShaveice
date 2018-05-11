@@ -9,6 +9,7 @@ public class MapBackgroundManager : MonoBehaviour {
 	GameObject mapBGPrefab;
 	[SerializeField]
 	Transform mapBGParent;
+
 	[SerializeField]
 	List<Sprite> mapBackgroundSpriteList;
 	[SerializeField]
@@ -25,7 +26,10 @@ public class MapBackgroundManager : MonoBehaviour {
 	{
 //		CreateMapBGPool();
 		LevelsMap._instance.OnReset += LevelsMap__instance_OnReset;
+
+		mainCamera.GetComponent<MapCamera>().SetCameraBounds(mapBackgroundSpriteList);
 	}
+
 
 	void LevelsMap__instance_OnReset ()
 	{

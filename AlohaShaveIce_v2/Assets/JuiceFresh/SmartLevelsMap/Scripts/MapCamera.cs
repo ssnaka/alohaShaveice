@@ -161,4 +161,17 @@ public class MapCamera : MonoBehaviour
 		return position;
 	}
 
+	public void SetCameraBounds (List<Sprite> _bgSpriteList)
+	{
+		float totalHeight = 0.0f;
+		for (int i = 0 ; i < _bgSpriteList.Count; i++)
+		{
+			totalHeight += _bgSpriteList[i].bounds.size.y;
+		}
+
+		Bounds = new Bounds(
+			new Vector3(Bounds.center.x, totalHeight/2.1f, Bounds.center.z),
+			new Vector3(Bounds.size.x, totalHeight, Bounds.size.z));
+	}
+
 }

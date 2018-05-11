@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Component: {fileID: 114402994159157740}
   m_Property: text
-  m_LocalizedAsset: {fileID: 0}
+  m_LocalizedAsset: {fileID: 11400000, guid: 57f1ce14ed16242d3b23e38e854952b5, type: 2}
   m_FormatArgs: []
 --- !u!114 &114843328829360622
 MonoBehaviour:

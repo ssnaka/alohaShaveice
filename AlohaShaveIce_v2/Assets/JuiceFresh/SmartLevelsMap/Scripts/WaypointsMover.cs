@@ -14,10 +14,11 @@ public class WaypointsMover : MonoBehaviour
     private bool _isRunning;
     private bool _isForwardDirection;
 
+	Vector3 originPosition;
     [HideInInspector]
     public Assets.Plugins.SmartLevelsMap.Scripts.Path Path;
 
-    [HideInInspector]
+//    [HideInInspector]
     public float Speed;
 
     public void Start()
@@ -38,7 +39,7 @@ public class WaypointsMover : MonoBehaviour
         _nextInd = Path.Waypoints.IndexOf(from);
         _finishInd = Path.Waypoints.IndexOf(to);
         _isForwardDirection = _finishInd > _nextInd;
-        transform.position = from.position;
+		transform.position = originPosition = from.position;
         _isRunning = true;
         TakeNextWaypoint();
     }
@@ -73,18 +74,22 @@ public class WaypointsMover : MonoBehaviour
     #region Linear
     private void UpdateLinear()
     {
-        Transform waypoint = Path.Waypoints[_nextInd];
+		Transform waypoint = Path.Waypoints[_finishInd];
         Vector3 direction = (waypoint.position - transform.position).normalized;
-        Vector3 nextPosition = transform.position + direction * Speed * Time.deltaTime;
-        if (Vector3.Distance(transform.position, waypoint.position) <=
-            Vector3.Distance(transform.position, nextPosition))
+//		Vector3 nextPosition = Vector3.Lerp(transform.position, waypoint.position, Speed * Time.deltaTime);//
+		Vector3 nextPosition = transform.position + direction * Speed * Time.deltaTime;
+//		Debug.LogError(Vector3.Distance(transform.position, waypoint.position));
+//		Debug.LogError(Vector3.Distance(transform.position, nextPosition));
+        if (Vector3.Distance(transform.position, waypoint.position) <= Vector3.Distance(transform.position, nextPosition))
+//		if (Vector3.Distance(transform.position, nextPosition) <= 0.005f)
         {
             transform.position = waypoint.position;
+//			_nextInd = _finishInd;
             TakeNextWaypoint();
         }
         else
         {
-            transform.position = nextPosition;
+			transform.position = nextPosition;
         }
     }
 
@@ -94,6 +99,7 @@ public class WaypointsMover : MonoBehaviour
     private void UpdateCurved()
     {
         _splineT += Time.deltaTime / _partTime;
+		Debug.LogError(_splineT);
         if (_splineT > 1.0f)
         {
             _splineT = 0.0f;

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Break all ice blocks
+    m_Value: Pop all bubbles
   - m_Language: 23
-    m_Value: "\uC5BC\uC74C\uB369\uC5B4\uB9AC \uAE68\uAE30"
+    m_Value: "\uBB3C\uBC29\uC6B8 \uD130\uB728\uB9AC\uAE30"

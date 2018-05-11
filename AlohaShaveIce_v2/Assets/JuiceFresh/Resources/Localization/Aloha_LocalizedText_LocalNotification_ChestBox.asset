@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af65ee6b0f35f974dba93979a07edbce, type: 3}
-  m_Name: Aloha_LocalizedText_LocalNotification_Life
+  m_Name: Aloha_LocalizedText_LocalNotification_ChestBox
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Skip
+    m_Value: New Chest box is ready. Come and open it!
   - m_Language: 23
-    m_Value: "\uB2EB\uAE30"
+    m_Value: "\uC0C8\uB85C\uC6B4 \uBCF4\uBB3C\uC0C1\uC790 \uBC1C\uACAC! \uC5F4\uC5B4\uBCF4\uB7EC
+      \uAC00\uC988\uC544~!"

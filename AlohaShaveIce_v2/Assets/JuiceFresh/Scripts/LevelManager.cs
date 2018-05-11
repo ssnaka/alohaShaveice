@@ -1344,11 +1344,12 @@ public class LevelManager : MonoBehaviour
 		if (Limit <= 0)
 		{
 			bool lose = false;
+			AddLimit(-Limit);
 			Limit = 0;
-			if (OnLimitUpdate != null)
-			{
-				OnLimitUpdate(Limit);
-			}
+//			if (OnLimitUpdate != null)
+//			{
+//				OnLimitUpdate(Limit);
+//			}
 
 			if (LevelManager.THIS.target == Target.BLOCKS && LevelManager.THIS.TargetBlocks > 0)
 			{
@@ -1510,12 +1511,15 @@ public class LevelManager : MonoBehaviour
 //		for (int i = 1; i <= countFlowers; i++)
 		{
 			if (limitType == LIMIT.MOVES)
-				Limit--;
-
-			if (OnLimitUpdate != null)
 			{
-				OnLimitUpdate(Limit);
+				AddLimit(-1);
+//				Limit--;
 			}
+
+//			if (OnLimitUpdate != null)
+//			{
+//				OnLimitUpdate(Limit);
+//			}
 
 			GameObject flowerParticle = GetFlowerFromPool();
 			flowerParticle.GetComponent<SpriteRenderer>().sortingLayerName = "UI";
@@ -1527,11 +1531,12 @@ public class LevelManager : MonoBehaviour
 			yield return new WaitForSeconds(0.3f);
 		}
 
-		Limit = 0;
-		if (OnLimitUpdate != null)
-		{
-			OnLimitUpdate(Limit);
-		}
+		AddLimit(-Limit);
+//		Limit = 0;
+//		if (OnLimitUpdate != null)
+//		{
+//			OnLimitUpdate(Limit);
+//		}
 
 		while (CheckFlowerStillFly())
 			yield return new WaitForSeconds(0.3f);
@@ -1856,13 +1861,14 @@ public class LevelManager : MonoBehaviour
 					FindMatches();
 					if (LevelManager.Instance.limitType == LIMIT.MOVES)
 					{
-						LevelManager.THIS.Limit--;
+						AddLimit(-1);
+//						LevelManager.THIS.Limit--;
 					}
 
-					if (OnLimitUpdate != null)
-					{
-						OnLimitUpdate(Limit);
-					}
+//					if (OnLimitUpdate != null)
+//					{
+//						OnLimitUpdate(Limit);
+//					}
 
 					LevelManager.THIS.moveID++;
 				}
@@ -1874,12 +1880,13 @@ public class LevelManager : MonoBehaviour
 						{
 							if (LevelManager.Instance.limitType == LIMIT.MOVES)
 							{
-								LevelManager.THIS.Limit--;
-
-								if (OnLimitUpdate != null)
-								{
-									OnLimitUpdate(Limit);
-								}
+								AddLimit(-1);
+//								LevelManager.THIS.Limit--;
+//
+//								if (OnLimitUpdate != null)
+//								{
+//									OnLimitUpdate(Limit);
+//								}
 							}
 						}
 						item.SleepItem();
@@ -1911,11 +1918,12 @@ public class LevelManager : MonoBehaviour
 			{
 				if (LevelManager.Instance.limitType == LIMIT.TIME)
 				{
-					LevelManager.THIS.Limit--;
-					if (OnLimitUpdate != null)
-					{
-						OnLimitUpdate(Limit);
-					}
+					AddLimit(-1);
+//					LevelManager.THIS.Limit--;
+//					if (OnLimitUpdate != null)
+//					{
+//						OnLimitUpdate(Limit);
+//					}
 					CheckWinLose();
 				}
 			}
@@ -3593,11 +3601,14 @@ public class LevelManager : MonoBehaviour
 				string blocksString = line.Replace("LIMIT", string.Empty).Trim();
 				string[] sizes = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				limitType = (LIMIT)int.Parse(sizes[0]);
-				Limit = int.Parse(sizes[1]);
-				if (OnLimitUpdate != null)
-				{
-					OnLimitUpdate(Limit);
-				}
+
+				Limit = 0;
+				AddLimit(int.Parse(sizes[1]));
+//				Limit = int.Parse(sizes[1]);
+//				if (OnLimitUpdate != null)
+//				{
+//					OnLimitUpdate(Limit);
+//				}
 			}
 			else if (line.StartsWith("COLOR LIMIT "))
 			{
@@ -3725,6 +3736,14 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
+	public void AddLimit (int _adds)
+	{
+		Limit += _adds;
+		if (OnLimitUpdate != null)
+		{
+			OnLimitUpdate(Limit);
+		}
+	}
 }
 
 [System.Serializable]

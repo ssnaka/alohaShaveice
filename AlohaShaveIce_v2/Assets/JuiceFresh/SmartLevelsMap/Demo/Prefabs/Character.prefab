@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: {fileID: 0}
-  Speed: 6.6
+  Speed: 2.5
 --- !u!114 &11448558
 MonoBehaviour:
   m_ObjectHideFlags: 1

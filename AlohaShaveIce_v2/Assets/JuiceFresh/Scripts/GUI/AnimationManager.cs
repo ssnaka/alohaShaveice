@@ -231,6 +231,7 @@ public class AnimationManager : MonoBehaviour
 
 	public void ShowAds()
 	{
+		GameTutorialManager.Instance.CloseTutorial();
 		if (name == "GemsShop")
 			InitScript.Instance.currentReward = RewardedAdsType.GetGems;
 		else if (name == "LiveShop")
@@ -462,18 +463,19 @@ public class AnimationManager : MonoBehaviour
 
 	bool shouldPlaySwishSound = false;
 	public void CloseMenu()
-	{
-		
+	{	
 		if (gameObject.name == "MenuPreGameOver") {
 			ShowGameOver();
 		}
 		if (gameObject.name == "MenuComplete") {
 			LevelManager.THIS.gameStatus = GameState.Map;
 			//1.4.5
-			if (PlayerPrefs.GetInt("OpenLevel") + 1 <= LevelsMap._instance.GetMapLevels().Count) {
+			if (PlayerPrefs.GetInt("OpenLevel") + 1 <= LevelsMap._instance.GetMapLevels().Count) 
+			{
 				PlayerPrefs.SetInt("OpenLevel", LevelManager.THIS.currentLevel + 1);
-				GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
-			} else {
+//				GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
+			} else 
+			{
 				GameObject g = Instantiate(Resources.Load("Prefabs/Congratulations"), Vector2.zero, Quaternion.identity) as GameObject;
 				g.transform.SetParent(GameObject.Find("CanvasGlobal").transform);
 				g.transform.localScale = Vector3.one;
@@ -716,13 +718,19 @@ public class AnimationManager : MonoBehaviour
 	public void GoOnFailed()
 	{
 		if (LevelManager.THIS.limitType == LIMIT.MOVES)
-			LevelManager.THIS.Limit += LevelManager.THIS.ExtraFailedMoves;
+		{
+			LevelManager.THIS.AddLimit(LevelManager.THIS.ExtraFailedMoves);
+//			LevelManager.THIS.Limit += LevelManager.THIS.ExtraFailedMoves;
+		}
 		else {
-			LevelManager.THIS.Limit += LevelManager.THIS.ExtraFailedSecs;
+			LevelManager.THIS.AddLimit(LevelManager.THIS.ExtraFailedSecs);
+//			LevelManager.THIS.Limit += LevelManager.THIS.ExtraFailedSecs;
 		}
 
 		if (LevelManager.THIS.target == Target.BOMBS)//1.3
+		{
 			LevelManager.THIS.RechargeBombs();
+		}
 		//GetComponent<Animation>()["bannerFailed"].speed = 1;
 		keepGaming = true;
 //		MusicBase.Instance.GetComponent<AudioSource>().Play();

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Skip
+    m_Value: Your life is full. Come back to play!
   - m_Language: 23
-    m_Value: "\uB2EB\uAE30"
+    m_Value: "\uD30C\uC778\uC560\uD50C\uC774 \uAC00\uB4DD \uCC3C\uC5B4\uC694. \uBE68\uB9AC
+      \uC640 \uBCF4\uC138\uC694~"

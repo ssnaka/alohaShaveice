@@ -82,7 +82,12 @@ public class LevelsMap : MonoBehaviour
 	private void PlaceCharacterToLastUnlockedLevel ()
 	{
 		int lastUnlockedNumber = GetMapLevels().Where(l => !l.IsLocked).Select(l => l.Number).Max();
-		TeleportToLevelInternal(lastUnlockedNumber, true);
+		if (WaypointsMover == null || CharacterLevel == null || CharacterLevel.Number == lastUnlockedNumber)
+		{
+			TeleportToLevelInternal(lastUnlockedNumber, true);
+			return;
+		}
+		_instance.WalkToLevelInternal(lastUnlockedNumber);
 	}
 
 	public int GetLastestReachedLevel ()
@@ -229,6 +234,7 @@ public class LevelsMap : MonoBehaviour
 				{
 					RaiseLevelReached(number);
 					CharacterLevel = mapLevel;
+					GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
 				});
 		}
 	}

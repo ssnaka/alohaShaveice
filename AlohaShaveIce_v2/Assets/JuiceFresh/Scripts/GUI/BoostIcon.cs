@@ -46,7 +46,8 @@ public class BoostIcon : MonoBehaviour
 
 
     public void ActivateBoost()
-    {
+	{
+		GameTutorialManager.Instance.CloseTutorial();
 		if (canUseBoost)
 		{
 	        if (LevelManager.THIS.ActivatedBoost == this)
@@ -70,8 +71,6 @@ public class BoostIcon : MonoBehaviour
 	                LevelManager.THIS.BoostStriped = 2;
 	                Check();
 	            }
-
-				GameTutorialManager.Instance.CloseTutorial();
 	        }
 	        else
 	        {

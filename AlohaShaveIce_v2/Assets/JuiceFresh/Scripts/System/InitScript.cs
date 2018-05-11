@@ -187,7 +187,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	// Use this for initialization
 	void Awake ()
 	{
-		Localization.Instance.CurrentLanguage = SystemLanguage.Korean;//Application.systemLanguage; //SystemLanguage.Korean;
+		Localization.Instance.CurrentLanguage = Application.systemLanguage; //SystemLanguage.Korean;
 		ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
 
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -1009,12 +1009,15 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			ZPlayerPrefs.SetString("DateOfExit", DateTime.Now.ToString());
 			PlayerPrefs.Save();
 
+			LocalizedText title = Resources.Load<LocalizedText>("Localization/Aloha_LocalizedText_Welcome");
 			// notification
 			if (lifes >= 0 && lifes < CapOfLife)
 			{
 				double notificationTimeAfter = ZPlayerPrefs.GetFloat("RestLifeTimer") + ((CapOfLife - lifes - 1) * TotalTimeForRestLifeMin * 60);
-				Debug.LogError(notificationTimeAfter);
-				RegisterLocalNotification(notificationTimeAfter, "Aloha", "Your life is full. Come back to play!");
+
+				LocalizedText description = Resources.Load<LocalizedText>("Localization/Aloha_LocalizedText_LocalNotification_Life");
+				Debug.LogError(description.Value);
+				RegisterLocalNotification(notificationTimeAfter, title.Value, description.Value);
 			}
 
 			string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
@@ -1024,8 +1027,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			{
 				TimeSpan timeSpan = nextDailyRewardTime.Subtract(DateTime.Now);
 				double notificationTimeAfter = timeSpan.TotalSeconds;
-				Debug.LogError(notificationTimeAfter);
-				RegisterLocalNotification(notificationTimeAfter, "Aloha", "New Chest is reay. Come and open it!");
+				LocalizedText description = Resources.Load<LocalizedText>("Localization/Aloha_LocalizedText_LocalNotification_Life");
+				Debug.LogError(description.Value);
+				RegisterLocalNotification(notificationTimeAfter, title.Value, description.Value);
 			}
 		}
 		else

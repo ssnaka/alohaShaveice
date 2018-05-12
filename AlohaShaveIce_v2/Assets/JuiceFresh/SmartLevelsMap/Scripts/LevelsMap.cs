@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 public class LevelsMap : MonoBehaviour
 {
@@ -234,9 +235,15 @@ public class LevelsMap : MonoBehaviour
 				{
 					RaiseLevelReached(number);
 					CharacterLevel = mapLevel;
-					GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
+					StartCoroutine(OpenMenuPlayAfterCharacterMove());
 				});
 		}
+	}
+
+	IEnumerator OpenMenuPlayAfterCharacterMove ()
+	{
+		yield return new WaitForSeconds(0.3f);
+		GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
 	}
 
 	private void RaiseLevelReached (int number)

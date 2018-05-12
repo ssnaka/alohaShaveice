@@ -32,7 +32,7 @@ public class Flower : MonoBehaviour
 	public void StartFly (Vector3 pos1, bool directFly = false, int _index = 0)
 	{
 		GetComponent<SpriteRenderer>().enabled = true;
-		StartCoroutine(FlyCor(pos1, directFly));
+		StartCoroutine(FlyCor(pos1, directFly, _index));
 	}
 
 	IEnumerator FlyCor (Vector3 pos1, bool directFly = false, int _index = 0)
@@ -66,6 +66,13 @@ public class Flower : MonoBehaviour
 			minRandomRange = 1;
 			maxRandomRange = 4;
 		}
+
+		if (directFly)
+		{
+			minRandomRange = 1;
+			maxRandomRange = 5;
+		}
+
 		//if flower count is greater than 1, it only will show square bomb or cross bomb.
 		_item.nextType = (ItemsTypes)Random.Range(minRandomRange, maxRandomRange);
 

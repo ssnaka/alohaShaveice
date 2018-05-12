@@ -78,8 +78,6 @@ public class WaypointsMover : MonoBehaviour
         Vector3 direction = (waypoint.position - transform.position).normalized;
 //		Vector3 nextPosition = Vector3.Lerp(transform.position, waypoint.position, Speed * Time.deltaTime);//
 		Vector3 nextPosition = transform.position + direction * Speed * Time.deltaTime;
-//		Debug.LogError(Vector3.Distance(transform.position, waypoint.position));
-//		Debug.LogError(Vector3.Distance(transform.position, nextPosition));
         if (Vector3.Distance(transform.position, waypoint.position) <= Vector3.Distance(transform.position, nextPosition))
 //		if (Vector3.Distance(transform.position, nextPosition) <= 0.005f)
         {

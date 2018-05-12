@@ -2759,6 +2759,7 @@ public class LevelManager : MonoBehaviour
 			}
 			int destroyArrayCount = destroyAnyway.Count;
 			int iCounter = 0;
+			int cc = 0;
 			foreach (Item item in destroyAnyway)
 			{
 				iCounter++;
@@ -2776,14 +2777,13 @@ public class LevelManager : MonoBehaviour
 						{
 							startPosFlowers.Add(item.transform.position);
 							List<Item> items = GetRandomItems(1);
-							int cc = 0;
 							foreach (Item item1 in items)
 							{
 								LevelManager.THIS.DragBlocked = true;
 								throwflower = true;
 								//                                item1.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 								GameObject flowerParticle = GetFlowerFromPool();
-								flowerParticle.GetComponent<Flower>().StartFly(item.transform.position, false, iCounter);
+								flowerParticle.GetComponent<Flower>().StartFly(item.transform.position, false, cc);
 								cc++;
 							}
 						}

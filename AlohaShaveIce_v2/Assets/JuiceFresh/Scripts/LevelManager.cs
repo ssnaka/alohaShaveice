@@ -2432,7 +2432,9 @@ public class LevelManager : MonoBehaviour
 		{
 			SoundBase.Instance.PlaySound(SoundBase.Instance.noMatch);
 
-			GameObject.Find("Level/Canvas").transform.Find("NoMoreMatches").gameObject.SetActive(true);//1.4.5
+			GameObject noMoreMatches = GameObject.Find("Level/Canvas").transform.Find("NoMoreMatches").gameObject;//1.4.5
+			noMoreMatches.SetActive(true);
+			noMoreMatches.GetComponent<Animator>().Play("floating_word");
 			gameStatus = GameState.RegenLevel;
 			yield return new WaitForSeconds(1);
 			ReGenLevel();

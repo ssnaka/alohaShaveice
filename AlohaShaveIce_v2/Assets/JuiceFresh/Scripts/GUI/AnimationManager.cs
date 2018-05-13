@@ -302,6 +302,14 @@ public class AnimationManager : MonoBehaviour
 		#endif
 	}
 
+	public void OnGratzAnimationEnd ()
+	{
+		if (name == "NoMoreMatches")
+			gameObject.SetActive(false);
+		if (name == "CompleteLabel")
+			gameObject.SetActive(false);
+	}
+
 	public void OnFinished()
 	{
 		if (name == "MenuComplete") {

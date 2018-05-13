@@ -1027,7 +1027,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			{
 				TimeSpan timeSpan = nextDailyRewardTime.Subtract(DateTime.Now);
 				double notificationTimeAfter = timeSpan.TotalSeconds;
-				LocalizedText description = Resources.Load<LocalizedText>("Localization/Aloha_LocalizedText_LocalNotification_Life");
+				LocalizedText description = Resources.Load<LocalizedText>("Localization/Aloha_LocalizedText_LocalNotification_ChestBox");
 				Debug.LogError(description.Value);
 				RegisterLocalNotification(notificationTimeAfter, title.Value, description.Value);
 			}
@@ -1119,7 +1119,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		localNotificationItemList.Add(item_01);
 		// can add more notification by adding to list.
 		NotificationCenter.Instance.RegisterLocalNotifications(localNotificationItemList);
-		Debug.LogError(localNotificationId);
 	}
 
 	public void GiveDailyReward (PossibleReward _reward)

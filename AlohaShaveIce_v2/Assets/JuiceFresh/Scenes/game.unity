@@ -58182,6 +58182,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bbc11e4aa11a04a7093531975efb14b7, type: 3}
   - {fileID: 21300000, guid: c4862f84692304c519d14bcf3c69df5b, type: 3}
   - {fileID: 21300000, guid: 40c38145b31284911875160ec01454ca, type: 3}
+  - {fileID: 21300000, guid: 17840ad9a10f2404e89a9cbe98d420be, type: 3}
   mapBackgroundYPositions:
   - 0
   - 24.57
@@ -58198,6 +58199,7 @@ MonoBehaviour:
   - 404.4
   - 453.46
   - 502.54
+  - 551.7
 --- !u!4 &1025403643 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 105903d664c39294e926aed54de8b6c8, type: 2}

@@ -51,13 +51,16 @@ public class Flower : MonoBehaviour
 			item = item1;
 			pos2 = item.transform.position;
 		}
+
 		if (item == null)
 		{
 			particleSystem.Stop();
 			spriteRenderer.enabled = false;
 			yield break;
 		}
+
 		Item _item = item;
+		_item.GetComponent<BoxCollider2D>().enabled = false;
 
 		int minRandomRange = 3;
 		int maxRandomRange = 5;
@@ -95,7 +98,10 @@ public class Flower : MonoBehaviour
 				StartFly(transform.position, directFly, _index);
 				yield break;
 			}
-			// aSpeed += 0.2f;
+			if (!directFly)
+			{
+				aSpeed += 0.2f;
+			}
 			float distCovered = (Time.time - startTime) * aSpeed;
 			fracJourney = distCovered / distance;
 			if (float.IsNaN(fracJourney))  //1.3
@@ -114,6 +120,7 @@ public class Flower : MonoBehaviour
 		particleSystem.Stop();
 		spriteRenderer.enabled = false;
 		item.ChangeType();
+		item.GetComponent<BoxCollider2D>().enabled = true;
 		LevelManager.THIS.DragBlocked = false;
 
 	}

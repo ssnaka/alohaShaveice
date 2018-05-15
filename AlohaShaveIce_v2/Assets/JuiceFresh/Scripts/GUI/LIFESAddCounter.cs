@@ -201,7 +201,7 @@ public class LIFESAddCounter : MonoBehaviour
 		InitScript.lifes = -1;
 		isInfiniteLife = InitScript.lifes < 0 ? true : false;
 
-		if (InitScript.lifes < InitScript.Instance.CapOfLife)
+		if (InitScript.lifes >= 0 && InitScript.lifes < InitScript.Instance.CapOfLife)
 		{
 			InitScript.RestLifeTimer = 0.0f;
 		}

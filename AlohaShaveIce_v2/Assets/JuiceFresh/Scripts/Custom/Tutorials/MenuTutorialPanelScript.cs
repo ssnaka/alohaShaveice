@@ -63,23 +63,26 @@ public class MenuTutorialPanelScript : MonoBehaviour
 
 		leftCover.rectTransform.position = new Vector2(_pivot.position.x, _pivot.position.y);
 		leftCover.rectTransform.anchoredPosition = new Vector2(leftCover.rectTransform.anchoredPosition.x - pivotHalfX, leftCover.rectTransform.anchoredPosition.y);
-		leftCover.rectTransform.sizeDelta = new Vector2(leftCover.rectTransform.rect.width, pivotHeight + (mergin * 2));
+		leftCover.rectTransform.sizeDelta = new Vector2(leftCover.rectTransform.rect.width, pivotHalfY * 2.0f);
 
 		rightCover.rectTransform.position = new Vector2(_pivot.position.x, _pivot.position.y);
 		rightCover.rectTransform.anchoredPosition = new Vector2(rightCover.rectTransform.anchoredPosition.x + pivotHalfX, rightCover.rectTransform.anchoredPosition.y);
-		rightCover.rectTransform.sizeDelta = new Vector2(rightCover.rectTransform.rect.width, pivotHeight + (mergin * 2));
+		rightCover.rectTransform.sizeDelta = new Vector2(rightCover.rectTransform.rect.width, pivotHalfY * 2.0f);
 
 		fingerImage.rectTransform.position = new Vector2(_pivot.position.x, _pivot.position.y);
 		fingerImage.rectTransform.anchoredPosition = new Vector2(fingerImage.rectTransform.anchoredPosition.x, fingerImage.rectTransform.anchoredPosition.y + pivotHalfY);
 
 		localizedTextBehaviour.LocalizedAsset = Resources.Load<LocalizedText>(_tutorialData.descriptionTextAsset);
 
-		if (bottomCover.rectTransform.localPosition.y < speechBubbleOriginalPosition.y)
+		speechBubble.rectTransform.localPosition = speechBubbleOriginalPosition;
+		characterIamge.rectTransform.localPosition = characterImageOriginalPosition;
+
+		if (bottomCover.rectTransform.localPosition.y <= speechBubbleOriginalPosition.y + speechBubble.rectTransform.rect.height)
 		{
 //			speechBubble.rectTransform.localPosition = new Vector2(speechBubble.rectTransform.localPosition.x, speechBubbleOriginalPosition.y * -1.0f);
 //			characterIamge.rectTransform.localPosition = new Vector2(characterIamge.rectTransform.localPosition.x, characterImageOriginalPosition.y * -1.0f);
-			speechBubble.rectTransform.localPosition = new Vector2(speechBubble.rectTransform.localPosition.x, 200.0f);
-			characterIamge.rectTransform.localPosition = new Vector2(characterIamge.rectTransform.localPosition.x, 200.0f);
+			speechBubble.rectTransform.localPosition = new Vector2(speechBubble.rectTransform.localPosition.x, fingerImage.transform.localPosition.y + (fingerImage.rectTransform.sizeDelta.y * 2.0f));
+			characterIamge.rectTransform.localPosition = new Vector2(characterIamge.rectTransform.localPosition.x, fingerImage.transform.localPosition.y + (fingerImage.rectTransform.sizeDelta.y * 2.0f));
 		}
 
 		gameObject.SetActive(true);
@@ -88,13 +91,14 @@ public class MenuTutorialPanelScript : MonoBehaviour
 	public void SetUpTutorialForLevel (ATutorial _tutorialData, Transform _pivot, Canvas _tutorialCanvas)
 	{
 		LevelManager.OnStartPlay += OnCloseButtonPressed;
-		float aMergin = mergin * 2;
+//		float aMergin = mergin * 2;
 		tutorialData = _tutorialData;
 		Vector3 pivotScreenPosition = Camera.main.WorldToScreenPoint(_pivot.position);
-		Rect pivotRect = BoundsToScreenRect(_pivot.GetComponent<Renderer>().bounds);
 
-		float pivotHalfX = pivotRect.width / 2.0f + aMergin;
-		float pivotHalfY = pivotRect.height / 2.0f + aMergin;
+//		Rect pivotRect = GUIRectWithObject(_pivot.gameObject);
+		Rect pivotRect = BoundsToScreenRect(_pivot.GetComponent<Renderer>().bounds);
+		float pivotHalfX = pivotRect.width / 2.0f + mergin;
+		float pivotHalfY = pivotRect.height / 2.0f + mergin;
 
 		topCover.rectTransform.position = new Vector2(topCover.rectTransform.position.x, pivotScreenPosition.y);
 		topCover.rectTransform.anchoredPosition = new Vector2(topCover.rectTransform.anchoredPosition.x, topCover.rectTransform.anchoredPosition.y + pivotHalfY);
@@ -104,23 +108,26 @@ public class MenuTutorialPanelScript : MonoBehaviour
 
 		leftCover.rectTransform.position = new Vector2(pivotScreenPosition.x, pivotScreenPosition.y);
 		leftCover.rectTransform.anchoredPosition = new Vector2(leftCover.rectTransform.anchoredPosition.x - pivotHalfX, leftCover.rectTransform.anchoredPosition.y);
-		leftCover.rectTransform.sizeDelta = new Vector2(leftCover.rectTransform.rect.width, pivotRect.height + (aMergin * 2));
+		leftCover.rectTransform.sizeDelta = new Vector2(leftCover.rectTransform.rect.width, pivotHalfY * 2.0f);
 
 		rightCover.rectTransform.position = new Vector2(pivotScreenPosition.x, pivotScreenPosition.y);
 		rightCover.rectTransform.anchoredPosition = new Vector2(rightCover.rectTransform.anchoredPosition.x + pivotHalfX, rightCover.rectTransform.anchoredPosition.y);
-		rightCover.rectTransform.sizeDelta = new Vector2(rightCover.rectTransform.rect.width, pivotRect.height + (aMergin * 2));
+		rightCover.rectTransform.sizeDelta = new Vector2(rightCover.rectTransform.rect.width, pivotHalfY * 2.0f);
 
 		fingerImage.rectTransform.position = new Vector2(pivotScreenPosition.x, pivotScreenPosition.y);
 		fingerImage.rectTransform.anchoredPosition = new Vector2(fingerImage.rectTransform.anchoredPosition.x, fingerImage.rectTransform.anchoredPosition.y + pivotHalfY);
 
 		localizedTextBehaviour.LocalizedAsset = Resources.Load<LocalizedText>(_tutorialData.descriptionTextAsset);
 
-		if (bottomCover.rectTransform.localPosition.y < speechBubbleOriginalPosition.y)
+		speechBubble.rectTransform.localPosition = speechBubbleOriginalPosition;
+		characterIamge.rectTransform.localPosition = characterImageOriginalPosition;
+
+		if (bottomCover.rectTransform.localPosition.y <= speechBubbleOriginalPosition.y + speechBubble.rectTransform.rect.height)
 		{
 //			speechBubble.rectTransform.localPosition = new Vector2(speechBubble.rectTransform.localPosition.x, speechBubbleOriginalPosition.y * -1.0f);
 //			characterIamge.rectTransform.localPosition = new Vector2(characterIamge.rectTransform.localPosition.x, characterImageOriginalPosition.y * -1.0f);
-			speechBubble.rectTransform.localPosition = new Vector2(speechBubble.rectTransform.localPosition.x, 200.0f);
-			characterIamge.rectTransform.localPosition = new Vector2(characterIamge.rectTransform.localPosition.x, 200.0f);
+			speechBubble.rectTransform.localPosition = new Vector2(speechBubble.rectTransform.localPosition.x, fingerImage.transform.localPosition.y + (fingerImage.rectTransform.sizeDelta.y * 2.0f));
+			characterIamge.rectTransform.localPosition = new Vector2(characterIamge.rectTransform.localPosition.x, fingerImage.transform.localPosition.y + (fingerImage.rectTransform.sizeDelta.y * 2.0f));
 		}
 
 		gameObject.SetActive(true);
@@ -132,9 +139,22 @@ public class MenuTutorialPanelScript : MonoBehaviour
 		Vector3 origin = Camera.main.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.max.y, 0f));
 		Vector3 extent = Camera.main.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, 0f));
 
+//		Debug.LogError(SystemInfo.deviceModel);
+
 		// Create rect in screen space and return - does not account for camera perspective
-		return new Rect(origin.x, Screen.height - origin.y, extent.x - origin.x, origin.y - extent.y);
+		float width = extent.x - origin.x;
+		float height = origin.y - extent.y;
+		#if !UNITY_EDITOR
+		if(GameUtility.DeviceDiagonalSizeInInches() > 6.5f)
+		{
+			width *= 0.5f;
+			height *= 0.5f;
+		}
+		#endif
+		return new Rect(origin.x, Screen.height - origin.y, width, height);
 	}
+
+
 
 	public void OnCloseButtonPressed ()
 	{

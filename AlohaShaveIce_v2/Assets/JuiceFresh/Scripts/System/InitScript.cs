@@ -83,7 +83,8 @@ public enum RewardedAdsType
 	Energy,
 	Unlimited_Life,
 	ChestBox,
-	All
+	All,
+	None,
 }
 
 
@@ -821,10 +822,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				PlayerPrefs.SetInt(RewardedAdsType.Shovel.ToString() + "_watch", count);
 			}
 		}
-				else if (currentReward == RewardedAdsType.ChestBox)
-				{
-					DailyRewardManager.Instance.ShowOpenChestAsVideoAds();
-				}
+		else if (currentReward == RewardedAdsType.ChestBox)
+		{
+			DailyRewardManager.Instance.ShowOpenChestAsVideoAds();
+		}
+		
+		currentReward = RewardedAdsType.None;
 
 		PlayerPrefs.Save();
 

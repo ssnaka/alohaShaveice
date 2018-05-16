@@ -1023,7 +1023,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				RegisterLocalNotification(notificationTimeAfter, title.Value, description.Value);
 			}
 
-			string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
+			string lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 			DateTime dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 			DateTime nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
 			if (DateTime.Now.CompareTo(nextDailyRewardTime) < 0)

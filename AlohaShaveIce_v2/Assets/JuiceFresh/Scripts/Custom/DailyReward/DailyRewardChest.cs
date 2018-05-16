@@ -59,9 +59,9 @@ public class DailyRewardChest : MonoBehaviour
 
 	void OnEnable ()
 	{
-		didWatchRewardAds = System.Convert.ToBoolean(PlayerPrefs.GetInt("didWatchRewardAds", 0));
+		didWatchRewardAds = System.Convert.ToBoolean(ZPlayerPrefs.GetInt("didWatchRewardAds", 0));
 //		openCountToday = PlayerPrefs.GetInt("dailyRewardOpenCountToday", 0);
-		string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
+		string lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 		dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 		nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
 		if (data.type.Equals(ChestType.premium))
@@ -88,8 +88,8 @@ public class DailyRewardChest : MonoBehaviour
 			else
 			{
 				didWatchRewardAds = false;
-				PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
-				PlayerPrefs.Save();
+				ZPlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
+				ZPlayerPrefs.Save();
 				//			openCountToday = 0;
 				timerText.gameObject.SetActive(false);
 				CheckDailyRewardOnceFromUpdate();
@@ -190,9 +190,9 @@ public class DailyRewardChest : MonoBehaviour
 		switch (data.type)
 		{
 			case ChestType.daily:
-				dailyRewardDayCount = PlayerPrefs.GetInt("dailyRewardDayCount", 0);
-				lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
-				didWatchRewardAds = System.Convert.ToBoolean(PlayerPrefs.GetInt("didWatchRewardAds", 0));
+				dailyRewardDayCount = ZPlayerPrefs.GetInt("dailyRewardDayCount", 0);
+				lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
+				didWatchRewardAds = System.Convert.ToBoolean(ZPlayerPrefs.GetInt("didWatchRewardAds", 0));
 				
 				dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 				nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
@@ -203,8 +203,8 @@ public class DailyRewardChest : MonoBehaviour
 					dailyRewardDayCount += 1;
 					
 					didWatchRewardAds = false;
-					PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
-					PlayerPrefs.Save();
+					ZPlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
+					ZPlayerPrefs.Save();
 				}
 				break;
 			case ChestType.premium:
@@ -301,20 +301,20 @@ public class DailyRewardChest : MonoBehaviour
 		}
 		else
 		{
-			PlayerPrefs.SetString("dailyRewardAwardedTime", DateTime.Now.ToString());
-			int dailyRewardDayCount = PlayerPrefs.GetInt("dailyRewardDayCount", 0);
+			ZPlayerPrefs.SetString("dailyRewardAwardedTime", DateTime.Now.ToString());
+			int dailyRewardDayCount = ZPlayerPrefs.GetInt("dailyRewardDayCount", 0);
 			dailyRewardDayCount += 1;
 			if (dailyRewardDayCount > data.data.Count)
 			{
 				dailyRewardDayCount = 0;
 			}
-			PlayerPrefs.SetInt("dailyRewardDayCount", dailyRewardDayCount);
+			ZPlayerPrefs.SetInt("dailyRewardDayCount", dailyRewardDayCount);
 
-			string lastDailyRewardAwardedTime = PlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
+			string lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 			dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 			nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
 
-			PlayerPrefs.Save();
+			ZPlayerPrefs.Save();
 		}
 
 		ShowOpenChest();
@@ -325,8 +325,8 @@ public class DailyRewardChest : MonoBehaviour
 		if (_fromAds)
 		{
 			didWatchRewardAds = true;
-			PlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
-			PlayerPrefs.Save();
+			ZPlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
+			ZPlayerPrefs.Save();
 		}
 //		openCountToday += 1;
 //		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);

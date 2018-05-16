@@ -36,7 +36,7 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 	{
 		LoadTutorialData();
 
-		string tutorialJson = PlayerPrefs.GetString("tutorialSaveData", string.Empty);
+		string tutorialJson = ZPlayerPrefs.GetString("tutorialSaveData", string.Empty);
 		if (tutorialJson.Equals(string.Empty))
 		{
 			tutorialSaveData = new TutorialSaveData();
@@ -173,8 +173,8 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 	public void SaveLocalTutorialData (TutorialSaveData _tutorialSaveData)
 	{
 		string tutorialJson = Newtonsoft.Json.JsonConvert.SerializeObject(_tutorialSaveData);
-		PlayerPrefs.SetString("tutorialSaveData", tutorialJson);
-		PlayerPrefs.Save();
+		ZPlayerPrefs.SetString("tutorialSaveData", tutorialJson);
+		ZPlayerPrefs.Save();
 	}
 	#endregion
 }

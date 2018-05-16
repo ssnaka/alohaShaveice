@@ -10,6 +10,28 @@ using System.Text.RegularExpressions;
 
 namespace GameSparks.Platforms
 {
+#if UNITY_EDITOR
+	[InitializeOnLoad]
+	public class StopPlayingOnRecompile
+	{
+		static StopPlayingOnRecompile()
+		{
+			EditorApplication.update -= StopPlayingIfRecompiling;
+			EditorApplication.update += StopPlayingIfRecompiling;
+		}
+
+		static void StopPlayingIfRecompiling()
+		{
+			if (EditorApplication.isCompiling && EditorApplication.isPlaying)
+			{
+				GS.Disconnect ();
+
+				EditorApplication.isPlaying = false;
+			}
+		}
+	}
+#endif
+
 	/// <summary>
 	/// This is the base class for all platform specific implementations.
 	/// Depending on your BuildTarget in Unity, GameSparks will automatically determine
@@ -131,10 +153,12 @@ namespace GameSparks.Platforms
 					
 					break;
 
+#if !UNITY_2017_3_OR_NEWER
 				case "SAMSUNGTV":
 					manufacturer = "Samsung";
 					
 					break;
+#endif
 
 				case "WIIU":
 					manufacturer = "Nintendo";
@@ -231,7 +255,7 @@ namespace GameSparks.Platforms
 	#if UNITY_2017_2_OR_NEWER
 			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
 	#else
-			EditorApplication.playmodeStateChanged = HandlePlayModeStateChanged;
+			EditorApplication.playmodeStateChanged += HandlePlayModeStateChanged;
 	#endif
 #endif
 		}
@@ -262,7 +286,15 @@ namespace GameSparks.Platforms
 				for (var index = 0; index < count; ++index) {
 					var a = _currentActions [index];
 					if (a != null) {
-						a ();
+						try {
+							a ();
+						} catch (Exception e) {
+							if (ExceptionReporter != null) {
+								ExceptionReporter (e);
+							} else {
+								Debug.Log (e);
+							}
+						}
 					}
 				}
 
@@ -379,8 +411,10 @@ namespace GameSparks.Platforms
                     case RuntimePlatform.XboxOne:
                         return "XBOXONE";
 
+#if !UNITY_2017_3_OR_NEWER
                     case RuntimePlatform.SamsungTVPlayer:
                         return "SAMSUNGTV";
+#endif
 
                     case RuntimePlatform.WiiU:
                         return "WIIU";

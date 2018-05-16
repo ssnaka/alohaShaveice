@@ -566,6 +566,8 @@ public class LevelManager : MonoBehaviour
 	[SerializeField]
 	Vector3 backgroundCenters;
 
+	int totalLimit;
+
 	public void MenuPlayEvent ()
 	{
 		OnMenuPlay();
@@ -998,6 +1000,10 @@ public class LevelManager : MonoBehaviour
 
 	IEnumerator InitBombs ()
 	{
+		if (LevelManager.THIS.Limit.Equals(LevelManager.THIS.totalLimit))
+		{
+			yield break;
+		}
 
 		yield return new WaitUntil(() => !TipsManager.THIS.gotTip); //1.3
 		yield return new WaitForSeconds(1);
@@ -2446,8 +2452,6 @@ public class LevelManager : MonoBehaviour
 
 	public void ReGenLevel ()
 	{
-
-
 		itemsHided = false;
 		DragBlocked = true;
 		if (gameStatus != GameState.Playing && gameStatus != GameState.RegenLevel)
@@ -3669,8 +3673,8 @@ public class LevelManager : MonoBehaviour
 				string blocksString = line.Replace("LIMIT", string.Empty).Trim();
 				string[] sizes = blocksString.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 				limitType = (LIMIT)int.Parse(sizes[0]);
-
 				Limit = 0;
+				totalLimit = int.Parse(sizes[1]);
 				AddLimit(int.Parse(sizes[1]));
 //				Limit = int.Parse(sizes[1]);
 //				if (OnLimitUpdate != null)

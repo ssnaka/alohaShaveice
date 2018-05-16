@@ -1000,7 +1000,7 @@ public class LevelManager : MonoBehaviour
 
 	IEnumerator InitBombs ()
 	{
-		if (LevelManager.THIS.Limit.Equals(LevelManager.THIS.totalLimit))
+		if (Limit.Equals(totalLimit) && !target.Equals(Target.BOMBS))
 		{
 			yield break;
 		}

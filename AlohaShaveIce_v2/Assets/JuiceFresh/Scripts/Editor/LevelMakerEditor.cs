@@ -1471,8 +1471,8 @@ public class LevelMakerEditor : EditorWindow {
 				bool oldCheck = item.check;
 				item.check = EditorGUILayout.Toggle (item.check, new GUILayoutOption[] { GUILayout.Width (20) });
 				EditorGUILayout.LabelField (item.name, new GUILayoutOption[] { GUILayout.Width (100) });
-				if (item.count <= 0)
-					item.count = 1;
+//				if (item.count <= 0)
+//					item.count = 1;
 				item.count = EditorGUILayout.IntField ("", item.count, new GUILayoutOption[] { GUILayout.Width (100) });
 
 				GUILayout.EndHorizontal ();

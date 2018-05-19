@@ -89,7 +89,7 @@ public class LevelMakerEditor : EditorWindow {
 		if (maxRows <= 0)
 			maxRows = 8;
 		if (maxCols <= 0)
-			maxCols = 7;
+			maxCols = 8;
 
 		if (Camera.main == null)
 			return;
@@ -1282,8 +1282,8 @@ public class LevelMakerEditor : EditorWindow {
 			maxCols = 3;
 		if (maxRows > 8)
 			maxRows = 8;
-		if (maxCols > 7)
-			maxCols = 7;
+		if (maxCols > 8)
+			maxCols = 8;
 		if (oldValue != maxRows + maxCols) {
 			Initialize ();
 			SaveLevel ();

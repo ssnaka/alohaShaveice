@@ -792,7 +792,6 @@ public class LevelManager : MonoBehaviour
 		InitTargets();
 
 		GameField.gameObject.SetActive(true);
-
 	}
 
 	public void RestartTimer ()
@@ -2012,7 +2011,8 @@ public class LevelManager : MonoBehaviour
 		float screenRatio = (float)Screen.height / (float)Screen.width;
 
 		float sqWidth = 1.6f;
-		if (screenRatio >= 2.0f)
+
+		if (screenRatio >= 2.0f || maxCols == 8)
 		{
 			sqWidth = 1.27f;
 			GameField.localScale = new Vector3(0.8f, 0.8f, 0.8f);

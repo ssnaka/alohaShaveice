@@ -87,7 +87,7 @@ public class LevelMakerEditor : EditorWindow {
 
 		initDone = false;
 		if (maxRows <= 0)
-			maxRows = 8;
+			maxRows = 10;
 		if (maxCols <= 0)
 			maxCols = 8;
 
@@ -1280,8 +1280,8 @@ public class LevelMakerEditor : EditorWindow {
 			maxRows = 3;
 		if (maxCols < 3)
 			maxCols = 3;
-		if (maxRows > 8)
-			maxRows = 8;
+		if (maxRows > 10)
+			maxRows = 10;
 		if (maxCols > 8)
 			maxCols = 8;
 		if (oldValue != maxRows + maxCols) {

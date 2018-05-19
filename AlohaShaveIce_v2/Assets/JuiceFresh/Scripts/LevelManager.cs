@@ -2040,7 +2040,15 @@ public class LevelManager : MonoBehaviour
 
 		float yOffset = 0;
 		if (target == Target.COLLECT)
+		{
 			yOffset = 0.3f;
+		}
+
+		if (maxRows == 10)
+		{
+			yOffset = -0.4f;
+		}
+
 		Animation anim = GameField.GetComponent<Animation>();
 		AnimationClip clip = new AnimationClip();
 		AnimationCurve curveX = new AnimationCurve(new Keyframe(0, pos.x + 15), new Keyframe(0.7f, pos.x - 0.2f), new Keyframe(0.8f, pos.x));
@@ -2350,6 +2358,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(solidBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			block.GetComponent<SpriteRenderer>().sortingOrder = 3;
 			square.GetComponent<Square>().type = SquareTypes.SOLIDBLOCK;
@@ -2362,6 +2371,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(solidBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			block.GetComponent<SpriteRenderer>().sortingOrder = 3;
 			square.GetComponent<Square>().type = SquareTypes.SOLIDBLOCK;
@@ -2370,6 +2380,7 @@ public class LevelManager : MonoBehaviour
 			block = Instantiate(solidBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			block.GetComponent<SpriteRenderer>().sprite = doubleSolidBlock;
 			block.GetComponent<SpriteRenderer>().sortingOrder = 4;

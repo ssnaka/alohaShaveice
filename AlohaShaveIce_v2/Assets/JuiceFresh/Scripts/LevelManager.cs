@@ -573,6 +573,7 @@ public class LevelManager : MonoBehaviour
 		OnMenuPlay();
 	}
 
+	Camera mCamera;
 	#endregion
 
 
@@ -607,23 +608,23 @@ public class LevelManager : MonoBehaviour
 
 	void SetupGameCamera ()
 	{
-
+		mCamera = GetComponent<Camera>();
 		float aspect = (float)Screen.height / (float)Screen.width;
-		GetComponent<Camera>().orthographicSize = 10.05f;
+		mCamera.orthographicSize = 10.05f;
 		aspect = (float)Math.Round(aspect, 2);
 		//        if (aspect == 1.6f)
-		//            GetComponent<Camera>().orthographicSize = 4.6f;                    //16:10
+		//            mCamera.orthographicSize = 4.6f;                    //16:10
 		//        else if (aspect == 1.78f)
-		//            GetComponent<Camera>().orthographicSize = 5.15f;    //16:9
+		//            mCamera.orthographicSize = 5.15f;    //16:9
 		//        else if (aspect == 1.5f)
-		//            GetComponent<Camera>().orthographicSize = 4.4f;                  //3:2
+		//            mCamera.orthographicSize = 4.4f;                  //3:2
 		//        else if (aspect == 1.33f)
-		//            GetComponent<Camera>().orthographicSize = 4.45f;                  //4:3
+		//            mCamera.orthographicSize = 4.45f;                  //4:3
 		//        else if (aspect == 1.67f)
-		//            GetComponent<Camera>().orthographicSize = 4.8f;                  //5:3
+		//            mCamera.orthographicSize = 4.8f;                  //5:3
 		//        else if (aspect == 1.25f)
-		//            GetComponent<Camera>().orthographicSize = 4.45f;                  //5:4
-		GetComponent<Camera>().GetComponent<MapCamera>().SetPosition(new Vector2(0, GetComponent<Camera>().transform.position.y));
+		//            mCamera.orthographicSize = 4.45f;                  //5:4
+		mCamera.GetComponent<MapCamera>().SetPosition(new Vector2(0, mCamera.transform.position.y));
 	}
 
 
@@ -633,21 +634,21 @@ public class LevelManager : MonoBehaviour
 		{
 			LevelsMap.SetActive(true);
 			float aspect = (float)Screen.height / (float)Screen.width;
-			GetComponent<Camera>().orthographicSize = 10.25f;
+			mCamera.orthographicSize = 10.25f;
 			aspect = (float)Math.Round(aspect, 2);
 			if (aspect == 1.6f)
-				GetComponent<Camera>().orthographicSize = 12.2f;                    //16:10
+				mCamera.orthographicSize = 12.2f;                    //16:10
 			else if (aspect == 1.78f)
-				GetComponent<Camera>().orthographicSize = 13.5f;    //16:9
+				mCamera.orthographicSize = 13.5f;    //16:9
 			else if (aspect == 1.5f)
-				GetComponent<Camera>().orthographicSize = 11.2f;                  //3:2
+				mCamera.orthographicSize = 11.2f;                  //3:2
 			else if (aspect == 1.33f)
-				GetComponent<Camera>().orthographicSize = 10.25f;                  //4:3
+				mCamera.orthographicSize = 10.25f;                  //4:3
 			else if (aspect == 1.67f)
-				GetComponent<Camera>().orthographicSize = 12.5f;                  //5:3
+				mCamera.orthographicSize = 12.5f;                  //5:3
 			//else if (aspect == 1.25f)
-			//    GetComponent<Camera>().orthographicSize = 4.9f;                  //5:4
-			GetComponent<Camera>().GetComponent<MapCamera>().SetPosition(new Vector2(0, GetComponent<Camera>().transform.position.y));
+			//    mCamera.orthographicSize = 4.9f;                  //5:4
+			mCamera.GetComponent<MapCamera>().SetPosition(new Vector2(0, mCamera.transform.position.y));
 		}
 		else
 		{
@@ -659,7 +660,7 @@ public class LevelManager : MonoBehaviour
 			Level.transform.Find("Canvas").GetComponent<GraphicRaycaster>().enabled = true;
 
 		}
-		Camera.main.GetComponent<MapCamera>().enabled = enable;
+		mCamera.GetComponent<MapCamera>().enabled = enable;
 		//1.4.4
 		{
 			//		LevelsMap.SetActive (!enable);
@@ -682,7 +683,7 @@ public class LevelManager : MonoBehaviour
 			GameField.gameObject.SetActive(false);
 
 		if (!enable)
-			Camera.main.transform.position = new Vector3(0, 0, -10);
+			mCamera.transform.position = new Vector3(0, 0, -10);
 		foreach (Transform item in GameField.transform)
 		{
 			Destroy(item.gameObject);
@@ -1370,11 +1371,12 @@ public class LevelManager : MonoBehaviour
 			ingr[0] = bombTargetObject.transform.gameObject;
 
 		}
-		AnimationCurve curveX = new AnimationCurve(new Keyframe(0, item.transform.localPosition.x), new Keyframe(0.4f, ingr[i].transform.position.x));
-		AnimationCurve curveY = new AnimationCurve(new Keyframe(0, item.transform.localPosition.y), new Keyframe(0.5f, ingr[i].transform.position.y));
-		curveY.AddKey(0.2f, item.transform.localPosition.y + UnityEngine.Random.Range(-2, 0.5f));
+
+		AnimationCurve curveX = new AnimationCurve(new Keyframe(0, item.transform.position.x), new Keyframe(0.4f, mCamera.ScreenToWorldPoint(ingr[i].transform.position).x));
+		AnimationCurve curveY = new AnimationCurve(new Keyframe(0, item.transform.position.y), new Keyframe(0.5f, mCamera.ScreenToWorldPoint(ingr[i].transform.position).y));
+		curveY.AddKey(0.2f, item.transform.position.y + UnityEngine.Random.Range(-2, 0.5f));
 		float startTime = Time.time;
-		Vector3 startPos = item.transform.localPosition;
+		Vector3 startPos = item.transform.position;
 		float speed = UnityEngine.Random.Range(0.4f, 0.6f);
 		float distCovered = 0;
 		if (ingrTarget.Count > 0)
@@ -1391,7 +1393,7 @@ public class LevelManager : MonoBehaviour
 		while (distCovered < 0.5f)
 		{
 			distCovered = (Time.time - startTime) * speed;
-			item.transform.localPosition = new Vector3(curveX.Evaluate(distCovered), curveY.Evaluate(distCovered), 0);
+			item.transform.position = new Vector3(curveX.Evaluate(distCovered), curveY.Evaluate(distCovered), 0);
 			item.transform.Rotate(Vector3.back, Time.deltaTime * 1000);
 			yield return new WaitForFixedUpdate();
 		}
@@ -1528,7 +1530,7 @@ public class LevelManager : MonoBehaviour
 		GameObject.Find("Level/Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(true);//1.4.5
 		yield return new WaitForSeconds(3);
 		GameObject.Find("Level/Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(false);//1.4.5
-		Vector3 pos1 = Camera.main.ScreenToWorldPoint(GameObject.Find("Limit").transform.position);
+		Vector3 pos1 = mCamera.ScreenToWorldPoint(GameObject.Find("Limit").transform.position);
 
 		yield return new WaitForSeconds(1);
 
@@ -1731,7 +1733,7 @@ public class LevelManager : MonoBehaviour
 			if (Input.GetMouseButton(0))
 			{        //touch detected
 				OnStartPlay();
-				Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
+						Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
 
 				if (hit != null)
 				{
@@ -1852,7 +1854,7 @@ public class LevelManager : MonoBehaviour
 			}
 			else if (Input.GetMouseButtonUp(0))
 			{
-				Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Default"));
+				Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Default"));
 				if (hit != null)
 				{
 					Square square = hit.gameObject.GetComponent<Square>();

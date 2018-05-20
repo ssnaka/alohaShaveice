@@ -576,7 +576,13 @@ public class LevelManager : MonoBehaviour
 	Camera mCamera;
 	#endregion
 
-
+	void OnEnable ()
+	{
+		if (mCamera == null)
+		{
+			mCamera = GetComponent<Camera>();
+		}
+	}
 	void LockBoosts ()
 	{
 		foreach (BoostIcon item in InGameBoosts)
@@ -608,7 +614,6 @@ public class LevelManager : MonoBehaviour
 
 	void SetupGameCamera ()
 	{
-		mCamera = GetComponent<Camera>();
 		float aspect = (float)Screen.height / (float)Screen.width;
 		mCamera.orthographicSize = 10.05f;
 		aspect = (float)Math.Round(aspect, 2);

@@ -11,7 +11,7 @@ public class BoostAnimation : MonoBehaviour {
         if (square.item)
             partcl.GetComponent<ParticleSystem>().startColor = LevelManager.THIS.scoresColors[square.item.color];
         Destroy(partcl, 1f);
-
+//		LevelManager.Instance.DragBlocked = true;
     }
 
 
@@ -28,7 +28,7 @@ public class BoostAnimation : MonoBehaviour {
 
                 if (_square.item != null) {
                     if (_square.item.currentType != ItemsTypes.CHOCOBOMB && _square.item.currentType != ItemsTypes.INGREDIENT && _square.CheckDamage(5))
-                        _square.item.DestroyItem(true, "destroy_package");
+                        _square.item.DestroyItem(true, "destroy_package", true);
                 }
                 if (_square.IsHaveDestroybleObstacle()) {
                     _square.DestroyBlock();
@@ -67,6 +67,7 @@ public class BoostAnimation : MonoBehaviour {
         else
             SoundBase.Instance.PlaySound(SoundBase.Instance.shovel);
         LevelManager.THIS.ClearHighlight(true);
+
         Destroy(gameObject);
     }
 }

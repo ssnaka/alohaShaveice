@@ -81,9 +81,9 @@ public class LevelManager : MonoBehaviour
 	//enabling iapps flag
 	public bool enableInApps;
 	//max rows of gamefield
-	public int maxRows = 8;
+	public int maxRows = 10;
 	//max cols of gamefield
-	public int maxCols = 7;
+	public int maxCols = 8;
 	//right square size for level generation
 	public float squareWidth = 1.2f;
 	//right square size for level generation
@@ -1585,8 +1585,10 @@ public class LevelManager : MonoBehaviour
 		gratzWord.SetupGartz(GratzType.LevelEnd);
 		yield return new WaitForSeconds(0.5f);
 
-		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
-		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
+//		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
+//		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
+		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Limit/6);
+		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Limit/6));
 		while (countFlowers > 0)
 //		for (int i = 1; i <= countFlowers; i++)
 		{
@@ -1679,12 +1681,14 @@ public class LevelManager : MonoBehaviour
 			item.DestroyHorizontal();
 			item.DestroyVertical();
 		}
+
 		foreach (ItemsTypes itemType in gatheredTypes)
 		{
 			if (itemType == ItemsTypes.HORIZONTAL_STRIPPED)
 				item.DestroyHorizontal();
 			else
 				item.DestroyVertical();
+			
 		}
 	}
 
@@ -1740,7 +1744,7 @@ public class LevelManager : MonoBehaviour
 			if (Input.GetMouseButton(0))
 			{        //touch detected
 				OnStartPlay();
-						Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
+				Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
 
 				if (hit != null)
 				{
@@ -1875,7 +1879,7 @@ public class LevelManager : MonoBehaviour
 							isIngredient = true;
 						}
 
-						if (!isIngredient)
+						if (!isIngredient && !DragBlocked)
 						{
 //							bool shouldIgnitePower = false;
 							if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb || (item.currentType == ItemsTypes.SQUARE_BOMB && destroyAnyway.Count == 1 && destroyAnyway.Contains(item)))// && gatheredTypes.Count == 0))
@@ -1898,7 +1902,8 @@ public class LevelManager : MonoBehaviour
 									obj = Instantiate(Resources.Load("Prefabs/Effects/bomb"), square.transform.position, square.transform.rotation) as GameObject;
 								}
 								obj.GetComponent<SpriteRenderer>().sortingOrder = 5;
-								obj.GetComponent<BoostAnimation>().square = square;
+								BoostAnimation boostAnimation = obj.GetComponent<BoostAnimation>();
+								boostAnimation.square = square;
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
 							}
@@ -1909,7 +1914,9 @@ public class LevelManager : MonoBehaviour
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/shovel"), square.transform.position, square.transform.rotation) as GameObject;
 								obj.GetComponent<SpriteRenderer>().sortingOrder = 5;
-								obj.GetComponent<BoostAnimation>().square = square;
+								BoostAnimation boostAnimation = obj.GetComponent<BoostAnimation>();
+								boostAnimation.square = square;
+//								boostAnimation.EnableSquareAndItemCollider(false);
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
 							}
@@ -1919,12 +1926,14 @@ public class LevelManager : MonoBehaviour
 								{
 									OnPowerUpUsed();
 								}
+
 								LevelManager.THIS.ActivatedBoost.type = BoostType.Energy;
 								SoundBase.Instance.PlaySound(SoundBase.Instance.boostBomb);
 								LevelManager.THIS.DragBlocked = true;
 								GameObject obj = Instantiate(Resources.Load("Prefabs/Effects/energy"), square.transform.position, square.transform.rotation) as GameObject;
 								obj.GetComponent<SpriteRenderer>().sortingOrder = 5;
-								obj.GetComponent<BoostAnimation>().square = square;
+								BoostAnimation boostAnimation = obj.GetComponent<BoostAnimation>();
+								boostAnimation.square = square;
 								waitingBoost = LevelManager.THIS.ActivatedBoost;
 								LevelManager.THIS.ActivatedBoost = null;
 							}
@@ -3043,6 +3052,7 @@ public class LevelManager : MonoBehaviour
 		gatheredTypes.Clear();
 		startPosFlowers.Clear();
 		DragBlocked = false;
+
 		yield return new WaitForEndOfFrame();
 		//if (throwflower)
 		//    DragBlocked = true;

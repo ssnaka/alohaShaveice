@@ -788,6 +788,7 @@ public class Item : MonoBehaviour
 		//if (anim_name == "")
 		//{
 		anim.SetTrigger ("IdleStop");
+
 		if (currentType == ItemsTypes.HORIZONTAL_STRIPPED)
 			PlayDestroyAnimation ("destroy");
 		else if (currentType == ItemsTypes.VERTICAL_STRIPPED)
@@ -876,7 +877,8 @@ public class Item : MonoBehaviour
 		//    square.AddDagame(5);
 
 		square.DestroyBlock ();
-		if (directly) {
+		if (directly) 
+		{
 			if (currentType == ItemsTypes.HORIZONTAL_STRIPPED)
 				DestroyHorizontal ();
 			else if (currentType == ItemsTypes.VERTICAL_STRIPPED)

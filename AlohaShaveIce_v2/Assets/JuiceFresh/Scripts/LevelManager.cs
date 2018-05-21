@@ -2114,6 +2114,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(blockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.01f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			square.GetComponent<Square>().type = SquareTypes.BLOCK;
 			block.GetComponent<Square>().type = SquareTypes.BLOCK;
@@ -2126,6 +2127,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(blockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.01f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			square.GetComponent<Square>().type = SquareTypes.BLOCK;
 			block.GetComponent<Square>().type = SquareTypes.BLOCK;
@@ -2134,6 +2136,7 @@ public class LevelManager : MonoBehaviour
 			block = Instantiate(blockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.01f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			square.GetComponent<Square>().type = SquareTypes.BLOCK;
 			block.GetComponent<Square>().type = SquareTypes.BLOCK;
@@ -2364,6 +2367,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(wireBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			square.GetComponent<Square>().type = SquareTypes.WIREBLOCK;
 			block.GetComponent<SpriteRenderer>().sortingOrder = 3;
@@ -2412,6 +2416,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(undesroyableBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			square.GetComponent<Square>().block.Add(block);
 			square.GetComponent<Square>().type = SquareTypes.UNDESTROYABLE;
 			block.GetComponent<Square>().type = SquareTypes.UNDESTROYABLE;
@@ -2423,6 +2428,7 @@ public class LevelManager : MonoBehaviour
 			GameObject block = Instantiate(thrivingBlockPrefab, firstSquarePosition + new Vector2(col * squareWidth, -row * squareHeight), Quaternion.identity) as GameObject;
 			block.transform.SetParent(square.transform);
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
+			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			block.GetComponent<SpriteRenderer>().sortingOrder = 3;
 			if (square.GetComponent<Square>().item != null)
 				Destroy(square.GetComponent<Square>().item.gameObject);

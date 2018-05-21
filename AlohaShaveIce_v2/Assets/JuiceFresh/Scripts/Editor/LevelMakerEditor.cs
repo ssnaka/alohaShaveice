@@ -129,7 +129,7 @@ public class LevelMakerEditor : EditorWindow {
 			wireBlockTex = lm.wireBlockPrefab.GetComponent<SpriteRenderer> ().sprite.texture;
 			solidBlockTex = lm.solidBlockPrefab.GetComponent<SpriteRenderer> ().sprite.texture;
 			doublesolidBlockTex = lm.doubleSolidBlock.texture;
-			//undestroyableBlockTex = lm.undesroyableBlockPrefab.GetComponent<SpriteRenderer>().sprite.texture;
+			undestroyableBlockTex = lm.undesroyableBlockPrefab.GetComponent<SpriteRenderer>().sprite.texture;
 			thrivingBlockTex = lm.thrivingBlockPrefab.GetComponent<SpriteRenderer> ().sprite.texture;
 		}
 	}
@@ -1680,16 +1680,16 @@ public class LevelMakerEditor : EditorWindow {
 							GUILayout.Label (" - solid /\n  double click x2", EditorStyles.boldLabel);
 						}
 						GUILayout.EndHorizontal ();
-						//GUILayout.BeginHorizontal();
-						//if (GUILayout.Button(undestroyableBlockTex, new GUILayoutOption[] { GUILayout.Width(50), GUILayout.Height(50) }))
-						//{
-						//    squareType = SquareTypes.UNDESTROYABLE;
+						GUILayout.BeginHorizontal();
+						if (GUILayout.Button(undestroyableBlockTex, new GUILayoutOption[] { GUILayout.Width(50), GUILayout.Height(50) }))
+						{
+						    squareType = SquareTypes.UNDESTROYABLE;
 
-						//}
+						}
 
-						//GUILayout.Label("-undestroyable\n block", EditorStyles.boldLabel);
+						GUILayout.Label("-undestroyable\n block", EditorStyles.boldLabel);
 
-						//GUILayout.EndHorizontal();
+						GUILayout.EndHorizontal();
 					}
 					GUILayout.EndVertical ();
 				}
@@ -1728,11 +1728,11 @@ public class LevelMakerEditor : EditorWindow {
 						imageButton = doublesolidBlockTex;
 						squareColor = Color.white;
 					}
-                    //else if (levelSquares[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
-                    //{
-                    //    imageButton = undestroyableBlockTex;
-                    //    squareColor = Color.white;
-                    //}
+                    else if (levelSquares[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
+                    {
+                        imageButton = undestroyableBlockTex;
+                        squareColor = Color.white;
+                    }
                     else if (levelSquares [row * maxCols + col].obstacle == SquareTypes.THRIVING) {
 						imageButton = thrivingBlockTex;
 						squareColor = Color.white;
@@ -1750,11 +1750,11 @@ public class LevelMakerEditor : EditorWindow {
 						imageButton = doublesolidBlockTex;
 						squareColor = Color.white;
 					}
-                    //else if (levelSquares[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
-                    //{
-                    //    imageButton = undestroyableBlockTex;
-                    //    squareColor = Color.white;
-                    //}
+                    else if (levelSquares[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
+                    {
+                        imageButton = undestroyableBlockTex;
+                        squareColor = Color.white;
+                    }
                     else if (levelSquares [row * maxCols + col].obstacle == SquareTypes.THRIVING) {
 						imageButton = thrivingBlockTex;
 						squareColor = Color.white;
@@ -1772,11 +1772,11 @@ public class LevelMakerEditor : EditorWindow {
 						imageButton = doublesolidBlockTex;
 						squareColor = Color.white;
 					}
-                    //else if (levelSquares[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
-                    //{
-                    //    imageButton = undestroyableBlockTex;
-                    //    squareColor = Color.white;
-                    //}
+                    else if (levelSquares[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
+                    {
+                        imageButton = undestroyableBlockTex;
+                        squareColor = Color.white;
+                    }
                     else if (levelSquares [row * maxCols + col].obstacle == SquareTypes.THRIVING) {
 						imageButton = thrivingBlockTex;
 						squareColor = Color.white;

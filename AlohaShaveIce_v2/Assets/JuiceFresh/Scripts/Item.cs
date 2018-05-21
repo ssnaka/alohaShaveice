@@ -685,6 +685,11 @@ public class Item : MonoBehaviour
 			{
 				GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Use_Bomb_InLevel, square.transform);
 			}
+
+			if (currentType.Equals(ItemsTypes.CROSS_BOMB))
+			{
+				GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.Use_CrossBomb_InLevel, square.transform);
+			}
 		}
 	}
 

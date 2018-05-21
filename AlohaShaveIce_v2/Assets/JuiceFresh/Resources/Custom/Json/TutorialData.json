@@ -91,6 +91,16 @@
       "type" : "Level_Target_Item",
       "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
       "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Level_Target_Item"
+    },
+    {
+      "type" : "Use_CrossBomb_InLevel",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_Use_CrossBomb_InLevel"
+    },
+    {
+      "type" : "UndestroyableBlock",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_UndestroyableBlock"
     }
   ]
 }

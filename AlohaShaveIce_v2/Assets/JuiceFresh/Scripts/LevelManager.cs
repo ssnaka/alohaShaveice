@@ -533,6 +533,8 @@ public class LevelManager : MonoBehaviour
 						break;
 				}
 
+				CheckUndestroyableBlockToturial();
+
 				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
 			}
 			else if (value == GameState.GameOver)
@@ -3832,6 +3834,30 @@ public class LevelManager : MonoBehaviour
 		if (OnLimitUpdate != null)
 		{
 			OnLimitUpdate(Limit);
+		}
+	}
+
+	void CheckUndestroyableBlockToturial ()
+	{
+		int undestroyableBlockRow = -1;
+		int undestroyableBlockCol = -1;
+		for (int row = 0; row < maxRows; row++)
+		{
+			for (int col = 0; col < maxCols; col++)
+			{
+				if (levelSquaresFile[row * maxCols + col].obstacle == SquareTypes.UNDESTROYABLE)
+				{
+					undestroyableBlockRow = row;
+					undestroyableBlockCol = col;
+					break;
+				}
+			}
+		}
+
+		if (undestroyableBlockRow >= 0 && undestroyableBlockCol >= 0)
+		{
+			Square square = GetSquare(undestroyableBlockCol, undestroyableBlockRow);
+			GameTutorialManager.Instance.SetUpTutorialForLevel(TutorialType.UndestroyableBlock, square.transform);
 		}
 	}
 }

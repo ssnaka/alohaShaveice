@@ -29,6 +29,9 @@ public enum TutorialType
 	Level_Target_Ingredient,//18
 	Level_Target_Item,		//19
 
+	Use_CrossBomb_InLevel,	//20
+	UndestroyableBlock,		//21
+
 	None,
 }
 

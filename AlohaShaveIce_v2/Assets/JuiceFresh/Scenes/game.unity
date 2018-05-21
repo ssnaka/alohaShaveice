@@ -26649,7 +26649,7 @@ MonoBehaviour:
   blockPrefab: {fileID: 179862, guid: 20204f83f367d93428a3e824b6ba4eb3, type: 2}
   wireBlockPrefab: {fileID: 153778, guid: d7a0ec3bdb439fb43a4ec9e26fe3f22c, type: 2}
   solidBlockPrefab: {fileID: 141174, guid: 546ef16483e777141b1e45b2f676d8b3, type: 2}
-  undesroyableBlockPrefab: {fileID: 142200, guid: 29bcaddb61b3cdd438f71dcda05f61bc,
+  undesroyableBlockPrefab: {fileID: 142200, guid: 6c144b813ef6b4812aa88a648d70cf5b,
     type: 2}
   thrivingBlockPrefab: {fileID: 142200, guid: 4d22c0ca6aa3c2f44a8136e879b88ed3, type: 2}
   lifeShop: {fileID: 285581711}

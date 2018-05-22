@@ -155,6 +155,10 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 
 	public bool GetLocalTutorialStatus (TutorialType _type)
 	{
+		if (tutorialSaveData == null)
+		{
+			return true;
+		}
 		SavedTutorial aTutorial = tutorialSaveData.tutorials.Find(item => item.type.Equals(_type));
 		if (aTutorial == null)
 		{

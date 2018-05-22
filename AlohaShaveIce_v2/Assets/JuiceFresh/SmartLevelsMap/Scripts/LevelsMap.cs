@@ -83,7 +83,8 @@ public class LevelsMap : MonoBehaviour
 	private void PlaceCharacterToLastUnlockedLevel ()
 	{
 		int lastUnlockedNumber = GetMapLevels().Where(l => !l.IsLocked).Select(l => l.Number).Max();
-		if (WaypointsMover == null || CharacterLevel == null || CharacterLevel.Number == lastUnlockedNumber)
+
+		if (WaypointsMover == null || CharacterLevel == null || CharacterLevel.Number == lastUnlockedNumber || CharacterLevel.Number <= lastUnlockedNumber - 2)
 		{
 			TeleportToLevelInternal(lastUnlockedNumber, true);
 			return;

@@ -170,7 +170,7 @@ public class MapCamera : MonoBehaviour
 		}
 
 		Bounds = new Bounds(
-			new Vector3(Bounds.center.x, totalHeight/2.1f, Bounds.center.z),
+			new Vector3(Bounds.center.x, totalHeight/2.0f - _bgSpriteList[0].bounds.size.y / 2.0f, Bounds.center.z),
 			new Vector3(Bounds.size.x, totalHeight, Bounds.size.z));
 	}
 

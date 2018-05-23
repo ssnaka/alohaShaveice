@@ -12,8 +12,8 @@ public class MapBackgroundManager : MonoBehaviour {
 
 	[SerializeField]
 	List<Sprite> mapBackgroundSpriteList;
-	[SerializeField]
-	List<float> mapBackgroundYPositions;
+//	[SerializeField]
+//	List<float> mapBackgroundYPositions;
 	Queue<MapBackgroundScript> mapBGPool = new Queue<MapBackgroundScript>();
 	int maxBGCount = 3;
 
@@ -50,10 +50,11 @@ public class MapBackgroundManager : MonoBehaviour {
 	{
 		if (currentIndex < 0)
 		{
-			for (int i = 0 ; i < mapBackgroundYPositions.Count; i++)
+			float bgYPos = 0.0f;
+			for (int i = 0 ; i < mapBackgroundSpriteList.Count; i++)
 			{
-				Vector2 spriteYBounds = GetSpriteYBounds(mapBackgroundSpriteList[i].bounds.size.y, mapBackgroundYPositions[i]);
-
+				Vector2 spriteYBounds = GetSpriteYBounds(mapBackgroundSpriteList[i].bounds.size.y, bgYPos);
+				bgYPos += (i == 0 ? 0.0f : mapBackgroundSpriteList[i - 1].bounds.size.y / 2.0f) + (mapBackgroundSpriteList[i].bounds.size.y / 2.0f);
 				if (mainCamera.transform.position.y < spriteYBounds.y && mainCamera.transform.position.y > spriteYBounds.x)
 				{
 					currentIndex = i;
@@ -71,14 +72,15 @@ public class MapBackgroundManager : MonoBehaviour {
 
 			if (previousCameraYPos < mainCamera.transform.position.y)
 			{
-				newIndex = currentIndex + 1 >= mapBackgroundYPositions.Count ? currentIndex : currentIndex + 1;
+				newIndex = currentIndex + 1 >= mapBackgroundSpriteList.Count ? currentIndex : currentIndex + 1;
 			}
 			else if (previousCameraYPos > mainCamera.transform.position.y)
 			{
 				newIndex = currentIndex - 1 <= 0 ? 0 : currentIndex - 1;
 			}
 
-			Vector2 spriteYBounds = GetSpriteYBounds(mapBackgroundSpriteList[newIndex].bounds.size.y, mapBackgroundYPositions[newIndex]);
+			float bgYPos = calculateYPos(1, newIndex);
+			Vector2 spriteYBounds = GetSpriteYBounds(mapBackgroundSpriteList[newIndex].bounds.size.y, bgYPos);
 			if (mainCamera.transform.position.y < spriteYBounds.y && mainCamera.transform.position.y > spriteYBounds.x)
 			{
 				if (currentIndex == newIndex)
@@ -112,7 +114,7 @@ public class MapBackgroundManager : MonoBehaviour {
 
 	void UpdateMapBG (int _spriteIndex)
 	{
-		if (_spriteIndex < 0 || _spriteIndex >= mapBackgroundYPositions.Count)
+		if (_spriteIndex < 0 || _spriteIndex >= mapBackgroundSpriteList.Count)
 		{
 			return;
 		}
@@ -129,8 +131,20 @@ public class MapBackgroundManager : MonoBehaviour {
 		}
 		mapBGPool.Enqueue(script);
 
-		script.SetupSprite(mapBackgroundSpriteList[_spriteIndex], mapBackgroundYPositions[_spriteIndex], _spriteIndex);
+		float bgYPos = calculateYPos(1, _spriteIndex);
+		script.SetupSprite(mapBackgroundSpriteList[_spriteIndex], bgYPos, _spriteIndex);
 
 		isInitDone = true;
+	}
+
+	float calculateYPos (int _startIndex, int _endIndex)
+	{
+		float result = 0.0f;
+		for (int i = _startIndex ; i <= _endIndex; i++)
+		{
+			result += (i == 0 ? 0.0f : mapBackgroundSpriteList[i - 1].bounds.size.y / 2.0f) + (mapBackgroundSpriteList[i].bounds.size.y / 2.0f);
+		}
+
+		return result;
 	}
 }

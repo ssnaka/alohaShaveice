@@ -264,7 +264,7 @@ public class GamesparksDataManager : IDataManager
 				Debug.Log("Getting tutorial");
 				TutorialSaveData tutorialSaveData = null;
 				var cursor = response.ScriptData.GetGSData("tutorial_Data");
-				Debug.LogError(cursor);
+//				Debug.LogError(cursor);
 				if (cursor == null)
 					return;
 

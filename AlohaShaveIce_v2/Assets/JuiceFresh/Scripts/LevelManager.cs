@@ -961,6 +961,12 @@ public class LevelManager : MonoBehaviour
 		if (ForDialog)
 			offset = 200;
 
+		// if collection items count is greater than 4, closer and smaller.
+		if (num > 4)
+		{
+			offset = 140;
+		}
+
 		containerRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (f - 1) * offset + ingrPrefab.transform.GetComponent<RectTransform>().rect.width / 2 * f - ingrPrefab.transform.GetComponent<RectTransform>().rect.width / 2 * (f - 2));
 		int j = 0;
 		//print(ingrCountTarget[0]);
@@ -991,6 +997,11 @@ public class LevelManager : MonoBehaviour
 				}
 				ingr.transform.SetParent(parentTransform.transform);
 				ingr.transform.localScale = Vector3.one;
+				// if collection items count is greater than 4, closer and smaller.
+				if (num > 4)
+				{
+					ingr.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);	
+				}
 				int heightPos = 0;
 				//if (f > 2 && (j == 0 || j == f - 1) && !ForDialog)
 				//    heightPos += 8;

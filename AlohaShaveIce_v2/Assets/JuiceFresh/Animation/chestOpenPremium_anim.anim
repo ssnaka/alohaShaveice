@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: chestOpen_anim
+  m_Name: chestOpenPremium_anim
   serializedVersion: 6
   m_Legacy: 1
   m_Compressed: 0
@@ -258,7 +258,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: chest_flash
+    path: chest_premium_flash
     classID: 1
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -770,7 +770,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: chest_flash
+    path: chest_premium_flash
     classID: 1
     script: {fileID: 0}
   m_EulerEditorCurves:

@@ -27213,7 +27213,7 @@ MonoBehaviour:
   - name: Ingredient4
     sprite: {fileID: 21300000, guid: d1b00986244544c43a25641091eed882, type: 3}
     check: 1
-    count: 15
+    count: 5
   currentReward: 0
   CapOfLife: 5
   TotalTimeForRestLifeHours: 0
@@ -27415,28 +27415,12 @@ MonoBehaviour:
   lifeShop: {fileID: 285581711}
   GameField: {fileID: 1050245871}
   enableInApps: 0
-  maxRows: 10
+  maxRows: 8
   maxCols: 8
   squareWidth: 1.6
   squareHeight: 1.6
   firstSquarePosition: {x: -2.4, y: 3.3}
   squaresArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -27512,7 +27496,7 @@ MonoBehaviour:
   limitType: 0
   Limit: 25
   TargetScore: 1000
-  currentLevel: 396
+  currentLevel: 381
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -27604,9 +27588,21 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  colorLimit: 3
+  colorLimit: 6
   ingrCountTarget: 0200000002000000
-  ingrTarget: []
+  ingrTarget:
+  - name: 
+    sprite: {fileID: 0}
+    check: 0
+    count: 7
+  - name: 
+    sprite: {fileID: 0}
+    check: 0
+    count: 7
+  - name: 
+    sprite: {fileID: 0}
+    check: 0
+    count: 7
   ingrediendSprites:
   - {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
   - {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
@@ -27645,7 +27641,7 @@ MonoBehaviour:
   - {fileID: 118832954}
   passLevelCounter: 0
   friendsAvatars: []
-  target: 5
+  target: 2
   TargetCages: 0
   TargetBombs: 0
   itemsHided: 0
@@ -27660,7 +27656,7 @@ MonoBehaviour:
   flower: {fileID: 107552, guid: 0a071ea80298917468648bade3061b0a, type: 2}
   bombsCollect: 20
   bombTimer: 15
-  NumIngredients: 0
+  NumIngredients: 3
   backgroundCenters: {x: 0, y: 0, z: 0}
   waitingBoost: {fileID: 0}
   highlightedItems: []
@@ -100921,6 +100917,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94eeb26f2fa8f4ad3a94084a3825ad5a, type: 3}
   - {fileID: 21300000, guid: 94eeb26f2fa8f4ad3a94084a3825ad5a, type: 3}
   - {fileID: 21300000, guid: 94eeb26f2fa8f4ad3a94084a3825ad5a, type: 3}
+  - {fileID: 21300000, guid: 94eeb26f2fa8f4ad3a94084a3825ad5a, type: 3}
+  - {fileID: 21300000, guid: 94eeb26f2fa8f4ad3a94084a3825ad5a, type: 3}
+  - {fileID: 21300000, guid: dc740d124c8154072a512acf6f3d92dc, type: 3}
 --- !u!1 &1663587256
 GameObject:
   m_ObjectHideFlags: 0

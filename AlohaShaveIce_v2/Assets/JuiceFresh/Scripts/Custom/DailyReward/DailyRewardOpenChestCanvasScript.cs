@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class DailyRewardOpenChestCanvasScript : MonoBehaviour 
 {
 	[SerializeField]
+	Image resultViewBG;
+	[SerializeField]
+	Text tapToOpenText;
+	[SerializeField]
 	Image chestImage;
 	[SerializeField]
 	Image chestImageOpen;
@@ -27,6 +31,13 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 	Button openButton;
 	[SerializeField]
 	Animation chestAnimation;
+
+	[SerializeField]
+	GameObject regularChestFlash;
+	[SerializeField]
+	GameObject premiumChestFlash;
+
+	string openAnimationName = "chestOpen_anim";
 
 	// sprite
 	public void SetupOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType)
@@ -70,6 +81,7 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 			break;
 		case ChestType.premium:
 			idleAnimationName = "chest_premium_image_idle";
+			openAnimationName = "chestOpenPremium_anim";
 			break;
 			default:
 			break;
@@ -143,10 +155,14 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		//chest animation
 //		chest3DContainer.SetActive(true);
 //		chestImage.gameObject.SetActive(true);
+		tapToOpenText.gameObject.SetActive(false);
 		chestAnimation.Stop();
-		chestAnimation.clip = chestAnimation.GetClip("chestOpen_anim");
+		chestAnimation.clip = chestAnimation.GetClip(openAnimationName);
 		chestAnimation.Play();
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(2.0f);
+		LoadingCanvasScript.Instance.ShowLoading();
+		yield return new WaitForSeconds(1.0f);
+		LoadingCanvasScript.Instance.HideLoading();
 
 		rewardItemsView.SetActive(true);
 		chestImage.gameObject.SetActive(false);
@@ -162,7 +178,12 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 			InitScript.Instance.GiveDailyReward(possibleReward);
 		}
 
+		resultViewBG.enabled = true;
+		tapToOpenText.gameObject.SetActive(true);
+		regularChestFlash.SetActive(false);
+		premiumChestFlash.SetActive(false);	
 		gameObject.SetActive(false);
 		DailyRewardManager.Instance.EnableReward(true);
+
 	}
 }

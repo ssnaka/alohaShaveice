@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Tap to melt surrounding shaved ice.
+    m_Value: Tap to melt surrounding shave ice.
   - m_Language: 23
     m_Value: "\uC8FC\uBCC0\uC758 \uBE59\uC218\uB4E4\uC774 \uBED0~\uC5C9."

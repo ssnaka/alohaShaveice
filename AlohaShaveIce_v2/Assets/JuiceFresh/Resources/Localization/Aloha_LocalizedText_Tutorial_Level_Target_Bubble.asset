@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Pop bubble by connecting same color of sahved ice.
+    m_Value: Pop the bubble by connecting the same  colored  shave ice.
   - m_Language: 23
     m_Value: "\uAC19\uC740 \uC0C9\uC758 \uBE59\uC218\uB97C \uC5F0\uACB0\uD574\uC11C
       \uBB3C\uBC29\uC6B8\uC744 \uD130\uB728\uB824\uBCF4\uC544\uC694."

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Destroy the bomb by connecting with same color of sahved ice within time.
+    m_Value: Destroy the bomb by connecting the same colored  shave ice within time
+      limit.
   - m_Language: 23
     m_Value: "\uAC19\uC740 \uC0C9\uC758 \uBE59\uC218\uC640 \uC5F0\uACB0\uC2DC\uCF1C
       \uC2DC\uAC04 \uB0B4\uC5D0 \uD3ED\uD0C4 \uC81C\uAC70\uD558\uAE30!!!!"

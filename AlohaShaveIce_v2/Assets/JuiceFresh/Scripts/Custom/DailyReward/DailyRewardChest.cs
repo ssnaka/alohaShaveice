@@ -266,7 +266,7 @@ public class DailyRewardChest : MonoBehaviour
 			case ChestType.daily:
 				if (!isNewRewardForToday)
 				{
-					if (InitScript.Gems <= data.price)
+					if (InitScript.Gems < data.price)
 					{
 						SoundBase.Instance.PlaySound(SoundBase.Instance.click);
 						GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
@@ -280,7 +280,7 @@ public class DailyRewardChest : MonoBehaviour
 
 				break;
 			case ChestType.premium:
-				if (InitScript.Gems <= data.price)
+				if (InitScript.Gems < data.price)
 				{
 					SoundBase.Instance.PlaySound(SoundBase.Instance.click);
 					GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);

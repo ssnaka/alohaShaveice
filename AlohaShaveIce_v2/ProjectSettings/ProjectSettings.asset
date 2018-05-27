@@ -149,8 +149,8 @@ PlayerSettings:
     iOS: com.naka.alohashaveice
     tvOS: com.Company.ProductName
   buildNumber:
-    iOS: 17
-  AndroidBundleVersionCode: 16
+    iOS: 19
+  AndroidBundleVersionCode: 19
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

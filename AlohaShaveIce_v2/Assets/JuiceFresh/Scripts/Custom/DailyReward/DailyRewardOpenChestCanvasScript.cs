@@ -74,6 +74,7 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		chestImageOpen.gameObject.SetActive(false);
 
 		string idleAnimationName = "chest_regular_image_idle";
+		openAnimationName = "chestOpen_anim";
 		switch (_chestType)
 		{
 		case ChestType.daily:
@@ -157,11 +158,18 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 //		chestImage.gameObject.SetActive(true);
 		tapToOpenText.gameObject.SetActive(false);
 		chestAnimation.Stop();
+
 		chestAnimation.clip = chestAnimation.GetClip(openAnimationName);
 		chestAnimation.Play();
-		yield return new WaitForSeconds(2.0f);
+
+		yield return new WaitForSeconds(0.3f);
+		GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+
+		yield return new WaitForSeconds(0.7f);
 		LoadingCanvasScript.Instance.ShowLoading();
+
 		yield return new WaitForSeconds(1.0f);
+		GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
 		LoadingCanvasScript.Instance.HideLoading();
 
 		rewardItemsView.SetActive(true);

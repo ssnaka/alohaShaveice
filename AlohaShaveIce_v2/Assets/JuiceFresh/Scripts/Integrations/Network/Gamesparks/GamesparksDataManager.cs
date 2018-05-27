@@ -161,8 +161,8 @@ public class GamesparksDataManager : IDataManager
 					string stars = item.GetInt("Stars").ToString();
 //					Debug.Log ("level: " + level + "; stars: " + stars);
 					starsDic.Add(level, int.Parse(stars));
-					Callback(starsDic);
 				}
+				Callback(starsDic);
 			}
 			else
 			{

@@ -33,7 +33,9 @@ public class MapBackgroundManager : MonoBehaviour {
 
 	void LevelsMap__instance_OnReset ()
 	{
+		isInitDone = false;
 		CheckBG();
+		isInitDone = true;
 	}
 		
 	// Update is called once per frame
@@ -43,12 +45,11 @@ public class MapBackgroundManager : MonoBehaviour {
 		{
 			CheckBG();
 		}
-//		mainCamera.rect
 	}
 
 	void CheckBG ()
 	{
-		if (currentIndex < 0)
+		if (currentIndex < 0 || !isInitDone)
 		{
 			float bgYPos = 0.0f;
 			for (int i = 0 ; i < mapBackgroundSpriteList.Count; i++)
@@ -134,7 +135,7 @@ public class MapBackgroundManager : MonoBehaviour {
 		float bgYPos = calculateYPos(1, _spriteIndex);
 		script.SetupSprite(mapBackgroundSpriteList[_spriteIndex], bgYPos, _spriteIndex);
 
-		isInitDone = true;
+//		isInitDone = true;
 	}
 
 	float calculateYPos (int _startIndex, int _endIndex)

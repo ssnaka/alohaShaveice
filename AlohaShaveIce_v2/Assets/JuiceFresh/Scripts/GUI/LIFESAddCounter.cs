@@ -179,15 +179,16 @@ public class LIFESAddCounter : MonoBehaviour
 
 	public void SetupInfiniteLife (bool _forceUpdate = true)
 	{
-		if (_forceUpdate)
-		{
-			int randomDuration = UnityEngine.Random.Range(infiniteLifeRnadomStart, infiniteLifeRnadomEnd);
-			int mod = randomDuration % infiniteLifeCut;
-			randomDuration += (infiniteLifeCut - mod);
+//		if (_forceUpdate)
+//		{
+//			int randomDuration = UnityEngine.Random.Range(infiniteLifeRnadomStart, infiniteLifeRnadomEnd);
+//			int mod = randomDuration % infiniteLifeCut;
+//			randomDuration += (infiniteLifeCut - mod);
+//
+//			SetupInfiniteLifeWithTime(randomDuration);
+//		}
 
-			SetupInfiniteLifeWithTime(randomDuration);
-		}
-
+		isInfiniteLife = InitScript.lifes < 0 ? true : false;
 		if (!isInfiniteLife)
 		{
 			TotalTimeForRestLife = InitScript.Instance.TotalTimeForRestLifeHours * 60 * 60 + InitScript.Instance.TotalTimeForRestLifeMin * 60 + InitScript.Instance.TotalTimeForRestLifeSec;

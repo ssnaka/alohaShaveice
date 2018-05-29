@@ -49,9 +49,9 @@ public class LIFESAddCounter : MonoBehaviour
 
 		if (DateTime.Now.Subtract(dateOfExit).TotalSeconds > timeForReset)
         {
-            InitScript.Instance.RestoreLifes();
-            InitScript.RestLifeTimer = 0;
+			InitScript.RestLifeTimer = 0;
 			isInfiniteLife = false;
+            InitScript.Instance.RestoreLifes();
             return false;    ///we dont need lifes
 		}
         else
@@ -72,10 +72,10 @@ public class LIFESAddCounter : MonoBehaviour
 		{
 			if (InitScript.RestLifeTimer <= 1)
 			{
-				InitScript.Instance.RestoreLifes();
 				InitScript.RestLifeTimer = 0;
-				ResetTimer();
 				isInfiniteLife = false;
+				InitScript.Instance.RestoreLifes();
+				ResetTimer();
 			}
 		}
 		else

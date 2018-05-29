@@ -893,6 +893,11 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void RestoreLifes ()
 	{
+		if (lifesAddCounterScript.isInfiniteLife)
+		{
+			return;
+		}
+
 		lifes = CapOfLife;
 		ZPlayerPrefs.SetInt("Lifes", lifes);
 		ZPlayerPrefs.Save();

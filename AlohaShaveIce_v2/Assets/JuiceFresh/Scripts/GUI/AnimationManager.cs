@@ -597,13 +597,15 @@ public class AnimationManager : MonoBehaviour
 
 	public void Again()
 	{
-		if (InitScript.lifes > 0) {
-
+		if (InitScript.lifes > 0 || InitScript.lifes < 0) 
+		{
 			SoundBase.Instance.PlaySound(SoundBase.Instance.click);
 			LevelManager.THIS.gameStatus = GameState.PrepareGame;
 			keepGaming = true;
 			CloseMenu();
-		} else {
+		} 
+		else 
+		{
 			BuyLifeShop();
 		}
 	}
@@ -689,9 +691,8 @@ public class AnimationManager : MonoBehaviour
 
 	public void BuyLifeShop()
 	{
-
 		SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-		if (InitScript.lifes < InitScript.Instance.CapOfLife)
+		if (InitScript.lifes >= 0 && InitScript.lifes < InitScript.Instance.CapOfLife)
 			GameObject.Find("CanvasGlobal").transform.Find("LiveShop").gameObject.SetActive(true);
 
 	}

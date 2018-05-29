@@ -40,17 +40,23 @@ public class LIFESAddCounter : MonoBehaviour
             InitScript.DateOfExit = DateTime.Now.ToString();
 
         DateTime dateOfExit = DateTime.Parse(InitScript.DateOfExit);
-        if (DateTime.Now.Subtract(dateOfExit).TotalSeconds > TotalTimeForRestLife * (InitScript.Instance.CapOfLife - InitScript.lifes))
+
+		float timeForReset = TotalTimeForRestLife * (InitScript.Instance.CapOfLife - InitScript.lifes);
+		if (isInfiniteLife)
+		{
+			timeForReset = InitScript.RestLifeTimer;
+		}
+
+		if (DateTime.Now.Subtract(dateOfExit).TotalSeconds > timeForReset)
         {
-            //Debug.Log(dateOfExit + " " + InitScript.today);
             InitScript.Instance.RestoreLifes();
             InitScript.RestLifeTimer = 0;
+			isInfiniteLife = false;
             return false;    ///we dont need lifes
 		}
         else
         {
-            TimeCount((float)DateTime.Now.Subtract(dateOfExit).TotalSeconds);
-            // Debug.Log(InitScript.today.Subtract(dateOfExit).TotalSeconds / 60 / 15 + " " + dateOfExit);
+        	TimeCount((float)DateTime.Now.Subtract(dateOfExit).TotalSeconds);
             return true;     ///we need lifes
 		}
     }
@@ -59,14 +65,15 @@ public class LIFESAddCounter : MonoBehaviour
     {
         if (InitScript.RestLifeTimer <= 0)
             ResetTimer();
-
+		
         InitScript.RestLifeTimer -= tick;
 
 		if (isInfiniteLife)
 		{
 			if (InitScript.RestLifeTimer <= 1)
 			{
-				InitScript.Instance.AddLife(InitScript.Instance.CapOfLife * 2);
+				InitScript.Instance.RestoreLifes();
+				InitScript.RestLifeTimer = 0;
 				ResetTimer();
 				isInfiniteLife = false;
 			}
@@ -179,15 +186,6 @@ public class LIFESAddCounter : MonoBehaviour
 
 	public void SetupInfiniteLife (bool _forceUpdate = true)
 	{
-//		if (_forceUpdate)
-//		{
-//			int randomDuration = UnityEngine.Random.Range(infiniteLifeRnadomStart, infiniteLifeRnadomEnd);
-//			int mod = randomDuration % infiniteLifeCut;
-//			randomDuration += (infiniteLifeCut - mod);
-//
-//			SetupInfiniteLifeWithTime(randomDuration);
-//		}
-
 		isInfiniteLife = InitScript.lifes < 0 ? true : false;
 		if (!isInfiniteLife)
 		{
@@ -199,13 +197,13 @@ public class LIFESAddCounter : MonoBehaviour
 
 	public void SetupInfiniteLifeWithTime (int _duration)
 	{
-		InitScript.lifes = -1;
-		isInfiniteLife = InitScript.lifes < 0 ? true : false;
-
-		if (InitScript.lifes >= 0 && InitScript.lifes < InitScript.Instance.CapOfLife)
+		if (InitScript.lifes >= 0 && InitScript.lifes <= InitScript.Instance.CapOfLife)
 		{
 			InitScript.RestLifeTimer = 0.0f;
 		}
+
+		InitScript.lifes = -1;
+		isInfiniteLife = InitScript.lifes < 0 ? true : false;
 
 		InitScript.RestLifeTimer += _duration;
 		InitScript.DateOfExit = DateTime.Now.ToString();

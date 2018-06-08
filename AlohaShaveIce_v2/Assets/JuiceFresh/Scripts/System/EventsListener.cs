@@ -8,9 +8,10 @@ using UnityEngine.Analytics;
 
 public class EventsListener : MonoBehaviour
 {
-
+	System.DateTime gameStartTime;
 	void OnEnable ()
 	{
+		gameStartTime = System.DateTime.Now;
 		LevelManager.OnMapState += OnMapState;
 		LevelManager.OnEnterGame += OnEnterGame;
 		LevelManager.OnLevelLoaded += OnLevelLoaded;
@@ -20,7 +21,6 @@ public class EventsListener : MonoBehaviour
 		LevelManager.OnWin += OnWin;
 		LevelManager.OnLose += OnLose;
 		LevelManager.OnLevelComplete += LevelManager_OnLevelComplete;
-
 		LevelManager.OnPowerUpUsed += LevelManager_OnPowerUpUsed;
 
 		InitScript.OnAppStart += InitScript_OnAppStart;
@@ -45,9 +45,6 @@ public class EventsListener : MonoBehaviour
 		LevelManager.OnWin -= OnWin;
 		LevelManager.OnLose -= OnLose;
 		LevelManager.OnLevelComplete -= LevelManager_OnLevelComplete;
-
-		LevelManager.OnAppEnd -= LevelManager_OnAppEnd;
-		LevelManager.OnPowerUpUsed -= LevelManager_OnPowerUpUsed;
 		LevelManager.OnPowerUpUsed -= LevelManager_OnPowerUpUsed;
 
 		InitScript.OnAppStart -= InitScript_OnAppStart;
@@ -58,6 +55,11 @@ public class EventsListener : MonoBehaviour
 		InitScript.OnDailyChestOpen -= InitScript_OnDailyChestOpen;
 		InitScript.OnPremiumChestOpen -= InitScript_OnPremiumChestOpen;
 	}
+
+//	void OnApplicationQuit ()
+//	{
+//		
+//	}
 
 	#region GAME_EVENTS
 
@@ -74,8 +76,8 @@ public class EventsListener : MonoBehaviour
 	{
 		Dictionary<string, object> dic = new Dictionary<string, object>();
 		dic.Add("level", LevelManager.THIS.currentLevel);
-		dic.Add("didwin", _isWin);
-		AnalyticsEvent("OnEnterLevel", dic);
+		dic.Add("didwin", _isWin.ToString());
+		AnalyticsEvent("OnExitLevel", dic);
 	}
 
 	void OnLevelLoaded ()
@@ -104,15 +106,16 @@ public class EventsListener : MonoBehaviour
 		AnalyticsEvent("OnLose", LevelManager.THIS.currentLevel);
 	}
 
-	void LevelManager_OnAppStart ()
-	{
-		AnalyticsEvent("OnAppStart", System.DateTime.Now);
-	}
+//	void LevelManager_OnAppStart ()
+//	{
+//		AnalyticsEvent("OnAppStart", System.DateTime.Now);
+//	}
 
-	void LevelManager_OnAppEnd ()
-	{
-		AnalyticsEvent("OnAppEnd", System.DateTime.Now);
-	}
+//	void LevelManager_OnAppEnd ()
+//	{
+//		System.TimeSpan playTime = System.DateTime.Now.Subtract(gameStartTime);
+//		AnalyticsEvent("OnAppEnd", playTime.TotalSeconds);
+//	}
 
 	void LevelManager_OnPowerUpUsed ()
 	{
@@ -129,7 +132,9 @@ public class EventsListener : MonoBehaviour
 
 	void InitScript_OnAppEnd ()
 	{
-		AnalyticsEvent("OnAppEnd", System.DateTime.Now);
+		
+		System.TimeSpan playTime = System.DateTime.Now.Subtract(gameStartTime);
+		AnalyticsEvent("OnAppEnd", playTime.TotalSeconds);
 	}
 
 	void InitScript_OnPremiumChestOpen ()
@@ -170,7 +175,14 @@ public class EventsListener : MonoBehaviour
 		Dictionary<string, object> dic = new Dictionary<string, object>();
 		for (int i = 0 ; i < _obj.Length; i++)
 		{
-			dic[_event] = _obj[i];
+			if (_obj[i] is Dictionary<string, object>)
+			{
+				dic = _obj[i] as Dictionary<string, object>;
+			}
+			else
+			{	
+				dic[_event] = _obj[i];
+			}
 		}
 		Analytics.CustomEvent(_event, dic);
 #endif

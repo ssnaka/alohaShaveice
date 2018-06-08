@@ -375,7 +375,7 @@ public class LevelManager : MonoBehaviour
 
 	public delegate void GameStateEvents ();
 	public delegate void LevelCompleteEvent (bool _isWin);
-	public static event GameStateEvents OnAppEnd;
+//	public static event GameStateEvents OnAppEnd;
 	public static event GameStateEvents OnMapState;
 	public static event GameStateEvents OnEnterGame;
 	public static event GameStateEvents OnLevelLoaded;

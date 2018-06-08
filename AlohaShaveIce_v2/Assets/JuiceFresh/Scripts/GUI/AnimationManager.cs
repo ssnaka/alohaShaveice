@@ -35,9 +35,11 @@ public class AnimationManager : MonoBehaviour
 		}
 		if (name == "MenuPlay") {
 //			LoadLevel(PlayerPrefs.GetInt("OpenLevel"));
+
 			if (LevelManager.THIS.currentLevel == 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
 			{
-				DailyRewardManager.Instance.EnableReward(true);
+				GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Try_ChestBox, GameObject.Find("DailyReward").GetComponent<RectTransform>());
+//				DailyRewardManager.Instance.EnableReward(true);
 				CloseMenu();
 			}
 			LevelInfo levelInfo = LevelManager.THIS.LoadLevel();

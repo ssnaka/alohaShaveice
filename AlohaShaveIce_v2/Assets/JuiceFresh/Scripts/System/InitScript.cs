@@ -94,6 +94,17 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 //public class InitScript : MonoBehaviour
 //#endif
 {
+	public delegate void AnalyticsEvents ();
+	public static event AnalyticsEvents OnAppStart;
+	public static event AnalyticsEvents OnAppEnd;
+	public static event AnalyticsEvents OnVideoAdShown;
+	public static event AnalyticsEvents OnFreeChestOpen;
+	public static event AnalyticsEvents OnFreeChestOpenWithAds;
+	public static event AnalyticsEvents OnDailyChestOpen;
+	public static event AnalyticsEvents OnPremiumChestOpen;
+
+
+
 	public event Action<int> OnLifeUpdate;
 	public event Action<int> OnGemUpdate;
 
@@ -379,6 +390,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		return false;
 	}
 
+	const int maxVideoLoadTry = 3;
+	int videoLoadTry = 0;
 	public void ShowRewardedAds ()
 	{
 #if UNITY_ADS
@@ -395,6 +408,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 #endif
 		#if APPODEAL_ADS
+		LoadingCanvasScript.Instance.ShowLoading();
 		if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
 		{
 			if (MusicBase.Instance)
@@ -404,7 +418,29 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			}
 			Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
 		}
+		else
+		{
+			if (videoLoadTry < maxVideoLoadTry)
+			{
+				Invoke("ShowRewardedAds", 1.5f);
+				videoLoadTry++;
+			}
+			else
+			{
+				videoLoadTry = 0;
+				LoadingCanvasScript.Instance.HideLoading();
+				SystemMessageCanvas.Instance.SetupSystemMessage(SystemMessageTitleType.Error, SystemMessageMessageType.VideoLoadError, SystemMessageOKType.Retry, SystemMessageCancelType.Close, VideoErrorCallback);
+			}
+		}
 		#endif
+	}
+
+	void VideoErrorCallback (bool _tryAgain)
+	{
+		if (_tryAgain)
+		{
+			ShowRewardedAds();
+		}
 	}
 
 	public void CheckAdsEvents (GameState state)
@@ -503,6 +539,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		Debug.Log("--Video Loaded");
 	}
 
+
 	public void onRewardedVideoFailedToLoad ()
 	{
 		Debug.Log("--Video failed");
@@ -545,7 +582,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void onNonSkippableVideoFinished ()
 	{
+		OnVideoAdShown();
 		Debug.Log("Video Finished");
+		videoLoadTry = 0;
+		LoadingCanvasScript.Instance.HideLoading();
 		CheckRewardedAds();
 	}
 
@@ -1089,10 +1129,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	void OnEnable ()
 	{
 		LevelsMap.LevelSelected += OnLevelClicked;
+		OnAppStart();
 	}
 
 	void OnDisable ()
 	{
+		OnAppEnd();
 		LevelsMap.LevelSelected -= OnLevelClicked;
 
 		//		if(RestLifeTimer>0){
@@ -1175,6 +1217,35 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 
 		PlayerPrefs.Save();
+	}
+
+	public void HandleDailyRewardEvent (ChestType _chestType, bool _withGems, bool _withAds)
+	{
+		switch (_chestType)
+		{
+		case ChestType.daily:
+			if (!_withGems)
+			{
+				if (_withAds)
+				{
+					OnFreeChestOpenWithAds();
+				}
+				else
+				{
+					OnFreeChestOpen();
+				}
+			}
+			else
+			{
+				OnDailyChestOpen();
+			}
+			break;
+		case ChestType.premium:
+			OnPremiumChestOpen();
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void OnRewardButtonPressed ()

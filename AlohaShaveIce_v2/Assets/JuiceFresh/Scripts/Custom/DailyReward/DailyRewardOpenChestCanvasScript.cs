@@ -39,9 +39,15 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 
 	string openAnimationName = "chestOpen_anim";
 
+	ChestType chestType;
+	bool openChestWithGems;
+	bool openChestWithAds;
 	// sprite
-	public void SetupOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType)
+	public void SetupOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType, bool _withGems, bool _fromAds)
 	{
+		chestType = _chestType;
+		openChestWithGems = _withGems;
+		openChestWithAds = _fromAds;
 		DailyRewardManager.Instance.EnableReward(false);
 		gameObject.SetActive(true);
 		rewardItemsView.SetActive(false);
@@ -75,7 +81,7 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 
 		string idleAnimationName = "chest_regular_image_idle";
 		openAnimationName = "chestOpen_anim";
-		switch (_chestType)
+		switch (chestType)
 		{
 		case ChestType.daily:
 			idleAnimationName = "chest_regular_image_idle";
@@ -185,6 +191,8 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 			PossibleReward possibleReward = possibleRewards[i];
 			InitScript.Instance.GiveDailyReward(possibleReward);
 		}
+
+		InitScript.Instance.HandleDailyRewardEvent(chestType, openChestWithGems, openChestWithAds);
 
 		resultViewBG.enabled = true;
 		tapToOpenText.gameObject.SetActive(true);

@@ -14,6 +14,9 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 
 	MenuTutorialPanelScript menuTutorialPanelScript;
 
+	public delegate void OnTutorialEvent (TutorialType _tutorialType);
+	public static event OnTutorialEvent onTutorialEvent;
+
 	void LoadTutorialData ()
 	{
 		if (tutorialData != null)
@@ -82,7 +85,6 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 
 	public void ShowMenuTutorial (TutorialType _type, RectTransform _pivotTransform)
 	{
-		
 		TutorialType tutorialType = _type;
 		bool tutorialShown = GetLocalTutorialStatus(tutorialType);
 		if (tutorialShown || (menuTutorialPanelScript != null && menuTutorialPanelScript.gameObject.activeInHierarchy) || !_pivotTransform.gameObject.activeInHierarchy)
@@ -151,6 +153,7 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 
 		SaveLocalTutorialData(tutorialSaveData);
 		NetworkManager.dataManager.UpdateTutorial();
+		onTutorialEvent(_type);
 	}
 
 	public bool GetLocalTutorialStatus (TutorialType _type)

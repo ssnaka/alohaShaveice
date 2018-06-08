@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TutorialManager : MonoBehaviour {
+public class TutorialManager : MonoBehaviour 
+{
     public List<Item> items = new List<Item>();
     public GameObject tutorial;
     public GameObject text;
@@ -30,7 +31,6 @@ public class TutorialManager : MonoBehaviour {
             showed = true;
         }
     }
-
 
     void CheckNewTarget() 
 	{

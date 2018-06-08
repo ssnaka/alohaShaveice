@@ -317,10 +317,10 @@ public class DailyRewardChest : MonoBehaviour
 			ZPlayerPrefs.Save();
 		}
 
-		ShowOpenChest();
+		ShowOpenChest(shouldSpendGems);
 	}
 
-	public void ShowOpenChest (bool _fromAds = false)
+	public void ShowOpenChest (bool _withGems, bool _fromAds = false)
 	{
 		if (_fromAds)
 		{
@@ -332,7 +332,7 @@ public class DailyRewardChest : MonoBehaviour
 //		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
 //		PlayerPrefs.Save();
 //		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
-		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type);
+		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type, _withGems, _fromAds);
 		CheckDailyReward();
 	}
 

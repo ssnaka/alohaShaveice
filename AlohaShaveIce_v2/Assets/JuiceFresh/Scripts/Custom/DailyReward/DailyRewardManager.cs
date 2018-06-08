@@ -92,30 +92,30 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 		GameTutorialManager.Instance.CheckBoostShopTutorial();
 	}
 
-	public void ShowOpenChest (List<PossibleReward> _possibleRewards, GameObject _chestPrefab)
-	{
-		if (openChestBoxCanvas == null)
-		{
-			openChestBoxCanvas = Instantiate<GameObject>(openChestBoxPrefab);
-		}
-		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
-		script.SetupOpenChest(_possibleRewards, _chestPrefab);
-	}
+//	public void ShowOpenChest (List<PossibleReward> _possibleRewards, GameObject _chestPrefab)
+//	{
+//		if (openChestBoxCanvas == null)
+//		{
+//			openChestBoxCanvas = Instantiate<GameObject>(openChestBoxPrefab);
+//		}
+//		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
+//		script.SetupOpenChest(_possibleRewards, _chestPrefab);
+//	}
 
-	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType)
+	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType, bool _withGems, bool _withAds)
 	{
 		if (openChestBoxCanvas == null)
 		{
 			openChestBoxCanvas = Instantiate<GameObject>(openChestBoxPrefab);
 		}
 		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
-		script.SetupOpenChest(_possibleRewards, _chestSprite, _chestType);
+		script.SetupOpenChest(_possibleRewards, _chestSprite, _chestType, _withGems, _withAds);
 	}
 
 	public void ShowOpenChestAsVideoAds ()
 	{
 		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));
-		dailyRewardChest.ShowOpenChest(true);
+		dailyRewardChest.ShowOpenChest(false, true);
 	}
 
 	#region Animation callback

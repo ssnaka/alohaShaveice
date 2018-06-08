@@ -374,8 +374,7 @@ public class LevelManager : MonoBehaviour
 	#region EVENTS
 
 	public delegate void GameStateEvents ();
-
-	public static event GameStateEvents OnAppStart;
+	public delegate void LevelCompleteEvent (bool _isWin);
 	public static event GameStateEvents OnAppEnd;
 	public static event GameStateEvents OnMapState;
 	public static event GameStateEvents OnEnterGame;
@@ -386,6 +385,11 @@ public class LevelManager : MonoBehaviour
 	public static event GameStateEvents OnWin;
 	public static event GameStateEvents OnLose;
 	public static event GameStateEvents OnPowerUpUsed;
+	public static event LevelCompleteEvent OnLevelComplete;
+//	public static event GameStateEvents OnVideoAdShown;
+//	public static event GameStateEvents OnFreeChestOpen;
+//	public static event GameStateEvents OnDailyChestOpen;
+//	public static event GameStateEvents OnPremiumChestOpen;
 
 
 	public GameState gameStatus
@@ -543,6 +547,7 @@ public class LevelManager : MonoBehaviour
 //				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				SoundBase.Instance.PlaySound(SoundBase.Instance.gameOver[0]);
 				GameObject.Find("CanvasGlobal").transform.Find("MenuFailed").gameObject.SetActive(true);
+				OnLevelComplete(false);
 				OnLose();
 			}
 			else if (value == GameState.PreWinAnimations)
@@ -554,6 +559,7 @@ public class LevelManager : MonoBehaviour
 			else if (value == GameState.Win)
 			{
 				passLevelCounter++;
+				OnLevelComplete(true);
 				OnMenuComplete();
 				GameObject.Find("CanvasGlobal").transform.Find("MenuComplete").gameObject.SetActive(true);
 				OnWin();
@@ -1599,7 +1605,7 @@ public class LevelManager : MonoBehaviour
 //		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 //		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Limit/6);
-		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Limit/6));
+		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Mathf.Min(Limit/6, 10)));
 		while (countFlowers > 0)
 //		for (int i = 1; i <= countFlowers; i++)
 		{

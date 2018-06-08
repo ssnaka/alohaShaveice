@@ -35,6 +35,11 @@ public class AnimationManager : MonoBehaviour
 		}
 		if (name == "MenuPlay") {
 //			LoadLevel(PlayerPrefs.GetInt("OpenLevel"));
+			if (LevelManager.THIS.currentLevel == 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
+			{
+				DailyRewardManager.Instance.EnableReward(true);
+				CloseMenu();
+			}
 			LevelInfo levelInfo = LevelManager.THIS.LoadLevel();
 			LevelManager.THIS.CreateCollectableTarget(transform.Find("Image/TargetIngr/TargetIngr").gameObject, target);
 
@@ -489,6 +494,11 @@ public class AnimationManager : MonoBehaviour
 				g.transform.localScale = Vector3.one;
 				g.transform.localPosition = Vector3.zero;
 			}
+
+//			if (LevelManager.THIS.currentLevel == 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
+//			{
+//				DailyRewardManager.Instance.EnableReward(true);
+//			}
 		}
 		if (gameObject.name == "MenuFailed") {
 			if (!keepGaming)
@@ -497,10 +507,7 @@ public class AnimationManager : MonoBehaviour
 		}
 		if (gameObject.name == "Tutorial") {
 			//LevelManager.Instance.gameStatus = GameState.WaitForPopup;
-			if (!GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial))
-			{
-				DailyRewardManager.Instance.EnableReward(true);
-			}
+
 			GameTutorialManager.Instance.SetLocalTutorialStatus(TutorialType.First_Tutorial);
 			PlayerPrefs.SetInt("didTutorialShown", 1);
 		}

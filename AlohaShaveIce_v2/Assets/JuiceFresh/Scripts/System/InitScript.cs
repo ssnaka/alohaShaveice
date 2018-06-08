@@ -1049,6 +1049,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{
 		if (pauseStatus)
 		{
+			Debug.LogError("Pause");
+			OnAppEnd();
 			if (RestLifeTimer > 0)
 			{
 				ZPlayerPrefs.SetFloat("RestLifeTimer", RestLifeTimer);
@@ -1082,6 +1084,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 		else
 		{
+			OnAppStart();
 			// Cancel all local notification.
 			localNotificationId = 1;
 			NotificationCenter.Instance.CancelAllLocalNotification();
@@ -1128,13 +1131,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	void OnEnable ()
 	{
-		LevelsMap.LevelSelected += OnLevelClicked;
 		OnAppStart();
+		LevelsMap.LevelSelected += OnLevelClicked;
 	}
 
 	void OnDisable ()
 	{
-		OnAppEnd();
 		LevelsMap.LevelSelected -= OnLevelClicked;
 
 		//		if(RestLifeTimer>0){

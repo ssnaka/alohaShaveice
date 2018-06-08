@@ -13,13 +13,13 @@ public class EventsListener : MonoBehaviour
 	{
 		gameStartTime = System.DateTime.Now;
 		LevelManager.OnMapState += OnMapState;
-		LevelManager.OnEnterGame += OnEnterGame;
+		LevelManager.OnEnterLevel += OnEnterLevel;
 		LevelManager.OnLevelLoaded += OnLevelLoaded;
 		LevelManager.OnMenuPlay += OnMenuPlay;
-		LevelManager.OnMenuComplete += OnMenuComplete;
-		LevelManager.OnStartPlay += OnStartPlay;
-		LevelManager.OnWin += OnWin;
-		LevelManager.OnLose += OnLose;
+//		LevelManager.OnMenuComplete += OnMenuComplete;
+//		LevelManager.OnStartPlay += OnStartPlay;
+//		LevelManager.OnWin += OnWin;
+//		LevelManager.OnLose += OnLose;
 		LevelManager.OnLevelComplete += LevelManager_OnLevelComplete;
 		LevelManager.OnPowerUpUsed += LevelManager_OnPowerUpUsed;
 
@@ -37,13 +37,13 @@ public class EventsListener : MonoBehaviour
 	void OnDisable ()
 	{
 		LevelManager.OnMapState -= OnMapState;
-		LevelManager.OnEnterGame -= OnEnterGame;
+		LevelManager.OnEnterLevel -= OnEnterLevel;
 		LevelManager.OnLevelLoaded -= OnLevelLoaded;
 		LevelManager.OnMenuPlay -= OnMenuPlay;
-		LevelManager.OnMenuComplete -= OnMenuComplete;
-		LevelManager.OnStartPlay -= OnStartPlay;
-		LevelManager.OnWin -= OnWin;
-		LevelManager.OnLose -= OnLose;
+//		LevelManager.OnMenuComplete -= OnMenuComplete;
+//		LevelManager.OnStartPlay -= OnStartPlay;
+//		LevelManager.OnWin -= OnWin;
+//		LevelManager.OnLose -= OnLose;
 		LevelManager.OnLevelComplete -= LevelManager_OnLevelComplete;
 		LevelManager.OnPowerUpUsed -= LevelManager_OnPowerUpUsed;
 
@@ -67,16 +67,18 @@ public class EventsListener : MonoBehaviour
 	{
 	}
 
-	void OnEnterGame ()
+	void OnEnterLevel ()
 	{
 		AnalyticsEvent("OnEnterLevel", LevelManager.THIS.currentLevel);
 	}
 
-	void LevelManager_OnLevelComplete (bool _isWin)
+	void LevelManager_OnLevelComplete (bool _isWin, int _limitLeftover, bool _extraLifeUsed)
 	{
 		Dictionary<string, object> dic = new Dictionary<string, object>();
 		dic.Add("level", LevelManager.THIS.currentLevel);
 		dic.Add("didwin", _isWin.ToString());
+		dic.Add("limit_left", _limitLeftover);
+		dic.Add("extraLifeUsed", _extraLifeUsed);
 		AnalyticsEvent("OnExitLevel", dic);
 	}
 
@@ -88,23 +90,23 @@ public class EventsListener : MonoBehaviour
 	{
 	}
 
-	void OnMenuComplete ()
-	{
-	}
+//	void OnMenuComplete ()
+//	{
+//	}
 
-	void OnStartPlay ()
-	{
-	}
+//	void OnStartPlay ()
+//	{
+//	}
 
-	void OnWin ()
-	{
-		AnalyticsEvent("OnWin", LevelManager.THIS.currentLevel);
-	}
-
-	void OnLose ()
-	{
-		AnalyticsEvent("OnLose", LevelManager.THIS.currentLevel);
-	}
+//	void OnWin ()
+//	{
+//		AnalyticsEvent("OnWin", LevelManager.THIS.currentLevel);
+//	}
+//
+//	void OnLose ()
+//	{
+//		AnalyticsEvent("OnLose", LevelManager.THIS.currentLevel);
+//	}
 
 //	void LevelManager_OnAppStart ()
 //	{
@@ -171,7 +173,7 @@ public class EventsListener : MonoBehaviour
 
 	void AnalyticsEvent (string _event, params object[] _obj)
 	{
-#if UNITY_ANALYTICS
+#if UNITY_ANALYTICS && !UNITY_EDITOR
 		Dictionary<string, object> dic = new Dictionary<string, object>();
 		for (int i = 0 ; i < _obj.Length; i++)
 		{

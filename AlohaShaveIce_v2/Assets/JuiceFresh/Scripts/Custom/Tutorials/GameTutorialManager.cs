@@ -83,24 +83,25 @@ public class GameTutorialManager : Singleton<GameTutorialManager>
 		menuTutorialPanelScript = go.GetComponent<MenuTutorialPanelScript>();
 	}
 
-	public void ShowMenuTutorial (TutorialType _type, RectTransform _pivotTransform)
+	public bool ShowMenuTutorial (TutorialType _type, RectTransform _pivotTransform)
 	{
 		TutorialType tutorialType = _type;
 		bool tutorialShown = GetLocalTutorialStatus(tutorialType);
 		if (tutorialShown || (menuTutorialPanelScript != null && menuTutorialPanelScript.gameObject.activeInHierarchy) || !_pivotTransform.gameObject.activeInHierarchy)
 		{
-			return;
+			return false;
 		}
 
 		ATutorial aTutorial = GetTutorialConfigData(tutorialType);
 		if (aTutorial == null)
 		{
 			Debug.LogError("Tutorial cannot be found.");
-			return;
+			return false;
 		}
 
 		SetMenuTutorialView(aTutorial.prefabName);
 		menuTutorialPanelScript.SetUpTutorial(aTutorial, _pivotTransform, GetComponent<Canvas>());
+		return true;
 	}
 
 	public void CheckBoostShopTutorial ()

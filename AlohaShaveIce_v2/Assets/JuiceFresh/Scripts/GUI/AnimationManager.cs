@@ -36,11 +36,13 @@ public class AnimationManager : MonoBehaviour
 		if (name == "MenuPlay") {
 //			LoadLevel(PlayerPrefs.GetInt("OpenLevel"));
 
-			if (LevelManager.THIS.currentLevel == 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
+			if (LevelManager.THIS.currentLevel > 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
 			{
-				GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Try_ChestBox, GameObject.Find("DailyReward").GetComponent<RectTransform>());
-//				DailyRewardManager.Instance.EnableReward(true);
-				CloseMenu();
+				if (GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Try_ChestBox, GameObject.Find("DailyReward").GetComponent<RectTransform>()))
+				{
+//					DailyRewardManager.Instance.EnableReward(true);
+					CloseMenu();
+				}
 			}
 			LevelInfo levelInfo = LevelManager.THIS.LoadLevel();
 			LevelManager.THIS.CreateCollectableTarget(transform.Find("Image/TargetIngr/TargetIngr").gameObject, target);
@@ -510,6 +512,13 @@ public class AnimationManager : MonoBehaviour
 		if (gameObject.name == "Tutorial") {
 			//LevelManager.Instance.gameStatus = GameState.WaitForPopup;
 
+			if (!GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial))
+			{
+				PlayerPrefs.SetInt("OpenLevel", 1);
+				PlayerPrefs.Save();
+				GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
+			}
+
 			GameTutorialManager.Instance.SetLocalTutorialStatus(TutorialType.First_Tutorial);
 			PlayerPrefs.SetInt("didTutorialShown", 1);
 		}
@@ -740,10 +749,13 @@ public class AnimationManager : MonoBehaviour
 			LevelManager.THIS.AddLimit(LevelManager.THIS.ExtraFailedMoves);
 //			LevelManager.THIS.Limit += LevelManager.THIS.ExtraFailedMoves;
 		}
-		else {
+		else 
+		{
 			LevelManager.THIS.AddLimit(LevelManager.THIS.ExtraFailedSecs);
 //			LevelManager.THIS.Limit += LevelManager.THIS.ExtraFailedSecs;
 		}
+
+		LevelManager.THIS.ExtraLifeUsed();
 
 		if (LevelManager.THIS.target == Target.BOMBS)//1.3
 		{

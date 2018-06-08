@@ -25,7 +25,7 @@ public class NetworkDataManager
 
 		NetworkManager.OnLoginEvent += GetTutorial;
 		NetworkManager.OnLoginEvent += GetPlayerLevel;
-		LevelManager.OnEnterGame += GetPlayerScore;
+		LevelManager.OnEnterLevel += GetPlayerScore;
 		NetworkManager.OnLogoutEvent += Logout;
 		NetworkManager.OnLoginEvent += GetBoosterData;	
 	}
@@ -35,7 +35,7 @@ public class NetworkDataManager
 		dataManager.Logout();
 		NetworkManager.OnLoginEvent -= GetTutorial;
 		NetworkManager.OnLoginEvent -= GetPlayerLevel;
-		LevelManager.OnEnterGame -= GetPlayerScore;
+		LevelManager.OnEnterLevel -= GetPlayerScore;
 		NetworkManager.OnLoginEvent -= GetBoosterData;
 		NetworkManager.OnLogoutEvent -= Logout;
 	}

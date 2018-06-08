@@ -374,17 +374,18 @@ public class LevelManager : MonoBehaviour
 	#region EVENTS
 
 	public delegate void GameStateEvents ();
-	public delegate void LevelCompleteEvent (bool _isWin);
+	public delegate void LevelCompleteEvent (bool _isWin, int _limitLeftOver, bool _extraLifeUsed);
 //	public static event GameStateEvents OnAppEnd;
 	public static event GameStateEvents OnMapState;
-	public static event GameStateEvents OnEnterGame;
+
 	public static event GameStateEvents OnLevelLoaded;
 	public static event GameStateEvents OnMenuPlay;
 	public static event GameStateEvents OnMenuComplete;
 	public static event GameStateEvents OnStartPlay;
-	public static event GameStateEvents OnWin;
-	public static event GameStateEvents OnLose;
+//	public static event GameStateEvents OnWin;
+//	public static event GameStateEvents OnLose;
 	public static event GameStateEvents OnPowerUpUsed;
+	public static event GameStateEvents OnEnterLevel;
 	public static event LevelCompleteEvent OnLevelComplete;
 //	public static event GameStateEvents OnVideoAdShown;
 //	public static event GameStateEvents OnFreeChestOpen;
@@ -409,6 +410,7 @@ public class LevelManager : MonoBehaviour
 //				MusicBase.Instance.GetComponent<AudioSource>().loop = true;
 //				MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
 //				MusicBase.Instance.GetComponent<AudioSource>().Play();
+
 				PrepareGame();
 				avatarManager.EnableAvatar(false);
 			}
@@ -547,8 +549,8 @@ public class LevelManager : MonoBehaviour
 //				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				SoundBase.Instance.PlaySound(SoundBase.Instance.gameOver[0]);
 				GameObject.Find("CanvasGlobal").transform.Find("MenuFailed").gameObject.SetActive(true);
-				OnLevelComplete(false);
-				OnLose();
+				OnLevelComplete(false, limitLeftOver, extraLifeUsed);
+//				OnLose();
 			}
 			else if (value == GameState.PreWinAnimations)
 			{
@@ -559,10 +561,10 @@ public class LevelManager : MonoBehaviour
 			else if (value == GameState.Win)
 			{
 				passLevelCounter++;
-				OnLevelComplete(true);
 				OnMenuComplete();
 				GameObject.Find("CanvasGlobal").transform.Find("MenuComplete").gameObject.SetActive(true);
-				OnWin();
+				OnLevelComplete(true, limitLeftOver, extraLifeUsed);
+//				OnWin();
 			}
 			InitScript.Instance.CheckAdsEvents(value);
 
@@ -575,6 +577,8 @@ public class LevelManager : MonoBehaviour
 	Vector3 backgroundCenters;
 
 	int totalLimit;
+	int limitLeftOver;
+	bool extraLifeUsed;
 
 	public void MenuPlayEvent ()
 	{
@@ -1064,6 +1068,9 @@ public class LevelManager : MonoBehaviour
 	{
 		InitScript.Instance.SpendLife(1);
 
+		extraLifeUsed = false;
+		limitLeftOver = 0;
+
 		ActivatedBoost = null;
 		Score = 0;
 		stars = 0;
@@ -1127,7 +1134,7 @@ public class LevelManager : MonoBehaviour
 
 		}
 
-		OnEnterGame();
+		OnEnterLevel();
 	}
 
 	public void CheckCollectedTarget (GameObject _item)
@@ -1606,6 +1613,7 @@ public class LevelManager : MonoBehaviour
 //		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
 		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Limit/6);
 		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Mathf.Min(Limit/6, 10)));
+		limitLeftOver = Limit;
 		while (countFlowers > 0)
 //		for (int i = 1; i <= countFlowers; i++)
 		{
@@ -3868,6 +3876,11 @@ public class LevelManager : MonoBehaviour
 		{
 			OnLimitUpdate(Limit);
 		}
+	}
+
+	public void ExtraLifeUsed ()
+	{
+		extraLifeUsed = true;
 	}
 
 	void CheckUndestroyableBlockToturial ()

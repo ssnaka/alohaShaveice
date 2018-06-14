@@ -76,8 +76,7 @@ public class MusicBase : Singleton<MusicBase> {
 
 	public void PlayRandomBGM ()
 	{
-		int index = Random.Range(1, musicList.Count);
-		Debug.LogError(index);
+		int index = Random.Range(0, musicList.Count);
 		PlayBGM(musicList[index].name, true, true);
 	}
 

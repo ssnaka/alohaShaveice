@@ -244,7 +244,16 @@ public class LevelsMap : MonoBehaviour
 	IEnumerator OpenMenuPlayAfterCharacterMove ()
 	{
 		yield return new WaitForSeconds(0.3f);
-		GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
+		if (LevelManager.Instance.questInfo == null)
+		{
+			if (DailyRewardManager.Instance.openChestBoxCanvas == null || (DailyRewardManager.Instance.openChestBoxCanvas != null && !DailyRewardManager.Instance.openChestBoxCanvas.activeSelf))
+			{
+				if (!DailyQuestManager.Instance.panel.gameObject.activeSelf)
+				{
+					GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
+				}
+			}
+		}
 	}
 
 	private void RaiseLevelReached (int number)

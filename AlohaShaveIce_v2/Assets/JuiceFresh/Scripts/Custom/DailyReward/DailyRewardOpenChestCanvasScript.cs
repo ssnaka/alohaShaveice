@@ -42,12 +42,15 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 	ChestType chestType;
 	bool openChestWithGems;
 	bool openChestWithAds;
+	bool isQuest;
+
 	// sprite
-	public void SetupOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType, bool _withGems, bool _fromAds)
+	public void SetupOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType, bool _withGems, bool _fromAds, bool _isQuest)
 	{
 		chestType = _chestType;
 		openChestWithGems = _withGems;
 		openChestWithAds = _fromAds;
+		isQuest = _isQuest;
 		DailyRewardManager.Instance.EnableReward(false);
 		gameObject.SetActive(true);
 		rewardItemsView.SetActive(false);
@@ -153,6 +156,7 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 
 	public void OnOpenButtonPressed ()
 	{
+		GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(false);
 		openButton.interactable = false;
 		StartCoroutine(RunOpenChestRoutine());
 	}
@@ -192,14 +196,20 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 			InitScript.Instance.GiveDailyReward(possibleReward);
 		}
 
-		InitScript.Instance.HandleDailyRewardEvent(chestType, openChestWithGems, openChestWithAds);
+		if (!isQuest)
+		{
+			InitScript.Instance.HandleDailyRewardEvent(chestType, openChestWithGems, openChestWithAds);
+		}
 
 		resultViewBG.enabled = true;
 		tapToOpenText.gameObject.SetActive(true);
 		regularChestFlash.SetActive(false);
 		premiumChestFlash.SetActive(false);	
 		gameObject.SetActive(false);
-		DailyRewardManager.Instance.EnableReward(true);
+		if (!isQuest)
+		{
+			DailyRewardManager.Instance.EnableReward(true);
+		}
 
 	}
 }

@@ -375,6 +375,9 @@ public class LevelManager : MonoBehaviour
 
 	public delegate void GameStateEvents ();
 	public delegate void LevelCompleteEvent (bool _isWin, int _limitLeftOver, bool _extraLifeUsed);
+	public delegate void QuestStartEvent (int _level);
+	public delegate void QuestEndEvent (int _level, bool _isWin, int _limitLeftOver, bool _extraLifeUsed);
+
 //	public static event GameStateEvents OnAppEnd;
 	public static event GameStateEvents OnMapState;
 
@@ -387,6 +390,9 @@ public class LevelManager : MonoBehaviour
 	public static event GameStateEvents OnPowerUpUsed;
 	public static event GameStateEvents OnEnterLevel;
 	public static event LevelCompleteEvent OnLevelComplete;
+
+	public static event QuestStartEvent OnQuestLevelStart;
+	public static event QuestEndEvent OnQuestLevelEnd;
 //	public static event GameStateEvents OnVideoAdShown;
 //	public static event GameStateEvents OnFreeChestOpen;
 //	public static event GameStateEvents OnDailyChestOpen;
@@ -433,6 +439,13 @@ public class LevelManager : MonoBehaviour
 			else if (value == GameState.Map)
 			{
 				avatarManager.EnableAvatar(true);
+				if (questInfo != null && (questSaveData != null && !questSaveData.type.Equals(DailyQuestType.NextLevel)))
+				{
+					MusicBase.Instance.PlayBGM("game_music", true, true);
+					EnableMap(true);
+					return;
+				}
+
 				if (PlayerPrefs.GetInt("OpenLevelTest") <= 0)
 				{
 					MusicBase.Instance.PlayBGM("game_music", true, true);
@@ -549,7 +562,10 @@ public class LevelManager : MonoBehaviour
 //				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 				SoundBase.Instance.PlaySound(SoundBase.Instance.gameOver[0]);
 				GameObject.Find("CanvasGlobal").transform.Find("MenuFailed").gameObject.SetActive(true);
-				OnLevelComplete(false, limitLeftOver, extraLifeUsed);
+				if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
+				{
+					OnLevelComplete(false, limitLeftOver, extraLifeUsed);
+				}
 //				OnLose();
 			}
 			else if (value == GameState.PreWinAnimations)
@@ -561,9 +577,21 @@ public class LevelManager : MonoBehaviour
 			else if (value == GameState.Win)
 			{
 				passLevelCounter++;
-				OnMenuComplete();
 				GameObject.Find("CanvasGlobal").transform.Find("MenuComplete").gameObject.SetActive(true);
-				OnLevelComplete(true, limitLeftOver, extraLifeUsed);
+				if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
+				{
+					OnMenuComplete();
+					OnLevelComplete(true, limitLeftOver, extraLifeUsed);
+					if (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel))
+					{
+						DailyQuestInfo _questInfo = LevelManager.Instance.questSaveData.dailyQuestInfos.Find(Item => Item.actualLevel.Equals(currentLevel));
+						DailyQuestManager.Instance.UpdateQuestInfo(_questInfo);
+					}
+				}
+				else
+				{
+					DailyQuestManager.Instance.UpdateQuestInfo(questInfo);
+				}
 //				OnWin();
 			}
 			InitScript.Instance.CheckAdsEvents(value);
@@ -586,6 +614,18 @@ public class LevelManager : MonoBehaviour
 	}
 
 	Camera mCamera;
+
+	public bool isPlayingQuest;
+	public int questLevel;
+	public DailyQuestInfo questInfo;
+	public DailyQuestSaveData questSaveData
+	{
+		get 
+		{
+			return DailyQuestManager.Instance.saveData;
+		}
+	}
+
 	#endregion
 
 	void OnEnable ()
@@ -619,7 +659,7 @@ public class LevelManager : MonoBehaviour
 		if (currentLevel == 0)
 			currentLevel = 1;
 		LevelInfo result = LoadDataFromLocal(currentLevel);
-		NumIngredients = ingrTarget.Count;
+//		NumIngredients = ingrTarget.Count;
 
 		return result;
 	}
@@ -679,22 +719,24 @@ public class LevelManager : MonoBehaviour
 		}
 		mCamera.GetComponent<MapCamera>().enabled = enable;
 		//1.4.4
+		if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
 		{
 			//		LevelsMap.SetActive (!enable);
 			//		LevelsMap.SetActive (enable);
 			LevelsMap.GetComponent<LevelsMap>().Reset();
-			foreach (Transform tr in LevelsMap.transform)
-			{
-				if (tr.name != "AvatarManager" && tr.name != "Character")
-					tr.gameObject.SetActive(enable);
-				if (tr.name == "Character")
-				{
-					tr.GetComponent<SpriteRenderer>().enabled = enable;
-					tr.transform.GetChild(0).gameObject.SetActive(enable);
-				}
-			}
-			Level.SetActive(!enable);
 		}
+
+		foreach (Transform tr in LevelsMap.transform)
+		{
+			if (tr.name != "AvatarManager" && tr.name != "Character")
+				tr.gameObject.SetActive(enable);
+			if (tr.name == "Character")
+			{
+				tr.GetComponent<SpriteRenderer>().enabled = enable;
+				tr.transform.GetChild(0).gameObject.SetActive(enable);
+			}
+		}
+		Level.SetActive(!enable);
 
 		if (enable)
 			GameField.gameObject.SetActive(false);
@@ -1093,7 +1135,6 @@ public class LevelManager : MonoBehaviour
 		ingrTarget = new List<CollectedIngredients>();
 		if (target != Target.COLLECT)
 			ingrTarget.Add(new CollectedIngredients());
-
 		//ingrTarget = InitScript.Instance.collectedIngredients.ToArray();  //necessary collectable items
 
 		for (int i = 0; i < collectItems.Length; i++)
@@ -1114,7 +1155,14 @@ public class LevelManager : MonoBehaviour
 		firstSquarePosition = GameField.transform.position;
 
 		squaresArray = new Square[maxCols * maxRows];
-		LoadLevel();
+		if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
+		{
+			LoadLevel();
+		}
+		else
+		{
+			LoadDataFromLocal(questInfo.actualLevel);
+		}
 
 		//float getSize = maxCols - 9;
 		//if (getSize < maxRows - 9)
@@ -1611,8 +1659,8 @@ public class LevelManager : MonoBehaviour
 
 //		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3;
 //		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 8) : 3);
-		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Limit/6);
-		List<Item> items = GetRandomItems(limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Mathf.Min(Limit/6, 10)));
+		int countFlowers = limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Mathf.Min(Limit/6, 10));
+		List<Item> items = GetRandomItems(countFlowers);//limitType == LIMIT.MOVES ? Mathf.Clamp(Limit, 0, 10) : Mathf.Clamp(Limit, 3, Mathf.Min(Limit/6, 10)));
 		limitLeftOver = Limit;
 		while (countFlowers > 0)
 //		for (int i = 1; i <= countFlowers; i++)
@@ -1679,19 +1727,23 @@ public class LevelManager : MonoBehaviour
 		//        GameObject.Find("Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(true);
 		//        yield return new WaitForSeconds(3);
 		//        GameObject.Find("Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(false);
-		if (PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), 0) < stars)
-			PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), stars);
-		if (Score > PlayerPrefs.GetInt("Score" + currentLevel))
+
+		if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
 		{
-			PlayerPrefs.SetInt("Score" + currentLevel, Score);
-		}
-		LevelsMap.SetActive(false);//1.4.4
+			if (PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), 0) < stars)
+				PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), stars);
+			if (Score > PlayerPrefs.GetInt("Score" + currentLevel))
+			{
+				PlayerPrefs.SetInt("Score" + currentLevel, Score);
+			}
+			LevelsMap.SetActive(false);//1.4.4
 //		LevelsMap.SetActive(true);//1.4.4
 #if PLAYFAB || GAMESPARKS
-		NetworkManager.dataManager.SetPlayerScore(currentLevel, Score);
-		NetworkManager.dataManager.SetPlayerLevel(currentLevel + 1);
-		NetworkManager.dataManager.SetStars();
+			NetworkManager.dataManager.SetPlayerScore(currentLevel, Score);
+			NetworkManager.dataManager.SetPlayerLevel(currentLevel + 1);
+			NetworkManager.dataManager.SetStars();
 #endif
+		}
 
 		gameStatus = GameState.Win;
 	}
@@ -1768,6 +1820,8 @@ public class LevelManager : MonoBehaviour
 			Item itemSelected = null;
 			if (Input.GetMouseButton(0))
 			{        //touch detected
+				if (LoadingCanvasScript.Instance.IsOn())
+					return;
 				OnStartPlay();
 				Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Item"));
 
@@ -1890,6 +1944,8 @@ public class LevelManager : MonoBehaviour
 			}
 			else if (Input.GetMouseButtonUp(0))
 			{
+				if (LoadingCanvasScript.Instance.IsOn())
+					return;
 				Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Default"));
 				if (hit != null)
 				{
@@ -2054,6 +2110,7 @@ public class LevelManager : MonoBehaviour
 		float screenRatio = (float)Screen.height / (float)Screen.width;
 
 		float sqWidth = 1.6f;
+		GameField.localScale = Vector3.one;
 
 		if (screenRatio >= 2.0f || maxCols == 8)
 		{
@@ -3678,7 +3735,9 @@ public class LevelManager : MonoBehaviour
 	{
 		levelLoaded = false;
 		string level = GetDataFromLocal(currentLevel);
-		return ProcessGameDataFromString(level);
+		LevelInfo result = ProcessGameDataFromString(level);
+		NumIngredients = ingrTarget.Count;
+		return result;
 	}
 
 	public static string GetDataFromLocal (int currentLevel)
@@ -3856,7 +3915,6 @@ public class LevelManager : MonoBehaviour
 		LevelInfo result = new LevelInfo();
 		result.target = target;
 		result.limitType = limitType;
-
 		return result;
 	}
 

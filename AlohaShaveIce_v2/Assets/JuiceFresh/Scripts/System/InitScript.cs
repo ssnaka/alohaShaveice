@@ -103,7 +103,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public static event AnalyticsEvents OnDailyChestOpen;
 	public static event AnalyticsEvents OnPremiumChestOpen;
 
-
+	public event Action<Square> OnItemDestroyed;
 
 	public event Action<int> OnLifeUpdate;
 	public event Action<int> OnGemUpdate;
@@ -617,18 +617,18 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public void EnableBannerAds (bool _enabled)
 	{
-		if (_enabled)
-		{
-//			Debug.LogError(Appodeal.isLoaded(Appodeal.BANNER));
-//			if (Appodeal.isLoaded(Appodeal.BANNER))
-//			{
-			Appodeal.show(Appodeal.BANNER_BOTTOM);
-//			}
-		}
-		else
-		{
-			Appodeal.hide(Appodeal.BANNER);
-		}
+//		if (_enabled)
+//		{
+////			Debug.LogError(Appodeal.isLoaded(Appodeal.BANNER));
+////			if (Appodeal.isLoaded(Appodeal.BANNER))
+////			{
+//			Appodeal.show(Appodeal.BANNER_BOTTOM);
+////			}
+//		}
+//		else
+//		{
+//			Appodeal.hide(Appodeal.BANNER);
+//		}
 	}
 
 	#endif
@@ -1254,6 +1254,15 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{
 		GameTutorialManager.Instance.CloseTutorial();
 		DailyRewardManager.Instance.EnableReward(true);
+	}
+
+	public void ItemDestroyedEvent (Square _square)
+	{
+//		Debug.LogError(_square.type + " : " + _square.item);// + " ; " + _item.color + " ; ");
+		if (OnItemDestroyed != null)
+		{
+			OnItemDestroyed(_square);
+		}
 	}
 
 }

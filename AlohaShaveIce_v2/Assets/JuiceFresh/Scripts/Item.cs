@@ -749,14 +749,13 @@ public class Item : MonoBehaviour
 			return;
 		StopCoroutine (AnimIdleStart ());
 		destroying = true;
-		square.item = null;
+//		square.item = null;
 
 		if (this == null)
 			return;
 
+//		InitScript.Instance.ItemDestroyedEvent(this);
 		StartCoroutine (DestroyCor (showScore, anim_name, explEffect, directly));
-
-
 	}
 
 	public void SetHighlight (ItemsTypes thisType)

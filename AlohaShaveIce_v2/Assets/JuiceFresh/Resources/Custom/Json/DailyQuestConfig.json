@@ -1,0 +1,76 @@
+{
+  "dailyQuests": [
+    {
+      "type": "RandomLevel",
+      "count": 5
+    },
+    {
+      "type": "PreviousLevel",
+      "count": 5
+    },
+    {
+      "type": "NextLevel",
+      "count": 5
+    },
+    {
+      "type": "Collect"
+    }
+  ],
+  "collection": [
+    "item1",
+    "item2",
+    "item3",
+    "item4",
+    "item_bomb",
+    "item_light",
+    "block",
+    "thriving",
+    "solid",
+    "ingredient1",
+    "ingredient2"
+  ],
+  "collectionCount": [
+    200,
+    100,
+    70,
+    50
+  ],
+  "rewards": [
+    {
+      "type": "GetGems",
+      "count": 15
+    },
+    {
+      "type": "ExtraMoves",
+      "count": 2
+    },
+    {
+      "type": "ExtraTime",
+      "count": 2
+    },
+    {
+      "type": "Shovel",
+      "count": 3
+    },
+    {
+      "type": "Stripes",
+      "count": 2
+    },
+    {
+      "type": "Energy",
+      "count": 2
+    },
+    {
+      "type": "Bomb",
+      "count": 2
+    },
+    {
+      "type": "Colorful_bomb",
+      "count": 2
+    },
+    {
+      "type": "Unlimited_Life",
+      "count": 1800
+    }
+  ]
+}

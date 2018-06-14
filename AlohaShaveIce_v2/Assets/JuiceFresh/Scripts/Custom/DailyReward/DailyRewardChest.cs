@@ -332,7 +332,7 @@ public class DailyRewardChest : MonoBehaviour
 //		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
 //		PlayerPrefs.Save();
 //		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
-		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type, _withGems, _fromAds);
+		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type, _withGems, _fromAds, false);
 		CheckDailyReward();
 	}
 

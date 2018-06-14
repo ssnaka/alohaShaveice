@@ -47,11 +47,13 @@ public class TutorialManager : MonoBehaviour
     }
 
     IEnumerator WaitForCombine() {
+		LoadingCanvasScript.Instance.ShowLoading();
         yield return new WaitUntil(() => TipsManager.THIS.GetCombine() != null);
         items = TipsManager.THIS.GetCombine();
         if (items.Count == 0)
             yield break;
         items.Sort(SortByDistance);
+		LoadingCanvasScript.Instance.HideLoading();
         if (LevelManager.THIS.currentLevel == 1 && !showed) {
             ShowStarsTutorial();
         }

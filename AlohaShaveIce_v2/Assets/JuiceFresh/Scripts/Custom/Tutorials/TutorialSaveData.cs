@@ -32,7 +32,11 @@ public enum TutorialType
 	Use_CrossBomb_InLevel,	//20
 	UndestroyableBlock,		//21
 
-	None,
+	DailyQuest_Try,
+	DailyQuest_OpenLevel,
+	DailyQuest_CollectItems,
+
+	None
 }
 
 public class TutorialSaveData 

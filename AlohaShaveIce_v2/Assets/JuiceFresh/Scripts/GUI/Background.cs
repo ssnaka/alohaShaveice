@@ -8,8 +8,14 @@ public class Background : MonoBehaviour {
 	// Use this for initialization
 	void OnEnable () {
 		if (LevelManager.THIS != null)
-			GetComponent<Image> ().sprite = pictures [(int)((float)LevelManager.Instance.currentLevel / 20f - 0.01f)];
-
+		{
+			int levelToLoad = LevelManager.Instance.currentLevel;
+			if (LevelManager.THIS.questInfo != null)
+			{
+				levelToLoad = LevelManager.THIS.questInfo.actualLevel;
+			}
+			GetComponent<Image> ().sprite = pictures [(int)((float)levelToLoad / 20f - 0.01f)];
+		}
 
 	}
 	

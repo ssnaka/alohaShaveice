@@ -19,4 +19,10 @@ public class LoadingCanvasScript : Singleton<LoadingCanvasScript> {
 	{
 		gameObject.SetActive(false);	
 	}
+
+	public bool IsOn ()
+	{
+		return gameObject.activeSelf;
+	}
+
 }

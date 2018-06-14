@@ -23,6 +23,8 @@ public class EventsListener : MonoBehaviour
 		LevelManager.OnLevelComplete += LevelManager_OnLevelComplete;
 		LevelManager.OnPowerUpUsed += LevelManager_OnPowerUpUsed;
 
+		LevelManager.OnQuestLevelStart += LevelManager_OnQuestLevelStart;
+		LevelManager.OnQuestLevelEnd += LevelManager_OnQuestLevelEnd;
 		InitScript.OnAppStart += InitScript_OnAppStart;
 		InitScript.OnAppEnd += InitScript_OnAppEnd;
 		InitScript.OnVideoAdShown += InitScript_OnVideoAdShown;
@@ -46,6 +48,9 @@ public class EventsListener : MonoBehaviour
 //		LevelManager.OnLose -= OnLose;
 		LevelManager.OnLevelComplete -= LevelManager_OnLevelComplete;
 		LevelManager.OnPowerUpUsed -= LevelManager_OnPowerUpUsed;
+
+		LevelManager.OnQuestLevelStart -= LevelManager_OnQuestLevelStart;
+		LevelManager.OnQuestLevelEnd -= LevelManager_OnQuestLevelEnd;
 
 		InitScript.OnAppStart -= InitScript_OnAppStart;
 		InitScript.OnAppEnd -= InitScript_OnAppEnd;
@@ -167,6 +172,23 @@ public class EventsListener : MonoBehaviour
 	void GameTutorialManager_onTutorialEvent (TutorialType _tutorialType)
 	{
 		AnalyticsEvent("OnTutorialEvent", _tutorialType.ToString());
+	}
+
+
+
+	void LevelManager_OnQuestLevelStart (int _level)
+	{
+		AnalyticsEvent("OnEnterLevel", _level);
+	}
+
+	void LevelManager_OnQuestLevelEnd (int _level, bool _isWin, int _limitLeftOver, bool _extraLifeUsed)
+	{
+		Dictionary<string, object> dic = new Dictionary<string, object>();
+		dic.Add("level", _level);
+		dic.Add("didwin", _isWin.ToString());
+		dic.Add("limit_left", _limitLeftOver);
+		dic.Add("extraLifeUsed", _extraLifeUsed);
+		AnalyticsEvent("OnExitLevel", dic);
 	}
 	#endregion
 

@@ -269,6 +269,10 @@ public class Square : MonoBehaviour {
 
 
     public void DestroyBlock() {
+
+		InitScript.Instance.ItemDestroyedEvent(this);
+
+		item = null;
         if (type == SquareTypes.UNDESTROYABLE)
             return;
         if (type != SquareTypes.SOLIDBLOCK && type != SquareTypes.THRIVING) {
@@ -323,7 +327,6 @@ public class Square : MonoBehaviour {
             if (block.Count == 0)
                 type = SquareTypes.EMPTY;
         }
-
     }
 
     public void GenThriveBlock(Square newSquare) {

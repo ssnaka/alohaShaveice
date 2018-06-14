@@ -17,7 +17,7 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 
 	[SerializeField]
 	GameObject openChestBoxPrefab;
-	GameObject openChestBoxCanvas;
+	public GameObject openChestBoxCanvas { get; private set; }
 
 	public void Init()
 	{
@@ -102,14 +102,14 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 //		script.SetupOpenChest(_possibleRewards, _chestPrefab);
 //	}
 
-	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType, bool _withGems, bool _withAds)
+	public void ShowOpenChest (List<PossibleReward> _possibleRewards, Sprite _chestSprite, ChestType _chestType, bool _withGems, bool _withAds, bool _isQuest)
 	{
 		if (openChestBoxCanvas == null)
 		{
 			openChestBoxCanvas = Instantiate<GameObject>(openChestBoxPrefab);
 		}
 		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
-		script.SetupOpenChest(_possibleRewards, _chestSprite, _chestType, _withGems, _withAds);
+		script.SetupOpenChest(_possibleRewards, _chestSprite, _chestType, _withGems, _withAds, _isQuest);
 	}
 
 	public void ShowOpenChestAsVideoAds ()

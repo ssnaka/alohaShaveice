@@ -101,6 +101,21 @@
       "type" : "UndestroyableBlock",
       "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
       "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_UndestroyableBlock"
+    },
+    {
+      "type" : "DailyQuest_Try",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_DailyQuest_Try"
+    },
+    {
+      "type" : "DailyQuest_OpenLevel",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_DailyQuest_OpenLevel"
+    },
+    {
+      "type" : "DailyQuest_CollectItems",
+      "prefabName" : "Custom/Tutorial/MenuTutorialPanel",
+      "descriptionTextAsset" : "Localization/Aloha_LocalizedText_Tutorial_DailyQuest_CollectItems"
     }
   ]
 }

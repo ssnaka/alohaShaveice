@@ -36,6 +36,15 @@ public class AnimationManager : MonoBehaviour
 		if (name == "MenuPlay") {
 //			LoadLevel(PlayerPrefs.GetInt("OpenLevel"));
 
+			LevelInfo levelInfo = null;
+			if (LevelManager.THIS.questInfo != null && (LevelManager.THIS.questSaveData != null && !LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.NextLevel)))
+			{
+				levelInfo = LevelManager.THIS.LoadDataFromLocal(LevelManager.THIS.questInfo.actualLevel);
+			}
+			else
+			{
+				levelInfo = LevelManager.THIS.LoadLevel();
+			}
 			if (LevelManager.THIS.currentLevel > 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
 			{
 				if (GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Try_ChestBox, GameObject.Find("DailyReward").GetComponent<RectTransform>()))
@@ -43,8 +52,17 @@ public class AnimationManager : MonoBehaviour
 //					DailyRewardManager.Instance.EnableReward(true);
 					CloseMenu();
 				}
+
+				if (LevelManager.THIS.currentLevel > 2)
+				{
+					if (GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.DailyQuest_Try, GameObject.Find("DailyQuest").GetComponent<RectTransform>()))
+					{
+	//					DailyRewardManager.Instance.EnableReward(true);
+						CloseMenu();
+					}
+				}
 			}
-			LevelInfo levelInfo = LevelManager.THIS.LoadLevel();
+
 			LevelManager.THIS.CreateCollectableTarget(transform.Find("Image/TargetIngr/TargetIngr").gameObject, target);
 
 			Transform timerImage = transform.Find("Image/TimerImage");
@@ -481,32 +499,69 @@ public class AnimationManager : MonoBehaviour
 	bool shouldPlaySwishSound = false;
 	public void CloseMenu()
 	{	
-		if (gameObject.name == "MenuPreGameOver") {
+		if (gameObject.name == "MenuPreGameOver") 
+		{
 			ShowGameOver();
 		}
 		if (gameObject.name == "MenuComplete") {
 			LevelManager.THIS.gameStatus = GameState.Map;
-			//1.4.5
-			if (PlayerPrefs.GetInt("OpenLevel") + 1 <= LevelsMap._instance.GetMapLevels().Count) 
+
+			bool shouldProceedToNextLevel = true;
+			if (LevelManager.THIS.questInfo != null)
 			{
-				PlayerPrefs.SetInt("OpenLevel", LevelManager.THIS.currentLevel + 1);
-//				GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
-			} else 
+				DailyQuestManager.Instance.EnableDailyQuestManager(true);
+				DailyQuestManager.Instance.HandleRewards();
+
+				if (LevelManager.THIS.questSaveData != null && !LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.NextLevel))
+				{
+					shouldProceedToNextLevel = false;
+				}
+//				LevelManager.THIS.questInfo = null;
+			}
+			else
 			{
-				GameObject g = Instantiate(Resources.Load("Prefabs/Congratulations"), Vector2.zero, Quaternion.identity) as GameObject;
-				g.transform.SetParent(GameObject.Find("CanvasGlobal").transform);
-				g.transform.localScale = Vector3.one;
-				g.transform.localPosition = Vector3.zero;
+				if (LevelManager.THIS.questSaveData != null && LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.NextLevel) || LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.Collect))
+				{
+//					DailyQuestManager.Instance.EnableDailyQuestManager(true);
+					DailyQuestManager.Instance.HandleRewards();
+				}
 			}
 
-//			if (LevelManager.THIS.currentLevel == 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
-//			{
-//				DailyRewardManager.Instance.EnableReward(true);
-//			}
+			if (shouldProceedToNextLevel)
+			{
+				//1.4.5
+				if (PlayerPrefs.GetInt("OpenLevel") + 1 <= LevelsMap._instance.GetMapLevels().Count) 
+				{
+					PlayerPrefs.SetInt("OpenLevel", LevelManager.THIS.currentLevel + 1);
+	//				GameObject.Find("CanvasGlobal").transform.Find("MenuPlay").gameObject.SetActive(true);
+				} 
+				else 
+				{
+					GameObject g = Instantiate(Resources.Load("Prefabs/Congratulations"), Vector2.zero, Quaternion.identity) as GameObject;
+					g.transform.SetParent(GameObject.Find("CanvasGlobal").transform);
+					g.transform.localScale = Vector3.one;
+					g.transform.localPosition = Vector3.zero;
+				}
+
+	//			if (LevelManager.THIS.currentLevel == 1 && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.First_Tutorial) && GameTutorialManager.Instance.GetLocalTutorialStatus(TutorialType.Level1))
+	//			{
+	//				DailyRewardManager.Instance.EnableReward(true);
+	//			}
+			}
+
+
 		}
 		if (gameObject.name == "MenuFailed") {
 			if (!keepGaming)
+			{
 				LevelManager.THIS.gameStatus = GameState.Map;
+
+				if (LevelManager.THIS.questInfo != null)
+				{
+					DailyQuestManager.Instance.EnableDailyQuestManager(true);
+//					LevelManager.THIS.questInfo = null;
+				}
+			}
 			keepGaming = false;
 		}
 		if (gameObject.name == "Tutorial") {
@@ -531,6 +586,7 @@ public class AnimationManager : MonoBehaviour
 		}
 
 		if (name == "MenuPlay") {
+//			LevelManager.Instance.questInfo = null;
 			Transform tr = transform.Find("Image/TargetIngr/TargetIngr");
 			foreach (Transform item in tr) {
 				Destroy(item.gameObject);
@@ -574,19 +630,25 @@ public class AnimationManager : MonoBehaviour
 			} else {
 				BuyGems();
 			}
-		} else if (gameObject.name == "MenuFailed") {
+		} 
+		else if (gameObject.name == "MenuFailed") 
+		{
 			LevelManager.Instance.gameStatus = GameState.Map;
-		} else if (gameObject.name == "MenuPlay") {
+		} 
+		else if (gameObject.name == "MenuPlay") 
+		{
 			if (InitScript.lifes > 0 || InitScript.Instance.HasInfiniteLife()) {
 				//InitScript.Instance.SpendLife(1);
 				LevelManager.THIS.gameStatus = GameState.PrepareGame;
+				DailyQuestManager.Instance.EnableDailyQuestManager(false);
 				CloseMenu();
 				//Application.LoadLevel( "game" );
 			} else {
 				BuyLifeShop();
 			}
 
-		} else if (gameObject.name == "MenuPause") {
+		} 
+		else if (gameObject.name == "MenuPause") {
 			CloseMenu();
 			LevelManager.Instance.gameStatus = GameState.Playing;
 		}

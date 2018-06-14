@@ -104,7 +104,12 @@ public class Counter_ : MonoBehaviour
 //			txt.GetComponent<LocalizedTextBehaviour>().FormatArgs[0] = PlayerPrefs.GetInt("OpenLevel").ToString();
 //			txt.text = txt.GetComponent<LocalizedTextBehaviour>().GetLocalizedValue() as string;
 //			Debug.LogError(txt.GetComponent<LocalizedTextBehaviour>().FormatArgs[0]);
-			txt.text = txt.text.Split(new string[]{" "}, System.StringSplitOptions.None)[0] + " " + PlayerPrefs.GetInt("OpenLevel");
+			int level = PlayerPrefs.GetInt("OpenLevel");
+			if (LevelManager.Instance.questInfo != null)
+			{
+				level = LevelManager.Instance.questInfo.level;
+			}
+			txt.text = txt.text.Split(new string[]{" "}, System.StringSplitOptions.None)[0] + " " + level;
 		}
 		else if (name == "TargetDescription1")
 		{

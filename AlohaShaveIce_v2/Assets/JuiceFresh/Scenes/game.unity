@@ -27277,7 +27277,7 @@ MonoBehaviour:
   admobUIDIOS: ca-app-pub-9974681578637939/7955828264
   ShowRateEvery: 5
   RateURL: https://play.google.com/store/apps/details?id=com.naka.alohashaveice
-  RateURLIOS: 
+  RateURLIOS: https://itunes.apple.com/us/app/aloha-shaved-ice/id1309466918?mt=8
   rewardedGems: 5
   losingLifeEveryGame: 0
   facebookButton: {fileID: 1163204533}

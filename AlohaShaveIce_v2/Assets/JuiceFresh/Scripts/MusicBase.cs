@@ -74,6 +74,13 @@ public class MusicBase : Singleton<MusicBase> {
 		FadeBGMIn(nextBGM, 1.0f);
 	}
 
+	public void PlayRandomBGM ()
+	{
+		int index = Random.Range(1, musicList.Count);
+		Debug.LogError(index);
+		PlayBGM(musicList[index].name, true, true);
+	}
+
 	delegate void OnSoundLoadDone(AudioSource _audioSource);
 	void FadeBGMOut (AudioSource _audioSource, float _delay = 0.0f)
 	{

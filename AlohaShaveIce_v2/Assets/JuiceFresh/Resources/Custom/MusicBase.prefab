@@ -274,10 +274,7 @@ MonoBehaviour:
   musicList:
   - {fileID: 8300000, guid: bbe6371953c9f4d5aa8c9398bed67270, type: 3}
   - {fileID: 8300000, guid: f7f9f4a537dacfc48b9a14d140e55be4, type: 3}
-  music:
-  - {fileID: 8300000, guid: f7f9f4a537dacfc48b9a14d140e55be4, type: 3}
-  - {fileID: 8300000, guid: f7f9f4a537dacfc48b9a14d140e55be4, type: 3}
-  - {fileID: 8300000, guid: bbe6371953c9f4d5aa8c9398bed67270, type: 3}
+  - {fileID: 8300000, guid: f5bb66b0a2c380f4da2d06ad1abbfba8, type: 3}
   bgmSources:
   - {fileID: 82560031877640030}
   - {fileID: 82632886777648486}

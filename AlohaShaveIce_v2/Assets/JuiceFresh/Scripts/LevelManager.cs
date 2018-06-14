@@ -411,7 +411,8 @@ public class LevelManager : MonoBehaviour
 
 			if (value == GameState.PrepareGame)
 			{
-				MusicBase.Instance.PlayBGM("game_music", true, true);
+//				MusicBase.Instance.PlayBGM("game_music", true, true);
+				MusicBase.Instance.PlayRandomBGM();
 //				MusicBase.Instance.GetComponent<AudioSource>().Stop();
 //				MusicBase.Instance.GetComponent<AudioSource>().loop = true;
 //				MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];
@@ -441,14 +442,16 @@ public class LevelManager : MonoBehaviour
 				avatarManager.EnableAvatar(true);
 				if (questInfo != null && (questSaveData != null && !questSaveData.type.Equals(DailyQuestType.NextLevel)))
 				{
-					MusicBase.Instance.PlayBGM("game_music", true, true);
+//					MusicBase.Instance.PlayBGM("game_music", true, true);
+					MusicBase.Instance.PlayRandomBGM();
 					EnableMap(true);
 					return;
 				}
 
 				if (PlayerPrefs.GetInt("OpenLevelTest") <= 0)
 				{
-					MusicBase.Instance.PlayBGM("game_music", true, true);
+//					MusicBase.Instance.PlayBGM("game_music", true, true);
+					MusicBase.Instance.PlayRandomBGM();
 //					MusicBase.Instance.GetComponent<AudioSource>().Stop();
 //					MusicBase.Instance.GetComponent<AudioSource>().loop = true;
 //					MusicBase.Instance.GetComponent<AudioSource>().clip = MusicBase.Instance.music[1];

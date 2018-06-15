@@ -40,10 +40,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -156,6 +156,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 644aa589eb17dc742b99b0b5f68e5385, type: 3}
   - {fileID: 8300000, guid: 607240db6b0ade44b85a354b0a5afa9a, type: 3}
   - {fileID: 8300000, guid: caec4553a7e7b4249b09902dea347778, type: 3}
+  - {fileID: 8300000, guid: 7d10b39b58e794a94818be19290afbf3, type: 3}
+  - {fileID: 8300000, guid: 6824d2e96878247f384beaac55b29cc9, type: 3}
   gameOver:
   - {fileID: 8300000, guid: c20ea280339f2bc42be2bf473ae7afa3, type: 3}
   - {fileID: 0}

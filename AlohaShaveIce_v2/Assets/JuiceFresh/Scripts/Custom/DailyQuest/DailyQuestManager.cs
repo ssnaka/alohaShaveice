@@ -144,6 +144,11 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
 		}
 
 		EnableDailyQuestManager(_enableView);
+
+		if (_enableView)
+		{
+			HandleRewards();
+		}
 	}
 
 	DailyQuestSaveData CreateNewSaveData ()

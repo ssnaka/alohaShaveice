@@ -204,6 +204,7 @@ public class DailyQuestItemScript : MonoBehaviour {
 
 	public void PlayAnimation ()
 	{
+		SoundBase.Instance.PlaySound(SoundBase.Instance.star[index]);
 		m_animation.Play();
 	}
 

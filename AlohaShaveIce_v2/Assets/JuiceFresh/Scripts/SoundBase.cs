@@ -42,6 +42,11 @@ public class SoundBase : Singleton<SoundBase> {
 	public AudioClip cheehoo;
 
 	[SerializeField]
+	public AudioClip chestShake;
+	[SerializeField]
+	public AudioClip chestOpen;
+
+	[SerializeField]
     public AudioSource audioSource;
 
     List<AudioClip> clipsPlaying = new List<AudioClip>();

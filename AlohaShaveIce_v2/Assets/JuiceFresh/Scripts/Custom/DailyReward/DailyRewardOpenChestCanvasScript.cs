@@ -171,8 +171,10 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 
 		chestAnimation.clip = chestAnimation.GetClip(openAnimationName);
 		chestAnimation.Play();
+		SoundBase.Instance.PlaySound(SoundBase.Instance.chestShake);
 
 		yield return new WaitForSeconds(0.3f);
+		SoundBase.Instance.PlaySound(SoundBase.Instance.chestOpen);
 		GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
 
 		yield return new WaitForSeconds(0.7f);

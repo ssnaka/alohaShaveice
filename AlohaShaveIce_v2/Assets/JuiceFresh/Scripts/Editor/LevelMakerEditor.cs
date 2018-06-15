@@ -259,8 +259,8 @@ public class LevelMakerEditor : EditorWindow {
 
 	void SetScriptingDefineSymbols () {
 		string defines = "";
-		if (initscript.enableUnityAds)
-			defines = defines + "; UNITY_ADS";
+//		if (initscript.enableUnityAds)
+//			defines = defines + "; UNITY_ADS";
 		if (initscript.enableGoogleMobileAds)
 			defines = defines + "; GOOGLE_MOBILE_ADS";
 		if (initscript.enableChartboostAds)

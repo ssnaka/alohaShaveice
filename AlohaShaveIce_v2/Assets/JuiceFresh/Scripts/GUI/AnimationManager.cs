@@ -4,9 +4,9 @@ using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-#if UNITY_ADS
-using UnityEngine.Advertisements;
-#endif
+//#if UNITY_ADS
+//using UnityEngine.Advertisements;
+//#endif
 
 public class LevelInfo 
 {
@@ -148,27 +148,33 @@ public class AnimationManager : MonoBehaviour
 			transform.Find("Image/Video").GetComponent<Image>().overrideSprite = sprite;
 		}
 
-		if (transform.Find("Image/Video") != null) {
+		if (transform.Find("Image/Video") != null) 
+		{
+			if (InitScript.Instance.enableUnityAds)
+			{
+//#if UNITY_ADS
+				InitScript.Instance.rewardedVideoZone = "rewardedVideo";
 
-#if UNITY_ADS
-			InitScript.Instance.rewardedVideoZone = "rewardedVideo";
-
-			if (!InitScript.Instance.enableUnityAds || !InitScript.Instance.GetRewardedUnityAdsReady ())
-				transform.Find ("Image/Video").gameObject.SetActive (false);
-#else
-#if !APPODEAL_ADS
-			transform.Find("Image/Video").gameObject.SetActive(false);
-#endif
-#endif
+//				if (!InitScript.Instance.enableUnityAds || !InitScript.Instance.GetRewardedUnityAdsReady ())
+//					transform.Find ("Image/Video").gameObject.SetActive (false);
+//#else
+			}
+//#if !APPODEAL_ADS
+//			transform.Find("Image/Video").gameObject.SetActive(false);
+//#endif
+//#endif
 		}
 
 		if (name != "Lifes" && name != "Gems" && name != "Settings")
 		{
 			if (name != "gratzWord(Clone)" && name != "PrePlay")
 			{
-				#if APPODEAL_ADS
-				InitScript.Instance.EnableBannerAds(true);
-				#endif
+				if (InitScript.Instance.enableAppODeal)
+				{
+//				#if APPODEAL_ADS
+					InitScript.Instance.EnableBannerAds(true);
+//				#endif
+				}
 			}
 
 
@@ -324,9 +330,12 @@ public class AnimationManager : MonoBehaviour
 		//    if( !GetComponent<SequencePlayer>().sequenceArray[0].isPlaying )
 		//        GetComponent<SequencePlayer>().sequenceArray[0].Play
 		//}
-		#if APPODEAL_ADS
-		InitScript.Instance.EnableBannerAds(false);
-		#endif
+		if (InitScript.Instance.enableAppODeal)
+		{
+//		#if APPODEAL_ADS
+			InitScript.Instance.EnableBannerAds(false);
+//		#endif
+		}
 	}
 
 	public void OnGratzAnimationEnd ()
@@ -421,17 +430,19 @@ public class AnimationManager : MonoBehaviour
 
 	public void WaitForGiveUp()
 	{
-		if (name == "MenuFailed") {
+		if (name == "MenuFailed") 
+		{
 			GetComponent<Animation>()["bannerFailed"].speed = 0;
-#if UNITY_ADS
 
-			if (InitScript.Instance.enableUnityAds) {
-
-				if (InitScript.Instance.GetRewardedUnityAdsReady ()) {
+//#if UNITY_ADS
+			if (InitScript.Instance.enableUnityAds) 
+			{
+				if (InitScript.Instance.GetRewardedUnityAdsReady ()) 
+				{
 					transform.Find ("Image/Video").gameObject.SetActive (true);
 				}
 			}
-#endif
+//#endif
 		}
 	}
 

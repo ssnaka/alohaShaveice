@@ -27110,6 +27110,7 @@ GameObject:
   - component: {fileID: 511786113}
   - component: {fileID: 511786114}
   - component: {fileID: 511786111}
+  - component: {fileID: 511786115}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -27238,23 +27239,23 @@ MonoBehaviour:
   boostAdsEvents:
   - boostType: 0
     adType: 3
-    countToReward: 5
+    countToReward: 3
     calls: 0
   - boostType: 1
     adType: 3
-    countToReward: 3
+    countToReward: 2
     calls: 0
   - boostType: 2
     adType: 3
-    countToReward: 5
+    countToReward: 3
     calls: 0
   - boostType: 3
     adType: 3
-    countToReward: 5
+    countToReward: 3
     calls: 0
   - boostType: 4
     adType: 3
-    countToReward: 5
+    countToReward: 3
     calls: 0
   - boostType: 5
     adType: 3
@@ -27262,11 +27263,10 @@ MonoBehaviour:
     calls: 0
   - boostType: 6
     adType: 3
-    countToReward: 10
+    countToReward: 3
     calls: 0
   unityAdsIDAndroid: 
   unityAdsIDIOS: 
-  enableUnityAds: 0
   enableGoogleMobileAds: 0
   enableChartboostAds: 0
   rewardedVideoZone: rewardedVideoZone
@@ -27416,33 +27416,12 @@ MonoBehaviour:
   lifeShop: {fileID: 285581711}
   GameField: {fileID: 1050245871}
   enableInApps: 0
-  maxRows: 8
+  maxRows: 5
   maxCols: 7
   squareWidth: 1.6
   squareHeight: 1.6
   firstSquarePosition: {x: -2.4, y: 3.3}
   squaresArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -27487,9 +27466,9 @@ MonoBehaviour:
   scoreForSolidBlock: 100
   scoreForThrivingBlock: 100
   limitType: 0
-  Limit: 12
+  Limit: 6
   TargetScore: 1000
-  currentLevel: 21
+  currentLevel: 1
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -27516,7 +27495,7 @@ MonoBehaviour:
   emptyBoostIcon: {fileID: 511786113}
   AvctivatedBoostView: {fileID: 0}
   activatedBoost: {fileID: 0}
-  targetBlocks: 12
+  targetBlocks: 0
   objectPoolParent: {fileID: 1193168064}
   levelStar: {fileID: 1121860027549990, guid: da8fbf701ca1644d19c38f5661592f40, type: 2}
   levelLockPrefab: {fileID: 1117235577520322, guid: 1d0f98157e5a841fa85eb68adf7860f9,
@@ -27558,9 +27537,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   stars: 0
-  star1: 1500
-  star2: 4000
-  star3: 5100
+  star1: 500
+  star2: 1200
+  star3: 2100
   showPopupScores: 1
   stripesEffect: {fileID: 100804, guid: c1d86e442930a7b40835a0fbad225fbd, type: 2}
   star1Anim: {fileID: 1966708837}
@@ -27581,7 +27560,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  colorLimit: 4
+  colorLimit: 3
   ingrCountTarget: 0200000002000000
   ingrTarget: []
   ingrediendSprites:
@@ -27622,14 +27601,14 @@ MonoBehaviour:
   - {fileID: 118832954}
   passLevelCounter: 0
   friendsAvatars: []
-  target: 1
+  target: 0
   TargetCages: 0
   TargetBombs: 0
   itemsHided: 0
   moveID: 0
   lastRandColor: 0
   onlyFalling: 0
-  levelLoaded: 0
+  levelLoaded: 1
   doubleBlock: {fileID: 21300000, guid: b19a43d9055f7834dbb0c212adbe27c8, type: 3}
   doubleSolidBlock: {fileID: 21300000, guid: de11d44799201174c8354808473c380e, type: 3}
   FacebookEnable: 0
@@ -27672,6 +27651,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6235d9df7682a4a98368ad38708d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &511786115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 511786103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52774eb4e08ee1f44a312b607e84fb4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DriveableProperty:
+    m_Fields:
+    - m_Target: {fileID: 511786109}
+      m_FieldPath: enableUnityAds
+      m_RSKeyName: IsUsingUnityAds
+      m_Type: bool
+    - m_Target: {fileID: 511786109}
+      m_FieldPath: enableAppODeal
+      m_RSKeyName: IsUsingAppODeal
+      m_Type: bool
 --- !u!4 &516760193 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 105903d664c39294e926aed54de8b6c8, type: 2}
@@ -81329,7 +81329,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2dbde5ef7c93a4ad5ba11ccffbfc7e19, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 2dbde5ef7c93a4ad5ba11ccffbfc7e19, type: 2}
       propertyPath: m_IsActive
@@ -83301,7 +83301,7 @@ Transform:
   - {fileID: 1705755626}
   - {fileID: 1778308771}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1401818167 stripped
 Transform:

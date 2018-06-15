@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using GameToolkit.Localization;
 
-#if UNITY_ADS
-using UnityEngine.Advertisements;
-#endif
+//#if UNITY_ADS
+//using UnityEngine.Advertisements;
+//#endif
 
 #if CHARTBOOST_ADS
 using ChartboostSDK;
@@ -15,10 +15,10 @@ using ChartboostSDK;
 #if  GOOGLE_MOBILE_ADS
 using GoogleMobileAds.Api;
 #endif
-#if APPODEAL_ADS
+//#if APPODEAL_ADS
 using AppodealAds.Unity.Api;
 using AppodealAds.Unity.Common;
-#endif
+//#endif
 
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -166,7 +166,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	private bool adsReady;
 	public string unityAdsIDAndroid;
 	public string unityAdsIDIOS;
-	public bool enableUnityAds;
+//	public bool enableUnityAds;
 	public bool enableGoogleMobileAds;
 	public bool enableChartboostAds;
 	public string rewardedVideoZone;
@@ -195,6 +195,64 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	[SerializeField]
 	LIFESAddCounter lifesAddCounterScript;
+
+	private bool _enableUnityAds;
+	public bool enableUnityAds 
+	{
+		get 
+		{ 
+			return _enableUnityAds; 
+		}
+
+		set 
+		{
+			_enableUnityAds = value;
+			if (_enableUnityAds)
+			{
+				for (int i = 0; i < adsEvents.Count; i++)
+				{
+					AdEvents adEvent = adsEvents[i];
+					adEvent.adType = AdType.UnityAdsVideo;
+				}
+				for (int i = 0; i < boostAdsEvents.Count; i++)
+				{
+					BoostAdEvents adEvent = boostAdsEvents[i];
+					adEvent.adType = AdType.UnityAdsVideo;
+				}
+			}
+			_enableAppODeal = !value;
+		}
+	}
+
+	private bool _enableAppODeal;
+	public bool enableAppODeal 
+	{
+		get 
+		{ 
+			return _enableAppODeal; 
+		}
+
+		set 
+		{
+			_enableAppODeal = value;
+			if (_enableAppODeal)
+			{
+				for (int i = 0; i < adsEvents.Count; i++)
+				{
+					AdEvents adEvent = adsEvents[i];
+					adEvent.adType = AdType.AppODeal;
+				}
+				for (int i = 0; i < boostAdsEvents.Count; i++)
+				{
+					BoostAdEvents adEvent = boostAdsEvents[i];
+					adEvent.adType = AdType.AppODeal;
+				}
+
+				InitAppODeal();
+			}
+			_enableUnityAds = !value;
+		}
+	}
 
 	// Use this for initialization
 	void Awake ()
@@ -250,11 +308,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		MusicBase.Instance.SetVolume(PlayerPrefs.GetInt("Music"));
 //		GameObject.Find("Music").GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Music");
 		SoundBase.Instance.audioSource.volume = PlayerPrefs.GetInt("Sound");
-		#if UNITY_ADS//1.3
+//		#if UNITY_ADS//1.3
+//		enableUnityAds = true;
+//		#else
 		enableUnityAds = true;
-		#else
-		enableUnityAds = false;
-		#endif
+		enableAppODeal = false;
+//		#endif
 		#if CHARTBOOST_ADS//1.4.1
 		enableChartboostAds = true;
 		#else
@@ -287,22 +346,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		enableGoogleMobileAds = false; //1.3
 #endif
 
-#if APPODEAL_ADS
-		string appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
-		#if UNITY_IOS
-		appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
-		#endif
-
-		Appodeal.disableLocationPermissionCheck();
-		Appodeal.setTesting(false);
-		Appodeal.setBannerBackground(true);
-
-		Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
-		Appodeal.setNonSkippableVideoCallbacks(this);
-
-//		Appodeal.setRewardedVideoCallbacks(this);
-		Appodeal.setBannerCallbacks(this);
-#endif
+		InitAppODeal();
 
 		Transform canvas = GameObject.Find("CanvasGlobal").transform;
 		foreach (Transform item in canvas)
@@ -330,6 +374,30 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		print ("HandleInterstitialFailedToLoad event received with message: " + args.Message);
 	}
 	#endif
+
+
+	void InitAppODeal ()
+	{
+//#if APPODEAL_ADS
+		if (enableAppODeal)
+		{
+			string appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
+#if UNITY_IOS
+			appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
+#endif
+
+			Appodeal.disableLocationPermissionCheck();
+			Appodeal.setTesting(false);
+			Appodeal.setBannerBackground(true);
+
+			Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
+			Appodeal.setNonSkippableVideoCallbacks(this);
+
+			//		Appodeal.setRewardedVideoCallbacks(this);
+			Appodeal.setBannerCallbacks(this);
+		}
+//#endif
+	}
 
 	void ShowFirstTutorial ()
 	{
@@ -374,18 +442,24 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
 	public bool GetRewardedUnityAdsReady ()
 	{
-#if UNITY_ADS
-
-		rewardedVideoZone = "rewardedVideo";
-		if (Advertisement.IsReady (rewardedVideoZone)) {
-			return true;
-		} else {
-			rewardedVideoZone = "rewardedVideoZone";
-			if (Advertisement.IsReady (rewardedVideoZone)) {
+		if (enableUnityAds)
+		{
+//#if UNITY_ADS
+			rewardedVideoZone = "rewardedVideo";
+			if (UnityEngine.Advertisements.Advertisement.IsReady (rewardedVideoZone)) 
+			{
 				return true;
+			} 
+			else 
+			{
+				rewardedVideoZone = "rewardedVideoZone";
+				if (UnityEngine.Advertisements.Advertisement.IsReady (rewardedVideoZone)) 
+				{
+					return true;
+				}
 			}
+//#endif
 		}
-#endif
 
 		return false;
 	}
@@ -394,45 +468,69 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	int videoLoadTry = 0;
 	public void ShowRewardedAds ()
 	{
-#if UNITY_ADS
-		Debug.Log ("show Unity Rewarded ads video in " + LevelManager.THIS.gameStatus);
+		if (enableUnityAds)
+		{
+//#if UNITY_ADS
+			Debug.Log ("show Unity Rewarded ads video in " + LevelManager.THIS.gameStatus);
 
-		if (GetRewardedUnityAdsReady ()) {
-			Advertisement.Show (rewardedVideoZone, new ShowOptions {
-				resultCallback = result => {
-					if (result == ShowResult.Finished) {
-						CheckRewardedAds ();
+			if (GetRewardedUnityAdsReady ()) 
+			{
+				UnityEngine.Advertisements.Advertisement.Show (rewardedVideoZone, new UnityEngine.Advertisements.ShowOptions 
+				{
+					resultCallback = result => 
+					{
+						if (result == UnityEngine.Advertisements.ShowResult.Finished) 
+						{
+							CheckRewardedAds ();
+						}
 					}
-				}
-			});
-		}
-#endif
-		#if APPODEAL_ADS
-		LoadingCanvasScript.Instance.ShowLoading();
-		if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
-		{
-			if (MusicBase.Instance)
-			{
-				MusicBase.Instance.StopCurrentBGM();
-//				MusicBase.Instance.GetComponent<AudioSource>().Stop();
-			}
-			Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
-		}
-		else
-		{
-			if (videoLoadTry < maxVideoLoadTry)
-			{
-				Invoke("ShowRewardedAds", 1.5f);
-				videoLoadTry++;
+				});
 			}
 			else
 			{
-				videoLoadTry = 0;
-				LoadingCanvasScript.Instance.HideLoading();
-				SystemMessageCanvas.Instance.SetupSystemMessage(SystemMessageTitleType.Error, SystemMessageMessageType.VideoLoadError, SystemMessageOKType.Retry, SystemMessageCancelType.Close, VideoErrorCallback);
+				if (videoLoadTry < maxVideoLoadTry)
+				{
+					Invoke("ShowRewardedAds", 1.5f);
+					videoLoadTry++;
+				}
+				else
+				{
+					videoLoadTry = 0;
+					LoadingCanvasScript.Instance.HideLoading();
+					SystemMessageCanvas.Instance.SetupSystemMessage(SystemMessageTitleType.Error, SystemMessageMessageType.VideoLoadError, SystemMessageOKType.Retry, SystemMessageCancelType.Close, VideoErrorCallback);
+				}
 			}
+//#endif
 		}
-		#endif
+		else if (enableAppODeal)
+		{
+//#if APPODEAL_ADS
+			LoadingCanvasScript.Instance.ShowLoading();
+			if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
+			{
+				if (MusicBase.Instance)
+				{
+					MusicBase.Instance.StopCurrentBGM();
+	//				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+				}
+				Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
+			}
+			else
+			{
+				if (videoLoadTry < maxVideoLoadTry)
+				{
+					Invoke("ShowRewardedAds", 1.5f);
+					videoLoadTry++;
+				}
+				else
+				{
+					videoLoadTry = 0;
+					LoadingCanvasScript.Instance.HideLoading();
+					SystemMessageCanvas.Instance.SetupSystemMessage(SystemMessageTitleType.Error, SystemMessageMessageType.VideoLoadError, SystemMessageOKType.Retry, SystemMessageCancelType.Close, VideoErrorCallback);
+				}
+			}
+//#endif
+		}
 	}
 
 	void VideoErrorCallback (bool _tryAgain)
@@ -486,16 +584,22 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	public void ShowVideo ()
 	{
 		Debug.Log("show Unity ads video on " + LevelManager.THIS.gameStatus);
-#if UNITY_ADS
-
-		if (Advertisement.IsReady ("video")) {
-			Advertisement.Show ("video");
-		} else {
-			if (Advertisement.IsReady ("defaultZone")) {
-				Advertisement.Show ("defaultZone");
+		if (enableUnityAds)
+		{
+//#if UNITY_ADS
+			if (UnityEngine.Advertisements.Advertisement.IsReady ("video")) 
+			{
+				UnityEngine.Advertisements.Advertisement.Show ("video");
 			}
+			else 
+			{
+				if (UnityEngine.Advertisements.Advertisement.IsReady ("defaultZone")) 
+				{
+					UnityEngine.Advertisements.Advertisement.Show ("defaultZone");
+				}
+			}
+//#endif
 		}
-#endif
 	}
 
 	public void ShowAds (bool chartboost = true)
@@ -531,9 +635,8 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		}
 	}
 
-	#if APPODEAL_ADS
+//	#if APPODEAL_ADS
 	#region Rewarded Video callback handlers
-
 	public void onRewardedVideoLoaded ()
 	{
 		Debug.Log("--Video Loaded");
@@ -588,11 +691,9 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 		LoadingCanvasScript.Instance.HideLoading();
 		CheckRewardedAds();
 	}
-
 	#endregion
 
 	#region Banner callback handlers
-
 	public void onBannerLoaded (bool _loaded)
 	{
 		Debug.LogError("banner loaded");
@@ -612,7 +713,6 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 	{
 		Debug.LogError("banner clicked");
 	}
-
 	#endregion
 
 	public void EnableBannerAds (bool _enabled)
@@ -630,8 +730,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 //			Appodeal.hide(Appodeal.BANNER);
 //		}
 	}
-
-	#endif
+//	#endif
 
 	public void ShowRate ()
 	{
@@ -1038,9 +1137,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 				MusicBase.Instance.PlayCurrentBGM();
 //				MusicBase.Instance.GetComponent<AudioSource>().Play();
 			}
-			#if APPODEAL_ADS
-			Appodeal.onResume();
-			#endif
+			if (enableAppODeal)
+			{
+//			#if APPODEAL_ADS
+				Appodeal.onResume();
+//			#endif
+			}
 		}
 	}
 

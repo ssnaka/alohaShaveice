@@ -50,9 +50,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -179,6 +179,8 @@ MonoBehaviour:
   iceCrack: {fileID: 8300000, guid: 15685ea1b04ff424abf5398339965460, type: 3}
   ono: {fileID: 8300000, guid: 98fab0f0e53c54468847b09d1ce48d2e, type: 3}
   cheehoo: {fileID: 8300000, guid: 94ae66b58a3a84b2490c8f4cfad57e7e, type: 3}
+  chestShake: {fileID: 8300000, guid: 95a332e0d557dbf4db0bb0a798c4cf0b, type: 3}
+  chestOpen: {fileID: 8300000, guid: 45e9348b3a6ec5149b51c475eda849c3, type: 3}
   audioSource: {fileID: 8200000}
 --- !u!1001 &100100000
 Prefab:

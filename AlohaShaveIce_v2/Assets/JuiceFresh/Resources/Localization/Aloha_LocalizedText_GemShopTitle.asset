@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: GOLD BANK
   - m_Language: 23
     m_Value: "\uAE08\uD654 \uC0C1\uC810"
+  - m_Language: 28
+    m_Value: banco de ouro
+  - m_Language: 34
+    m_Value: banco de oro

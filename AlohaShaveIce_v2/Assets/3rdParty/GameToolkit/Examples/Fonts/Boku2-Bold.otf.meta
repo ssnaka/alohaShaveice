@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 072ba2b4d92514f3c9bbede181ac8c62
+timeCreated: 1529479675
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: BokutachinoGothic2Bold
+  fontNames:
+  - BokutachinoGothic2Bold
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

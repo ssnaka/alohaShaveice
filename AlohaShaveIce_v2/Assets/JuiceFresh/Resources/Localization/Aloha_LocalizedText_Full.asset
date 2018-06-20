@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: '  Full'
   - m_Language: 23
     m_Value: "\uAC00\uB4DD\uCC38"
+  - m_Language: 28
+    m_Value: cheio
+  - m_Language: 34
+    m_Value: completo

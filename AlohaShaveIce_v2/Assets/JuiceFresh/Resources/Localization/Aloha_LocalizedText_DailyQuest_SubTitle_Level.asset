@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Complete  levels
   - m_Language: 23
     m_Value: "\uD310 \uAE68\uAE30 "
+  - m_Language: 28
+    m_Value: "N\xEDveis completos"
+  - m_Language: 34
+    m_Value: Niveles completos

@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Collected
   - m_Language: 23
     m_Value: "\uC644\uB8CC"
+  - m_Language: 28
+    m_Value: Coletado
+  - m_Language: 34
+    m_Value: Recogido

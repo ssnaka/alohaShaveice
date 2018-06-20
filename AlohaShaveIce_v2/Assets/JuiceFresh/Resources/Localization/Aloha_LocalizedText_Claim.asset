@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Claim
   - m_Language: 23
     m_Value: "\uBC1B\uAE30!"
+  - m_Language: 28
+    m_Value: "Reivindica\xE7\xE3o"
+  - m_Language: 34
+    m_Value: "Reclamaci\xF3n"

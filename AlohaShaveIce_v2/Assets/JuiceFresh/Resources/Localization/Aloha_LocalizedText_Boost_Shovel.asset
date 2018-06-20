@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Destroy an item
   - m_Language: 23
     m_Value: "\uBE59\uC218 \uD558\uB098 \uD37C\uBA39\uAE30!"
+  - m_Language: 28
+    m_Value: Destrua um item
+  - m_Language: 34
+    m_Value: "Destruye un art\xEDculo"

@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
   - m_Language: 23
     m_Value: {fileID: 12800000, guid: ce8a3b458601748bd961dd662cb2b7cc, type: 3}
+  - m_Language: 28
+    m_Value: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}
+  - m_Language: 34
+    m_Value: {fileID: 12800000, guid: 4bf8b26feaf48a74984bc2f58e740bd7, type: 3}

@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Places 2 special items
   - m_Language: 23
     m_Value: "\uC288\uD37C \uBE59\uC218 2\uAC1C!"
+  - m_Language: 28
+    m_Value: Lugares 2 itens especiais
+  - m_Language: 34
+    m_Value: "Lugares 2 art\xEDculos especiales"

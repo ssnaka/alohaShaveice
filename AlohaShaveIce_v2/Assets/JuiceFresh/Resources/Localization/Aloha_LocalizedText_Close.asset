@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Close
   - m_Language: 23
     m_Value: "\uB2EB\uAE30"
+  - m_Language: 28
+    m_Value: Fechar
+  - m_Language: 34
+    m_Value: Cerca

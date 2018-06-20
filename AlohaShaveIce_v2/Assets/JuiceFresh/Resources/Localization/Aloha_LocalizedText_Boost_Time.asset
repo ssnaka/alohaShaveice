@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Gives you the 30 extra seconds
   - m_Language: 23
     m_Value: "30\uCD08 \uCD94\uAC00~!"
+  - m_Language: 28
+    m_Value: "D\xE1 a voc\xEA os 30 segundos extras"
+  - m_Language: 34
+    m_Value: Te da los 30 segundos extra

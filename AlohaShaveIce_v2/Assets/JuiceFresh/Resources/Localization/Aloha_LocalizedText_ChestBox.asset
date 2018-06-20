@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Chest Box
   - m_Language: 23
     m_Value: "\uBCF4\uBB3C \uC0C1\uC790"
+  - m_Language: 28
+    m_Value: Caixa de peito
+  - m_Language: 34
+    m_Value: Caja del cofre

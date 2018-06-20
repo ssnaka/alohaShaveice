@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: COMPLETED
   - m_Language: 23
     m_Value: "\uB808\uBCA8 \uC644\uB8CC "
+  - m_Language: 28
+    m_Value: Completou
+  - m_Language: 34
+    m_Value: Terminado

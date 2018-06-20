@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Cancel
   - m_Language: 23
     m_Value: "\uCDE8\uC18C"
+  - m_Language: 28
+    m_Value: Cancelar
+  - m_Language: 34
+    m_Value: Cancelar

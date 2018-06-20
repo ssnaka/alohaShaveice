@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Destroy the row and column crosswise
   - m_Language: 23
     m_Value: "\uAC00\uB85C, \uC138\uB85C \uD06C\uB85C\uC2A4 \uD55C \uC904 \uC5C6\uC560\uAE30!"
+  - m_Language: 28
+    m_Value: Destrua a linha e a coluna em ordem cruzada
+  - m_Language: 34
+    m_Value: Destruye la fila y la columna transversalmente

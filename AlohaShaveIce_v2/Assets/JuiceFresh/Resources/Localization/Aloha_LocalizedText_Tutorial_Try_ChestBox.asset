@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: "Check chest box everyday.\t"
   - m_Language: 23
     m_Value: "\uACF5\uC9DC \uBCF4\uBB3C \uC0C1\uC790\uB294 \uD558\uB8E8\uC5D0 \uD55C\uBC88~!"
+  - m_Language: 28
+    m_Value: "Verifique a caixa tor\xE1cica todos os dias."
+  - m_Language: 34
+    m_Value: "Verifique la caja del cofre todos los d\xEDas"

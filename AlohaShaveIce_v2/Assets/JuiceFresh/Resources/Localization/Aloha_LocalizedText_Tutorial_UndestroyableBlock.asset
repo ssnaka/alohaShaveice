@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: 'This block cannot be destroyed. '
   - m_Language: 23
     m_Value: "\uC808\uB300\uB85C \uAE68\uC9C0\uC9C0\uC54A\uC544\uC694."
+  - m_Language: 28
+    m_Value: "Este bloco n\xE3o pode ser destru\xEDdo."
+  - m_Language: 34
+    m_Value: Este bloque no puede ser destruido.

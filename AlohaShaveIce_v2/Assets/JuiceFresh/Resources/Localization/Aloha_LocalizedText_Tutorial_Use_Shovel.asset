@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uC21F\uAC00\uB77D\uC73C\uB85C \uBE59\uC218\uB97C \uD37C\uBA39\uC5B4!
       \uC544\uC8FC \uB9DB\uB09C\uAC70\uC57C~."
+  - m_Language: 28
+    m_Value: Use a colher para retirar 1 raspado. Humm!
+  - m_Language: 34
+    m_Value: "Usa la cuchara para sacar 1 raspado. \xA1Yumm!"

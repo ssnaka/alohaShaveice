@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: "\u2191 Login Now \u2191"
   - m_Language: 23
     m_Value: "\u2191 \uC9C0\uAE08 \uB85C\uADF8\uC778 \u2191"
+  - m_Language: 28
+    m_Value: "\u2191 Conecte-se agora \u2191"
+  - m_Language: 34
+    m_Value: "\u2191 Inicia sesi\xF3n ahora \u2191"

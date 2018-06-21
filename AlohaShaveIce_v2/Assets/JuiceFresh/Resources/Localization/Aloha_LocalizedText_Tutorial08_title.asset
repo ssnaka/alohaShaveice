@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Lightning
   - m_Language: 23
     m_Value: "\uBC88\uAC1C"
+  - m_Language: 28
+    m_Value: "Rel\xE2mpago"
+  - m_Language: 34
+    m_Value: "Rel\xE1mpago"

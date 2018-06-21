@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Adds 30 sec to timer
   - m_Language: 23
     m_Value: "\uC2DC\uAC04\uC774 30\uCD08 \uB298\uC5B4\uB098\uC694."
+  - m_Language: 28
+    m_Value: Adiciona 30 seg ao temporizador
+  - m_Language: 34
+    m_Value: Agrega 30 segundos al temporizador

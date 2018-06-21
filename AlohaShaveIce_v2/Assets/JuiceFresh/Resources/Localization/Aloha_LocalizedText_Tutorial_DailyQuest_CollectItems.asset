@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Collect items to get rewards.
   - m_Language: 23
     m_Value: "\uC544\uC774\uD15C \uBAA8\uC73C\uACE0 \uC120\uBB3C \uBC1B\uC73C\uC138\uC694~"
+  - m_Language: 28
+    m_Value: Colete itens para receber recompensas.
+  - m_Language: 34
+    m_Value: Recoge objetos para obtener recompensas.

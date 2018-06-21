@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Collect the items
   - m_Language: 23
     m_Value: "\uBE59\uC218\uB97C \uBAA8\uC544\uBCF4\uC544\uC694~"
+  - m_Language: 28
+    m_Value: Recolha os itens
+  - m_Language: 34
+    m_Value: "Recoge los art\xEDculos"

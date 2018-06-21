@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uAC19\uC740 \uC0C9\uC758 \uBE59\uC218\uB97C \uC5F0\uACB0\uD574\uC11C
       \uBB3C\uBC29\uC6B8\uC744 \uD130\uB728\uB824\uBCF4\uC544\uC694."
+  - m_Language: 28
+    m_Value: Estale a bolha conectando a mesma cor raspada.
+  - m_Language: 34
+    m_Value: Haga estallar la burbuja conectando el mismo color raspado.

@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uBC88\uAC1C\uB97C \uC4F0\uBA74 \uD06C\uB85C\uC2A4\uB85C \uBE59\uC218\uB97C
       \uB179\uC5EC\uBC84\uB9AC\uC9C0!"
+  - m_Language: 28
+    m_Value: "Solte um raio em uma \xE1rea. Explode em um padr\xE3o cruzado."
+  - m_Language: 34
+    m_Value: "Deja caer un rayo en un \xE1rea. Explota en un patr\xF3n cruzado."

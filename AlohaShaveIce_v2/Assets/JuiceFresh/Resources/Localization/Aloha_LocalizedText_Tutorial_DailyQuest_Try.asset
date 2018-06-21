@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uC624\uB298\uC758 \uBAA9\uD45C\uB294 \uB9E4\uC77C \uC790\uC815\uC5D0
       \uC0C8\uB85C \uC2DC\uC791\uD569\uB2C8\uB2E4."
+  - m_Language: 28
+    m_Value: "O Daily Quest \xE9 redefinido \xE0 meia-noite todos os dias."
+  - m_Language: 34
+    m_Value: "Daily Quest se reinicia a medianoche todos los d\xEDas."

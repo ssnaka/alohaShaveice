@@ -19,3 +19,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uBE44\uB514\uC624\uB97C \uBD88\uB7EC\uC62C \uC218 \uC5C6\uC5B4\uC694.\n\uB2E4\uC2DC
       \uC2DC\uB3C4\uD574\uBCF4\uBA74 \uB420\uC9C0\uB3C4 \uBAB0\uB77C\uC694~"
+  - m_Language: 28
+    m_Value: "N\xE3o foi poss\xEDvel carregar o v\xEDdeo.\nPor favor, tente novamente."
+  - m_Language: 34
+    m_Value: "Error al cargar el video.\nInt\xE9ntalo de nuevo."

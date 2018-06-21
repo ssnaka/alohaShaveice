@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Gives you 2 Super Shave Ice at the start of a game
   - m_Language: 23
     m_Value: "\uC288\uD37C\uBE59\uC218\uAC00 2\uAC1C \uC0DD\uACA8\uC694."
+  - m_Language: 28
+    m_Value: "D\xE1-lhe 2 Super raspado no in\xEDcio de um jogo"
+  - m_Language: 34
+    m_Value: Te da 2 Super raspado al comienzo de un juego

@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Tap and start the mission.
   - m_Language: 23
     m_Value: "\uB20C\uB7EC\uC11C \uC624\uB298\uC758 \uBAA9\uD45C \uC2DC\uC791\uD558\uAE30"
+  - m_Language: 28
+    m_Value: "Toque e inicie a miss\xE3o."
+  - m_Language: 34
+    m_Value: "Toca y comienza la misi\xF3n."

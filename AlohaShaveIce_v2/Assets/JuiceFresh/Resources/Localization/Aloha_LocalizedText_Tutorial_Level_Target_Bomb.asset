@@ -18,3 +18,9 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uAC19\uC740 \uC0C9\uC758 \uBE59\uC218\uC640 \uC5F0\uACB0\uC2DC\uCF1C
       \uC2DC\uAC04 \uB0B4\uC5D0 \uD3ED\uD0C4 \uC81C\uAC70\uD558\uAE30!!!!"
+  - m_Language: 28
+    m_Value: Destrua a bomba conectando o gelo de barbear da mesma cor dentro do limite
+      de tempo.
+  - m_Language: 34
+    m_Value: "Destruye la bomba conectando el mismo afeitado de color dentro del l\xEDmite
+      de tiempo."

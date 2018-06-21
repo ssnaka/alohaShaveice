@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Get %s star(s)
   - m_Language: 23
     m_Value: "\uBCC4 %s\uAC1C \uBAA8\uC73C\uAE30"
+  - m_Language: 28
+    m_Value: Obter %s estrela (s)
+  - m_Language: 34
+    m_Value: Obtener %s estrella (s)

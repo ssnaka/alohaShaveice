@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uD30C\uC778\uC560\uD50C\uC774 \uAC00\uB4DD \uCC3C\uC5B4\uC694. \uBE68\uB9AC
       \uC640 \uBCF4\uC138\uC694~"
+  - m_Language: 28
+    m_Value: "Sua vida est\xE1 cheia. Volte para brincar!"
+  - m_Language: 34
+    m_Value: "Tu vida est\xE1 llena. Vuelve a jugar!"

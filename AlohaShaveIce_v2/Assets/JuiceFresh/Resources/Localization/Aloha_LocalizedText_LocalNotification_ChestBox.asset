@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uC0C8\uB85C\uC6B4 \uBCF4\uBB3C\uC0C1\uC790 \uBC1C\uACAC! \uC5F4\uC5B4\uBCF4\uB7EC
       \uAC00\uC988\uC544~!"
+  - m_Language: 28
+    m_Value: "A caixa New Chest est\xE1 pronta. Venha e abra!"
+  - m_Language: 34
+    m_Value: "La nueva caja del cofre est\xE1 lista. Ven y \xE1brelo!"

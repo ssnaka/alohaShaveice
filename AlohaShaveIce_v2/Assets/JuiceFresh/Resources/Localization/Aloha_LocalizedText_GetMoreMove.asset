@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Get +{0} Moves
   - m_Language: 23
     m_Value: "+{0} \uD134 \uCD94\uAC00"
+  - m_Language: 28
+    m_Value: Obter + {0} movimentos
+  - m_Language: 34
+    m_Value: Obtener + {0} movimientos

@@ -13,6 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Pop all bubbles
+    m_Value: Break all ice
   - m_Language: 23
     m_Value: "\uBB3C\uBC29\uC6B8 \uD130\uB728\uB9AC\uAE30"
+  - m_Language: 28
+    m_Value: Quebre todo o gelo
+  - m_Language: 34
+    m_Value: Rompe todo el hielo

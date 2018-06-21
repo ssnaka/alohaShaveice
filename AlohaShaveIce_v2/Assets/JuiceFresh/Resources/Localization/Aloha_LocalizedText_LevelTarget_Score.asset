@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Get %n scores
   - m_Language: 23
     m_Value: "%n\uC810 \uB2EC\uC131 "
+  - m_Language: 28
+    m_Value: "Obter %n pontua\xE7\xF5es"
+  - m_Language: 34
+    m_Value: Obtener %n puntajes

@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: OPEN
   - m_Language: 23
     m_Value: "\uC5F4\uAE30"
+  - m_Language: 28
+    m_Value: aberto
+  - m_Language: 34
+    m_Value: abierto

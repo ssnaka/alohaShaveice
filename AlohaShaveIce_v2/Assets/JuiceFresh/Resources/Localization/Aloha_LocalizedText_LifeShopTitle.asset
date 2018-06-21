@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: REFILL YOUR LIFE
   - m_Language: 23
     m_Value: "\uB77C\uC774\uD504 \uB9AC\uD544"
+  - m_Language: 28
+    m_Value: RECUPERAR SUA VIDA
+  - m_Language: 34
+    m_Value: Recarga tu vida

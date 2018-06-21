@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Get +{0} Secs
   - m_Language: 23
     m_Value: "+{0}\uCD08 \uCD94\uAC00"
+  - m_Language: 28
+    m_Value: Obtenha + {0} Segs
+  - m_Language: 34
+    m_Value: Obtenga + {0} Secs

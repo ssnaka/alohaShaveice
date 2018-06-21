@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Destroy bombs
   - m_Language: 23
     m_Value: "\uD3ED\uD0C4 \uC81C\uAC70\uD558\uAE30"
+  - m_Language: 28
+    m_Value: destruir bombas
+  - m_Language: 34
+    m_Value: destruir bombas

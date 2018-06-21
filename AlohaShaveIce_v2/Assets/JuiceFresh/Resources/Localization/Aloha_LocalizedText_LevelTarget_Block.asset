@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Collect all blocks
   - m_Language: 23
     m_Value: "\uBE14\uB85D \uCE58\uC6B0\uAE30"
+  - m_Language: 28
+    m_Value: recolher todos os blocos
+  - m_Language: 34
+    m_Value: recoger todos los bloques

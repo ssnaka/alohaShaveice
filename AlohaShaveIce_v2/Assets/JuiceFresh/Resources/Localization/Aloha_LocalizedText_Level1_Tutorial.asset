@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: ' Swipe on the shave ice of the same color to destroy them.'
   - m_Language: 23
     m_Value: "\uAC19\uC740 \uC0C9\uC758 \uBE59\uC218\uB97C \uC5F0\uACB0\uD574 \uBCF4\uC138\uC694~~"
+  - m_Language: 28
+    m_Value: "Passe o gelo raspado da mesma cor para destru\xED-los."
+  - m_Language: 34
+    m_Value: Desliza sobre el hielo raspado del mismo color para destruirlos.

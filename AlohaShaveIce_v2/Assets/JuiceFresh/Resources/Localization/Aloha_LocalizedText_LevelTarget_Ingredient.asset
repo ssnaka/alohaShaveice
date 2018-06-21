@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Collect all ingredients
   - m_Language: 23
     m_Value: "\uC7AC\uB8CC \uBAA8\uC73C\uAE30"
+  - m_Language: 28
+    m_Value: Recolha todos os ingredientes
+  - m_Language: 34
+    m_Value: Recoge todos los ingredientes

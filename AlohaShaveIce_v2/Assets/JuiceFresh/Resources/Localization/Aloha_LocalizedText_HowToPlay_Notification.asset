@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uAC8C\uC784 \uBC29\uBC95\uC774 \uAD81\uAE08\uD574\uC694~? \uAD81\uAE08\uD558\uBA74
       \uC124\uC815\uC744 \uB20C\uB7EC\uBD10."
+  - m_Language: 28
+    m_Value: "Clique nas configura\xE7\xF5es para aprender a jogar"
+  - m_Language: 34
+    m_Value: "Haz clic en la configuraci\xF3n para aprender a jugar"

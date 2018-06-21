@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: up & down
   - m_Language: 23
     m_Value: "\uC704 / \uC544\uB798"
+  - m_Language: 28
+    m_Value: para cima e para baixo
+  - m_Language: 34
+    m_Value: arriba y abajo

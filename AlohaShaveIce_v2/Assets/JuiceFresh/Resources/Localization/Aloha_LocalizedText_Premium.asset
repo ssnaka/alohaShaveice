@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: PREMIUM
   - m_Language: 23
     m_Value: "\uC88B\uC740 \uC0C1\uC790"
+  - m_Language: 28
+    m_Value: "PR\xCAMIO"
+  - m_Language: 34
+    m_Value: PRIMA

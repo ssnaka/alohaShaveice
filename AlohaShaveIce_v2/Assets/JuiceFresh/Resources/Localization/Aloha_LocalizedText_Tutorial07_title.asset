@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: Spoon
   - m_Language: 23
     m_Value: "\uC21F\uAC00\uB77D"
+  - m_Language: 28
+    m_Value: colher
+  - m_Language: 34
+    m_Value: cuchara

@@ -17,3 +17,7 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "\uC5EC\uB7EC \uB2E4\uB978 \uBE59\uC218\uB97C \uD55C\uAC00\uC9C0 \uC0C9\uC73C\uB85C
       \uB9CC\uB4E4\uC5B4 \uC918\uC694."
+  - m_Language: 28
+    m_Value: Altera a cor de alguns raspados para uma cor.
+  - m_Language: 34
+    m_Value: Cambia el color de algunos raspados a un color.

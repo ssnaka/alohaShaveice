@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: side to side
   - m_Language: 23
     m_Value: "\uC88C / \uC6B0"
+  - m_Language: 28
+    m_Value: lado a lado
+  - m_Language: 34
+    m_Value: un lado a otro

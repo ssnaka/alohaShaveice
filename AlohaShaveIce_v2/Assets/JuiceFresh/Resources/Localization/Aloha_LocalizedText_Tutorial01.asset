@@ -19,3 +19,9 @@ MonoBehaviour:
   - m_Language: 23
     m_Value: "3\uAC1C \uC774\uC0C1\uC758 \uBE59\uC218\uB97C \uC5F0\uACB0\uD558\uC138\uC694.\n5\uAC1C
       \uC774\uC0C1 \uC5F0\uACB0 \uC2DC \uC288\uD37C\uBE59\uC218 \uC0DD\uC131!"
+  - m_Language: 28
+    m_Value: 'Ligue 3 ou mais para ganhar
+
+      Conecte 5 ou mais para Super raspado'
+  - m_Language: 34
+    m_Value: "Conecta 3 o m\xE1s para ganar\nConecte 5 o m\xE1s para Super raspado"

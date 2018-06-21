@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: PAUSE
   - m_Language: 23
     m_Value: "\uC77C\uC2DC\uC911\uC9C0"
+  - m_Language: 28
+    m_Value: pausa
+  - m_Language: 34
+    m_Value: pausa

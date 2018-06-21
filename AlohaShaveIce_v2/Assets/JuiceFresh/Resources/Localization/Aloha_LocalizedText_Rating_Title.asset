@@ -16,3 +16,7 @@ MonoBehaviour:
     m_Value: YOUR RATING
   - m_Language: 23
     m_Value: "\uB9AC\uBDF0"
+  - m_Language: 28
+    m_Value: "SUA AVALIA\xC7\xC3O"
+  - m_Language: 34
+    m_Value: "TU CLASIFICACI\xD3N"

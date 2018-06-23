@@ -484,6 +484,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 					{
 						if (result == UnityEngine.Advertisements.ShowResult.Finished) 
 						{
+							OnVideoAdShown();
 							CheckRewardedAds ();
 						}
 					}

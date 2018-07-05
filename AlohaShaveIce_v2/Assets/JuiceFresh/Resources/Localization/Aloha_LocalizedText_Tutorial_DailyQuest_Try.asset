@@ -13,11 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleItems:
   - m_Language: 10
-    m_Value: Daily Quest resets at midnight everyday.
+    m_Value: Complete daily quests and get rewars.
   - m_Language: 23
-    m_Value: "\uC624\uB298\uC758 \uBAA9\uD45C\uB294 \uB9E4\uC77C \uC790\uC815\uC5D0
-      \uC0C8\uB85C \uC2DC\uC791\uD569\uB2C8\uB2E4."
+    m_Value: "\uC624\uB298\uC758 \uBAA9\uD45C\uB97C \uB2EC\uC131\uD558\uACE0 \uC120\uBB3C
+      \uBC1B\uC544\uAC00\uC138\uC694~"
   - m_Language: 28
-    m_Value: "O Daily Quest \xE9 redefinido \xE0 meia-noite todos os dias."
+    m_Value: "Completar quests di\xE1rias e obter recompensas."
   - m_Language: 34
-    m_Value: "Daily Quest se reinicia a medianoche todos los d\xEDas."
+    m_Value: "Completa misiones diarias y obt\xE9n recompensas."

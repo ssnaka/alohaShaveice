@@ -365,6 +365,7 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 //		LoadingCanvasScript.Instance.HideLoading();
 
 		DailyRewardManager.Instance.Init();
+//		DailyQuestManager.Instance.SetupDailyQuest();
 
 	}
 	#if GOOGLE_MOBILE_ADS

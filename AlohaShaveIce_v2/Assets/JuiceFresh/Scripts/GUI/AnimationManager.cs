@@ -53,7 +53,7 @@ public class AnimationManager : MonoBehaviour
 					CloseMenu();
 				}
 
-				if (LevelManager.THIS.currentLevel > 2)
+				if (GameObject.Find("DailyQuest") != null)
 				{
 					if (GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.DailyQuest_Try, GameObject.Find("DailyQuest").GetComponent<RectTransform>()))
 					{
@@ -531,7 +531,7 @@ public class AnimationManager : MonoBehaviour
 			}
 			else
 			{
-				if (LevelManager.THIS.questSaveData != null && LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.NextLevel) || LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.Collect))
+				if (LevelManager.THIS.questSaveData != null && (LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.NextLevel) || LevelManager.THIS.questSaveData.type.Equals(DailyQuestType.Collect)))
 				{
 //					DailyQuestManager.Instance.EnableDailyQuestManager(true);
 					DailyQuestManager.Instance.HandleRewards();

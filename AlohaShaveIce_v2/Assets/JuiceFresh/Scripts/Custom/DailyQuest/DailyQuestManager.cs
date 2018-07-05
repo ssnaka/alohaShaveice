@@ -338,7 +338,7 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
 
 	public bool HandleRewards ()
 	{
-		if (saveData.completed)
+		if (saveData == null || saveData.completed)
 		{
 			return false;
 		}
@@ -386,7 +386,7 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
 
 	void InitScript_Instance_OnItemDestroyed (Square _square)
 	{
-		if (!saveData.type.Equals(DailyQuestType.Collect))
+		if (saveData == null || !saveData.type.Equals(DailyQuestType.Collect))
 		{
 			return;
 		}

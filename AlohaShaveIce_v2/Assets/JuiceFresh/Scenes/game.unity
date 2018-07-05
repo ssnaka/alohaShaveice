@@ -27275,7 +27275,7 @@ MonoBehaviour:
   ShowAdmobAdsEveryLevel: 2
   admobUIDAndroid: ca-app-pub-9974681578637939/2945375868
   admobUIDIOS: ca-app-pub-9974681578637939/7955828264
-  ShowRateEvery: 5
+  ShowRateEvery: 7
   RateURL: https://play.google.com/store/apps/details?id=com.naka.alohashaveice
   RateURLIOS: https://itunes.apple.com/us/app/aloha-shaved-ice/id1309466918?mt=8
   rewardedGems: 5

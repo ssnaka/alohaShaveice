@@ -30,6 +30,8 @@ public class LevelsMap : MonoBehaviour
 
 	public event Action OnReset;
 
+	GameObject dailyQuestButton;
+
 	public void Awake ()
 	{
 		_instance = this;
@@ -83,6 +85,22 @@ public class LevelsMap : MonoBehaviour
 	private void PlaceCharacterToLastUnlockedLevel ()
 	{
 		int lastUnlockedNumber = GetMapLevels().Where(l => !l.IsLocked).Select(l => l.Number).Max();
+
+		if (dailyQuestButton == null)
+		{
+			dailyQuestButton = GameObject.Find("DailyQuest");//.SetActive(false);
+		}
+
+		dailyQuestButton.SetActive(false);
+		if (lastUnlockedNumber > 6)
+		{
+			dailyQuestButton.SetActive(true);
+//			if (GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.DailyQuest_Try, dailyQuestButton.GetComponent<RectTransform>()))
+//			{
+//				//					DailyRewardManager.Instance.EnableReward(true);
+//				//					CloseMenu();
+//			}
+		}
 
 		if (WaypointsMover == null || CharacterLevel == null || CharacterLevel.Number == lastUnlockedNumber || CharacterLevel.Number <= lastUnlockedNumber - 2)
 		{

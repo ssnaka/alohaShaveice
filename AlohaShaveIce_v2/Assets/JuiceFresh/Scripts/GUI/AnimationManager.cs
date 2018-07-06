@@ -274,34 +274,11 @@ public class AnimationManager : MonoBehaviour
 		else if (name == "BoostShop")
 		{	
 			BoostShop shop = GetComponent<BoostShop>();
-			switch(shop.boostType)
-			{
-			case BoostType.Stripes:
-				InitScript.Instance.currentReward = RewardedAdsType.Stripes;
-				break;
-			case BoostType.Colorful_bomb:
-				InitScript.Instance.currentReward = RewardedAdsType.Colorful_bomb;
-				break;
-			case BoostType.ExtraMoves:
-				InitScript.Instance.currentReward = RewardedAdsType.ExtraMoves;
-				break;
-			case BoostType.ExtraTime:
-				InitScript.Instance.currentReward = RewardedAdsType.ExtraTime;
-				break;
-			case BoostType.Bomb:
-				InitScript.Instance.currentReward = RewardedAdsType.Bomb;
-				break;
-			case BoostType.Energy:
-				InitScript.Instance.currentReward = RewardedAdsType.Energy;
-				break;
-			case BoostType.Shovel:
-				InitScript.Instance.currentReward = RewardedAdsType.Shovel;
-				break;
-			}
+			InitScript.Instance.currentReward = GameUtility.GetRewardedAdsTypeFromBoostType(shop.boostType);
 		}
 		InitScript.Instance.ShowRewardedAds();
-		if (name != "MenuFailed")
-			CloseMenu();
+//		if (name != "MenuFailed")
+//			CloseMenu();
 	}
 
 	public void GoRate()

@@ -75,9 +75,11 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 			rewardResultContentList.Add(rewardResultContent);
 		}
 
-		chestImage.overrideSprite = _chestSprite;
-//		chestImage.gameObject.SetActive(false);
-		chestImageOpen.overrideSprite = Resources.Load<Sprite>("Custom/Sprite/" + _chestSprite.name + "_open");
+        if (_chestSprite != null)
+        {
+    		chestImage.overrideSprite = _chestSprite;
+    		chestImageOpen.overrideSprite = Resources.Load<Sprite>("Custom/Sprite/" + _chestSprite.name + "_open");
+        }
 		openButton.interactable = true;
 		chestImage.gameObject.SetActive(true);
 		chestImageOpen.gameObject.SetActive(false);
@@ -189,6 +191,13 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		chestImageOpen.gameObject.SetActive(false);
 //		chest3DContainer.SetActive(false);
 	}
+
+    public void ShowResult ()
+    {
+        chestImage.gameObject.SetActive(false);
+        chestImageOpen.gameObject.SetActive(false);
+        rewardItemsView.SetActive(true);
+    }
 
 	public void OnCloseButtonPressed ()
 	{

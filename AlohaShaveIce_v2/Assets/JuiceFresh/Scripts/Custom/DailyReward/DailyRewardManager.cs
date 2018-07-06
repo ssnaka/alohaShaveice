@@ -112,6 +112,17 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 		script.SetupOpenChest(_possibleRewards, _chestSprite, _chestType, _withGems, _withAds, _isQuest);
 	}
 
+	public void ShowOpenChestResultNow ()
+	{
+		if (openChestBoxCanvas == null)
+		{
+            return;
+		}
+
+		DailyRewardOpenChestCanvasScript script = openChestBoxCanvas.GetComponent<DailyRewardOpenChestCanvasScript>();
+        script.ShowResult();
+	}
+
 	public void ShowOpenChestAsVideoAds ()
 	{
 		DailyRewardChest dailyRewardChest = chestList.Find(item => item.data.type.Equals(ChestType.daily));

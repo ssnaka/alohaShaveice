@@ -27225,44 +27225,36 @@ MonoBehaviour:
   FirstGems: 30
   adsEvents:
   - gameEvent: 5
-    adType: 3
-    everyLevel: 3
-    calls: 0
-  - gameEvent: 8
-    adType: 3
-    everyLevel: 7
-    calls: 0
-  - gameEvent: 6
-    adType: 3
+    adType: 2
     everyLevel: 3
     calls: 0
   boostAdsEvents:
   - boostType: 0
-    adType: 3
+    adType: 2
     countToReward: 3
     calls: 0
   - boostType: 1
-    adType: 3
+    adType: 2
     countToReward: 2
     calls: 0
   - boostType: 2
-    adType: 3
+    adType: 2
     countToReward: 3
     calls: 0
   - boostType: 3
-    adType: 3
+    adType: 2
     countToReward: 3
     calls: 0
   - boostType: 4
-    adType: 3
+    adType: 2
     countToReward: 3
     calls: 0
   - boostType: 5
-    adType: 3
+    adType: 2
     countToReward: 1
     calls: 0
   - boostType: 6
-    adType: 3
+    adType: 2
     countToReward: 3
     calls: 0
   unityAdsIDAndroid: 
@@ -35473,6 +35465,7 @@ MonoBehaviour:
     GemPrices: 0f000000140000001e000000
   videoButtonObject: {fileID: 934685783}
   videoCounter: {fileID: 1955052510}
+  counterAnimation: {fileID: 934685788}
 --- !u!1 &641601988
 GameObject:
   m_ObjectHideFlags: 0
@@ -58935,6 +58928,7 @@ GameObject:
   - component: {fileID: 934685787}
   - component: {fileID: 934685786}
   - component: {fileID: 934685785}
+  - component: {fileID: 934685788}
   m_Layer: 5
   m_Name: Video
   m_TagString: Untagged
@@ -59048,6 +59042,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 934685783}
+--- !u!111 &934685788
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 934685783}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 55701e01bbcf8447fb8948d9fe8bfef4, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 55701e01bbcf8447fb8948d9fe8bfef4, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!4 &934714677 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 105903d664c39294e926aed54de8b6c8, type: 2}

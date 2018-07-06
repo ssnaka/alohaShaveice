@@ -34,6 +34,28 @@ public class BoostShop : MonoBehaviour
 	GameObject videoButtonObject;
 	[SerializeField]
 	Text videoCounter;
+    [SerializeField]
+    Animation counterAnimation;
+
+    void OnEnable ()
+    {
+//        SetVideoCounter();
+        InitScript.Instance.OnVideoAdFinished += InitScript_Instance_OnVideoAdFinished;
+    }
+
+    void OnDisable ()
+    {
+        InitScript.Instance.OnVideoAdFinished -= InitScript_Instance_OnVideoAdFinished;
+    }
+
+    void InitScript_Instance_OnVideoAdFinished (BoostType _boostType)
+    {
+        if (boostType.Equals(_boostType))
+        {
+            SetVideoCounter();
+            counterAnimation.Play();
+        }
+    }
 
     // Update is called once per frame
     public void SetBoost(BoostType _boostType)
@@ -49,18 +71,22 @@ public class BoostShop : MonoBehaviour
             transform.Find("Image/BuyBoost" + (i + 1) + "/Price").GetComponent<Text>().text = "" + boostProducts[(int)_boostType].GemPrices[i];
         }
 
-		BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(_boostType);
-		if (boostAdEvent != null)
-		{
-			int playedCount = PlayerPrefs.GetInt(_boostType.ToString() + "_watch", 0);
-			videoCounter.text = (boostAdEvent.countToReward - playedCount).ToString();
-			if (playedCount >= boostAdEvent.countToReward)
-			{
-				videoButtonObject.SetActive(false);
-			}
-		}
-
+        SetVideoCounter();
 		GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.Buy_Boosts_WithAd, videoButtonObject.GetComponent<RectTransform>());
+    }
+
+    public void SetVideoCounter ()
+    {
+        BoostAdEvents boostAdEvent = InitScript.Instance.GetBoostAdsEvent(boostType);
+        if (boostAdEvent != null)
+        {
+            int playedCount = PlayerPrefs.GetInt(boostType.ToString() + "_watch", 0);
+            videoCounter.text = (boostAdEvent.countToReward - playedCount).ToString();
+            if (playedCount >= boostAdEvent.countToReward)
+            {
+                videoButtonObject.SetActive(false);
+            }
+        }
     }
 
     public void BuyBoost(GameObject button)

@@ -47,4 +47,35 @@ public class GameUtility
 
 		return diagonalInches;
 	}
+
+	public static RewardedAdsType GetRewardedAdsTypeFromBoostType (BoostType _boostType)
+	{
+		RewardedAdsType result = RewardedAdsType.None;
+		switch(_boostType)
+		{
+		case BoostType.Stripes:
+			result = RewardedAdsType.Stripes;
+			break;
+		case BoostType.Colorful_bomb:
+			result = RewardedAdsType.Colorful_bomb;
+			break;
+		case BoostType.ExtraMoves:
+			result = RewardedAdsType.ExtraMoves;
+			break;
+		case BoostType.ExtraTime:
+			result = RewardedAdsType.ExtraTime;
+			break;
+		case BoostType.Bomb:
+			result = RewardedAdsType.Bomb;
+			break;
+		case BoostType.Energy:
+			result = RewardedAdsType.Energy;
+			break;
+		case BoostType.Shovel:
+			result = RewardedAdsType.Shovel;
+			break;
+		}
+
+		return result;
+	}
 }

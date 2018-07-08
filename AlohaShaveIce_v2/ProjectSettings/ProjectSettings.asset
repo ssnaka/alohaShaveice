@@ -125,7 +125,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2.1.0
+  bundleVersion: 2.1.1
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -149,8 +149,8 @@ PlayerSettings:
     iOS: com.naka.alohashaveice
     tvOS: com.Company.ProductName
   buildNumber:
-    iOS: 26
-  AndroidBundleVersionCode: 26
+    iOS: 27
+  AndroidBundleVersionCode: 27
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

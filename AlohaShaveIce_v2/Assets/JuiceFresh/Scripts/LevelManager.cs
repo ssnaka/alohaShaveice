@@ -1606,7 +1606,7 @@ public class LevelManager : MonoBehaviour
 
 	IEnumerator PreWinAnimationsCor ()
 	{
-		if (!InitScript.Instance.losingLifeEveryGame)
+        if (!InitScript.Instance.losingLifeEveryGame)
 			InitScript.Instance.AddLife(1);
 		SoundBase.Instance.PlaySound(SoundBase.Instance.complete[1]);
 		GameObject.Find("Level/Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(true);//1.4.5
@@ -1718,9 +1718,6 @@ public class LevelManager : MonoBehaviour
 		yield return new WaitForSeconds(1f);
 
 
-
-
-
 		while (dragBlocked)
 			yield return new WaitForSeconds(0.2f);
 
@@ -1731,9 +1728,10 @@ public class LevelManager : MonoBehaviour
 		//        yield return new WaitForSeconds(3);
 		//        GameObject.Find("Canvas").transform.Find("PreCompleteBanner").gameObject.SetActive(false);
 
+        previousStars = PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), 0);
 		if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
 		{
-			if (PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), 0) < stars)
+            if (previousStars < stars)
 				PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", currentLevel), stars);
 			if (Score > PlayerPrefs.GetInt("Score" + currentLevel))
 			{
@@ -1751,7 +1749,7 @@ public class LevelManager : MonoBehaviour
 		gameStatus = GameState.Win;
 	}
 
-
+    public int previousStars = 0;
 
 	void DestroyGatheredExtraItems (Item item)
 	{

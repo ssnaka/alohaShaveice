@@ -131,8 +131,10 @@ public class AnimationManager : MonoBehaviour
 			}
 		}
 		if (name == "MenuComplete") {
-			for (int i = 1; i <= 3; i++) {
-				transform.Find("Image/Star" + i + "/Star").gameObject.SetActive(false);
+            for (int i = 0; i < starTransforms.Count; i++) 
+            {
+                starTransforms[i].gameObject.SetActive(false);
+                coinTransforms[i].gameObject.SetActive(false);
 			}
 		}
 
@@ -440,19 +442,54 @@ public class AnimationManager : MonoBehaviour
 		}
 		Destroy(firework, 1);
 		Destroy(firework1, 1);
+
+        for (int i = 0 ; i < coinTransforms.Count ; i++)
+        {
+            coinTransforms[i].gameObject.SetActive(false);
+        }
 	}
 
-	IEnumerator MenuComplete()
+    [Header("MenuComplete Only")]
+    [SerializeField]
+    List<Transform> starTransforms;
+    [SerializeField]
+    List<Transform> coinTransforms;
+//    Animation coinAnimation;
+	IEnumerator MenuComplete ()
 	{
+        int latestLevel = LevelsMap._instance.GetLastestReachedLevel();
+        int previousStars = LevelManager.Instance.previousStars;
+        if (LevelManager.Instance.questSaveData != null && (LevelManager.Instance.questSaveData.type.Equals(DailyQuestType.RandomLevel)))
+        {
+            previousStars = 3;
+        }
+
 		for (int i = 1; i <= LevelManager.Instance.stars; i++) {
 			//  SoundBase.Instance.audio.PlayOneShot( SoundBase.Instance.scoringStar );
-			transform.Find("Image/Star" + i + "/Star").gameObject.SetActive(true);
+            Transform starTransform = starTransforms[i - 1];//transform.Find("Image/Star" + i + "/Star");
+            Transform coinTransform = coinTransforms[i - 1];
+            starTransform.gameObject.SetActive(true);
 			SoundBase.Instance.PlaySound(SoundBase.Instance.star[i - 1]);
-			yield return new WaitForSeconds(0.5f);
+            if (previousStars < i)
+            {
+                RewardGemsForWinningBonus(starTransform.position);
+                coinTransform.gameObject.SetActive(true);
+            }
+			yield return new WaitForSeconds(0.4f);
+
 		}
+
 		StartCoroutine(FireworkParticles());
 
 	}
+
+    void RewardGemsForWinningBonus (Vector3 _coinPosition)
+    {
+        InitScript.Instance.AddGems(1);
+//        coinAnimation.Stop();
+//        coinAnimation.transform.position = _coinPosition;
+//        coinAnimation.Play();
+    }
 
 	IEnumerator MenuCompleteScoring()
 	{

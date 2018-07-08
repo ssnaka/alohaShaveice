@@ -1101,6 +1101,10 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 
     public void AddLife (int count)
     {
+        if (lifes < 0)
+        {
+            return;
+        }
         lifes += count;
         if (lifes > CapOfLife)
             lifes = CapOfLife;

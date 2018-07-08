@@ -32,6 +32,8 @@ public class LevelsMap : MonoBehaviour
 
 	GameObject dailyQuestButton;
 
+    public int LatestReachedLevel;
+
 	public void Awake ()
 	{
 		_instance = this;
@@ -85,6 +87,8 @@ public class LevelsMap : MonoBehaviour
 	private void PlaceCharacterToLastUnlockedLevel ()
 	{
 		int lastUnlockedNumber = GetMapLevels().Where(l => !l.IsLocked).Select(l => l.Number).Max();
+
+        LatestReachedLevel = lastUnlockedNumber;
 
 		if (dailyQuestButton == null)
 		{

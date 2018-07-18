@@ -191,7 +191,7 @@ public class DailyRewardChest : MonoBehaviour
 		{
 			case ChestType.daily:
 				dailyRewardDayCount = ZPlayerPrefs.GetInt("dailyRewardDayCount", 0);
-                if (dailyRewardDayCount > data.data.Count)
+                if (dailyRewardDayCount >= data.data.Count)
                 {
                     dailyRewardDayCount = 0;
                     ZPlayerPrefs.SetInt("dailyRewardDayCount", dailyRewardDayCount);
@@ -220,7 +220,7 @@ public class DailyRewardChest : MonoBehaviour
 				break;
 		}
 
-		RewardData rewardData = data.data.Find(item => item.day.Equals(dailyRewardDayCount));
+        RewardData rewardData = data.data.Find(item => item.day.Equals(dailyRewardDayCount));
 
 		rewardItem = GetRewardForToday(rewardData);
 

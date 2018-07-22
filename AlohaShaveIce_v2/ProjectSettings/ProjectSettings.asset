@@ -235,7 +235,7 @@ PlayerSettings:
   androidSplashScreen: {fileID: 2800000, guid: 3e254ed51911e4ea1ae5dc841d8fee8c, type: 3}
   AndroidKeystoreName: KeyStore/aloha.keystore
   AndroidKeyaliasName: shaveice
-  AndroidTVCompatibility: 1
+  AndroidTVCompatibility: 0
   AndroidIsGame: 1
   androidEnableBanner: 0
   m_AndroidBanners:

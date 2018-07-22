@@ -16,8 +16,8 @@ using ChartboostSDK;
 using GoogleMobileAds.Api;
 #endif
 //#if APPODEAL_ADS
-using AppodealAds.Unity.Api;
-using AppodealAds.Unity.Common;
+//using AppodealAds.Unity.Api;
+//using AppodealAds.Unity.Common;
 
 //#endif
 
@@ -90,7 +90,7 @@ public enum RewardedAdsType
 
 
 //#if UNITY_ANDROID
-public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAdListener, IRewardedVideoAdListener
+public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBannerAdListener, IRewardedVideoAdListener
 //#elif UNITY_IOS
 //public class InitScript : MonoBehaviour
 //#endif
@@ -396,15 +396,15 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
 			appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
 #endif
 
-            Appodeal.disableLocationPermissionCheck();
-            Appodeal.setTesting(false);
-            Appodeal.setBannerBackground(true);
-
-            Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
-            Appodeal.setNonSkippableVideoCallbacks(this);
-
-            //		Appodeal.setRewardedVideoCallbacks(this);
-            Appodeal.setBannerCallbacks(this);
+//            Appodeal.disableLocationPermissionCheck();
+//            Appodeal.setTesting(false);
+//            Appodeal.setBannerBackground(true);
+//
+//            Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
+//            Appodeal.setNonSkippableVideoCallbacks(this);
+//
+//            //		Appodeal.setRewardedVideoCallbacks(this);
+//            Appodeal.setBannerCallbacks(this);
         }
 //#endif
     }
@@ -513,35 +513,35 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
             }
 //#endif
         }
-        else if (enableAppODeal)
-        {
-//#if APPODEAL_ADS
-            LoadingCanvasScript.Instance.ShowLoading();
-            if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
-            {
-                if (MusicBase.Instance)
-                {
-                    MusicBase.Instance.StopCurrentBGM();
-                    //				MusicBase.Instance.GetComponent<AudioSource>().Stop();
-                }
-                Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
-            }
-            else
-            {
-                if (videoLoadTry < maxVideoLoadTry)
-                {
-                    Invoke("ShowRewardedAds", 1.5f);
-                    videoLoadTry++;
-                }
-                else
-                {
-                    videoLoadTry = 0;
-                    LoadingCanvasScript.Instance.HideLoading();
-                    SystemMessageCanvas.Instance.SetupSystemMessage(SystemMessageTitleType.Error, SystemMessageMessageType.VideoLoadError, SystemMessageOKType.Retry, SystemMessageCancelType.Close, VideoErrorCallback);
-                }
-            }
-//#endif
-        }
+//        else if (enableAppODeal)
+//        {
+////#if APPODEAL_ADS
+//            LoadingCanvasScript.Instance.ShowLoading();
+//            if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
+//            {
+//                if (MusicBase.Instance)
+//                {
+//                    MusicBase.Instance.StopCurrentBGM();
+//                    //				MusicBase.Instance.GetComponent<AudioSource>().Stop();
+//                }
+//                Appodeal.show(Appodeal.NON_SKIPPABLE_VIDEO);
+//            }
+//            else
+//            {
+//                if (videoLoadTry < maxVideoLoadTry)
+//                {
+//                    Invoke("ShowRewardedAds", 1.5f);
+//                    videoLoadTry++;
+//                }
+//                else
+//                {
+//                    videoLoadTry = 0;
+//                    LoadingCanvasScript.Instance.HideLoading();
+//                    SystemMessageCanvas.Instance.SetupSystemMessage(SystemMessageTitleType.Error, SystemMessageMessageType.VideoLoadError, SystemMessageOKType.Retry, SystemMessageCancelType.Close, VideoErrorCallback);
+//                }
+//            }
+////#endif
+//        }
     }
 
     void VideoErrorCallback (bool _tryAgain)
@@ -1198,12 +1198,12 @@ public class InitScript : MonoBehaviour, INonSkippableVideoAdListener, IBannerAd
                 MusicBase.Instance.PlayCurrentBGM();
 //				MusicBase.Instance.GetComponent<AudioSource>().Play();
             }
-            if (enableAppODeal)
-            {
-//			#if APPODEAL_ADS
-                Appodeal.onResume();
-//			#endif
-            }
+//            if (enableAppODeal)
+//            {
+////			#if APPODEAL_ADS
+//                Appodeal.onResume();
+////			#endif
+//            }
         }
     }
 

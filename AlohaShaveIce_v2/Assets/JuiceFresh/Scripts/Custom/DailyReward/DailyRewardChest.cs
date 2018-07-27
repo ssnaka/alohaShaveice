@@ -194,9 +194,8 @@ public class DailyRewardChest : MonoBehaviour
                 if (dailyRewardDayCount >= data.data.Count)
                 {
                     dailyRewardDayCount = 0;
-                    ZPlayerPrefs.SetInt("dailyRewardDayCount", dailyRewardDayCount);
                 }
-
+                
 				lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 				didWatchRewardAds = System.Convert.ToBoolean(ZPlayerPrefs.GetInt("didWatchRewardAds", 0));
 				
@@ -212,6 +211,13 @@ public class DailyRewardChest : MonoBehaviour
 					ZPlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
 					ZPlayerPrefs.Save();
 				}
+                if (dailyRewardDayCount == 0)
+                {
+                    dailyRewardDayCount += 1;
+                }
+                
+                ZPlayerPrefs.SetInt("dailyRewardDayCount", dailyRewardDayCount);
+                ZPlayerPrefs.Save();
 				break;
 			case ChestType.premium:
 
@@ -219,6 +225,7 @@ public class DailyRewardChest : MonoBehaviour
 			default:
 				break;
 		}
+
 
         RewardData rewardData = data.data.Find(item => item.day.Equals(dailyRewardDayCount));
 

@@ -728,6 +728,10 @@ public class LevelManager : MonoBehaviour
 			//		LevelsMap.SetActive (enable);
 			LevelsMap.GetComponent<LevelsMap>().Reset();
 		}
+        else
+        {
+            LevelsMap.GetComponent<LevelsMap>().SetCameraToCharacter();
+        }
 
 		foreach (Transform tr in LevelsMap.transform)
 		{

@@ -122,7 +122,7 @@ public class LevelsMap : MonoBehaviour
 			return LevelManager.THIS.currentLevel;
 	}
 
-	private void SetCameraToCharacter ()
+	public void SetCameraToCharacter ()
 	{
 		MapCamera mapCamera = FindObjectOfType<MapCamera>();
 		if (mapCamera != null)

@@ -1768,9 +1768,8 @@ public class LevelManager : MonoBehaviour
 		{
 			if (itemType == ItemsTypes.HORIZONTAL_STRIPPED)
 				item.DestroyHorizontal();
-			else
+            else if (itemType == ItemsTypes.VERTICAL_STRIPPED)
 				item.DestroyVertical();
-			
 		}
 	}
 

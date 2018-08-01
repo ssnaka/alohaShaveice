@@ -459,7 +459,7 @@ public class AnimationManager : MonoBehaviour
 	{
         int latestLevel = LevelsMap._instance.GetLastestReachedLevel();
         int previousStars = LevelManager.Instance.previousStars;
-        if (LevelManager.Instance.questSaveData != null && (LevelManager.Instance.questSaveData.type.Equals(DailyQuestType.RandomLevel)))
+        if (LevelManager.Instance.questSaveData != null && (LevelManager.Instance.questSaveData.type.Equals(DailyQuestType.RandomLevel)) && LevelManager.THIS.questInfo != null)
         {
             previousStars = 3;
         }

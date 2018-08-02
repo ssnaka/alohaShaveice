@@ -2902,6 +2902,10 @@ public class LevelManager : MonoBehaviour
 						}
 						if (iCounter % extraItemEvery == 0)
 						{
+                            if (item == null)
+                            {
+                                continue;
+                            }
 							startPosFlowers.Add(item.transform.position);
 							List<Item> items = GetRandomItems(1);
 							foreach (Item item1 in items)

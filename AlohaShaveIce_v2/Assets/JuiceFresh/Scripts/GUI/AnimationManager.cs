@@ -464,6 +464,7 @@ public class AnimationManager : MonoBehaviour
             previousStars = 3;
         }
 
+        RewardGemsForWinningBonus(LevelManager.Instance.stars - previousStars);
 		for (int i = 1; i <= LevelManager.Instance.stars; i++) {
 			//  SoundBase.Instance.audio.PlayOneShot( SoundBase.Instance.scoringStar );
             Transform starTransform = starTransforms[i - 1];//transform.Find("Image/Star" + i + "/Star");
@@ -472,7 +473,6 @@ public class AnimationManager : MonoBehaviour
 			SoundBase.Instance.PlaySound(SoundBase.Instance.star[i - 1]);
             if (previousStars < i)
             {
-                RewardGemsForWinningBonus(starTransform.position);
                 coinTransform.gameObject.SetActive(true);
             }
 			yield return new WaitForSeconds(0.4f);
@@ -483,9 +483,13 @@ public class AnimationManager : MonoBehaviour
 
 	}
 
-    void RewardGemsForWinningBonus (Vector3 _coinPosition)
+    void RewardGemsForWinningBonus (int _reward)
     {
-        InitScript.Instance.AddGems(1);
+        if (_reward <= 0)
+        {
+            return;
+        }
+        InitScript.Instance.AddGems(_reward);
 //        coinAnimation.Stop();
 //        coinAnimation.transform.position = _coinPosition;
 //        coinAnimation.Play();

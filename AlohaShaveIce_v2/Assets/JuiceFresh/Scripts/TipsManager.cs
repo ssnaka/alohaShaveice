@@ -500,7 +500,7 @@ public class TipsManager : MonoBehaviour
 						if (row < maxRow - 1)
 						{
 							square = GetSquare(row + 1, col);
-							if (square.item != null)
+                            if (square != null && square.item != null)
 							{
 								if (square.item.color == COLOR)
 								{
@@ -513,7 +513,7 @@ public class TipsManager : MonoBehaviour
 						if (row > 0)
 						{
 							square = GetSquare(row - 1, col);
-							if (square.item != null)
+                            if (square != null && square.item != null)
 							{
 								if (square.item.color == COLOR)
 								{
@@ -526,7 +526,7 @@ public class TipsManager : MonoBehaviour
 						if (col > 0)
 						{
 							square = GetSquare(row, col - 1);
-							if (square.item != null)
+                            if (square != null && square.item != null)
 							{
 								if (square.item.color == COLOR)
 								{
@@ -539,7 +539,7 @@ public class TipsManager : MonoBehaviour
 						if (col < maxCol - 1)
 						{
 							square = GetSquare(row, col + 1);
-							if (square.item != null)
+                            if (square != null && square.item != null)
 							{
 								if (square.item.color == COLOR)
 								{

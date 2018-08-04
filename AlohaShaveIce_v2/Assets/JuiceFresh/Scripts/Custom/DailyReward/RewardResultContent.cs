@@ -19,13 +19,24 @@ public class RewardResultContent : MonoBehaviour {
 		string newText = "x " + _possibleReward.count.ToString();
 		switch(_possibleReward.type)
 		{
-		case RewardedAdsType.Unlimited_Life:
-			int min =_possibleReward.count / 60;
-			newText = min.ToString() + ":00";
-			break;
+    		case RewardedAdsType.Unlimited_Life:
+    			int min =_possibleReward.count / 60;
+    			newText = min.ToString() + ":00";
+    			break;
 			default:
-			break;
+    			break;
 		}
 		countText.text = newText;
 	}
+
+    void OnEnable ()
+    {
+        StartCoroutine(ResetImageSize());
+    }
+
+    IEnumerator ResetImageSize ()
+    {
+        yield return new WaitForEndOfFrame();
+        itemImage.rectTransform.sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, itemImage.rectTransform.sizeDelta.y);   
+    }
 }

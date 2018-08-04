@@ -158,6 +158,10 @@ public static class ZPlayerPrefs
     /////////////////////////////////////////////////////////////////
     public static void Initialize(string newPassword, string newSalt)
     {
+        if (hasSetPassword)
+        {
+            return;
+        }
         strPassword = newPassword;
         strSalt = newSalt;
 

@@ -13,6 +13,7 @@ public class BoostIcon : MonoBehaviour
 
     void OnEnable()
     {
+        ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
         if (name != "Main Camera")
         {
             if (LevelManager.THIS != null)

@@ -2912,7 +2912,7 @@ public class LevelManager : MonoBehaviour
 							{
 								LevelManager.THIS.DragBlocked = true;
 								throwflower = true;
-								//                                item1.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
+//                                item1.nextType = (ItemsTypes)UnityEngine.Random.Range(1, 3);
 								GameObject flowerParticle = GetFlowerFromPool();
 								flowerParticle.GetComponent<Flower>().StartFly(item.transform.position, false, cc);
 								cc++;
@@ -2925,7 +2925,6 @@ public class LevelManager : MonoBehaviour
 					{
 						if (iCounter == destroyArrayCount)
 						{
-
 							DestroyGatheredExtraItems(item);
 						}
 
@@ -2997,13 +2996,13 @@ public class LevelManager : MonoBehaviour
 					}
 				}
 			}
-			yield return new WaitForSeconds(0.2f);
+//			yield return new WaitForSeconds(0.2f);
 			GenerateNewItems();
 			// StartCoroutine(RegenMatches(true));
 			yield return new WaitForSeconds(0.1f);
 			while (!IsAllItemsFallDown())
 			{
-				yield return new WaitForSeconds(0.1f);
+                yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);
 			}
 
 			//detect near empty squares to fall into
@@ -3036,7 +3035,7 @@ public class LevelManager : MonoBehaviour
 			//CheckIngredient();
 			while (!IsAllItemsFallDown())
 			{//1.3.2
-				yield return new WaitForSeconds(0.1f);
+                yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);
 			}
 
 			if (destroyAnyway.Count > 0)
@@ -3164,8 +3163,6 @@ public class LevelManager : MonoBehaviour
 
 		if (gameStatus == GameState.Playing)
 			StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
-
-
 
 	}
 

@@ -2999,7 +2999,7 @@ public class LevelManager : MonoBehaviour
 //			yield return new WaitForSeconds(0.2f);
 			GenerateNewItems();
 			// StartCoroutine(RegenMatches(true));
-			yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();//new WaitForSeconds(0.1f);
 			while (!IsAllItemsFallDown())
 			{
                 yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);

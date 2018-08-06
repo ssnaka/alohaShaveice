@@ -27384,7 +27384,7 @@ MonoBehaviour:
   - name: Ingredient2
     sprite: {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
     check: 1
-    count: 0
+    count: 2
   - name: Ingredient3
     sprite: {fileID: 21300000, guid: 3267aa3f629d14482bb5f20c833653c9, type: 3}
     check: 1
@@ -27392,7 +27392,7 @@ MonoBehaviour:
   - name: Ingredient4
     sprite: {fileID: 21300000, guid: d1b00986244544c43a25641091eed882, type: 3}
     check: 1
-    count: 15
+    count: 2
   currentReward: 0
   CapOfLife: 5
   TotalTimeForRestLifeHours: 0
@@ -27585,67 +27585,12 @@ MonoBehaviour:
   lifeShop: {fileID: 285581711}
   GameField: {fileID: 1050245871}
   enableInApps: 0
-  maxRows: 10
-  maxCols: 8
+  maxRows: 5
+  maxCols: 5
   squareWidth: 1.6
   squareHeight: 1.6
   firstSquarePosition: {x: -2.4, y: 3.3}
   squaresArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -27679,10 +27624,10 @@ MonoBehaviour:
   scoreForWireBlock: 100
   scoreForSolidBlock: 100
   scoreForThrivingBlock: 100
-  limitType: 0
-  Limit: 25
+  limitType: 1
+  Limit: 180
   TargetScore: 1000
-  currentLevel: 395
+  currentLevel: 5
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -27724,35 +27669,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   flowersPool:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  appearingEffectPool:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   stars: 0
-  star1: 8000
-  star2: 12000
+  star1: 2000
+  star2: 3000
   star3: 15000
   showPopupScores: 1
   stripesEffect: {fileID: 100804, guid: c1d86e442930a7b40835a0fbad225fbd, type: 2}
@@ -27774,25 +27705,9 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  colorLimit: 2
+  colorLimit: 1
   ingrCountTarget: 0200000002000000
-  ingrTarget:
-  - name: Ingredient1
-    sprite: {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
-    check: 1
-    count: 0
-  - name: Ingredient2
-    sprite: {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
-    check: 1
-    count: 0
-  - name: Ingredient3
-    sprite: {fileID: 21300000, guid: 3267aa3f629d14482bb5f20c833653c9, type: 3}
-    check: 1
-    count: 0
-  - name: Ingredient4
-    sprite: {fileID: 21300000, guid: d1b00986244544c43a25641091eed882, type: 3}
-    check: 1
-    count: 15
+  ingrTarget: []
   ingrediendSprites:
   - {fileID: 21300000, guid: 63938c0f13ed90f44a5a7ad659f6262a, type: 3}
   - {fileID: 21300000, guid: 5b36c94fa40177248bd1894a25cbd3b8, type: 3}
@@ -27831,7 +27746,7 @@ MonoBehaviour:
   - {fileID: 118832954}
   passLevelCounter: 0
   friendsAvatars: []
-  target: 1
+  target: 0
   TargetCages: 0
   TargetBombs: 0
   itemsHided: 0
@@ -27844,12 +27759,14 @@ MonoBehaviour:
   FacebookEnable: 0
   PlayFab: 0
   flower: {fileID: 107552, guid: 0a071ea80298917468648bade3061b0a, type: 2}
-  bombsCollect: 20
-  bombTimer: 15
-  NumIngredients: 4
+  bombsCollect: 4
+  bombTimer: 8
+  NumIngredients: 0
   backgroundCenters: {x: 0, y: 0, z: 0}
   isPlayingQuest: 0
   questLevel: 0
+  appearingEffectPrefab: {fileID: 157356, guid: 6edc18e850d8a134e88e99cb7a671687,
+    type: 2}
   previousStars: 0
   waitingBoost: {fileID: 0}
   highlightedItems: []

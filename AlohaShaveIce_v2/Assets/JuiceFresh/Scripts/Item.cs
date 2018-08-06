@@ -103,9 +103,10 @@ public class Item : MonoBehaviour
     GameObject light;
     public GameObject wickBurningPrefab;
     public bool awaken;
-    public GameObject appearingEffect;
+
     private bool extraChecked;
     public Item item;
+
 
     // Use this for initialization
     void Start ()
@@ -654,9 +655,21 @@ public class Item : MonoBehaviour
         }
         transform.Find("Sprite").GetComponent<SpriteRenderer>().sortingOrder = 3;
 
-        GameObject effect = Instantiate(appearingEffect) as GameObject;
+        StartCoroutine(AppearingEffectRoutine());
+    }
+
+    IEnumerator AppearingEffectRoutine ()
+    {
+        GameObject effect = LevelManager.Instance.GetAppearingEffectFromPool();
+        if (effect == null)
+        {
+            yield break;
+        }
+
         effect.transform.position = transform.position;
-        Destroy(effect, 2);
+        yield return new WaitForSeconds(1.2f);
+        effect.SetActive(false);
+        effect = null;
     }
 
     GameObject CreateStripEffect ()
@@ -914,10 +927,11 @@ public class Item : MonoBehaviour
             GameObject partcl = LevelManager.THIS.GetExplFromPool();
             if (partcl != null)
             {
-                partcl.GetComponent<ItemAnimEvents>().item = this;
+                ItemAnimEvents itemAnimEvent = partcl.GetComponent<ItemAnimEvents>();
+                itemAnimEvent.item = this;
                 partcl.transform.localScale = Vector3.one * 1f;
                 partcl.transform.position = transform.position;// + (Vector3)UnityEngine.Random.insideUnitCircle / 3;
-                GameObject psObj = Instantiate(partcl.GetComponent<ItemAnimEvents>().particals, partcl.transform.position, Quaternion.identity) as GameObject;
+                GameObject psObj = itemAnimEvent.particals;//Instantiate(partcl.GetComponent<ItemAnimEvents>().particals, partcl.transform.position, Quaternion.identity) as GameObject;
                 int spr = 0;
                 if (color == 0)
                     spr = 3;
@@ -937,7 +951,7 @@ public class Item : MonoBehaviour
                 ts.frameOverTime = new ParticleSystem.MinMaxCurve((float)spr / ts.numTilesX);
 
                 psObj.GetComponent<ParticleSystem>().Play();
-                Destroy(psObj, 2);
+//                Destroy(psObj, 2);
                 partcl.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(0f, 360f)));
                 partcl.GetComponent<Animator>().SetInteger("color", color);
                 SoundBase.Instance.PlaySoundsRandom(SoundBase.Instance.pops);

@@ -31,7 +31,7 @@ public class Flower : MonoBehaviour
 
 	public void StartFly (Vector3 pos1, bool directFly = false, int _index = 0)
 	{
-		GetComponent<SpriteRenderer>().enabled = true;
+//		GetComponent<SpriteRenderer>().enabled = true;
 		StartCoroutine(FlyCor(pos1, directFly, _index));
 	}
 
@@ -55,7 +55,7 @@ public class Flower : MonoBehaviour
 		if (item == null)
 		{
 			particleSystem.Stop();
-			spriteRenderer.enabled = false;
+//			spriteRenderer.enabled = false;
 			yield break;
 		}
 
@@ -118,10 +118,10 @@ public class Flower : MonoBehaviour
 	void AnimCallBack ()
 	{
 		particleSystem.Stop();
-		spriteRenderer.enabled = false;
+//		spriteRenderer.enabled = false;
 		item.ChangeType();
 		item.GetComponent<BoxCollider2D>().enabled = true;
 		LevelManager.THIS.DragBlocked = false;
-
+        gameObject.SetActive(false);
 	}
 }

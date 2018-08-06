@@ -219,9 +219,11 @@ public class LevelManager : MonoBehaviour
 	//pool of level timer
 	List<GameObject> levelTimerPool = new List<GameObject>();
 	//pool of explosion effects for items
-	public GameObject[] itemExplPool = new GameObject[20];
+    public List<GameObject> itemExplPool = new List<GameObject>(5);
 	//pool of flowers
-	public GameObject[] flowersPool = new GameObject[5];
+    public List<GameObject> flowersPool = new List<GameObject>(5);
+    //pool of item appearing
+    public List<GameObject> appearingEffectPool = new List<GameObject>(5);
 
 
 	//global Score amount on current level
@@ -629,6 +631,8 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
+    [SerializeField]
+    GameObject appearingEffectPrefab;
 	#endregion
 
 	void OnEnable ()
@@ -824,18 +828,23 @@ public class LevelManager : MonoBehaviour
 //			levelTimerPool.Add(go);
 //		}
 
-		for (int i = 0; i < 20; i++)
+        for (int i = 0; i < itemExplPool.Count; i++)
 		{
-			itemExplPool[i] = Instantiate(Resources.Load("Prefabs/Effects/ItemExpl"), transform.position, Quaternion.identity, objectPoolParent) as GameObject;
-			itemExplPool[i].GetComponent<SpriteRenderer>().enabled = false;
-
-			// itemExplPool[i].SetActive(false);
+			itemExplPool[i] = Instantiate(Resources.Load("Prefabs/Effects/ItemExplNew"), transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+//			itemExplPool[i].GetComponent<SpriteRenderer>().enabled = false;
+            itemExplPool[i].SetActive(false);
 		}
-		for (int i = 0; i < flowersPool.Length; i++)
+        for (int i = 0; i < flowersPool.Count; i++)
 		{
 			flowersPool[i] = Instantiate(flower, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
-			flowersPool[i].GetComponent<SpriteRenderer>().enabled = false;
+//			flowersPool[i].GetComponent<SpriteRenderer>().enabled = false;
+            flowersPool[i].SetActive(false);
 		}
+        for (int i = 0; i < appearingEffectPool.Count; i++)
+        {
+            appearingEffectPool[i] = Instantiate(appearingEffectPrefab, transform.position, Quaternion.identity, LevelManager.Instance.objectPoolParent) as GameObject;
+            appearingEffectPool[i].SetActive(false);
+        }
 		passLevelCounter = 0;
 
 #if UNITY_INAPPS
@@ -1345,58 +1354,83 @@ public class LevelManager : MonoBehaviour
 
 	public GameObject GetExplFromPool ()
 	{
-		for (int i = 0; i < itemExplPool.Length; i++)
+        for (int i = 0; i < itemExplPool.Count; i++)
 		{
-			if (!itemExplPool[i].GetComponent<SpriteRenderer>().enabled)
+            if (!itemExplPool[i].activeSelf)//.GetComponent<SpriteRenderer>().enabled)
 			{
-				// itemExplPool[i].SetActive(true);
-				itemExplPool[i].GetComponent<SpriteRenderer>().enabled = true;
+				itemExplPool[i].SetActive(true);
+//				itemExplPool[i].GetComponent<SpriteRenderer>().enabled = true;
 				StartCoroutine(HideDelayed(itemExplPool[i]));
 				return itemExplPool[i];
 			}
-
 		}
-		return null;
+
+        GameObject newItemExpl = Instantiate(Resources.Load("Prefabs/Effects/ItemExplNew"), transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+        StartCoroutine(HideDelayed(newItemExpl));
+        itemExplPool.Add(newItemExpl);
+
+        return newItemExpl;
 	}
 
 	public bool CheckFlowerStillFly ()
 	{ //check if any flower still not reachec his target
-		for (int i = 0; i < flowersPool.Length; i++)
+        for (int i = 0; i < flowersPool.Count; i++)
 		{
-			if (flowersPool[i].GetComponent<SpriteRenderer>().enabled)
+            if (flowersPool[i].activeSelf)//.GetComponent<SpriteRenderer>().enabled)
 			{
 				return true;
 			}
-
 		}
+
 		return false;
 	}
 
 	public GameObject GetFlowerFromPool ()
 	{
-		for (int i = 0; i < flowersPool.Length; i++)
+        for (int i = 0; i < flowersPool.Count; i++)
 		{
-			if (!flowersPool[i].GetComponent<SpriteRenderer>().enabled)
+            if (!flowersPool[i].activeSelf)//.GetComponent<SpriteRenderer>().enabled)
 			{
-				//                flowersPool[i].GetComponent<SpriteRenderer>().enabled = true;
-				// StartCoroutine(HideDelayed(flowersPool[i]));
+                flowersPool[i].SetActive(true);
+//                flowersPool[i].GetComponent<SpriteRenderer>().enabled = true;
+//				StartCoroutine(HideDelayed(flowersPool[i]));
 				return flowersPool[i];
 			}
 
 		}
-		return null;
+
+        GameObject newFlower = Instantiate(flower, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+        flowersPool.Add(newFlower);
+        return newFlower;
 	}
+
+    public GameObject GetAppearingEffectFromPool ()
+    {
+        for (int i = 0; i < appearingEffectPool.Count; i++)
+        {
+            if (!appearingEffectPool[i].activeSelf)
+            {
+                appearingEffectPool[i].SetActive(true);
+                return appearingEffectPool[i];
+            }
+
+        }
+
+        GameObject newAppearingEffect = Instantiate(appearingEffectPrefab, transform.position, Quaternion.identity, LevelManager.Instance.objectPoolParent) as GameObject;
+        appearingEffectPool.Add(newAppearingEffect);
+        return newAppearingEffect;
+    }
 
 	IEnumerator HideDelayed (GameObject gm)
 	{
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		if (gm.GetComponent<Animator>())
 		{
 			gm.GetComponent<Animator>().SetTrigger("stop");
 			gm.GetComponent<Animator>().SetInteger("color", 10);
 		}
-		gm.GetComponent<SpriteRenderer>().enabled = false;
-		//gm.SetActive(false);
+//		gm.GetComponent<SpriteRenderer>().enabled = false;
+		gm.SetActive(false);
 	}
 
 	public int GetActualIngredients ()
@@ -1757,6 +1791,10 @@ public class LevelManager : MonoBehaviour
 
 	void DestroyGatheredExtraItems (Item item)
 	{
+        if (item.currentType.Equals(ItemsTypes.INGREDIENT))
+        {
+            return;
+        }
 		//ClearHighlight(true);
 		if (gatheredTypes.Count > 1)
 		{
@@ -2897,7 +2935,6 @@ public class LevelManager : MonoBehaviour
 					{
 						if (iCounter == destroyArrayCount)
 						{
-
 							DestroyGatheredExtraItems(item);
 						}
 						if (iCounter % extraItemEvery == 0)

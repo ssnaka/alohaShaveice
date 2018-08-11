@@ -27585,12 +27585,43 @@ MonoBehaviour:
   lifeShop: {fileID: 285581711}
   GameField: {fileID: 1050245871}
   enableInApps: 0
-  maxRows: 5
-  maxCols: 5
+  maxRows: 8
+  maxCols: 7
   squareWidth: 1.6
   squareHeight: 1.6
   firstSquarePosition: {x: -2.4, y: 3.3}
   squaresArray:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -27624,10 +27655,10 @@ MonoBehaviour:
   scoreForWireBlock: 100
   scoreForSolidBlock: 100
   scoreForThrivingBlock: 100
-  limitType: 1
-  Limit: 180
+  limitType: 0
+  Limit: 13
   TargetScore: 1000
-  currentLevel: 5
+  currentLevel: 6
   FailedCost: 10
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
@@ -27654,7 +27685,7 @@ MonoBehaviour:
   emptyBoostIcon: {fileID: 511786113}
   AvctivatedBoostView: {fileID: 0}
   activatedBoost: {fileID: 0}
-  targetBlocks: 0
+  targetBlocks: 12
   objectPoolParent: {fileID: 1193168064}
   levelStar: {fileID: 1121860027549990, guid: da8fbf701ca1644d19c38f5661592f40, type: 2}
   levelLockPrefab: {fileID: 1117235577520322, guid: 1d0f98157e5a841fa85eb68adf7860f9,
@@ -27663,6 +27694,7 @@ MonoBehaviour:
     type: 2}
   levelTimerPrefab: {fileID: 1224689124104774, guid: a2e00bba11a0849f7b860c7887cf7cb6,
     type: 2}
+  itemPool: []
   itemExplPool:
   - {fileID: 0}
   - {fileID: 0}
@@ -27682,9 +27714,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   stars: 0
-  star1: 2000
-  star2: 3000
-  star3: 15000
+  star1: 2500
+  star2: 4900
+  star3: 6900
   showPopupScores: 1
   stripesEffect: {fileID: 100804, guid: c1d86e442930a7b40835a0fbad225fbd, type: 2}
   star1Anim: {fileID: 1966708837}
@@ -27705,7 +27737,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  colorLimit: 1
+  colorLimit: 4
   ingrCountTarget: 0200000002000000
   ingrTarget: []
   ingrediendSprites:
@@ -27746,7 +27778,7 @@ MonoBehaviour:
   - {fileID: 118832954}
   passLevelCounter: 0
   friendsAvatars: []
-  target: 0
+  target: 3
   TargetCages: 0
   TargetBombs: 0
   itemsHided: 0

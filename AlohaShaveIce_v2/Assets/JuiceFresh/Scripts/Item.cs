@@ -107,11 +107,61 @@ public class Item : MonoBehaviour
     private bool extraChecked;
     public Item item;
 
+    public bool isReadyToReuse = true;
+    List<GameObject> stripeEffectList = new List<GameObject>();
+    GameObject arrowIngredient;
+    GameObject timerTextGo;
+    GameObject wickBurning;
 
     // Use this for initialization
     void Start ()
     {
         item = this;
+
+//        square = _parentSquare;
+//        falling = true;
+//        ingredientItems = LevelManager.THIS.ingrediendSprites;
+//        GenColor();
+//        // sprRenderer = GetComponentInChildren<SpriteRenderer>();
+//        if (nextType != ItemsTypes.NONE)
+//        {
+//            debugType = nextType;
+//            currentType = nextType;
+//            nextType = ItemsTypes.NONE;
+//            transform.position = square.transform.position;
+//            falling = false;
+//        }
+//
+//
+//        // else if (LevelManager.THIS.limitType == LIMIT.TIME && UnityEngine.Random.Range(0, 28) == 1)
+//        // {
+//        //     GameObject fiveTimes = Instantiate(Resources.Load("Prefabs/5sec")) as GameObject;
+//        //     fiveTimes.transform.SetParent(transform);
+//        //     fiveTimes.name = "5sec";
+//        //     fiveTimes.transform.localScale = Vector3.one * 2;
+//        //     fiveTimes.transform.localPosition = Vector3.zero;
+//        // }
+//        xScale = transform.localScale.x;
+//        yScale = transform.localScale.y;
+//        if (currentType == ItemsTypes.INGREDIENT)
+//        {
+//            GameObject obj = Instantiate(Resources.Load("Prefabs/arrow_ingredients")) as GameObject;
+//            obj.transform.SetParent(transform);
+//            obj.transform.localPosition = new Vector3(0.66f, -0.53f, 0);
+//            obj.transform.localScale = Vector3.one * 0.6f;
+//
+//        }
+    }
+
+//    void OnEnable ()
+//    {
+//        SetItem(null);
+//    }
+
+    public void SetItem (Square _parentSquare)
+    {
+        square = _parentSquare;
+        isReadyToReuse = false;
         falling = true;
         ingredientItems = LevelManager.THIS.ingrediendSprites;
         GenColor();
@@ -121,9 +171,10 @@ public class Item : MonoBehaviour
             debugType = nextType;
             currentType = nextType;
             nextType = ItemsTypes.NONE;
-            transform.position = square.transform.position;
+//            transform.position = square.transform.position;
             falling = false;
         }
+
         // else if (LevelManager.THIS.limitType == LIMIT.TIME && UnityEngine.Random.Range(0, 28) == 1)
         // {
         //     GameObject fiveTimes = Instantiate(Resources.Load("Prefabs/5sec")) as GameObject;
@@ -136,12 +187,16 @@ public class Item : MonoBehaviour
         yScale = transform.localScale.y;
         if (currentType == ItemsTypes.INGREDIENT)
         {
-            GameObject obj = Instantiate(Resources.Load("Prefabs/arrow_ingredients")) as GameObject;
-            obj.transform.SetParent(transform);
-            obj.transform.localPosition = new Vector3(0.66f, -0.53f, 0);
-            obj.transform.localScale = Vector3.one * 0.6f;
-
+            if (arrowIngredient == null)
+            {
+                arrowIngredient = Instantiate(Resources.Load("Prefabs/arrow_ingredients")) as GameObject;
+                arrowIngredient.transform.SetParent(transform);
+                arrowIngredient.transform.localPosition = new Vector3(0.66f, -0.53f, 0);
+                arrowIngredient.transform.localScale = Vector3.one * 0.6f;
+            }
+            arrowIngredient.SetActive(true);
         }
+
         //StartCoroutine(GenRandomSprite());
     }
 
@@ -264,7 +319,7 @@ public class Item : MonoBehaviour
     public void AwakeItem ()
     {
         awaken = true;
-        anim.SetTrigger("Idle");
+        PlayAnimation("Idle");
 
         if (currentType == ItemsTypes.CHOCOBOMB)
         {
@@ -295,7 +350,6 @@ public class Item : MonoBehaviour
                 light.transform.localScale = Vector3.one * 2f;
         }
         light.SetActive(true);
-
     }
 
     public void SleepItem ()
@@ -303,7 +357,7 @@ public class Item : MonoBehaviour
         awaken = false;
         if (!anim)
             return;//1.3
-        anim.SetTrigger("IdleStop");
+        PlayAnimation("IdleStop");
 
         if (currentType != ItemsTypes.BOMB && currentType != ItemsTypes.SQUARE_BOMB && currentType != ItemsTypes.CROSS_BOMB)
             sprRenderer.sprite = items[color];
@@ -584,7 +638,7 @@ public class Item : MonoBehaviour
         }
         if (distance > 0.5f && animate)
         {
-            anim.SetTrigger("stop");
+            PlayAnimation("stop");
             SoundBase.Instance.PlaySound(SoundBase.Instance.drop[UnityEngine.Random.Range(0, SoundBase.Instance.drop.Length)]);
         }
         falling = false;
@@ -641,7 +695,9 @@ public class Item : MonoBehaviour
     {
         GameObject obj = CreateStripEffect();
         if (_itemType == ItemsTypes.HORIZONTAL_STRIPPED)
+        {
             obj.transform.eulerAngles = new Vector3(0, 0, 90);
+        }
         else if (_itemType == ItemsTypes.SQUARE_BOMB)
         {
             obj.transform.eulerAngles = new Vector3(0, 0, 45);
@@ -674,11 +730,13 @@ public class Item : MonoBehaviour
 
     GameObject CreateStripEffect ()
     {
-        GameObject obj = Instantiate(Resources.Load("Prefabs/StripeEffect")) as GameObject;
+        GameObject obj = LevelManager.Instance.GetStripeEffectFromPool();// Instantiate(Resources.Load("Prefabs/StripeEffect")) as GameObject;
         obj.transform.SetParent(transform.Find("Sprite"));
+
         obj.transform.localScale = Vector3.one;
         obj.GetComponent<StripesWrappEffect>().itemSprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         obj.transform.localPosition = Vector3.zero;
+        stripeEffectList.Add(obj);
         return obj;
     }
 
@@ -693,44 +751,44 @@ public class Item : MonoBehaviour
         if (nextType == ItemsTypes.HORIZONTAL_STRIPPED)
         {
             StripeEffect(nextType);
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
         }
         else if (nextType == ItemsTypes.VERTICAL_STRIPPED)
         {
             StripeEffect(nextType);
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
         }
         else if (nextType == ItemsTypes.SQUARE_BOMB)
         {
             sprRenderer.sprite = squareBomb;
             StripeEffect(nextType);
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
         }
         else if (nextType == ItemsTypes.CROSS_BOMB)
         {
             sprRenderer.sprite = crossBomb;
             StripeEffect(nextType);
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
         }
         else if (nextType == ItemsTypes.PACKAGE)
         {
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
 
         }
         else if (nextType == ItemsTypes.CHOCOBOMB)
         {
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
             color = 555;
         }
         else if (nextType == ItemsTypes.BOMB)
         {
-            anim.SetTrigger("appear");
+            PlayAnimation("appear");
             SoundBase.Instance.PlaySound(SoundBase.Instance.appearStipedColorBomb);
             xScale /= 2f;
             yScale /= 2f;
@@ -740,7 +798,7 @@ public class Item : MonoBehaviour
         while (!appeared)
             yield return new WaitForFixedUpdate();
 
-        //   sprRenderer.transform.localScale = Vector3.one;
+//        sprRenderer.transform.localScale = Vector3.one;
         if (nextType == ItemsTypes.NONE)
             yield break;
         // sprRenderer.enabled = true;
@@ -780,22 +838,29 @@ public class Item : MonoBehaviour
 
     void SetupBomb ()
     {
-
         anim.SetBool("package_idle", true);
 
-        GameObject t = Instantiate(timerTextPrefab) as GameObject;
-        t.transform.SetParent(transform);
-//		t.transform.localPosition = new Vector3 (1.5f, -0.8f, 0);
-        t.transform.localPosition = new Vector3(0.9f, -0.8f, 0);
-//		t.transform.localScale = Vector3.one;
-        timerText = t.transform.GetChild(0).GetComponent<Text>();
+        if (timerTextGo == null)
+        {
+            timerTextGo = Instantiate(timerTextPrefab) as GameObject;
+            timerTextGo.transform.SetParent(transform);
+            timerTextGo.transform.localPosition = new Vector3(0.9f, -0.8f, 0);
+            timerText = timerTextGo.transform.GetChild(0).GetComponent<Text>();
+        }
+        timerTextGo.SetActive(true);
+
         if (bombTimer <= 0)//1.3
 			bombTimer = LevelManager.Instance.bombTimer;
 
-        GameObject wickBurning = Instantiate(wickBurningPrefab) as GameObject;
-        wickBurning.transform.SetParent(transform);
-        wickBurning.transform.localPosition = new Vector3(0.69f, 0.85f, 0);
-        wickBurning.transform.localScale = Vector3.one * 0.2f;
+        if (wickBurning == null)
+        {
+            wickBurning = Instantiate(wickBurningPrefab) as GameObject;
+            wickBurning.transform.SetParent(transform);
+            wickBurning.transform.localPosition = new Vector3(0.69f, 0.85f, 0);
+            wickBurning.transform.localScale = Vector3.one * 0.2f;
+        }
+        wickBurning.SetActive(true);
+
     }
 
     public void BombTick ()
@@ -820,8 +885,10 @@ public class Item : MonoBehaviour
 
     public void SetAnimationDestroyingFinished ()
     {
+//        Debug.LogError("~~~~~~ 1212");
         LevelManager.THIS.itemsHided = true;
         animationFinished = true;
+        sprRenderer.transform.localScale = Vector3.one;
     }
 
     #region Destroying
@@ -841,7 +908,15 @@ public class Item : MonoBehaviour
             return;
 
 //		InitScript.Instance.ItemDestroyedEvent(this);
-        StartCoroutine(DestroyCor(showScore, anim_name, explEffect, directly));
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(DestroyCor(showScore, anim_name, explEffect, directly));
+        }
+        else
+        {
+            Debug.LogError("!!!!");
+            Reset();
+        }
     }
 
     public void SetHighlight (ItemsTypes thisType)
@@ -875,11 +950,11 @@ public class Item : MonoBehaviour
     {
         //if (anim_name == "")
         //{
-        anim.SetTrigger("IdleStop");
+        PlayAnimation("IdleStop");
 //        Debug.LogError("type : " + currentType + " : " + directly);
         if (currentType == ItemsTypes.HORIZONTAL_STRIPPED)
         {
-            PlayDestroyAnimation("destroy");
+            PlayAnimation("destroy");
             if (directly)
             {
                 DestroyHorizontal();
@@ -887,7 +962,7 @@ public class Item : MonoBehaviour
         }
         else if (currentType == ItemsTypes.VERTICAL_STRIPPED)
         {
-            PlayDestroyAnimation("destroy");
+            PlayAnimation("destroy");
             if (directly)
             {
                 DestroyVertical();
@@ -895,15 +970,15 @@ public class Item : MonoBehaviour
         }
         else if (currentType == ItemsTypes.SQUARE_BOMB)
         {
-            PlayDestroyAnimation("destroy");
+            PlayAnimation("destroy");
         }
         else if (currentType == ItemsTypes.CROSS_BOMB)
         {
-            PlayDestroyAnimation("destroy");
+            PlayAnimation("destroy");
         }
         else if (currentType == ItemsTypes.PACKAGE)
         {
-            PlayDestroyAnimation("destroy");
+            PlayAnimation("destroy");
             yield return new WaitForSeconds(0.1f);
 
             GameObject partcl = Instantiate(Resources.Load("Prefabs/Effects/Firework"), transform.position, Quaternion.identity) as GameObject;
@@ -922,7 +997,7 @@ public class Item : MonoBehaviour
                 }
             }
 
-            PlayDestroyAnimation("destroy");
+            PlayAnimation("destroy");
 
             GameObject partcl = LevelManager.THIS.GetExplFromPool();
             if (partcl != null)
@@ -1034,7 +1109,15 @@ public class Item : MonoBehaviour
         }
         if (destroying)
         {
-            Destroy(gameObject);
+//            Destroy(gameObject);
+//            Debug.LogError("~~~~~~");
+            gameObject.SetActive(false);
+            gameObject.transform.SetParent(LevelManager.Instance.objectPoolParent);
+            Reset();
+        }
+        else
+        {
+            gameObject.SetActive(true);
         }
     }
 
@@ -1143,10 +1226,15 @@ public class Item : MonoBehaviour
         }
     }
 
+    void PlayAnimation(string _name)
+    {
+//        Debug.LogError(_name);
+        anim.SetTrigger(_name);
+    }
+
     void PlayDestroyAnimation (string anim_name)
     {
         anim.SetTrigger(anim_name);
-
     }
 
     public void SmoothDestroy ()
@@ -1156,10 +1244,14 @@ public class Item : MonoBehaviour
 
     IEnumerator SmoothDestroyCor ()
     {
+//        Debug.LogError("SmoothDestroyCor");
         square.item = null;
-        anim.SetTrigger("disAppear");
+        PlayAnimation("disAppear");
         yield return new WaitForSeconds(1);
-        Destroy(gameObject);
+//        Destroy(gameObject);
+        gameObject.SetActive(false);
+        gameObject.transform.SetParent(LevelManager.Instance.objectPoolParent);
+        Reset();
     }
 
     #endregion
@@ -1169,6 +1261,57 @@ public class Item : MonoBehaviour
         return currentType == ItemsTypes.HORIZONTAL_STRIPPED || currentType == ItemsTypes.VERTICAL_STRIPPED;
     }
 
+    public void Reset ()
+    {
+//        Debug.LogError("-----");
+        currentType = ItemsTypes.NONE;
+        nextType = ItemsTypes.NONE;
+        debugType = ItemsTypes.NONE;
+        square = null;
+        destroying = false;
+        isReadyToReuse = true;
+        animationFinished = false;
+        awaken = false;
+        if (light != null)
+        {
+            light.SetActive(false);
+        }
+
+        for (int i = 0 ; i < stripeEffectList.Count; i++)
+        {
+            GameObject stripeEffect = stripeEffectList[i];
+            stripeEffect.transform.SetParent(LevelManager.Instance.objectPoolParent);
+            stripeEffect.SetActive(false);
+            stripeEffect.transform.eulerAngles = Vector3.zero;
+        }
+        stripeEffectList.Clear();
+
+        if (arrowIngredient != null)
+        {
+            arrowIngredient.SetActive(false);
+        }
+
+        if (timerTextGo != null)
+        {
+            timerTextGo.SetActive(false);
+        }
+        if (wickBurning)
+        {
+            wickBurning.SetActive(false);
+        }
+    }
+
+    void OnDestroy ()
+    {
+        for (int i = 0 ; i < stripeEffectList.Count; i++)
+        {
+            GameObject stripeEffect = stripeEffectList[i];
+            stripeEffect.transform.SetParent(LevelManager.Instance.objectPoolParent);
+            stripeEffect.SetActive(false);
+            stripeEffect.transform.eulerAngles = Vector3.zero;
+        }
+        stripeEffectList.Clear();
+    }
 }
 
 [System.Serializable]

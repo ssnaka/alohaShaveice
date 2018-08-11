@@ -1028,8 +1028,8 @@ ParticleSystem:
     enabled: 0
     frameOverTime:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 0.33333334
+      minMaxState: 0
+      scalar: 0.5
       minScalar: 0.33333334
       maxCurve:
         serializedVersion: 2

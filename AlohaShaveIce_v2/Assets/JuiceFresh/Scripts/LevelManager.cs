@@ -218,13 +218,16 @@ public class LevelManager : MonoBehaviour
 	public GameObject levelTimerPrefab;
 	//pool of level timer
 	List<GameObject> levelTimerPool = new List<GameObject>();
+    //pool of Items
+    public List<GameObject> itemPool = new List<GameObject>();
 	//pool of explosion effects for items
     public List<GameObject> itemExplPool = new List<GameObject>(5);
 	//pool of flowers
     public List<GameObject> flowersPool = new List<GameObject>(5);
     //pool of item appearing
     public List<GameObject> appearingEffectPool = new List<GameObject>(5);
-
+    //pool of item stripe effect
+    List<GameObject> stripeEffectPool = new List<GameObject>(5);
 
 	//global Score amount on current level
 	public static int Score;
@@ -633,6 +636,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     GameObject appearingEffectPrefab;
+    [SerializeField]
+    GameObject stripeEffectPrefab;
 	#endregion
 
 	void OnEnable ()
@@ -756,8 +761,10 @@ public class LevelManager : MonoBehaviour
 			mCamera.transform.position = new Vector3(0, 0, -10);
 		foreach (Transform item in GameField.transform)
 		{
-			Destroy(item.gameObject);
+            Destroy(item.gameObject);
 		}
+
+        itemPool.Clear();
 	}
 
 	AvatarManager avatarManager;
@@ -860,14 +867,13 @@ public class LevelManager : MonoBehaviour
 		//        itemPrefab = Resources.Load("Prefabs/Item " + currentLevel)as GameObject;
 		GenerateLevel();
 		GenerateOutline();
+        GameField.gameObject.SetActive(true);
 		GenerateNewItems(false);
 		nextExtraItems = 0;
 		bombTimers.Clear();//1.3
 		//        ReGenLevel();
 		RestartTimer();
 		InitTargets();
-
-		GameField.gameObject.SetActive(true);
 	}
 
 	public void RestartTimer ()
@@ -892,6 +898,7 @@ public class LevelManager : MonoBehaviour
 		foreach (GameObject item in listIngredientsGUIObjects)
 		{
 			Destroy(item);
+//            item.GetComponent<Item>().Reset();
 		}
 		listIngredientsGUIObjects.Clear();
 
@@ -1372,6 +1379,21 @@ public class LevelManager : MonoBehaviour
         return newItemExpl;
 	}
 
+    public GameObject GetItemFromPool ()
+    {
+        for (int i = 0; i < itemPool.Count; i++)
+        {
+            if (!itemPool[i].activeSelf && itemPool[i].GetComponent<Item>().isReadyToReuse)
+            {
+                itemPool[i].SetActive(true);
+                return itemPool[i];
+            }
+        }
+
+        GameObject newItem = Instantiate(itemPrefab, objectPoolParent) as GameObject;
+        itemPool.Add(newItem);
+        return newItem;
+    }
 	public bool CheckFlowerStillFly ()
 	{ //check if any flower still not reachec his target
         for (int i = 0; i < flowersPool.Count; i++)
@@ -1416,9 +1438,25 @@ public class LevelManager : MonoBehaviour
 
         }
 
-        GameObject newAppearingEffect = Instantiate(appearingEffectPrefab, transform.position, Quaternion.identity, LevelManager.Instance.objectPoolParent) as GameObject;
+        GameObject newAppearingEffect = Instantiate(appearingEffectPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
         appearingEffectPool.Add(newAppearingEffect);
         return newAppearingEffect;
+    }
+
+    public GameObject GetStripeEffectFromPool ()
+    {
+        for (int i = 0; i < stripeEffectPool.Count; i++)
+        {
+            if (!stripeEffectPool[i].activeSelf)
+            {
+                stripeEffectPool[i].SetActive(true);
+                return stripeEffectPool[i];
+            }
+        }
+
+        GameObject newStripeEffect = Instantiate(stripeEffectPrefab, transform.position, Quaternion.identity, objectPoolParent) as GameObject;
+        stripeEffectPool.Add(newStripeEffect);
+        return newStripeEffect;
     }
 
 	IEnumerator HideDelayed (GameObject gm)
@@ -1526,7 +1564,10 @@ public class LevelManager : MonoBehaviour
 				OnTargetBombUpdate(TargetBombs);
 			}
 		}
-		Destroy(item);
+
+        Destroy(item);
+//        item.GetComponent<Item>().Reset();
+
 		if (gameStatus == GameState.Playing)
 			CheckWinLose();
 		ingredientFly = false;
@@ -2554,8 +2595,13 @@ public class LevelManager : MonoBehaviour
 			block.transform.localPosition = new Vector3(0, 0, -0.5f);
 			block.transform.localScale = new Vector3(1.0f, 1.0f, block.transform.localScale.z);
 			block.GetComponent<SpriteRenderer>().sortingOrder = 3;
-			if (square.GetComponent<Square>().item != null)
-				Destroy(square.GetComponent<Square>().item.gameObject);
+            Item aItem = square.GetComponent<Square>().item;
+            if (aItem != null)
+            {
+                aItem.Reset();
+                aItem.gameObject.SetActive(false);
+//				Destroy(square.GetComponent<Square>().item.gameObject);
+            }
 			square.GetComponent<Square>().block.Add(block);
 			square.GetComponent<Square>().type = SquareTypes.THRIVING;
 			block.GetComponent<Square>().type = SquareTypes.THRIVING;
@@ -2577,7 +2623,7 @@ public class LevelManager : MonoBehaviour
 					{
 						if ((GetSquare(col, row).item == null && !GetSquare(col, row).IsHaveSolidAbove()) || !falling)
 						{
-							GetSquare(col, row).GenItem(falling);
+                            GetSquare(col, row).GenItem(falling, col, row);
 						}
 					}
 				}
@@ -3036,10 +3082,10 @@ public class LevelManager : MonoBehaviour
 //			yield return new WaitForSeconds(0.2f);
 			GenerateNewItems();
 			// StartCoroutine(RegenMatches(true));
-            yield return new WaitForEndOfFrame();//new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.1f);
 			while (!IsAllItemsFallDown())
 			{
-                yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
 			}
 
 			//detect near empty squares to fall into
@@ -3072,7 +3118,7 @@ public class LevelManager : MonoBehaviour
 			//CheckIngredient();
 			while (!IsAllItemsFallDown())
 			{//1.3.2
-                yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
 			}
 
 			if (destroyAnyway.Count > 0)
@@ -3091,7 +3137,8 @@ public class LevelManager : MonoBehaviour
 				{
 					if (item1 != item1.square.item)
 					{
-						Destroy(item1.gameObject);
+//                        Destroy(item1.gameObject);
+                        item1.Reset();
 					}
 				}
 			}
@@ -3318,6 +3365,10 @@ public class LevelManager : MonoBehaviour
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
 		foreach (GameObject item in items)
 		{
+//            if (item.activeSelf)
+//            {
+//                return true;
+//            }
 			Item itemComponent = item.GetComponent<Item>();
 			if (itemComponent == null)
 			{
@@ -3441,9 +3492,7 @@ public class LevelManager : MonoBehaviour
 		foreach (GameObject item in items)
 		{
 			Item itemScript = item.GetComponent<Item>();
-			if (!itemScript.destroying && itemScript.currentType == ItemsTypes.NONE
-				&& itemScript.nextType == ItemsTypes.NONE
-				&& itemScript.square.type != SquareTypes.WIREBLOCK)
+			if (!itemScript.destroying && itemScript.currentType == ItemsTypes.NONE && itemScript.nextType == ItemsTypes.NONE && itemScript.square.type != SquareTypes.WIREBLOCK)
 			{
 				list.Add(itemScript);
 			}

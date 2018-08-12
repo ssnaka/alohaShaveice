@@ -3033,13 +3033,13 @@ public class LevelManager : MonoBehaviour
 					}
 				}
 			}
-//			yield return new WaitForSeconds(0.2f);
+			yield return new WaitForSeconds(0.1f);
 			GenerateNewItems();
 			// StartCoroutine(RegenMatches(true));
             yield return new WaitForEndOfFrame();//new WaitForSeconds(0.1f);
 			while (!IsAllItemsFallDown())
 			{
-                yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
 			}
 
 			//detect near empty squares to fall into
@@ -3072,7 +3072,7 @@ public class LevelManager : MonoBehaviour
 			//CheckIngredient();
 			while (!IsAllItemsFallDown())
 			{//1.3.2
-                yield return new WaitForEndOfFrame();// new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
 			}
 
 			if (destroyAnyway.Count > 0)

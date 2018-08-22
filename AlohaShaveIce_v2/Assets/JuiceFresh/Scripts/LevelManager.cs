@@ -2567,6 +2567,28 @@ public class LevelManager : MonoBehaviour
 
 	void GenerateNewItems (bool falling = true)
 	{
+        Dictionary<int, int> colRowDict = new Dictionary<int, int>();
+        for (int col = 0; col < maxCols; col++)
+        {
+            int maxRow = 0;
+            for (int row = maxRows - 1; row >= 0; row--)
+            {
+                if (GetSquare(col, row) != null)
+                {
+                    if (!GetSquare(col, row).IsNone() && GetSquare(col, row).CanGoInto() && GetSquare(col, row).item == null)
+                    {
+                        if ((GetSquare(col, row).item == null && !GetSquare(col, row).IsHaveSolidAbove()) || !falling)
+                        {
+                            if (maxRow < row)
+                            {
+                                maxRow = row;
+                            }
+                            colRowDict[col] = maxRow;
+                        }
+                    }
+                }
+            }
+        }
 		for (int col = 0; col < maxCols; col++)
 		{
 			for (int row = maxRows - 1; row >= 0; row--)
@@ -2577,7 +2599,7 @@ public class LevelManager : MonoBehaviour
 					{
 						if ((GetSquare(col, row).item == null && !GetSquare(col, row).IsHaveSolidAbove()) || !falling)
 						{
-							GetSquare(col, row).GenItem(falling);
+                            GetSquare(col, row).GenItem(falling, colRowDict[col]);
 						}
 					}
 				}

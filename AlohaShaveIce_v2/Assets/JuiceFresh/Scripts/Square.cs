@@ -53,7 +53,7 @@ public class Square : MonoBehaviour {
 
     }
 
-    public Item GenItem(bool falling = true) {
+    public Item GenItem(bool falling = true, int _maxRow = 0) {
         if (IsNone() && !CanGoInto())
             return null;
         GameObject item = Instantiate(LevelManager.THIS.itemPrefab) as GameObject;
@@ -68,7 +68,9 @@ public class Square : MonoBehaviour {
 		item.transform.localScale = Vector2.one * 0.9f;
 
         if (falling) {
-            item.transform.position = transform.position + Vector3.back * 0.2f + Vector3.up * 3f;
+//            item.transform.position = transform.position + Vector3.back * 0.2f + Vector3.up * 3f;
+            item.transform.position = transform.position + Vector3.back * 0.2f;
+            item.transform.position = new Vector3(transform.position.x, (LevelManager.Instance.GameField.position.y + 2.0f) + (float)((_maxRow - row) * 2.1f), transform.position.z);
 			generatedItem.justCreatedItem = true;
         }
         else

@@ -70,7 +70,7 @@ public class Square : MonoBehaviour {
         if (falling) {
 //            item.transform.position = transform.position + Vector3.back * 0.2f + Vector3.up * 3f;
             item.transform.position = transform.position + Vector3.back * 0.2f;
-            item.transform.position = new Vector3(transform.position.x, (LevelManager.Instance.GameField.position.y + 2.0f) + (float)((_maxRow - row) * 2.1f), transform.position.z);
+            item.transform.position = new Vector3(transform.position.x, (LevelManager.Instance.GameField.position.y + 2.0f) + (float)((_maxRow - row) * 2.2f), transform.position.z);
 			generatedItem.justCreatedItem = true;
         }
         else

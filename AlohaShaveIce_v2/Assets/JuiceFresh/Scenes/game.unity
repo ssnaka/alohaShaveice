@@ -27398,7 +27398,7 @@ MonoBehaviour:
   TotalTimeForRestLifeMin: 15
   TotalTimeForRestLifeSec: 0
   TotalTimerForResetInfiniteLife: 360
-  FirstGems: 30
+  FirstGems: 100
   adsEvents:
   - gameEvent: 5
     adType: 2

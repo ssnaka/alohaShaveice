@@ -19329,7 +19329,6 @@ RectTransform:
   - {fileID: 27644617}
   - {fileID: 587614438}
   - {fileID: 429412356}
-  - {fileID: 1888476447}
   m_Father: {fileID: 925629431}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27632,13 +27631,13 @@ MonoBehaviour:
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
   gemsProducts:
-  - count: 10
+  - count: 20
     price: 0.99
-  - count: 55
+  - count: 200
     price: 4.99
-  - count: 120
+  - count: 500
     price: 9.99
-  - count: 250
+  - count: 2500
     price: 19.99
   InAppIDs:
   - com.naka.alohashaveice.10gems
@@ -35643,44 +35642,44 @@ MonoBehaviour:
     description: Gives you the 5 extra moves
     descriptionLocalizedText: {fileID: 11400000, guid: 1f609aea551cf4d048ad83cb01c90bf8,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 0a0000001b00000028000000
+    count: 01000000040000001e000000
+    GemPrices: 0f0000002800000032000000
   - icon: {fileID: 21300000, guid: fcfbd73bb3ee57d418cea28db0fe8e8c, type: 3}
     description: Places 2 special items
     descriptionLocalizedText: {fileID: 11400000, guid: dc27c0a7545274fa79e35aeefcb331cb,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 090000001800000023000000
+    count: 020000000600000014000000
+    GemPrices: 0a0000001400000028000000
   - icon: {fileID: 21300000, guid: 71af414c8b112174f8c814815a4d75b1, type: 3}
     description: Gives you the 30 extra seconds
     descriptionLocalizedText: {fileID: 11400000, guid: 30124fa0f0a364d859b92a72039b7d20,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 0a0000001b00000028000000
+    count: 01000000040000001e000000
+    GemPrices: 0f0000002800000032000000
   - icon: {fileID: 21300000, guid: 43c8115232176bd40849df3c77a06cb3, type: 3}
     description: Detroy some items around
     descriptionLocalizedText: {fileID: 11400000, guid: 865c2ba3123974b229981213d0427dc5,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 0a0000001b00000028000000
+    count: 020000000600000014000000
+    GemPrices: 0a0000001400000028000000
   - icon: {fileID: 21300000, guid: 35495283bcfecd444b7e7ba2ba26b7a8, type: 3}
     description: Replace some colors
     descriptionLocalizedText: {fileID: 11400000, guid: 755b8ab2f96364ae6ba4116c170d983f,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 0a0000001b00000028000000
+    count: 010000000600000014000000
+    GemPrices: 0a0000001400000028000000
   - icon: {fileID: 21300000, guid: 0d4e2fa76c25d467fb2b712b07a5eabd, type: 3}
     description: Destroy an item
     descriptionLocalizedText: {fileID: 11400000, guid: b564e83a745154fbb89bca74871c5bfb,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 070000001200000019000000
+    count: 030000000f00000028000000
+    GemPrices: 0a000000140000001e000000
   - icon: {fileID: 21300000, guid: 539dd0ec19b224a5694fe24ee72e5e9c, type: 3}
     description: Destroy the row and column crosswise
     descriptionLocalizedText: {fileID: 11400000, guid: f89f6ac247f454c16b2b857b309c2eca,
       type: 2}
-    count: 010000000300000005000000
-    GemPrices: 0a0000001b00000028000000
+    count: 01000000050000001e000000
+    GemPrices: 0f0000001e00000032000000
   videoButtonObject: {fileID: 934685783}
   videoCounter: {fileID: 1955052510}
   counterAnimation: {fileID: 934685788}
@@ -59269,6 +59268,7 @@ RectTransform:
   - {fileID: 1384611650}
   - {fileID: 214286744}
   - {fileID: 1450582874}
+  - {fileID: 1888476447}
   m_Father: {fileID: 925629431}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -114159,16 +114159,16 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1888476446}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 276160836}
+  m_Father: {fileID: 924455796}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 84, y: 14}
+  m_AnchoredPosition: {x: 84, y: 167}
   m_SizeDelta: {x: 288, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1888476448

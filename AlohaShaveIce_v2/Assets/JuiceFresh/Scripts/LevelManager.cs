@@ -676,22 +676,12 @@ public class LevelManager : MonoBehaviour
 		float aspect = (float)Screen.height / (float)Screen.width;
 		mCamera.orthographicSize = 10.05f;
 		aspect = (float)Math.Round(aspect, 2);
-        if (aspect == 2.06f)
+        if (aspect >= 2.00f && aspect < 2.06f)
+            mCamera.orthographicSize = 11.5f;                  //18:9
+        else if (aspect == 2.06f)
             mCamera.orthographicSize = 11.5f;                  //2960:1440 S8
         else if (aspect == 2.17f)
             mCamera.orthographicSize = 12.26f;                  //iphone x
-		//        if (aspect == 1.6f)
-		//            mCamera.orthographicSize = 4.6f;                    //16:10
-		//        else if (aspect == 1.78f)
-		//            mCamera.orthographicSize = 5.15f;    //16:9
-		//        else if (aspect == 1.5f)
-		//            mCamera.orthographicSize = 4.4f;                  //3:2
-		//        else if (aspect == 1.33f)
-		//            mCamera.orthographicSize = 4.45f;                  //4:3
-		//        else if (aspect == 1.67f)
-		//            mCamera.orthographicSize = 4.8f;                  //5:3
-		//        else if (aspect == 1.25f)
-		//            mCamera.orthographicSize = 4.45f;                  //5:4
 		mCamera.GetComponent<MapCamera>().SetPosition(new Vector2(0, mCamera.transform.position.y));
 	}
 
@@ -704,17 +694,6 @@ public class LevelManager : MonoBehaviour
 			float aspect = (float)Screen.height / (float)Screen.width;
 			mCamera.orthographicSize = 10.25f;
 			aspect = (float)Math.Round(aspect, 2);
-//			if (aspect == 1.6f)
-//				mCamera.orthographicSize = 12.2f;               //16:10
-//			else if (aspect == 1.78f)
-//				mCamera.orthographicSize = 13.5f;               //16:9
-//			else if (aspect == 1.5f)
-//				mCamera.orthographicSize = 11.2f;               //3:2
-//			else if (aspect == 1.33f)
-//				mCamera.orthographicSize = 10.25f;              //4:3
-//			else if (aspect == 1.67f)
-//				mCamera.orthographicSize = 12.5f;               //5:3
-
             if (aspect == 1.6f)
                 mCamera.orthographicSize = 12.2f;               //16:10
             else if (aspect == 1.78f)
@@ -725,6 +704,8 @@ public class LevelManager : MonoBehaviour
                 mCamera.orthographicSize = 10.25f;              //4:3
             else if (aspect == 1.67f)
                 mCamera.orthographicSize = 12.5f;               //5:3
+            else if (aspect >= 2.00f && aspect < 2.06f)
+                mCamera.orthographicSize = 15.0f;               //18:9
             else if (aspect == 2.06f)
                 mCamera.orthographicSize = 15.75f;              //2960:1440 S8   //1.4.7
             else if (aspect == 2.17f)

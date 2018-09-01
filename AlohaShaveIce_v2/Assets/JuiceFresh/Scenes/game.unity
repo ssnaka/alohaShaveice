@@ -27627,7 +27627,7 @@ MonoBehaviour:
   Limit: 180
   TargetScore: 1000
   currentLevel: 5
-  FailedCost: 10
+  FailedCost: 15
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
   gemsProducts:

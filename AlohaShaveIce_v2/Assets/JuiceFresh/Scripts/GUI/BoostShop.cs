@@ -25,7 +25,8 @@ public class BoostShop : MonoBehaviour
     public Text description;
 	[SerializeField]
 	LocalizedTextBehaviour descriptionTextBehaviour;
-
+    [SerializeField]
+    Text gemsText;
 	public BoostType boostType { get; private set; }
 
     public List<BoostProduct> boostProducts = new List<BoostProduct>();
@@ -41,11 +42,20 @@ public class BoostShop : MonoBehaviour
     {
 //        SetVideoCounter();
         InitScript.Instance.OnVideoAdFinished += InitScript_Instance_OnVideoAdFinished;
+        InitScript.Instance.OnGemUpdate -= InitScript_Instance_OnGemUpdate;
+        InitScript.Instance.OnGemUpdate += InitScript_Instance_OnGemUpdate;
+        InitScript_Instance_OnGemUpdate(InitScript.Gems);
     }
 
     void OnDisable ()
     {
         InitScript.Instance.OnVideoAdFinished -= InitScript_Instance_OnVideoAdFinished;
+        InitScript.Instance.OnGemUpdate -= InitScript_Instance_OnGemUpdate;
+    }
+
+    void InitScript_Instance_OnGemUpdate (int _gemCount)
+    {
+        gemsText.text = _gemCount.ToString();;
     }
 
     void InitScript_Instance_OnVideoAdFinished (BoostType _boostType)

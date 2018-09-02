@@ -1150,9 +1150,11 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 
     public void BuyBoost (BoostType boostType, int price, int count)
     {
-        ZPlayerPrefs.SetInt("" + boostType, count);
+        int boostCount = ZPlayerPrefs.GetInt("" + boostType, 0);
+        boostCount += count;
+        ZPlayerPrefs.SetInt("" + boostType, boostCount);
         ZPlayerPrefs.Save();
-        Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, count);
+        Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, boostCount);
         #if PLAYFAB ||GAMESPARKS
         NetworkManager.dataManager.SetBoosterData();
         #endif

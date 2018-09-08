@@ -19705,7 +19705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b3ffbc7b1aad348823056c48c0819c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CostIfRefill: 10
+  CostIfRefill: 50
 --- !u!1001 &287331139
 Prefab:
   m_ObjectHideFlags: 0
@@ -27399,11 +27399,7 @@ MonoBehaviour:
   TotalTimeForRestLifeSec: 0
   TotalTimerForResetInfiniteLife: 360
   FirstGems: 100
-  adsEvents:
-  - gameEvent: 5
-    adType: 2
-    everyLevel: 3
-    calls: 0
+  adsEvents: []
   boostAdsEvents:
   - boostType: 0
     adType: 2
@@ -27682,7 +27678,7 @@ MonoBehaviour:
   Limit: 25
   TargetScore: 1000
   currentLevel: 386
-  FailedCost: 15
+  FailedCost: 25
   ExtraFailedMoves: 5
   ExtraFailedSecs: 30
   gemsProducts:

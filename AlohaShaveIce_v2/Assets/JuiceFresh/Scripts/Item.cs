@@ -561,32 +561,44 @@ public class Item : MonoBehaviour
     IEnumerator FallingCor (Square _square, bool animate)
     {
         falling = true;
+
+        if (LevelManager.Instance.gameStatus.Equals(GameState.Playing) && justCreatedItem)
+        {
+            float randomZ = UnityEngine.Random.Range(-45.0f, 45.0f);
+            item.transform.eulerAngles = new Vector3(0.0f, 0.0f, randomZ);
+            iTween.RotateTo(item.gameObject, Vector3.zero, 1.5f);
+        }
+
         float startTime = Time.time;
         Vector3 startPos = transform.position;
         float speed = 3;
         if (LevelManager.THIS.gameStatus == GameState.PreWinAnimations)
-            speed = 10;
+        {
+            speed = 7;
+        }
         float distance = Vector3.Distance(startPos, _square.transform.position);
         float fracJourney = 0;
         if (distance > 0.5f)
         {
             while (fracJourney < 1)
             {
-                speed += 0.2f;
+                speed += 0.3f;
                 float distCovered = (Time.time - startTime) * speed;
                 fracJourney = distCovered / distance;
                 transform.position = Vector3.Lerp(startPos, _square.transform.position + Vector3.back * 0.2f, fracJourney);
                 yield return new WaitForFixedUpdate();
-                if (fracJourney > 0.3f)
+                if (fracJourney > 0.15f)
                     falling = false;
-
             }
         }
+
         if (distance > 0.5f && animate)
         {
             anim.SetTrigger("stop");
             SoundBase.Instance.PlaySound(SoundBase.Instance.drop[UnityEngine.Random.Range(0, SoundBase.Instance.drop.Length)]);
         }
+
+        transform.eulerAngles = Vector3.zero;
         falling = false;
         justCreatedItem = false;
     }

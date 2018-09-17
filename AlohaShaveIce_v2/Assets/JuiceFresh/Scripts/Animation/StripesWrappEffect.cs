@@ -18,7 +18,7 @@ public class StripesWrappEffect : MonoBehaviour
         light.name = "BombSelection";
         light.transform.localPosition = Vector3.zero;
         light.transform.localScale = Vector3.one * 2f;
-        topArrow.GetComponent<SpriteRenderer>().sortingOrder = itemSprite.sortingOrder - 1;
-        bottomArrow.GetComponent<SpriteRenderer>().sortingOrder = itemSprite.sortingOrder - 1;
+//        topArrow.GetComponent<SpriteRenderer>().sortingOrder = itemSprite.sortingOrder - 1;
+//        bottomArrow.GetComponent<SpriteRenderer>().sortingOrder = itemSprite.sortingOrder - 1;
     }
 }

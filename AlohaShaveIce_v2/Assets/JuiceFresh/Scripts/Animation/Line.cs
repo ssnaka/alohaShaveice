@@ -41,7 +41,7 @@ public class Line : MonoBehaviour
             if (i < count)
             {
                 item.enabled = true;
-                SetSorting(item);
+                SetSorting(item, 6);
             }
             else
                 item.enabled = false;
@@ -67,10 +67,29 @@ public class Line : MonoBehaviour
 
     }
 
-    void SetSorting(LineRenderer lr)
+    public void ResetLineSorting()
+    {
+        foreach (LineRenderer item in lines)
+        {
+            SetSorting(item, 1);
+            item.enabled = false;
+        }
+    }
+
+    public void ResetLineSorting(int _index)
+    {
+        if (lines.Count > _index)
+        {
+            LineRenderer item = lines[_index];
+            SetSorting(item, 1);
+            item.enabled = false;
+        }
+    }
+
+    void SetSorting(LineRenderer lr, int _order)
     {
         lr.sortingLayerID = 0;
-        lr.sortingOrder = 1;
+        lr.sortingOrder = _order;
 
     }
 }

@@ -18,7 +18,7 @@ public class Background : MonoBehaviour
             }
 
             int bgIndex = (int)((float)levelToLoad / 20f - 0.01f);
-            if (pictures.Length >= bgIndex)
+            if (pictures.Length <= bgIndex)
             {
                 Debug.LogError("Need New background Image");
                 return;

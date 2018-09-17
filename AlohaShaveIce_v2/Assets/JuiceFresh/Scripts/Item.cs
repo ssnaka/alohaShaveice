@@ -107,7 +107,6 @@ public class Item : MonoBehaviour
     private bool extraChecked;
     public Item item;
 
-
     // Use this for initialization
     void Start ()
     {
@@ -1181,6 +1180,31 @@ public class Item : MonoBehaviour
         return currentType == ItemsTypes.HORIZONTAL_STRIPPED || currentType == ItemsTypes.VERTICAL_STRIPPED;
     }
 
+    public void AddInactiveBlocker (int _color)
+    {
+        if (color == _color)
+        {
+            if (currentType == ItemsTypes.SQUARE_BOMB || currentType == ItemsTypes.CROSS_BOMB)
+            {
+                square.GetComponent<SpriteRenderer>().sortingOrder = 5;
+                return;
+            }
+            SetSpriteRendererSortingOrder(7);
+            return;
+        }
+
+        square.GetComponent<SpriteRenderer>().sortingOrder = 5;
+    }
+
+    public void RemoveInactiveBlocker ()
+    {
+        square.GetComponent<SpriteRenderer>().sortingOrder = 0;
+    }
+
+    public void SetSpriteRendererSortingOrder (int _order)
+    {
+        sprRenderer.sortingOrder = _order;
+    }
 }
 
 [System.Serializable]

@@ -559,7 +559,7 @@ public class LevelManager : MonoBehaviour
 
 				CheckUndestroyableBlockToturial();
 
-				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
+//				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
 			}
 			else if (value == GameState.GameOver)
 			{
@@ -845,6 +845,7 @@ public class LevelManager : MonoBehaviour
             appearingEffectPool[i] = Instantiate(appearingEffectPrefab, transform.position, Quaternion.identity, LevelManager.Instance.objectPoolParent) as GameObject;
             appearingEffectPool[i].SetActive(false);
         }
+
 		passLevelCounter = 0;
 
 #if UNITY_INAPPS
@@ -1841,22 +1842,6 @@ public class LevelManager : MonoBehaviour
 				Application.Quit();
 		}
 
-		int i = 0;
-		//line.SetVertexCount(destroyAnyway.Count*2);
-		line.SetVertexCount(destroyAnyway.Count);       //draw line effect for selected items
-		foreach (Item item in destroyAnyway)
-		{
-			if (item != null)
-			{
-				line.AddPoint(item.transform.position, i);
-				i++;
-			}
-			//Drawing.DrawLine(destroyAnyway[i-1].transform.position, item.transform.position );
-			//line.SetPosition(i, item.transform.position);
-			//line.SetPosition(i, item.transform.position+Vector3.one*0.01f);
-			//i++;
-		}
-
 		if (LevelManager.THIS.gameStatus == GameState.Playing)
 		{
 			Item itemSelected = null;
@@ -1870,9 +1855,9 @@ public class LevelManager : MonoBehaviour
 				if (hit != null)
 				{
 					itemSelected = hit.gameObject.GetComponent<Item>();
+
 					if (itemSelected.currentType != ItemsTypes.INGREDIENT)
 					{
-
 						if (LevelManager.THIS.ActivatedBoost.type == BoostType.Bomb && itemSelected.currentType != ItemsTypes.INGREDIENT)
 						{       //boost action events   BOMB
 						}
@@ -1891,6 +1876,43 @@ public class LevelManager : MonoBehaviour
 									return;
 								}
 							}
+
+                            int i = 0;
+                            line.SetVertexCount(destroyAnyway.Count);       //draw line effect for selected items
+                            foreach (Item item in destroyAnyway)
+                            {
+                                if (item != null)
+                                {
+                                    line.AddPoint(item.transform.position, i);
+                                    i++;
+                                }
+                                //Drawing.DrawLine(destroyAnyway[i-1].transform.position, item.transform.position );
+                                //line.SetPosition(i, item.transform.position);
+                                //line.SetPosition(i, item.transform.position+Vector3.one*0.01f);
+                                //i++;
+                            }
+
+                            if (destroyAnyway.Count > 0 && destroyAnyway[0].currentType != ItemsTypes.SQUARE_BOMB && destroyAnyway[0].currentType != ItemsTypes.CROSS_BOMB)
+                            {
+                                for (int col = 0; col < maxCols; col++)
+                                {
+                                    for (int row = maxRows - 1; row >= 0; row--)
+                                    {
+                                        Square square = GetSquare(col, row);
+                                        if (square != null)
+                                        {
+                                            if (!square.IsNone())
+                                            {
+                                                if (square.item != null)
+                                                {
+                                                    square.item.AddInactiveBlocker(itemSelected.color);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
 							if (extraCageAddItem < 0)
 								extraCageAddItem = 0;
 							selectedColor = itemSelected.color;
@@ -1988,15 +2010,34 @@ public class LevelManager : MonoBehaviour
 			{
 				if (LoadingCanvasScript.Instance.IsOn())
 					return;
+
+                for (int col = 0; col < maxCols; col++)
+                {
+                    for (int row = maxRows - 1; row >= 0; row--)
+                    {
+                        Square aSquare = GetSquare(col, row);
+                        if (aSquare != null)
+                        {
+                            if (!aSquare.IsNone())
+                            {
+                                if (aSquare.item != null)
+                                {
+                                    aSquare.item.RemoveInactiveBlocker();
+                                }
+                            }
+                        }
+                    }
+                }
+
 				Collider2D hit = Physics2D.OverlapPoint(mCamera.ScreenToWorldPoint(Input.mousePosition), 1 << LayerMask.NameToLayer("Default"));
 				if (hit != null)
 				{
 					Square square = hit.gameObject.GetComponent<Square>();
 					Item item = square.item;
 					bool isIngredient = false;
+
 					if (item)
 					{ //1.3
-
 						if (item.currentType == ItemsTypes.INGREDIENT)
 						{
 							isIngredient = true;
@@ -2086,6 +2127,25 @@ public class LevelManager : MonoBehaviour
 				}
 				else
 				{
+                    for (int col = 0; col < maxCols; col++)
+                    {
+                        for (int row = maxRows - 1; row >= 0; row--)
+                        {
+                            Square aSquare = GetSquare(col, row);
+                            if (aSquare != null)
+                            {
+                                if (!aSquare.IsNone())
+                                {
+                                    if (aSquare.item != null)
+                                    {
+                                        aSquare.item.SetSpriteRendererSortingOrder(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    line.ResetLineSorting();
+
 					foreach (Item item in destroyAnyway)
 					{
 						if (item.currentType == ItemsTypes.SQUARE_BOMB || item.currentType == ItemsTypes.CROSS_BOMB)
@@ -2109,7 +2169,6 @@ public class LevelManager : MonoBehaviour
 					//ClearHighlight();
 				}
 				HighlightManager.StopAndClearAll();
-
 				itemSelected = null;
 				//Collider2D hit = Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition));
 				//if (hit != null) {
@@ -2950,6 +3009,7 @@ public class LevelManager : MonoBehaviour
 			int cc = 0;
 			foreach (Item item in destroyAnyway)
 			{
+                line.ResetLineSorting(iCounter);
 				iCounter++;
 				//  if(item.sprRenderer.enabled)
 				if (item.nextType == ItemsTypes.NONE)
@@ -2992,6 +3052,24 @@ public class LevelManager : MonoBehaviour
 					}
 				}
 			}
+
+            for (int col = 0; col < maxCols; col++)
+            {
+                for (int row = maxRows - 1; row >= 0; row--)
+                {
+                    Square aSquare = GetSquare(col, row);
+                    if (aSquare != null)
+                    {
+                        if (!aSquare.IsNone())
+                        {
+                            if (aSquare.item != null)
+                            {
+                                aSquare.item.SetSpriteRendererSortingOrder(2);
+                            }
+                        }
+                    }
+                }
+            }
 			//          if (destroyAnyway.Count > 0) PopupScore(scoreForItem * destroyAnyway.Count, destroyAnyway[(int)destroyAnyway.Count / 2].transform.position);
 			destroyAnyway.Clear();
 
@@ -3221,8 +3299,8 @@ public class LevelManager : MonoBehaviour
 				bombTimers.Add(item.bombTimer);
 		}
 
-		if (gameStatus == GameState.Playing)
-			StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
+//		if (gameStatus == GameState.Playing)
+//			StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
 
 	}
 

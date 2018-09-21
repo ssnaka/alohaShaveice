@@ -124,9 +124,13 @@ public class LevelsMap : MonoBehaviour
 
 	public void SetCameraToCharacter ()
 	{
-		MapCamera mapCamera = FindObjectOfType<MapCamera>();
-		if (mapCamera != null)
-			mapCamera.SetPosition(WaypointsMover.transform.position);
+        if (MapCamera == null)
+        {
+            MapCamera = FindObjectOfType<MapCamera>();
+        }
+
+        if (MapCamera != null)
+            MapCamera.SetPosition(WaypointsMover.transform.position);
 	}
 
 	#region Events

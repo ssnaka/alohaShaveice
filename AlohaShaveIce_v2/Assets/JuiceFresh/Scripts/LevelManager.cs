@@ -619,6 +619,7 @@ public class LevelManager : MonoBehaviour
 	}
 
 	Camera mCamera;
+    MapCamera mapCamera;
 
 	public bool isPlayingQuest;
 	public int questLevel;
@@ -640,6 +641,7 @@ public class LevelManager : MonoBehaviour
 		if (mCamera == null)
 		{
 			mCamera = GetComponent<Camera>();
+            mapCamera = GetComponent<MapCamera>();
 		}
 	}
 	void LockBoosts ()
@@ -682,7 +684,7 @@ public class LevelManager : MonoBehaviour
             mCamera.orthographicSize = 11.5f;                  //2960:1440 S8
         else if (aspect == 2.17f)
             mCamera.orthographicSize = 12.26f;                  //iphone x
-		mCamera.GetComponent<MapCamera>().SetPosition(new Vector2(0, mCamera.transform.position.y));
+        mapCamera.SetPosition(new Vector2(0, mCamera.transform.position.y));
 	}
 
 
@@ -712,7 +714,7 @@ public class LevelManager : MonoBehaviour
                 mCamera.orthographicSize = 16.5f;               //iphone x    //1.4.7
             //else if (aspect == 1.25f)
             //    GetComponent<Camera>().orthographicSize = 4.9f;                  //5:4
-			mCamera.GetComponent<MapCamera>().SetPosition(new Vector2(0, mCamera.transform.position.y));
+            mapCamera.SetPosition(new Vector2(0, mCamera.transform.position.y));
 		}
 		else
 		{
@@ -724,7 +726,7 @@ public class LevelManager : MonoBehaviour
 			Level.transform.Find("Canvas").GetComponent<GraphicRaycaster>().enabled = true;
 
 		}
-		mCamera.GetComponent<MapCamera>().enabled = enable;
+        mapCamera.enabled = enable;
 		//1.4.4
 		if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
 		{

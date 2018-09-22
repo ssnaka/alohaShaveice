@@ -117,6 +117,11 @@ public class MapCamera : MonoBehaviour
 		touchId = 0;
         #endif
 
+        if (EventSystem.current.IsPointerOverGameObject(touchId))
+        {
+            return;
+        }
+
         if (!enableCameraMove)
         {
             return;
@@ -124,10 +129,6 @@ public class MapCamera : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject(touchId))
-            {
-                return;
-            }
             deltaV = Vector2.zero;
             _prevPosition = Input.mousePosition;
             firstV = _prevPosition;
@@ -144,12 +145,9 @@ public class MapCamera : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (enableCameraMove)
-            {
-                speed = (Time.time - currentTime);
-                Vector3 diffV = (transform.position - (Vector3)deltaV);
-                Vector3 destination = (transform.position - diffV / 20);
-            }
+            speed = (Time.time - currentTime);
+            Vector3 diffV = (transform.position - (Vector3)deltaV);
+            Vector3 destination = (transform.position - diffV / 20);
         }
         else
         {

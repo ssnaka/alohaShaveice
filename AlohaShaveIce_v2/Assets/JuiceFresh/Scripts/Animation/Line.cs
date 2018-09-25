@@ -41,7 +41,10 @@ public class Line : MonoBehaviour
             if (i < count)
             {
                 item.enabled = true;
-                SetSorting(item, 6);
+                if (LevelManager.Instance.currentLevel <= LevelManager.Instance.hintLevelMax && LevelsMap._instance.GetLastestReachedLevel() <= LevelManager.Instance.hintLevelMax)
+                {
+                    SetSorting(item, 6);
+                }
             }
             else
                 item.enabled = false;

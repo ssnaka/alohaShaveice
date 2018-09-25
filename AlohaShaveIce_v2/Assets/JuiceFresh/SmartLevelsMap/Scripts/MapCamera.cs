@@ -26,6 +26,8 @@ public class MapCamera : MonoBehaviour
     bool enableCameraMove = true;
     float cameraMovingBackSpeed = 30.0f;
 
+    Vector3 cameraMovingBackPosition = new Vector3(0.0f, 4.5f, -10.0f);
+
     public void Awake ()
     {
         currentTime = 0;
@@ -186,7 +188,6 @@ public class MapCamera : MonoBehaviour
         Vector3 viewPortPoint = Camera.WorldToViewportPoint(LevelsMap._instance.WaypointsMover.transform.position);
         if (viewPortPoint.y <= waypointBottomBuffer)
         {
-            Vector3 cameraMovingBackPosition = LevelsMap._instance.WaypointsMover.transform.position + new Vector3(0.0f, 7.0f, 0.0f);
             StartCoroutine(MoveCameraBackToWaypointRoutine(transform.position, cameraMovingBackPosition, cameraMovingBackSpeed));
             return true;
         }
@@ -197,29 +198,31 @@ public class MapCamera : MonoBehaviour
     IEnumerator MoveCameraBackToWaypointRoutine (Vector3 _fromPosition, Vector3 _toPosition, float _speed)
     {
         enableCameraMove = false;
-        float step = (_speed / (_fromPosition - _toPosition).magnitude) * Time.deltaTime;
+        Vector3 newToPosition = _toPosition - new Vector3(0.0f, 3.0f, 0.0f);
+
+//        if (LevelManager.Instance.currentLevel <= 3)
+//        {
+//            newToPosition = _toPosition - new Vector3(0.0f, 1.0f, 0.0f);
+//        }
+
+        float step = (_speed / (_fromPosition - newToPosition).magnitude) * Time.deltaTime;
         float t = 0;
         while (t <= 1.0f)
         {
             t += step;
-            Vector3 position = Vector3.Lerp(_fromPosition, _toPosition, t);
+            Vector3 position = Vector3.Lerp(_fromPosition, newToPosition, t);
             SetPosition(position);
             yield return new WaitForEndOfFrame();
         }
 
-        Vector3 newToPosition = _toPosition - new Vector3(0.0f, 3.0f, 0.0f);
-        step = (_speed / (_toPosition - newToPosition).magnitude) * Time.deltaTime;
-        t = 0;
-        while (t <= 1.0f)
+        if (LevelManager.Instance.currentLevel <= 3)
         {
-            t += step;
-            Vector3 position = Vector3.Lerp(_toPosition, newToPosition, t);
-            SetPosition(position);
-            yield return new WaitForEndOfFrame();
+            enableCameraMove = true;
+            SetPosition(newToPosition);
+            yield break;
         }
 
-
-        step = (_speed / 2.0f / (newToPosition - _toPosition).magnitude) * Time.deltaTime;
+        step = (_speed / 3.0f / (newToPosition - _toPosition).magnitude) * Time.deltaTime;
         t = 0;
         while (t <= 1.0f)
         {

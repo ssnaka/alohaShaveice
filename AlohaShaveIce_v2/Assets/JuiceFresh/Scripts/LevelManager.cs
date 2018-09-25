@@ -292,7 +292,7 @@ public class LevelManager : MonoBehaviour
 	//UI object
 	public GameObject Level;
 	//scene object
-	public GameObject LevelsMap;
+	public GameObject LevelsMapGO;
 
 	public BoostIcon[] InGameBoosts;
 	public int passLevelCounter;
@@ -373,6 +373,7 @@ public class LevelManager : MonoBehaviour
 	public int bombTimer;
 	public int NumIngredients = 4;
 
+    public int hintLevelMax = 3;
 	#region EVENTS
 
 	public delegate void GameStateEvents ();
@@ -559,7 +560,7 @@ public class LevelManager : MonoBehaviour
 
 				CheckUndestroyableBlockToturial();
 
-//				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
+				StartCoroutine(TipsManager.THIS.CheckPossibleCombines());
 			}
 			else if (value == GameState.GameOver)
 			{
@@ -692,7 +693,7 @@ public class LevelManager : MonoBehaviour
 	{
 		if (enable)
 		{
-			LevelsMap.SetActive(true);
+            LevelsMapGO.SetActive(true);
 			float aspect = (float)Screen.height / (float)Screen.width;
 			mCamera.orthographicSize = 10.25f;
 			aspect = (float)Math.Round(aspect, 2);
@@ -730,16 +731,16 @@ public class LevelManager : MonoBehaviour
 		//1.4.4
 		if (questInfo == null || (questSaveData != null && questSaveData.type.Equals(DailyQuestType.NextLevel)))
 		{
-			//		LevelsMap.SetActive (!enable);
-			//		LevelsMap.SetActive (enable);
-			LevelsMap.GetComponent<LevelsMap>().Reset();
+            //		LevelsMapGO.SetActive (!enable);
+            //		LevelsMapGO.SetActive (enable);
+            LevelsMapGO.GetComponent<LevelsMap>().Reset();
 		}
         else
         {
-            LevelsMap.GetComponent<LevelsMap>().SetCameraToCharacter();
+            LevelsMapGO.GetComponent<LevelsMap>().SetCameraToCharacter();
         }
 
-		foreach (Transform tr in LevelsMap.transform)
+        foreach (Transform tr in LevelsMapGO.transform)
 		{
 			if (tr.name != "AvatarManager" && tr.name != "Character")
 				tr.gameObject.SetActive(enable);
@@ -1778,8 +1779,8 @@ public class LevelManager : MonoBehaviour
 			{
 				PlayerPrefs.SetInt("Score" + currentLevel, Score);
 			}
-			LevelsMap.SetActive(false);//1.4.4
-//		LevelsMap.SetActive(true);//1.4.4
+            LevelsMapGO.SetActive(false);//1.4.4
+            //		LevelsMapGO.SetActive(true);//1.4.4
 #if PLAYFAB || GAMESPARKS
 			NetworkManager.dataManager.SetPlayerScore(currentLevel, Score);
 			NetworkManager.dataManager.SetPlayerLevel(currentLevel + 1);
@@ -1894,20 +1895,23 @@ public class LevelManager : MonoBehaviour
                                 //i++;
                             }
 
-                            if (destroyAnyway.Count > 0 && destroyAnyway[0].currentType != ItemsTypes.SQUARE_BOMB && destroyAnyway[0].currentType != ItemsTypes.CROSS_BOMB)
+                            if (currentLevel <= hintLevelMax && LevelsMap._instance.GetLastestReachedLevel() <= hintLevelMax)
                             {
-                                for (int col = 0; col < maxCols; col++)
+                                if (destroyAnyway.Count > 0 && destroyAnyway[0].currentType != ItemsTypes.SQUARE_BOMB && destroyAnyway[0].currentType != ItemsTypes.CROSS_BOMB)
                                 {
-                                    for (int row = maxRows - 1; row >= 0; row--)
+                                    for (int col = 0; col < maxCols; col++)
                                     {
-                                        Square square = GetSquare(col, row);
-                                        if (square != null)
+                                        for (int row = maxRows - 1; row >= 0; row--)
                                         {
-                                            if (!square.IsNone())
+                                            Square square = GetSquare(col, row);
+                                            if (square != null)
                                             {
-                                                if (square.item != null)
+                                                if (!square.IsNone())
                                                 {
-                                                    square.item.AddInactiveBlocker(itemSelected.color);
+                                                    if (square.item != null)
+                                                    {
+                                                        square.item.AddInactiveBlocker(itemSelected.color);
+                                                    }
                                                 }
                                             }
                                         }
@@ -2129,18 +2133,21 @@ public class LevelManager : MonoBehaviour
 				}
 				else
 				{
-                    for (int col = 0; col < maxCols; col++)
+                    if (currentLevel <= hintLevelMax && LevelsMap._instance.GetLastestReachedLevel() <= hintLevelMax)
                     {
-                        for (int row = maxRows - 1; row >= 0; row--)
+                        for (int col = 0; col < maxCols; col++)
                         {
-                            Square aSquare = GetSquare(col, row);
-                            if (aSquare != null)
+                            for (int row = maxRows - 1; row >= 0; row--)
                             {
-                                if (!aSquare.IsNone())
+                                Square aSquare = GetSquare(col, row);
+                                if (aSquare != null)
                                 {
-                                    if (aSquare.item != null)
+                                    if (!aSquare.IsNone())
                                     {
-                                        aSquare.item.SetSpriteRendererSortingOrder(2);
+                                        if (aSquare.item != null)
+                                        {
+                                            aSquare.item.SetSpriteRendererSortingOrder(2);
+                                        }
                                     }
                                 }
                             }
@@ -3055,18 +3062,21 @@ public class LevelManager : MonoBehaviour
 				}
 			}
 
-            for (int col = 0; col < maxCols; col++)
+            if (currentLevel <= hintLevelMax && LevelsMap._instance.GetLastestReachedLevel() <= hintLevelMax)
             {
-                for (int row = maxRows - 1; row >= 0; row--)
+                for (int col = 0; col < maxCols; col++)
                 {
-                    Square aSquare = GetSquare(col, row);
-                    if (aSquare != null)
+                    for (int row = maxRows - 1; row >= 0; row--)
                     {
-                        if (!aSquare.IsNone())
+                        Square aSquare = GetSquare(col, row);
+                        if (aSquare != null)
                         {
-                            if (aSquare.item != null)
+                            if (!aSquare.IsNone())
                             {
-                                aSquare.item.SetSpriteRendererSortingOrder(2);
+                                if (aSquare.item != null)
+                                {
+                                    aSquare.item.SetSpriteRendererSortingOrder(2);
+                                }
                             }
                         }
                     }

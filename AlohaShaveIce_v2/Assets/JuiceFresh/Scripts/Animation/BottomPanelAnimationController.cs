@@ -13,6 +13,7 @@ public class BottomPanelAnimationController : MonoBehaviour
     string closeAnimationName = "Close";
 
     bool isOpened;
+
     // Use this for initialization
     void Start ()
     {

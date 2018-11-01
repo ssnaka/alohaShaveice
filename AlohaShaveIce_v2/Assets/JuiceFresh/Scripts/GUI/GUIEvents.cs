@@ -41,25 +41,27 @@ public class GUIEvents : MonoBehaviour {
 
 	public void Settings (GameObject settings) {
 		SoundBase.Instance.PlaySound (SoundBase.Instance.click);
-		if (!settings.activeSelf)
-		{
-			settings.SetActive (true);
-			int tutorialNotificationView = PlayerPrefs.GetInt("tutorialNotificationView", 0);
-			if (tutorialNotificationView <= 0)
-			{
-				GameObject tutorialNotification = GameObject.Find("tutorialNotification");
-				if (tutorialNotification != null)
-				{
-					PlayerPrefs.SetInt("tutorialNotificationView", 1);
-					PlayerPrefs.Save();
-					tutorialNotification.SetActive(false);
-				}
-			}
-		}
-		else
-		{
-			settings.SetActive (false);
-		}
+        InitScript.Instance.menuController.menuPanelScript.OnOpenCloseButtonPressed();
+        InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.settings);
+//		if (!settings.activeSelf)
+//		{
+//			settings.SetActive (true);
+//			int tutorialNotificationView = PlayerPrefs.GetInt("tutorialNotificationView", 0);
+//			if (tutorialNotificationView <= 0)
+//			{
+//				GameObject tutorialNotification = GameObject.Find("tutorialNotification");
+//				if (tutorialNotification != null)
+//				{
+//					PlayerPrefs.SetInt("tutorialNotificationView", 1);
+//					PlayerPrefs.Save();
+//					tutorialNotification.SetActive(false);
+//				}
+//			}
+//		}
+//		else
+//		{
+//			settings.SetActive (false);
+//		}
 		// GameObject.Find("CanvasGlobal").transform.Find("Settings").gameObject.SetActive(true);
 	}
 

@@ -260,6 +260,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 
     public event Action<BoostType> OnVideoAdFinished;
 
+    [SerializeField]
+    public MenuController menuController;
+
     // Use this for initialization
     void Awake ()
     {
@@ -370,7 +373,7 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 //		NotificationCenter.Instance.Init();
 //		LoadingCanvasScript.Instance.HideLoading();
 
-        DailyRewardManager.Instance.Init();
+//        DailyRewardManager.Instance.Init();
 //		DailyQuestManager.Instance.SetupDailyQuest();
 
     }
@@ -995,7 +998,8 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         }
         else if (currentReward == RewardedAdsType.ChestBox)
         {
-            DailyRewardManager.Instance.ShowOpenChestAsVideoAds();
+            DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+            dailyRewardManager.ShowOpenChestAsVideoAds();
         }
 		
         currentReward = RewardedAdsType.None;
@@ -1031,8 +1035,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         possibleReward.count = 1;
         possibleRewards.Add(possibleReward);
 
-        DailyRewardManager.Instance.ShowOpenChest(possibleRewards, null, ChestType.daily, false, false, true);
-        DailyRewardManager.Instance.ShowOpenChestResultNow();
+        DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+        dailyRewardManager.ShowOpenChest(possibleRewards, null, ChestType.daily, false, false, true);
+        dailyRewardManager.ShowOpenChestResultNow();
 
 //        BuyBoost(_boostType, 0, _currentBoostCount + 1);
     }
@@ -1419,7 +1424,10 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
     public void OnRewardButtonPressed ()
     {
         GameTutorialManager.Instance.CloseTutorial();
-        DailyRewardManager.Instance.EnableReward(true);
+        InitScript.Instance.menuController.menuPanelScript.OnOpenCloseButtonPressed();
+        InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.chest);
+//        DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+//        dailyRewardManager.EnableReward(true);
     }
 
     public void ItemDestroyedEvent (Square _square)

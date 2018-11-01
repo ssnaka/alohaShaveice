@@ -98,6 +98,7 @@ public class MapBackgroundManager : MonoBehaviour {
 			}
 		}
 
+        UpdateMapBG(currentIndex - 2);
 		UpdateMapBG(currentIndex - 1);
 		UpdateMapBG(currentIndex);
 		UpdateMapBG(currentIndex + 1);

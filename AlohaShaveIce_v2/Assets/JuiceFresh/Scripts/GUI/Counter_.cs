@@ -308,13 +308,19 @@ public class Counter_ : MonoBehaviour
 
 	void OnDisable ()
 	{
-		LevelManager.Instance.OnScoreUpdate -= LevelManager_Instance_OnScoreUpdate;
-		LevelManager.Instance.OnStarUpdate -= LevelManager_Instance_OnStarUpdate;
-		InitScript.Instance.OnLifeUpdate -= InitScript_Instance_OnLifeUpdate;
-		InitScript.Instance.OnGemUpdate -= InitScript_Instance_OnGemUpdate;
-		LevelManager.Instance.OnTargetBlockUpdate -= LevelManager_Instance_OnTargetBlockUpdate;
-		LevelManager.Instance.OnTargetCageUpdate -= LevelManager_Instance_OnTargetCageUpdate;
-		LevelManager.Instance.OnTargetBombUpdate -= LevelManager_Instance_OnTargetBombUpdate;
-		LevelManager.Instance.OnTargetIngredientUpdate -= LevelManager_Instance_OnTargetIngredientUpdate;;
+        if (LevelManager.Instance != null)
+        {
+    		LevelManager.Instance.OnScoreUpdate -= LevelManager_Instance_OnScoreUpdate;
+    		LevelManager.Instance.OnStarUpdate -= LevelManager_Instance_OnStarUpdate;
+            LevelManager.Instance.OnTargetBlockUpdate -= LevelManager_Instance_OnTargetBlockUpdate;
+            LevelManager.Instance.OnTargetCageUpdate -= LevelManager_Instance_OnTargetCageUpdate;
+            LevelManager.Instance.OnTargetBombUpdate -= LevelManager_Instance_OnTargetBombUpdate;
+            LevelManager.Instance.OnTargetIngredientUpdate -= LevelManager_Instance_OnTargetIngredientUpdate;;
+        }
+        if (InitScript.Instance != null)
+        {
+    		InitScript.Instance.OnLifeUpdate -= InitScript_Instance_OnLifeUpdate;
+    		InitScript.Instance.OnGemUpdate -= InitScript_Instance_OnGemUpdate;
+        }
 	}
 }

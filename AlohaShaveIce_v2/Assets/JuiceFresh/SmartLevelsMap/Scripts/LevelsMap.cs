@@ -272,7 +272,8 @@ public class LevelsMap : MonoBehaviour
 		yield return new WaitForSeconds(0.3f);
 		if (LevelManager.Instance.questInfo == null)
 		{
-			if (DailyRewardManager.Instance.openChestBoxCanvas == null || (DailyRewardManager.Instance.openChestBoxCanvas != null && !DailyRewardManager.Instance.openChestBoxCanvas.activeSelf))
+            DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+            if (dailyRewardManager.openChestBoxCanvas == null || (dailyRewardManager.openChestBoxCanvas != null && !dailyRewardManager.openChestBoxCanvas.activeSelf))
 			{
 				if (!DailyQuestManager.Instance.panel.gameObject.activeSelf)
 				{

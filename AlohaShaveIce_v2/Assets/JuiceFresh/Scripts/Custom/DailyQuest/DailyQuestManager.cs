@@ -372,7 +372,8 @@ public class DailyQuestManager : Singleton<DailyQuestManager>
 		yield return new WaitForSeconds(0.5f);
 
 		Sprite chestSprite = Resources.Load<Sprite>("Custom/Sprite/regularChestbox");
-		DailyRewardManager.Instance.ShowOpenChest(saveData.rewards, chestSprite, ChestType.daily, false, false, true);
+        DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+        dailyRewardManager.ShowOpenChest(saveData.rewards, chestSprite, ChestType.daily, false, false, true);
 		closeButton.gameObject.SetActive(true);
 		OnCloseButtonPressed();
 	}

@@ -7529,7 +7529,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2049894076
+  randomSeed: 1412209652
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10672,7 +10672,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 522873516
+  randomSeed: -373121276
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13779,7 +13779,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 58496801
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -14030,7 +14030,7 @@ Canvas:
   m_GameObject: {fileID: 1452989778623878}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 20265115594137810}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -14039,7 +14039,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 58496801
   m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &224201092899919800

@@ -635,6 +635,9 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     GameObject appearingEffectPrefab;
+
+    [SerializeField]
+    Button skipButton;
 	#endregion
 
 	void OnEnable ()
@@ -1646,8 +1649,16 @@ public class LevelManager : MonoBehaviour
 		return (int)this.GetType().GetField("star" + (int)starsTargetCount).GetValue(this); //get value of appropriate field (star1, star2 or star3)
 	}
 
+    public void OnSkipButtonPressed ()
+    {
+        skipButton.gameObject.SetActive(false);
+        Time.timeScale = 100.0f;
+    }
+
 	IEnumerator PreWinAnimationsCor ()
 	{
+        skipButton.gameObject.SetActive(true);
+        Time.timeScale = 1.0f;
         if (!InitScript.Instance.losingLifeEveryGame)
 			InitScript.Instance.AddLife(1);
 		SoundBase.Instance.PlaySound(SoundBase.Instance.complete[1]);
@@ -1789,6 +1800,8 @@ public class LevelManager : MonoBehaviour
 		}
 
 		gameStatus = GameState.Win;
+        Time.timeScale = 1.0f;
+        skipButton.gameObject.SetActive(false);
 	}
 
     public int previousStars = 0;

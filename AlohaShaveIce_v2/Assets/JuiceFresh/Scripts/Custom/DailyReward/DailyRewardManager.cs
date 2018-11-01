@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Custom/DailyReward/DailyRewardManager")]
-public class DailyRewardManager : Singleton<DailyRewardManager> 
+//[Prefab("Custom/DailyReward/DailyRewardManager")]
+public class DailyRewardManager : MenuBodyPanelScript
 {
 	[Header("RewardChestItem")]
 	[SerializeField]
@@ -19,11 +19,13 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 	GameObject openChestBoxPrefab;
 	public GameObject openChestBoxCanvas { get; private set; }
 
-	public void Init()
+	public void Start ()
 	{
 		EnableReward(false);
 		ReadData();
 		SetupChestBoxes();
+
+        CheckRewardToShow ();
 	}
 
 	void ReadData ()
@@ -63,7 +65,7 @@ public class DailyRewardManager : Singleton<DailyRewardManager>
 
 	public void EnableReward (bool _enable)
 	{
-		gameObject.SetActive(_enable);
+//		gameObject.SetActive(_enable);
 	}
 
 	public void CheckRewardToShow ()

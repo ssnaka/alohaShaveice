@@ -124,12 +124,12 @@ public class AnimationManager : MonoBehaviour
 				transform.Find("Image/Music/MusicOff").gameObject.SetActive(false);
 		}
 
-		if (name == "GemsShop") {
-			for (int i = 1; i <= 4; i++) {
-				transform.Find("Image/Pack" + i + "/Count").GetComponent<Text>().text = "x " + LevelManager.THIS.gemsProducts[i - 1].count;
-				transform.Find("Image/Pack" + i + "/Buy/Price").GetComponent<Text>().text = "$" + LevelManager.THIS.gemsProducts[i - 1].price;
-			}
-		}
+//		if (name == "GemsShop") {
+//			for (int i = 1; i <= 4; i++) {
+//				transform.Find("Image/Pack" + i + "/Count").GetComponent<Text>().text = "x " + LevelManager.THIS.gemsProducts[i - 1].count;
+//				transform.Find("Image/Pack" + i + "/Buy/Price").GetComponent<Text>().text = "$" + LevelManager.THIS.gemsProducts[i - 1].price;
+//			}
+//		}
 		if (name == "MenuComplete") {
             for (int i = 0; i < starTransforms.Count; i++) 
             {
@@ -722,9 +722,10 @@ public class AnimationManager : MonoBehaviour
 
 	public void BuyGems()
 	{
-
 		SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-		GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+        InitScript.Instance.menuController.menuPanelScript.OnOpenCloseButtonPressed();
+        InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.bank);
+//		GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
 	}
 
 	public void Buy(GameObject pack)
@@ -800,10 +801,13 @@ public class AnimationManager : MonoBehaviour
 
 	public void BuyLifeShop()
 	{
-		SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-		if (InitScript.lifes >= 0 && InitScript.lifes < InitScript.Instance.CapOfLife)
-			GameObject.Find("CanvasGlobal").transform.Find("LiveShop").gameObject.SetActive(true);
-
+//		SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+//		if (InitScript.lifes >= 0 && InitScript.lifes < InitScript.Instance.CapOfLife)
+//			GameObject.Find("CanvasGlobal").transform.Find("LiveShop").gameObject.SetActive(true);
+//
+        SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+        InitScript.Instance.menuController.menuPanelScript.OnOpenCloseButtonPressed();
+        InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.bank);
 	}
 
 	public void BuyLife(GameObject button)
@@ -814,7 +818,7 @@ public class AnimationManager : MonoBehaviour
 			InitScript.Instance.RestoreLifes();
 			CloseMenu();
 		} else {
-			GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+            BuyGems(); //GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
 		}
 
 	}
@@ -828,7 +832,7 @@ public class AnimationManager : MonoBehaviour
 			//button.GetComponent<Button>().interactable = false;
 			GoOnFailed();
 		} else {
-			GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+            BuyGems(); //GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
 		}
 		//}
 	}

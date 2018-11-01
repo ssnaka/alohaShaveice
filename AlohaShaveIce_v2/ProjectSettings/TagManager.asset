@@ -15,7 +15,7 @@ TagManager:
   - 
   - 
   - Item
-  - 
+  - Particle
   - 
   - 
   - 
@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Game
+    uniqueID: 1373856949
+    locked: 0
   - name: UI
     uniqueID: 58496801
+    locked: 0
+  - name: Particle
+    uniqueID: 4237580723
     locked: 0

@@ -188,7 +188,7 @@ public class MapCamera : MonoBehaviour
         Vector3 viewPortPoint = Camera.WorldToViewportPoint(LevelsMap._instance.WaypointsMover.transform.position);
         if (viewPortPoint.y <= waypointBottomBuffer)
         {
-            StartCoroutine(MoveCameraBackToWaypointRoutine(transform.position, cameraMovingBackPosition, cameraMovingBackSpeed));
+            StartCoroutine(MoveCameraBackToWaypointRoutine(transform.position, LevelsMap._instance.WaypointsMover.transform.position, cameraMovingBackSpeed));
             return true;
         }
 

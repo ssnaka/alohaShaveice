@@ -6,7 +6,7 @@ public class IPhoneXSafeArea : MonoBehaviour {
 	[SerializeField]
 	RectTransform topPanel;
 	[SerializeField]
-	RectTransform bottomanel;
+	public RectTransform bottoPanel;
 
 	void OnEnable ()
 	{
@@ -14,8 +14,14 @@ public class IPhoneXSafeArea : MonoBehaviour {
         screenRatio = (float)System.Math.Round(screenRatio, 2);
         if (screenRatio == 2.17f)
 		{
-			topPanel.anchoredPosition = new Vector2(topPanel.anchoredPosition.x, -120.0f);
-			bottomanel.anchoredPosition = new Vector2(bottomanel.anchoredPosition.x, 68.0f);
+            if (topPanel != null)
+            {
+			    topPanel.anchoredPosition = new Vector2(topPanel.anchoredPosition.x, -120.0f);
+            }
+            if (bottoPanel != null)
+            {
+                bottoPanel.anchoredPosition = new Vector2(bottoPanel.anchoredPosition.x, 68.0f);
+            }
 		}
 	}
 }

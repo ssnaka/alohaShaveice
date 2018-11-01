@@ -51,7 +51,10 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		openChestWithGems = _withGems;
 		openChestWithAds = _fromAds;
 		isQuest = _isQuest;
-		DailyRewardManager.Instance.EnableReward(false);
+
+        DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+        dailyRewardManager.EnableReward(false);
+
 		gameObject.SetActive(true);
 		rewardItemsView.SetActive(false);
 
@@ -108,7 +111,9 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 	// 3d
 	public void SetupOpenChest (List<PossibleReward> _possibleRewards, GameObject _chestPrefab)
 	{
-		DailyRewardManager.Instance.EnableReward(false);
+        DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+        dailyRewardManager.EnableReward(false);
+
 		gameObject.SetActive(true);
 		rewardItemsView.SetActive(false);
 
@@ -219,7 +224,8 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		gameObject.SetActive(false);
 		if (!isQuest)
 		{
-			DailyRewardManager.Instance.EnableReward(true);
+            DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+            dailyRewardManager.EnableReward(true);
 		}
 
 	}

@@ -64,7 +64,7 @@ public class DailyRewardChest : MonoBehaviour
 		string lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 		dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 		nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
-		if (data.type.Equals(ChestType.premium))
+        if (data != null && data.type.Equals(ChestType.premium))
 		{
 			timerText.gameObject.SetActive(false);
 			chestImageAnimation.clip = chestImageAnimation.GetClip("chest_button_premium_image_idle");
@@ -346,7 +346,8 @@ public class DailyRewardChest : MonoBehaviour
 //		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
 //		PlayerPrefs.Save();
 //		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
-		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type, _withGems, _fromAds, false);
+        DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
+        dailyRewardManager.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type, _withGems, _fromAds, false);
 		CheckDailyReward();
 	}
 

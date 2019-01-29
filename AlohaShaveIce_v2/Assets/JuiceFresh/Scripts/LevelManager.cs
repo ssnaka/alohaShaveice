@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour
 	//extra moves that you get to continue game after fail
 	public int ExtraFailedMoves = 5;
 	//extra seconds that you get to continue game after fail
-	public int ExtraFailedSecs = 30;
+    public int ExtraFailedSecs = 15;// 30;
 	// array of iapps products
 	public List<GemProduct> gemsProducts = new List<GemProduct>();
 	// product IDs
@@ -188,9 +188,11 @@ public class LevelManager : MonoBehaviour
 				if (activatedBoost.type == BoostType.ExtraMoves || activatedBoost.type == BoostType.ExtraTime)
 				{
 					if (LevelManager.Instance.limitType == LIMIT.MOVES)
-						LevelManager.THIS.Limit += 5;
+                        AddLimit(ExtraFailedMoves);
+//						LevelManager.THIS.Limit += 5;
 					else
-						LevelManager.THIS.Limit += 30;
+                        AddLimit(ExtraFailedSecs);
+//						LevelManager.THIS.Limit += 30;
 
 					ActivatedBoost = null;
 				}

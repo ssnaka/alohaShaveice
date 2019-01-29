@@ -56,17 +56,23 @@ public class BoostIcon : MonoBehaviour
 	            UnCheckBoost();
 	            return;
 	        }
+
 	        if (IsLocked() || check || (LevelManager.THIS.gameStatus != GameState.Playing && LevelManager.THIS.gameStatus != GameState.Map))
 	            return;
+            
 	        if (BoostCount() > 0)
 	        {
 	            if (type != BoostType.Colorful_bomb && type != BoostType.Stripes && !LevelManager.THIS.DragBlocked)
+                {
 	                LevelManager.THIS.ActivatedBoost = this;
+                }
+
 	            if (type == BoostType.Colorful_bomb)
 	            {
 	                LevelManager.THIS.BoostColorfullBomb = 1;
 	                Check();
 	            }
+
 	            if (type == BoostType.Stripes)
 	            {
 	                LevelManager.THIS.BoostStriped = 2;

@@ -100,6 +100,7 @@ public class NetworkDataManager
 			NetworkDataManager.LatestReachedLevel = value;
 			GetStars();
 		});
+
 		if (NetworkDataManager.LatestReachedLevel <= 0)
 			NetworkManager.dataManager.SetPlayerLevel(1);
 	}
@@ -121,22 +122,27 @@ public class NetworkDataManager
 			return;
 
 
-		if (LevelsMap._instance.GetLastestReachedLevel() > LatestReachedLevel)
-		{
-			Debug.Log("reached higher level than synced");
-			SyncAllData();
-			return;
-		}
+//		if (LevelsMap._instance.GetLastestReachedLevel() > LatestReachedLevel)
+//		{
+//			Debug.Log("reached higher level than synced");
+//			SyncAllData();
+//			return;
+//		}
 
 		dataManager.GetStars((dic) =>
 		{
 			foreach (var item in dic)
 			{
-				PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", int.Parse(item.Key.Replace("StarsLevel_", ""))), item.Value);
+                int level = int.Parse(item.Key.Replace("StarsLevel_", ""));
+                int currentStar = PlayerPrefs.GetInt(string.Format("Level.{0:000}.StarsCount", level), 0);
+                if (currentStar < item.Value)
+                {
+                    PlayerPrefs.SetInt(string.Format("Level.{0:000}.StarsCount", level), item.Value);
+                }
 			}
 			PlayerPrefs.Save();
 			LevelsMap._instance.Reset();
-
+            SyncAllData();
 		});
 	}
 
@@ -209,7 +215,7 @@ public class NetworkDataManager
 		SetTotalStars();
 		SetPlayerLevel(LevelsMap._instance.GetLastestReachedLevel());
 		//		SetPlayerScoreTotal ();
-		Debug.LogError("SyncAllData");
+		Debug.Log("SyncAllData");
 	}
 
 }

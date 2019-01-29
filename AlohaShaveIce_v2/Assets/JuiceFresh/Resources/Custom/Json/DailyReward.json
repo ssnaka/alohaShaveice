@@ -332,7 +332,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 30
+                  "count": 50
                 },
                 {
                   "type": "ExtraMoves",
@@ -349,7 +349,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 30
+                  "count": 50
                 },
                 {
                   "type": "Stripes",
@@ -366,7 +366,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 30
+                  "count": 100
                 }
               ],
               "weight": 2
@@ -384,7 +384,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 50
+                  "count": 150
                 }
               ],
               "weight": 1

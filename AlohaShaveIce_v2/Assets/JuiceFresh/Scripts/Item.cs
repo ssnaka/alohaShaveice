@@ -982,7 +982,8 @@ public class Item : MonoBehaviour
             FiveSec.GetComponent<Animation>().Play("5secfly");
             Destroy(FiveSec, 1);
             if (LevelManager.THIS.gameStatus == GameState.Playing)
-                LevelManager.THIS.Limit += 5;
+                LevelManager.THIS.AddLimit(5);
+//                LevelManager.THIS.Limit += 5;
         }
 
         //Color color = sprRenderer.sprite.texture.GetPixel(sprRenderer.sprite.texture.width / 2 - 10, sprRenderer.sprite.texture.height / 2 - 10);

@@ -39,8 +39,6 @@ public class DailyRewardChest : MonoBehaviour
 	Sprite chestSprite;
 
 	GameObject chest3D;
-//	[SerializeField]
-//	GameObject openChestBoxPrefab;
 
 	RewardItem rewardItem;
 
@@ -49,7 +47,6 @@ public class DailyRewardChest : MonoBehaviour
 	bool isNewRewardForToday = false;
 	bool didWatchRewardAds = false;
 
-//	int openCountToday = 0;
 	Vector2 originalBoxSize = Vector2.zero;
 
 	[SerializeField]
@@ -57,20 +54,29 @@ public class DailyRewardChest : MonoBehaviour
 	[SerializeField]
 	LocalizedText openTextAsset;
 
+    [SerializeField]
+    Image bgImage;
+    [SerializeField]
+    Sprite regularBGSprite;
+    [SerializeField]
+    Sprite preniumBGSprite;
+
 	void OnEnable ()
 	{
 		didWatchRewardAds = System.Convert.ToBoolean(ZPlayerPrefs.GetInt("didWatchRewardAds", 0));
-//		openCountToday = PlayerPrefs.GetInt("dailyRewardOpenCountToday", 0);
 		string lastDailyRewardAwardedTime = ZPlayerPrefs.GetString("dailyRewardAwardedTime", DateTime.Now.AddDays(-1).ToString());
 		dailyRewardAwardedTime = System.Convert.ToDateTime(lastDailyRewardAwardedTime);
 		nextDailyRewardTime = dailyRewardAwardedTime.AddHours(24);
-        if (data != null && data.type.Equals(ChestType.premium))
-		{
-			timerText.gameObject.SetActive(false);
-			chestImageAnimation.clip = chestImageAnimation.GetClip("chest_button_premium_image_idle");
-			chestImageAnimation.Stop();
-			chestImageAnimation.Play();
-		}
+//        bgImage.overrideSprite = regularBGSprite;
+//        if (data != null && data.type.Equals(ChestType.premium))
+//		{
+//            Debug.LogError("+++++++++");
+//			timerText.gameObject.SetActive(false);
+//			chestImageAnimation.clip = chestImageAnimation.GetClip("chest_button_premium_image_idle");
+//			chestImageAnimation.Stop();
+//			chestImageAnimation.Play();
+//            bgImage.overrideSprite = preniumBGSprite;
+//		}
 	}
 
 	// Update is called once per frame
@@ -90,7 +96,6 @@ public class DailyRewardChest : MonoBehaviour
 				didWatchRewardAds = false;
 				ZPlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
 				ZPlayerPrefs.Save();
-				//			openCountToday = 0;
 				timerText.gameObject.SetActive(false);
 				CheckDailyRewardOnceFromUpdate();
 			}
@@ -100,7 +105,6 @@ public class DailyRewardChest : MonoBehaviour
 	public void SetupData (ChestData _chestData)
 	{
 		data = _chestData;
-//		SetupView();
 		CheckDailyReward();
 	}
 
@@ -111,19 +115,10 @@ public class DailyRewardChest : MonoBehaviour
 			originalBoxSize = boxImage.rectTransform.sizeDelta;
 		}
 
-		adButton.gameObject.SetActive(false);
-//		boxTitle.text = data.type.ToString().ToUpper();
+        adButton.interactable = false;//.gameObject.SetActive(false);
 		titleTextBehaviour.LocalizedAsset = titleTextAssets.Find(item => item.name.Equals(data.textAssetName));
 		chestSprite = Resources.Load<Sprite>("Custom/Sprite/" + data.chestImage);
 		boxImage.overrideSprite = chestSprite;
-//		chest3DPrefab = Resources.Load<GameObject>("Custom/Chest/" + data.chestPrefab);
-//		if (chest3D == null)
-//		{
-//			chest3D = Instantiate<GameObject>(chest3DPrefab, transform);
-//			chest3D.transform.localPosition = new Vector3(0.0f, -12.0f, -120.0f);
-//			chest3D.transform.eulerAngles = new Vector3(0.0f, 162.0f, 0.0f);
-//			chest3D.transform.localScale = new Vector3(50.0f, 50.0f, 50.0f);
-//		}
 
 		currencyTextBehaviour.LocalizedAsset = null;
 		string priceString = currencyText.text;
@@ -135,7 +130,7 @@ public class DailyRewardChest : MonoBehaviour
 				{
 					if (!didWatchRewardAds)
 					{
-						adButton.gameObject.SetActive(true);
+                        adButton.interactable = true;//.gameObject.SetActive(true);
 					}
 					priceString = data.price.ToString();
 				}
@@ -145,18 +140,24 @@ public class DailyRewardChest : MonoBehaviour
 					priceString = currencyText.text;
 					shouldShowCurrencyImage = false;
 				}
+                bgImage.overrideSprite = regularBGSprite;
 
 				break;
 			case ChestType.premium:
+                bgImage.overrideSprite = preniumBGSprite;
 				boxImage.rectTransform.sizeDelta = originalBoxSize * 1.15f;
 				priceString = data.price.ToString();
+                
+                adButton.gameObject.SetActive(false);
+                timerText.gameObject.SetActive(false);
+                chestImageAnimation.clip = chestImageAnimation.GetClip("chest_button_premium_image_idle");
+                chestImageAnimation.Stop();
+                chestImageAnimation.Play();
 				break;
 			default:
 				break;
 		}
 			
-//		currencyImage.overrideSprite = ;
-
 		currencyImage.gameObject.SetActive(shouldShowCurrencyImage);
 		currencyText.alignment = TextAnchor.MiddleCenter;
 		currencyText.rectTransform.sizeDelta = new Vector2(100.0f, currencyText.rectTransform.sizeDelta.y);
@@ -262,7 +263,6 @@ public class DailyRewardChest : MonoBehaviour
 
 	public void OnAdsButtonPressed ()
 	{
-//		adButton.gameObject.SetActive(false);
 		InitScript.Instance.currentReward = RewardedAdsType.ChestBox;
 		InitScript.Instance.ShowRewardedAds();
 
@@ -272,7 +272,6 @@ public class DailyRewardChest : MonoBehaviour
 	public void OnOpenButtonPressed ()
 	{
 		// Open box
-//		box3DPrefab
 		GameTutorialManager.Instance.CloseTutorial();
 		bool shouldSpendGems = false;
 		switch (data.type)
@@ -283,7 +282,7 @@ public class DailyRewardChest : MonoBehaviour
 					if (InitScript.Gems < data.price)
 					{
 						SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-						GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+                        InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.bank);
 						return;
 					}
 					else
@@ -297,7 +296,7 @@ public class DailyRewardChest : MonoBehaviour
 				if (InitScript.Gems < data.price)
 				{
 					SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-					GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
+                    InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.bank);
 					return;
 				}
 				else
@@ -342,12 +341,10 @@ public class DailyRewardChest : MonoBehaviour
 			ZPlayerPrefs.SetInt("didWatchRewardAds", System.Convert.ToInt32(didWatchRewardAds));
 			ZPlayerPrefs.Save();
 		}
-//		openCountToday += 1;
-//		PlayerPrefs.SetInt("dailyRewardOpenCountToday", openCountToday);
-//		PlayerPrefs.Save();
-//		DailyRewardManager.Instance.ShowOpenChest(rewardItem.possibleRewards, chest3DPrefab);
+
         DailyRewardManager dailyRewardManager = InitScript.Instance.menuController.menuPanelScript.GetBodyPanelScript(MenuItemType.chest) as DailyRewardManager;
         dailyRewardManager.ShowOpenChest(rewardItem.possibleRewards, chestSprite, data.type, _withGems, _fromAds, false);
+        InitScript.Instance.menuController.menuPanelScript.OnOpenCloseButtonPressed();
 		CheckDailyReward();
 	}
 

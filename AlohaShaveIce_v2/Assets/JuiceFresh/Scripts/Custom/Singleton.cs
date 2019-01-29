@@ -196,4 +196,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 			this.transform.parent = parentObj.transform;
 		}
 	}
+
+    public void Init()
+    {
+        
+    }
 }

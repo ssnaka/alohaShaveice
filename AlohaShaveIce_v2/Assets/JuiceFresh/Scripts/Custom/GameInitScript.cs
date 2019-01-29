@@ -5,6 +5,11 @@ using GameToolkit.Localization;
 
 public class GameInitScript : MonoBehaviour 
 {
+    void Awake ()
+    {
+        FacebookManager.Instance.Init();
+        NetworkManager.Instance.Init();
+    }
 	// Use this for initialization
 	void Start () 
 	{

@@ -3,7 +3,7 @@
     {
       "type": "daily",
       "textAssetName": "Aloha_LocalizedText_Daily",
-      "price": 7,
+      "price": 30,
       "chestImage": "regularChestbox",
       "chestPrefab": "regularChestbox",
       "data": [
@@ -23,7 +23,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 3
+                  "count": 5
                 }
               ],
               "weight": 1
@@ -73,7 +73,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 5
+                  "count": 10
                 }
               ],
               "weight": 1
@@ -114,7 +114,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 6
+                  "count": 15
                 }
               ],
               "weight": 1
@@ -155,7 +155,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 7
+                  "count": 20
                 }
               ],
               "weight": 1
@@ -204,7 +204,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 8
+                  "count": 25
                 }
               ],
               "weight": 1
@@ -253,7 +253,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 9
+                  "count": 30
                 }
               ],
               "weight": 1
@@ -292,7 +292,7 @@
                 },
                 {
                   "type": "GetGems",
-                  "count": 10
+                  "count": 40
                 }
               ],
               "weight": 1
@@ -304,7 +304,7 @@
     {
       "type": "premium",
       "textAssetName": "Aloha_LocalizedText_Premium",
-      "price": 20,
+      "price": 100,
       "chestImage": "premiumChestbox",
       "chestPrefab": "premiumChestbox",
       "data": [
@@ -315,15 +315,15 @@
               "possibleRewards": [
                 {
                   "type": "Shovel",
-                  "count": 2
+                  "count": 1
                 },
                 {
                   "type": "Bomb",
-                  "count": 2
+                  "count": 1
                 },
                 {
                   "type": "Colorful_bomb",
-                  "count": 2
+                  "count": 1
                 }
               ],
               "weight": 3
@@ -332,7 +332,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 15
+                  "count": 30
                 },
                 {
                   "type": "ExtraMoves",
@@ -349,7 +349,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 15
+                  "count": 30
                 },
                 {
                   "type": "Stripes",
@@ -366,7 +366,7 @@
               "possibleRewards": [
                 {
                   "type": "GetGems",
-                  "count": 25
+                  "count": 30
                 }
               ],
               "weight": 2

@@ -16,7 +16,9 @@ using PlayFab;
 //using PlayFab.AdminModels;
 using System.Collections.Generic;
 
-public class NetworkManager : MonoBehaviour {
+[Prefab("Custom/Singleton/NetworkManager")]
+public class NetworkManager : Singleton<NetworkManager> 
+{
 	public delegate void NetworkEvents ();
 
 	public static event NetworkEvents OnLoginEvent;
@@ -25,7 +27,7 @@ public class NetworkManager : MonoBehaviour {
 	public static event NetworkEvents OnPlayerPictureLoaded;
 	public static event NetworkEvents OnLevelLeadboardLoaded;
 
-	public static NetworkManager THIS;
+//	public static NetworkManager THIS;
 	public static NetworkCurrencyManager currencyManager;
 	public static NetworkDataManager dataManager;
 	public static NetworkFriendsManager friendsManager;
@@ -70,9 +72,14 @@ public class NetworkManager : MonoBehaviour {
 	public static List<LeadboardPlayerData> leadboardList = new List<LeadboardPlayerData> ();
 	public static string facebookUserID;
 
+//    void Awake ()
+//    {
+//        THIS = this;
+//        DontDestroyOnLoad(gameObject);
+//    }
+
 	// Use this for initialization
 	void Start () {
-		THIS = this;
 		//#if ((UNITY_PS4 || UNITY_XBOXONE) && !UNITY_EDITOR) || GS_FORCE_NATIVE_PLATFORM
 
 #if GS_FORCE_NATIVE_PLATFORM
@@ -127,11 +134,17 @@ this.gameObject.AddComponent<WebGLPlatform>();
 	}
 
 	public static void PlayerPictureLoaded () {
-		OnPlayerPictureLoaded ();
+        if (OnPlayerPictureLoaded != null)
+        {
+		    OnPlayerPictureLoaded ();
+        }
 	}
 
 	public static void FriendsOnMapLoaded () {
-		OnFriendsOnMapLoaded ();
+        if (OnFriendsOnMapLoaded != null)
+        {
+		    OnFriendsOnMapLoaded ();
+        }
 	}
 
 

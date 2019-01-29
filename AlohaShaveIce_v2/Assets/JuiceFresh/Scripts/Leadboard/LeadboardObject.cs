@@ -30,8 +30,8 @@ public class LeadboardObject : MonoBehaviour {
 		yield return new WaitUntil (() => PlayerData != null);
 		yield return new WaitUntil (() => PlayerData.friendData != null);
 		if (PlayerData.friendData.picture == null) {//1.4.4
-			FacebookManager.THIS.LoggedSuccefull ();
-			FacebookManager.THIS.GetFriendsPicture ();
+			FacebookManager.Instance.LoggedSuccefull ();
+			FacebookManager.Instance.GetFriendsPicture ();
 	}
 		yield return new WaitUntil (() => PlayerData.friendData.picture != null);
 		PlayerData.picture = PlayerData.friendData.picture;
@@ -39,7 +39,7 @@ public class LeadboardObject : MonoBehaviour {
 		place.text = "" + PlayerData.position;
 		playerName.text = PlayerData.Name.Split(new string[] {" "}, System.StringSplitOptions.None)[0];
 		score.text = "" + PlayerData.score;
-		if (NetworkManager.THIS.IsYou (PlayerData.userID)) {
+		if (NetworkManager.Instance.IsYou (PlayerData.userID)) {
 			playerName.text = "YOU";
 			playerName.color = Color.red;
 			//if (LevelManager.THIS.gameStatus == GameState.Win) {

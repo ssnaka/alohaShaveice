@@ -25,7 +25,7 @@ public class DailyRewardManager : MenuBodyPanelScript
 		ReadData();
 		SetupChestBoxes();
 
-        CheckRewardToShow ();
+        CheckRewardToShow();
 	}
 
 	void ReadData ()
@@ -53,7 +53,8 @@ public class DailyRewardManager : MenuBodyPanelScript
 			return;
 		}
 
-		for (int i = 0 ; i < data.chests.Count ; i++)
+//		for (int i = 0 ; i < data.chests.Count ; i++)
+        for (int i = data.chests.Count - 1; i >= 0; i--)
 		{
 			ChestData chestData = data.chests[i];
 			DailyRewardChest chestScript = Instantiate<GameObject>(rewardChestItemPrefab, Vector3.one, Quaternion.identity, rewardChestContainer.transform).GetComponent<DailyRewardChest>();

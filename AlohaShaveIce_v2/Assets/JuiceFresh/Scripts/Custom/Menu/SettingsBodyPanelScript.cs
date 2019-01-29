@@ -8,6 +8,7 @@ public class SettingsBodyPanelScript : MenuBodyPanelScript
     GameObject soundOffGameObject;
     [SerializeField]
     GameObject musicOffGameObject;
+
     // Use this for initialization
     void Start ()
     {
@@ -72,6 +73,5 @@ public class SettingsBodyPanelScript : MenuBodyPanelScript
 
         PlayerPrefs.SetInt("Music", (int)volume);
         PlayerPrefs.Save();
-
     }
 }

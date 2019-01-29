@@ -105,7 +105,6 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		chestAnimation.Stop();
 		chestAnimation.clip = chestAnimation.GetClip(idleAnimationName);
 		chestAnimation.Play();
-//		StartCoroutine(RunOpenChestRoutine());
 	}
 
 	// 3d
@@ -171,8 +170,6 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 	IEnumerator RunOpenChestRoutine ()
 	{
 		//chest animation
-//		chest3DContainer.SetActive(true);
-//		chestImage.gameObject.SetActive(true);
 		tapToOpenText.gameObject.SetActive(false);
 		chestAnimation.Stop();
 
@@ -194,7 +191,6 @@ public class DailyRewardOpenChestCanvasScript : MonoBehaviour
 		rewardItemsView.SetActive(true);
 		chestImage.gameObject.SetActive(false);
 		chestImageOpen.gameObject.SetActive(false);
-//		chest3DContainer.SetActive(false);
 	}
 
     public void ShowResult ()

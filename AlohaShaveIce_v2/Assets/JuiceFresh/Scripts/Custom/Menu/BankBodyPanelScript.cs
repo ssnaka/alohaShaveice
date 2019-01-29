@@ -10,6 +10,9 @@ public class BankBodyPanelScript : MenuBodyPanelScript
     [SerializeField]
     List<Text> priceTexts;
 
+    [SerializeField]
+    Text lifeGemTexts;
+
     // Use this for initialization
     void Start ()
     {
@@ -88,8 +91,25 @@ public class BankBodyPanelScript : MenuBodyPanelScript
             AmazonInapps.THIS.Purchase (LevelManager.THIS.InAppIDs [3]);
 
             #endif
+        }
+    }
 
-
+    public void BuyLife ()
+    {
+        SoundBase.Instance.PlaySound(SoundBase.Instance.click);
+        if (InitScript.lifes >= InitScript.Instance.CapOfLife)
+        {
+            return;
+        }
+            
+        if (InitScript.Gems >= int.Parse(lifeGemTexts.text)) 
+        {
+            InitScript.Instance.SpendGems(int.Parse(lifeGemTexts.text));
+            InitScript.Instance.RestoreLifes();
+        } 
+        else 
+        {
+//            BuyGems(); //GameObject.Find("CanvasGlobal").transform.Find("GemsShop").gameObject.SetActive(true);
         }
     }
 }

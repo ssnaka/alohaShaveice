@@ -30,9 +30,9 @@ public class GamesparksLogin : ILoginManager
 				Debug.Log ("Player id : " + response.UserId);
 				userID = response.UserId;
 				NetworkManager.UserID = userID;
-				NetworkManager.THIS.IsLoggedIn = true;
+				NetworkManager.Instance.IsLoggedIn = true;
 
-				LoadingCanvasScript.Instance.ShowLoading();
+//				LoadingCanvasScript.Instance.ShowLoading();
 			}
 			else
 			{

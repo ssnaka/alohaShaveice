@@ -156,7 +156,10 @@ public class BoostIcon : MonoBehaviour
     public void OpenBoostShop(BoostType boosType)
     {
         SoundBase.Instance.PlaySound(SoundBase.Instance.click);
-        GameObject.Find("CanvasGlobal").transform.Find("BoostShop").gameObject.GetComponent<BoostShop>().SetBoost(boosType);
+//        GameObject.Find("CanvasGlobal").transform.Find("BoostShop").gameObject.GetComponent<BoostShop>().SetBoost(boosType);
+        GetComponent<NewBoostShop>().BuyBoost();
+//        InitScript.Instance.menuController.menuPanelScript.OnOpenCloseButtonPressed();
+//        InitScript.Instance.menuController.menuPanelScript.OnMenuButtonPressed((int)MenuItemType.boosts);
     }
 
     void ShowPlus(bool show)

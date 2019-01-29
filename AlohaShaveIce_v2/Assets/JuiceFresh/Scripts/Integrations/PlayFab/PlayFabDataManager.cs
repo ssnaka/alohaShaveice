@@ -13,7 +13,7 @@ public class PlayFabDataManager : IDataManager {
 
 
 	public  void SetData (Dictionary<string, string> dic) {
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		UpdateUserDataRequest request = new UpdateUserDataRequest () {

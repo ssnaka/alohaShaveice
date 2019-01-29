@@ -28,7 +28,7 @@ public class NetworkCurrencyManager {
 	}
 
 	public  void IncBalance (int amount) {
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 
@@ -37,7 +37,7 @@ public class NetworkCurrencyManager {
 	}
 
 	public  void DecBalance (int amount) {
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 
@@ -46,7 +46,7 @@ public class NetworkCurrencyManager {
 	}
 
 	public  void SetBalance (int newbalance) {
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		//		GetBalance ();
@@ -56,7 +56,8 @@ public class NetworkCurrencyManager {
 	}
 
 	public  void GetBalance () {
-		if (!NetworkManager.THIS.IsLoggedIn)
+        LoadingCanvasScript.Instance.HideLoading();
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		if (currencyMananager != null) {
@@ -67,9 +68,7 @@ public class NetworkCurrencyManager {
 					InitScript.Instance.SetGems (balance);
 				else
 					SetBalance (InitScript.Gems);
-				
 			});
-
 		}
 	}
 

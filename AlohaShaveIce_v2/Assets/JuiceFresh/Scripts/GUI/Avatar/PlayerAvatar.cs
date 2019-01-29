@@ -8,6 +8,11 @@ public class PlayerAvatar : MonoBehaviour, IAvatarLoader {
 
 	void Start () {
 		image.enabled = false;
+
+        if (FacebookManager.Instance.IsFaceboolLoggedIn())
+        {
+            ShowPicture();
+        }
 	}
 
 	#if PLAYFAB || GAMESPARKS

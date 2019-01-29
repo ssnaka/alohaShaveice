@@ -34,7 +34,7 @@ public class GUIEvents : MonoBehaviour {
 
 	void Update () {
 		if (name == "FaceBook" || name == "Share" || name == "FaceBookLogout") {
-			if (!LevelManager.THIS.FacebookEnable)
+            if (!FacebookManager.Instance.FacebookEnable)
 				gameObject.SetActive (false);
 		}
 	}
@@ -103,7 +103,7 @@ public class GUIEvents : MonoBehaviour {
 
 	public void FaceBookLogin () {
 #if FACEBOOK
-		FacebookManager.THIS.CallFBLogin ();
+		FacebookManager.Instance.CallFBLogin ();
 
 		// GameSparksIntegration.THIS.CallFBLogin();
 #endif
@@ -111,7 +111,7 @@ public class GUIEvents : MonoBehaviour {
 
 	public void FaceBookLogout () { //1.3.3
 		#if FACEBOOK
-		FacebookManager.THIS.CallFBLogout ();
+		FacebookManager.Instance.CallFBLogout ();
 
 		#endif
 	}
@@ -120,28 +120,28 @@ public class GUIEvents : MonoBehaviour {
 	public void FaceBookLoginWithPublishPerm () {
 #if FACEBOOK
 
-		FacebookManager.THIS.CallFBLoginForPublish ();
+		FacebookManager.Instance.CallFBLoginForPublish ();
 #endif
 	}
 
 	public void Share () {
 #if FACEBOOK
 
-		FacebookManager.THIS.Share ();
+		FacebookManager.Instance.Share ();
 #endif
 	}
 
 	public void ApiRequest () {
 #if FACEBOOK
 
-		FacebookManager.THIS.ReadScores ();
+		FacebookManager.Instance.ReadScores ();
 #endif
 	}
 
 	public void ApiPost () {
 #if FACEBOOK
 
-		FacebookManager.THIS.SaveScores ();
+		FacebookManager.Instance.SaveScores ();
 #endif
 	}
 

@@ -42,13 +42,13 @@ public class NetworkFriendsManager {
 	/// Gets the friends list.
 	/// </summary>
 	public  void GetFriends () {
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		if (friendsManager != null) {
 			friendsManager.GetFriends ((dic) => {
 
-				FacebookManager.THIS.AddFriend (FacebookManager.THIS.GetCurrentUserAsFriend ());//1.4.4
+				FacebookManager.Instance.AddFriend (FacebookManager.Instance.GetCurrentUserAsFriend ());//1.4.4
 
 				foreach (var item in dic) {
 					FriendData friend = new FriendData () {
@@ -56,10 +56,10 @@ public class NetworkFriendsManager {
 						userID = item.Value
 					};
 //					Debug.Log (friend.userID);
-					FacebookManager.THIS.AddFriend (friend);//1.4.4
+					FacebookManager.Instance.AddFriend (friend);//1.4.4
 //					Debug.Log ("    " + item.Key + " == " + item.Value);
 				}
-				FacebookManager.THIS.GetFriendsPicture ();
+				FacebookManager.Instance.GetFriendsPicture ();
 				PlaceFriendsPositionsOnMap ();
 
 			});
@@ -70,7 +70,7 @@ public class NetworkFriendsManager {
 	/// Place the friends on map.
 	/// </summary>
 	public  void PlaceFriendsPositionsOnMap () {
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		if (friendsManager != null) {
@@ -97,7 +97,7 @@ public class NetworkFriendsManager {
 	}
 
 	IEnumerator GetLeadboardCor () {
-		yield return new WaitUntil (() => NetworkManager.THIS.IsLoggedIn == true);
+		yield return new WaitUntil (() => NetworkManager.Instance.IsLoggedIn == true);
 		Debug.Log ("getting leadboard");
 
 		if (friendsManager != null) {

@@ -36,7 +36,7 @@ public class PlayFabManager : ILoginManager {
 			} else {
 				Debug.Log ("(existing account)");
 			}
-			NetworkManager.THIS.IsLoggedIn = true;
+			NetworkManager.Instance.IsLoggedIn = true;
 		},
 			(error) => {
 				Debug.Log (error.ErrorMessage);
@@ -60,7 +60,7 @@ public class PlayFabManager : ILoginManager {
 			} else {
 				Debug.Log ("(existing account)");
 			}
-			NetworkManager.THIS.IsLoggedIn = true;
+			NetworkManager.Instance.IsLoggedIn = true;
 		},
 			(error) => {
 				Debug.Log (error.ErrorMessage);

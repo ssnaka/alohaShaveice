@@ -99,11 +99,6 @@ public class LevelsMap : MonoBehaviour
 		if (lastUnlockedNumber > 6)
 		{
 			dailyQuestButton.SetActive(true);
-//			if (GameTutorialManager.Instance.ShowMenuTutorial(TutorialType.DailyQuest_Try, dailyQuestButton.GetComponent<RectTransform>()))
-//			{
-//				//					DailyRewardManager.Instance.EnableReward(true);
-//				//					CloseMenu();
-//			}
 		}
 
 		if (WaypointsMover == null || CharacterLevel == null || CharacterLevel.Number == lastUnlockedNumber || CharacterLevel.Number <= lastUnlockedNumber - 2)

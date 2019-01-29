@@ -52,7 +52,7 @@ public class NetworkDataManager
 
 	public  void SetPlayerScore (int level, int score)
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		if (score <= LevelScoreCurrentRecord)
@@ -63,7 +63,7 @@ public class NetworkDataManager
 
 	public void GetPlayerScore ()
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 		
 		dataManager.GetPlayerScore((value) =>
@@ -81,7 +81,7 @@ public class NetworkDataManager
 
 	public  void SetPlayerLevel (int level)
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		if (level <= LatestReachedLevel)
@@ -92,7 +92,7 @@ public class NetworkDataManager
 
 	public void GetPlayerLevel ()
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		dataManager.GetPlayerLevel((value) =>
@@ -117,7 +117,7 @@ public class NetworkDataManager
 
 	public void GetStars ()
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 
@@ -161,7 +161,7 @@ public class NetworkDataManager
 
 	public  void GetBoosterData ()
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		dataManager.GetBoosterData((dic) =>
@@ -189,7 +189,7 @@ public class NetworkDataManager
 
 	public void GetTutorial ()
 	{
-		if (!NetworkManager.THIS.IsLoggedIn)
+		if (!NetworkManager.Instance.IsLoggedIn)
 			return;
 
 		dataManager.GetTutorial((tutorialSaveData) =>

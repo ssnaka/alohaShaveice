@@ -333,10 +333,10 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         #endif
 
 
-#if FACEBOOK
-        FacebookManager fbManager = gameObject.AddComponent<FacebookManager>();//1.3.3
-        fbManager.facebookButton = facebookButton;//1.3.3
-#endif
+//#if FACEBOOK
+//        FacebookManager fbManager = gameObject.AddComponent<FacebookManager>();//1.3.3
+//        fbManager.facebookButton = facebookButton;//1.3.3
+//#endif
 
 #if GOOGLE_MOBILE_ADS
 		enableGoogleMobileAds = true;//1.3
@@ -360,11 +360,11 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 
         InitAppODeal();
 
-        Transform canvas = GameObject.Find("CanvasGlobal").transform;
-        foreach (Transform item in canvas)
-        {
-            item.gameObject.SetActive(false);
-        }
+//        Transform canvas = GameObject.Find("CanvasGlobal").transform;
+//        foreach (Transform item in canvas)
+//        {
+//            item.gameObject.SetActive(false);
+//        }
 
         ShowFirstTutorial();
 

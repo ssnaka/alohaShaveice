@@ -8,9 +8,11 @@ using UnityEngine.SceneManagement;
 using Facebook.Unity;
 #endif
 
-
-public class FacebookManager : MonoBehaviour
+[Prefab("Custom/Singleton/FacebookManager")]
+public class FacebookManager : Singleton<FacebookManager>
 {
+    public bool FacebookEnable;
+
 	private bool LoginEnable;
 	public GameObject facebookButton;
 	//1.3.3
@@ -47,14 +49,16 @@ public class FacebookManager : MonoBehaviour
 	}
 
 	bool loginForSharing;
-	public static FacebookManager THIS;
+//	public static FacebookManager THIS;
 	bool loginOnce;
 	//1.4.5;
 
-	void Awake ()
-	{
-		THIS = this;
-	}
+    public event Action<bool> onFacebookLogIn;
+
+    public bool IsFaceboolLoggedIn ()
+    {
+        return FB.IsLoggedIn;
+    }
 
 	void OnEnable ()
 	{
@@ -72,6 +76,17 @@ public class FacebookManager : MonoBehaviour
 
 		#endif
 	}
+
+    void Start ()
+    {
+#if FACEBOOK
+        FacebookEnable = true;//1.3.2
+        if (FacebookEnable)
+            FacebookManager.Instance.CallFBInit();
+#else
+        FacebookEnable = false;
+#endif
+    }
 
 	public void AddFriend (FriendData friend)
 	{ //1.4.4
@@ -168,14 +183,22 @@ public class FacebookManager : MonoBehaviour
 	}
 
 	public void CallFBLogout ()
-	{ 
+	{
 		FB.LogOut();
-		facebookButton.SetActive(true);
-
+//		facebookButton.SetActive(true);
+        PlayerPrefs.SetInt("Facebook_Logged", 0);
+        if (onFacebookLogIn != null)
+        {
+            onFacebookLogIn(false);
+        }
 #if PLAYFAB || GAMESPARKS
-		NetworkManager.THIS.IsLoggedIn = false;
+		NetworkManager.Instance.IsLoggedIn = false;
 		#endif
-		SceneManager.LoadScene("game");
+
+        if (SceneManager.GetActiveScene().name == "game")
+        {
+		    SceneManager.LoadScene("game");
+        }
 	}
 
 	public void Share ()
@@ -246,9 +269,14 @@ public class FacebookManager : MonoBehaviour
 
 	public void LoggedSuccefull ()
 	{//1.4.4
+        Debug.Log("!!!!! LoggedSuccefull " + onFacebookLogIn);
 		PlayerPrefs.SetInt("Facebook_Logged", 1);
 		PlayerPrefs.Save();
-		facebookButton.SetActive(false);//1.3.3
+        if (onFacebookLogIn != null)
+        {
+            onFacebookLogIn(true);
+        }
+//		facebookButton.SetActive(false);//1.3.3
 
 		//Debug.Log(result.RawResult);
 		userID = AccessToken.CurrentAccessToken.UserId;
@@ -256,7 +284,7 @@ public class FacebookManager : MonoBehaviour
 
 #if PLAYFAB || GAMESPARKS
 		NetworkManager.facebookUserID = AccessToken.CurrentAccessToken.UserId;
-		NetworkManager.THIS.LoginWithFB(AccessToken.CurrentAccessToken.TokenString);
+		NetworkManager.Instance.LoginWithFB(AccessToken.CurrentAccessToken.TokenString);
 		#endif
 	}
 
@@ -273,7 +301,7 @@ public class FacebookManager : MonoBehaviour
 			string fbname = dict["first_name"].ToString();
 
 #if PLAYFAB || GAMESPARKS
-			NetworkManager.THIS.UpdateName(fbname);
+			NetworkManager.Instance.UpdateName(fbname);
 			#endif
 		}
 	}

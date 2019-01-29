@@ -21,7 +21,7 @@ public class MenuPanelScript : MonoBehaviour
     [Header("Open/Close")]
     [SerializeField]
     Button openCloseButton;
-    bool isOpened;
+    public bool isOpened { get; private set; }
     float speed = 12000.0f;
     Vector2 closePosition;
     Vector2 openPosition;
@@ -76,20 +76,44 @@ public class MenuPanelScript : MonoBehaviour
 	
     public void OnOpenCloseButtonPressed ()
     {
+        if (!gameObject.activeInHierarchy || !gameObject.activeSelf)
+        {
+            return;
+        }
+
         if (moveCoroutine != null)
         {
             StopCoroutine(moveCoroutine);
         }
+
         if (isOpened)
         {
+            // Close menu
+            if (LevelManager.THIS.gameStatus == GameState.Map)
+            {
+                InitScript.Instance.menuController.ChangeCanvasOrder(false);
+            }
+            else if (LevelManager.THIS.gameStatus == GameState.Playing)
+            {
+                InitScript.Instance.menuController.EnableLifeGemGo(false);
+            }
             StartCoroutine(MoveAnimation(rectTransform, openPosition, closePosition, speed, delegate {
                 SetButtonEnable();
+                if (LevelManager.THIS.gameStatus == GameState.Playing)
+                {
+                    InitScript.Instance.menuController.EnableMainMenu(false, true);
+                }
             }));
         }
         else
         {
+            // Open menu
             StartCoroutine(MoveAnimation(rectTransform, closePosition, openPosition, speed, delegate {
                 SetButtonEnable();
+                if (LevelManager.THIS.gameStatus == GameState.Playing)
+                {
+                    InitScript.Instance.menuController.EnableLifeGemGo(true);
+                }
             }));
         }
 
@@ -129,6 +153,10 @@ public class MenuPanelScript : MonoBehaviour
 
     public void OnPageChangedEvent (int _page)
     {
+        if (!gameObject.activeInHierarchy || !gameObject.activeSelf)
+        {
+            return;
+        }
         float defaultDistanceBetweenButton = Vector2.Distance(menuButtons[0].anchoredPosition, menuButtons[1].anchoredPosition);
         Vector2 newAncchoredPosition = new Vector2(menuButtons[_page].anchoredPosition.x, 0.0f);
         if (moveCoroutine != null)

@@ -682,7 +682,7 @@ public class LevelManager : MonoBehaviour
 		float aspect = (float)Screen.height / (float)Screen.width;
 		mCamera.orthographicSize = 10.05f;
 		aspect = (float)Math.Round(aspect, 2);
-        if (aspect >= 2.00f && aspect < 2.06f)
+        if (aspect >= 1.9f && aspect < 2.06f)
             mCamera.orthographicSize = 11.5f;                  //18:9
         else if (aspect == 2.06f)
             mCamera.orthographicSize = 11.5f;                  //2960:1440 S8
@@ -710,7 +710,7 @@ public class LevelManager : MonoBehaviour
                 mCamera.orthographicSize = 10.25f;              //4:3
             else if (aspect == 1.67f)
                 mCamera.orthographicSize = 12.5f;               //5:3
-            else if (aspect >= 2.00f && aspect < 2.06f)
+            else if (aspect >= 1.9f && aspect < 2.06f)
                 mCamera.orthographicSize = 15.0f;               //18:9
             else if (aspect == 2.06f)
                 mCamera.orthographicSize = 15.75f;              //2960:1440 S8   //1.4.7
@@ -745,13 +745,18 @@ public class LevelManager : MonoBehaviour
 
         foreach (Transform tr in LevelsMapGO.transform)
 		{
-			if (tr.name != "AvatarManager" && tr.name != "Character")
+            if (tr.name != "AvatarManager" && tr.name != "Character" && tr.name != "CanvasMap")
+            {
 				tr.gameObject.SetActive(enable);
+            }
+
 			if (tr.name == "Character")
 			{
 				tr.GetComponent<SpriteRenderer>().enabled = enable;
 				tr.transform.GetChild(0).gameObject.SetActive(enable);
 			}
+
+            InitScript.Instance.menuController.EnableMapMenu(enable);
 		}
 		Level.SetActive(!enable);
 
@@ -767,6 +772,13 @@ public class LevelManager : MonoBehaviour
 	}
 
 	AvatarManager avatarManager;
+
+    void Awake ()
+    {
+        FacebookManager.Instance.Init();
+        NetworkManager.Instance.Init();
+    }
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -777,15 +789,22 @@ public class LevelManager : MonoBehaviour
 
 		if (Level.gameObject.activeSelf)
 			Level.gameObject.SetActive(false);
-#if FACEBOOK
-		FacebookEnable = true;//1.3.2
-		if (FacebookEnable)
-			FacebookManager.THIS.CallFBInit();
 
-#else
-		FacebookEnable = false;
+        FacebookEnable = FacebookManager.Instance.FacebookEnable;//1.3.2
+        if (FacebookEnable && FacebookManager.Instance.IsFaceboolLoggedIn())
+        {
+            NetworkManager.friendsManager.GetFriends();
+            NetworkManager.dataManager.GetTutorial();
+            NetworkManager.dataManager.GetPlayerLevel();
+            NetworkManager.dataManager.GetBoosterData();
+            NetworkManager.currencyManager.GetBalance();
+        }
+        else
+        {
+            LoadingCanvasScript.Instance.HideLoading();
+        }
 
-#endif
+
 #if UNITY_INAPPS
 
 		gameObject.AddComponent<UnityInAppsIntegration>();

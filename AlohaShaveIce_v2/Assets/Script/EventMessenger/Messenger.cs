@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 static internal class Messenger {
 	#region Internal variables
@@ -297,11 +298,14 @@ static internal class Messenger {
 public sealed class MessengerHelper : MonoBehaviour {
 	void Awake ()
 	{
-		DontDestroyOnLoad(gameObject);	
+		DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += SceneManager_SceneLoaded;
 	}
 
 	//Clean up eventTable every time a new level loads.
-	public void OnLevelWasLoaded(int unused) {
-		Messenger.Cleanup();
-	}
+    void SceneManager_SceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        Messenger.Cleanup();
+    }
+
 }

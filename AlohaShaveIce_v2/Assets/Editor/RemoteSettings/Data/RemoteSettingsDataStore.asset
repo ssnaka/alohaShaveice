@@ -11,10 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e893c667724814cbbae306609c3635, type: 3}
   m_Name: RemoteSettingsDataStore
   m_EditorClassIdentifier: 
-  rsKeyList:
-  - key: IsUsingAppODeal
-    value: false
-    type: bool
-  - key: IsUsingUnityAds
-    value: true
-    type: bool
+  rsKeyList: []

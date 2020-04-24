@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using GameToolkit.Localization;
 
 //#if UNITY_ADS
-//using UnityEngine.Advertisements;
+using UnityEngine.Advertisements;
 //#endif
 
 #if CHARTBOOST_ADS
@@ -90,12 +90,12 @@ public enum RewardedAdsType
 
 
 //#if UNITY_ANDROID
-public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBannerAdListener, IRewardedVideoAdListener
+public class InitScript : MonoBehaviour, IUnityAdsListener//, INonSkippableVideoAdListener, IBannerAdListener, IRewardedVideoAdListener
 //#elif UNITY_IOS
 //public class InitScript : MonoBehaviour
 //#endif
 {
-    public delegate void AnalyticsEvents ();
+    public delegate void AnalyticsEvents();
 
     public static event AnalyticsEvents OnAppStart;
     public static event AnalyticsEvents OnAppEnd;
@@ -176,10 +176,10 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
     public int ShowChartboostAdsEveryLevel;
     public int ShowAdmobAdsEveryLevel;
     private bool leftControl;
-    #if  GOOGLE_MOBILE_ADS
+#if GOOGLE_MOBILE_ADS
 	private InterstitialAd interstitial;
 	private AdRequest requestAdmob;
-	#endif
+#endif
     public string admobUIDAndroid;
     public string admobUIDIOS;
 
@@ -203,8 +203,8 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
     public bool enableUnityAds
     {
         get
-        { 
-            return _enableUnityAds; 
+        {
+            return _enableUnityAds;
         }
 
         set
@@ -232,8 +232,8 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
     public bool enableAppODeal
     {
         get
-        { 
-            return _enableAppODeal; 
+        {
+            return _enableAppODeal;
         }
 
         set
@@ -252,7 +252,7 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
                     adEvent.adType = AdType.AppODeal;
                 }
 
-                InitAppODeal();
+                //InitAppODeal();
             }
             _enableUnityAds = !value;
         }
@@ -261,11 +261,11 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
     public event Action<BoostType> OnVideoAdFinished;
 
     // Use this for initialization
-    void Awake ()
+    void Awake()
     {
-//		Localization.Instance.CurrentLanguage = SystemLanguage.Portuguese;
-//		Localization.Instance.CurrentLanguage = SystemLanguage.Spanish;
-//		Localization.Instance.CurrentLanguage = SystemLanguage.Korean;
+        //		Localization.Instance.CurrentLanguage = SystemLanguage.Portuguese;
+        //		Localization.Instance.CurrentLanguage = SystemLanguage.Spanish;
+        //		Localization.Instance.CurrentLanguage = SystemLanguage.Korean;
         Localization.Instance.CurrentLanguage = Application.systemLanguage;
         ZPlayerPrefs.Initialize("TryYourBestToGuessPass", "saltIsnotGoingToBeEasy");
 
@@ -281,8 +281,8 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         }
         RestLifeTimer = ZPlayerPrefs.GetFloat("RestLifeTimer");
 
-//		if (Application.isEditor)//TODO comment it
-//			PlayerPrefs.DeleteAll ();
+        //		if (Application.isEditor)//TODO comment it
+        //			PlayerPrefs.DeleteAll ();
 
         if (PlayerPrefs.HasKey("DateOfExit"))
         {
@@ -315,19 +315,19 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         //rate.transform.localScale = Vector3.one;
 
         MusicBase.Instance.SetVolume(PlayerPrefs.GetInt("Music"));
-//		GameObject.Find("Music").GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Music");
+        //		GameObject.Find("Music").GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Music");
         SoundBase.Instance.audioSource.volume = PlayerPrefs.GetInt("Sound");
-//		#if UNITY_ADS//1.3
-//		enableUnityAds = true;
-//		#else
+        //		#if UNITY_ADS//1.3
+        //		enableUnityAds = true;
+        //		#else
         enableUnityAds = true;
         enableAppODeal = false;
-//		#endif
-        #if CHARTBOOST_ADS//1.4.1
+        //		#endif
+#if CHARTBOOST_ADS//1.4.1
 		enableChartboostAds = true;
-        #else
+#else
         enableChartboostAds = false;
-        #endif
+#endif
 
 
 #if FACEBOOK
@@ -351,11 +351,11 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 		interstitial.LoadAd (requestAdmob);
 		interstitial.OnAdLoaded += HandleInterstitialLoaded;
 		interstitial.OnAdFailedToLoad += HandleInterstitialFailedToLoad;
-        #else
+#else
         enableGoogleMobileAds = false; //1.3
 #endif
 
-        InitAppODeal();
+        //InitAppODeal();
 
         Transform canvas = GameObject.Find("CanvasGlobal").transform;
         foreach (Transform item in canvas)
@@ -367,14 +367,23 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 
         SetupInfiniteLife(false);
 
-//		NotificationCenter.Instance.Init();
-//		LoadingCanvasScript.Instance.HideLoading();
+        //		NotificationCenter.Instance.Init();
+        //		LoadingCanvasScript.Instance.HideLoading();
 
         DailyRewardManager.Instance.Init();
-//		DailyQuestManager.Instance.SetupDailyQuest();
+        //		DailyQuestManager.Instance.SetupDailyQuest();
+
+
+#if UNITY_IOS
+        String unityGameId = "1511071";
+#elif UNITY_ANDROID
+        String unityGameId = "1511070";
+#endif
+        Advertisement.Initialize(unityGameId, false);
+        Advertisement.AddListener(this);
 
     }
-    #if GOOGLE_MOBILE_ADS
+#if GOOGLE_MOBILE_ADS
 	
 	public void HandleInterstitialLoaded (object sender, EventArgs args) {
 		print ("HandleInterstitialLoaded event received.");
@@ -383,31 +392,31 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 	public void HandleInterstitialFailedToLoad (object sender, AdFailedToLoadEventArgs args) {
 		print ("HandleInterstitialFailedToLoad event received with message: " + args.Message);
 	}
-	#endif
-
-
-    void InitAppODeal ()
-    {
-//#if APPODEAL_ADS
-        if (enableAppODeal)
-        {
-            string appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
-#if UNITY_IOS
-			appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
 #endif
 
-//            Appodeal.disableLocationPermissionCheck();
-//            Appodeal.setTesting(false);
-//            Appodeal.setBannerBackground(true);
-//
-//            Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
-//            Appodeal.setNonSkippableVideoCallbacks(this);
-//
-//            //		Appodeal.setRewardedVideoCallbacks(this);
-//            Appodeal.setBannerCallbacks(this);
-        }
+
+//    void InitAppODeal ()
+//    {
+////#if APPODEAL_ADS
+//        if (enableAppODeal)
+//        {
+//            string appKey = "9f79bcfc0adf30a16bfa525b336a0337893901ac1f5344a2";
+//#if UNITY_IOS
+//			appKey = "7071382527242050da07addd574e66366b29a9da961d7f36";
 //#endif
-    }
+
+////            Appodeal.disableLocationPermissionCheck();
+////            Appodeal.setTesting(false);
+////            Appodeal.setBannerBackground(true);
+////
+////            Appodeal.initialize(appKey, Appodeal.INTERSTITIAL | Appodeal.BANNER | Appodeal.NON_SKIPPABLE_VIDEO);
+////            Appodeal.setNonSkippableVideoCallbacks(this);
+////
+////            //		Appodeal.setRewardedVideoCallbacks(this);
+////            Appodeal.setBannerCallbacks(this);
+//        }
+////#endif
+    //}
 
     void ShowFirstTutorial ()
     {
@@ -456,14 +465,14 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         {
 //#if UNITY_ADS
             rewardedVideoZone = "rewardedVideo";
-            if (UnityEngine.Advertisements.Advertisement.IsReady(rewardedVideoZone))
+            if (Advertisement.IsReady(rewardedVideoZone))
             {
                 return true;
             }
             else
             {
                 rewardedVideoZone = "rewardedVideoZone";
-                if (UnityEngine.Advertisements.Advertisement.IsReady(rewardedVideoZone))
+                if (Advertisement.IsReady(rewardedVideoZone))
                 {
                     return true;
                 }
@@ -486,16 +495,7 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 
             if (GetRewardedUnityAdsReady())
             {
-                UnityEngine.Advertisements.Advertisement.Show(rewardedVideoZone, new UnityEngine.Advertisements.ShowOptions {
-                    resultCallback = result =>
-                    {
-                        if (result == UnityEngine.Advertisements.ShowResult.Finished)
-                        {
-                            OnVideoAdShown();
-                            CheckRewardedAds();
-                        }
-                    }
-                });
+                Advertisement.Show(rewardedVideoZone);
             }
             else
             {
@@ -598,15 +598,15 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         if (enableUnityAds)
         {
 //#if UNITY_ADS
-            if (UnityEngine.Advertisements.Advertisement.IsReady("video"))
+            if (Advertisement.IsReady("video"))
             {
-                UnityEngine.Advertisements.Advertisement.Show("video");
+                Advertisement.Show("video");
             }
             else
             {
-                if (UnityEngine.Advertisements.Advertisement.IsReady("defaultZone"))
+                if (Advertisement.IsReady("defaultZone"))
                 {
-                    UnityEngine.Advertisements.Advertisement.Show("defaultZone");
+                    Advertisement.Show("defaultZone");
                 }
             }
 //#endif
@@ -648,7 +648,7 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
 
     //	#if APPODEAL_ADS
 
-    #region Rewarded Video callback handlers
+#region Rewarded Video callback handlers
 
     public void onRewardedVideoLoaded ()
     {
@@ -705,9 +705,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         CheckRewardedAds();
     }
 
-    #endregion
+#endregion
 
-    #region Banner callback handlers
+#region Banner callback handlers
 
     public void onBannerLoaded (bool _loaded)
     {
@@ -729,7 +729,7 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         Debug.LogError("banner clicked");
     }
 
-    #endregion
+#endregion
 
     public void EnableBannerAds (bool _enabled)
     {
@@ -1061,9 +1061,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         Gems += count;
         ZPlayerPrefs.SetInt("Gems", Gems);
         ZPlayerPrefs.Save();
-        #if PLAYFAB || GAMESPARKS
+#if PLAYFAB || GAMESPARKS
         NetworkManager.currencyManager.IncBalance(count);
-        #endif
+#endif
 
         if (OnGemUpdate != null)
         {
@@ -1077,9 +1077,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         Gems -= count;
         ZPlayerPrefs.SetInt("Gems", Gems);
         ZPlayerPrefs.Save();
-        #if PLAYFAB || GAMESPARKS
+#if PLAYFAB || GAMESPARKS
         NetworkManager.currencyManager.DecBalance(count);
-        #endif
+#endif
 
         if (OnGemUpdate != null)
         {
@@ -1155,9 +1155,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         ZPlayerPrefs.SetInt("" + boostType, boostCount);
         ZPlayerPrefs.Save();
         Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, boostCount);
-        #if PLAYFAB ||GAMESPARKS
+#if PLAYFAB || GAMESPARKS
         NetworkManager.dataManager.SetBoosterData();
-        #endif
+#endif
 
         //   ReloadBoosts();
     }
@@ -1169,9 +1169,9 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         ZPlayerPrefs.Save();
         Messenger.Broadcast<BoostType, int>("BoostValueChanged", boostType, count);
 
-        #if PLAYFAB || GAMESPARKS
+#if PLAYFAB || GAMESPARKS
         NetworkManager.dataManager.SetBoosterData();
-        #endif
+#endif
 
     }
     //void ReloadBoosts()
@@ -1431,4 +1431,29 @@ public class InitScript : MonoBehaviour//, INonSkippableVideoAdListener, IBanner
         }
     }
 
+    public void OnUnityAdsDidError(string message)
+    {
+        Debug.Log("OnUnityAdsDidError: " + message);
+    }
+
+    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
+    {
+        Debug.Log("OnUnityAdsDidFinish ==> " + placementId);
+        if (placementId == "rewardedVideo" || placementId == "rewardedVideoZone")
+        if (showResult == ShowResult.Finished)
+        {
+            OnVideoAdShown();
+            CheckRewardedAds();
+        }
+    }
+
+    public void OnUnityAdsDidStart(string placementId)
+    {
+        Debug.Log("OnUnityAdsDidStart : " + placementId);
+    }
+
+    public void OnUnityAdsReady(string placementId)
+    {
+        Debug.Log("OnUnityAdsReady : " + placementId);
+    }
 }

@@ -288,8 +288,8 @@ public class FacebookManager : MonoBehaviour
 	{
 		if (string.IsNullOrEmpty(result.Error) && result.Texture != null)
 		{
-			Sprite sprite = new Sprite();
-			sprite = Sprite.Create(result.Texture, new Rect(0, 0, 50, 50), new Vector2(0, 0), 1f);
+            //Sprite sprite = new Sprite();
+            Sprite sprite = Sprite.Create(result.Texture, new Rect(0, 0, 50, 50), new Vector2(0, 0), 1f);
 			InitScript.profilePic = sprite;
 
 #if PLAYFAB || GAMESPARKS
@@ -397,10 +397,10 @@ public class FacebookManager : MonoBehaviour
 	IEnumerator GetPictureCor (string url, FriendData friend)
 	{
 
-		Sprite sprite = new Sprite();
+		//Sprite sprite = new Sprite();
 		WWW www = new WWW(url);
 		yield return www;
-		sprite = Sprite.Create(www.texture, new Rect(0, 0, 50, 50), new Vector2(0, 0), 1f);
+        Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, 50, 50), new Vector2(0, 0), 1f);
 		friend.picture = sprite;
 		//		print ("get picture for " + url);
 	}

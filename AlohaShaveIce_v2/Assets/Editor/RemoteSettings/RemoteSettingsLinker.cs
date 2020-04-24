@@ -9,8 +9,9 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEngine.SceneManagement;
 #if UNITY_2018_1_OR_NEWER
-    using UnityEditor.Build.Reporting;
+using UnityEditor.Build.Reporting;
 #endif
 using Object = UnityEngine.Object;
 
@@ -218,6 +219,14 @@ namespace UnityEngine.Analytics
             AssetDatabase.SaveAssets();
 
             Console.WriteLine("Wrote " + k_LinkPath);
+        }
+
+        public void OnPreprocessBuild(BuildTarget target, string path)
+        {
+        }
+
+        public void OnProcessScene(Scene scene)
+        {
         }
     }
 }
